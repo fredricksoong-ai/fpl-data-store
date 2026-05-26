@@ -1,0 +1,12 @@
+{
+  "current_season": "2025-2026",
+  "current_gw": 38,
+  "previous_gw": 37,
+  "next_gw": null,
+  "mode": "offseason",
+  "mode_note": "Season complete. Pipeline frozen at GW38. Backtesting available. Next season expected Aug 2026.",
+  "last_pipeline_run": null,
+  "ci_data_available": true,
+  "fpl_api_available": true,
+  "next_season_expected": "2026-08-01"
+}
