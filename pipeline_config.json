@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+
+  "season": {
+    "current": "2025-2026",
+    "ci_path": "data/2025-2026",
+    "mode": "offseason"
+  },
+
+  "fpl": {
+    "my_entry_id": 822500,
+    "league_id": 1822310,
+    "rival_entry_ids": [1837531, 1353220, 638664, 61955, 2414293, 1823633]
+  },
+
+  "core_insights": {
+    "base_url": "https://raw.githubusercontent.com/olbauday/FPL-Core-Insights/main",
+    "season": "2025-2026"
+  },
+
+  "windows": {
+    "player_history_gws": 8,
+    "fixture_lookahead_gws": 5,
+    "fdr_avg_window": 3,
+    "scan_min_minutes": 90
+  },
+
+  "auto_flags": {
+    "form_top_n": 20,
+    "ep_next_top_n_per_position": 8,
+    "transfers_in_event_min": 80000,
+    "ownership_delta_min": 1.5,
+    "value_gem_max_price": 6.0,
+    "value_gem_min_form": 5.0,
+    "xgi_per90_min": 0.55,
+    "xgi_min_minutes": 450,
+    "penalty_taker_order": 1,
+    "corner_taker_max_order": 2
+  },
+
+  "update_schedule": {
+    "twice_daily": ["player_scan", "player_universe", "gw_meta"],
+    "post_gw": ["manager_history", "season_decisions", "league_table"],
+    "pre_deadline": ["my_squad", "rival_squads", "fixtures"],
+    "matchday": ["live_gw"],
+    "on_demand": ["player_history"]
+  },
+
+  "output_paths": {
+    "live": "live/",
+    "season_final": "seasons/2025-2026/final/",
+    "snapshots": "seasons/2025-2026/snapshots/"
+  },
+
+  "new_season_changes": [
+    "Update season.current to 2026-2027",
+    "Update core_insights.season to 2026-2027",
+    "Update output_paths.season_final to seasons/2026-2027/final/",
+    "Update output_paths.snapshots to seasons/2026-2027/snapshots/",
+    "Review and carry over watchlist player IDs",
+    "Set season.mode to preseason, then live at GW1"
+  ]
+}
