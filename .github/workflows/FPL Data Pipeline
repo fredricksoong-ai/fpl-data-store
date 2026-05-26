@@ -1,0 +1,138 @@
+name: FPL Data Pipeline
+
+# ── Triggers ──────────────────────────────────────────────────────────────────
+on:
+  schedule:
+    # Twice daily — timed for Singapore timezone
+    - cron: '0 22 * * *'   # 10 PM UTC = 6 AM SGT  (pre-deadline morning update)
+    - cron: '0 12 * * *'   # 12 PM UTC = 8 PM SGT  (post-match evening update)
+
+  # Manual trigger — run anytime from GitHub UI
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Pipeline mode'
+        required: true
+        default: 'live'
+        type: choice
+        options:
+          - live
+          - offseason
+          - preseason
+      gw:
+        description: 'GW number (backtest mode only)'
+        required: false
+        type: string
+
+# ── Permissions ───────────────────────────────────────────────────────────────
+permissions:
+  contents: write   # needed to commit and push data files back to repo
+
+# ── Job ───────────────────────────────────────────────────────────────────────
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # 1. Check out the repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # 2. Set up Python
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: pip install requests
+
+      # 4. Determine pipeline mode
+      #    Scheduled runs → read mode from meta/season_state.json
+      #    Manual runs    → use the mode selected in the UI
+      - name: Determine pipeline mode
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "mode=${{ inputs.mode }}" >> $GITHUB_OUTPUT
+            echo "gw=${{ inputs.gw }}" >> $GITHUB_OUTPUT
+          else
+            # Read mode from season_state.json
+            MODE=$(python3 -c "
+          import json
+          with open('meta/season_state.json') as f:
+              d = json.load(f)
+          print(d.get('mode', 'live'))
+          ")
+            echo "mode=$MODE" >> $GITHUB_OUTPUT
+            echo "gw=" >> $GITHUB_OUTPUT
+          fi
+          echo "Determined mode: $mode"
+
+      # 5. Run the pipeline
+      - name: Run pipeline
+        run: |
+          MODE="${{ steps.mode.outputs.mode }}"
+          GW="${{ steps.mode.outputs.gw }}"
+
+          if [ "$MODE" = "backtest" ] && [ -n "$GW" ]; then
+            echo "Running backtest for GW$GW"
+            python3 pipeline.py --mode=backtest --gw=$GW
+          else
+            echo "Running pipeline in $MODE mode"
+            python3 pipeline.py --mode=$MODE
+          fi
+
+      # 6. Commit and push updated data files
+      #    Only commits if files actually changed — no empty commits
+      - name: Commit and push
+        run: |
+          git config user.name  "FPL Pipeline Bot"
+          git config user.email "pipeline-bot@github-actions"
+
+          # Stage live/ and meta/ (the files the pipeline updates)
+          git add live/ meta/ seasons/
+
+          # Read current GW for commit message
+          CURRENT_GW=$(python3 -c "
+          import json
+          with open('meta/season_state.json') as f:
+              d = json.load(f)
+          print(d.get('current_gw', '?'))
+          ")
+
+          MODE="${{ steps.mode.outputs.mode }}"
+          TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
+
+          # Only commit if there are staged changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit — data unchanged since last run"
+          else
+            git commit -m "Pipeline [${MODE}] GW${CURRENT_GW} — ${TIMESTAMP}"
+            git push
+            echo "Data updated and pushed"
+          fi
+
+      # 7. Report summary
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Pipeline Run Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| Mode | ${{ steps.mode.outputs.mode }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Trigger | ${{ github.event_name }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Timestamp | $(date -u '+%Y-%m-%d %H:%M UTC') |" >> $GITHUB_STEP_SUMMARY
+          python3 -c "
+          import json
+          with open('meta/season_state.json') as f:
+              d = json.load(f)
+          print(f'| Current GW | {d.get(\"current_gw\", \"?\")} |')
+          print(f'| Season | {d.get(\"current_season\", \"?\")} |')
+          print(f'| Last run | {d.get(\"last_pipeline_run\", \"?\")} |')
+          " >> $GITHUB_STEP_SUMMARY
