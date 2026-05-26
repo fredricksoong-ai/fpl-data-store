@@ -14,7 +14,7 @@
   },
 
   "core_insights": {
-    "base_url": "https://raw.githubusercontent.com/olbauday/FPL-Core-Insights/main",
+    "base_url": "https://raw.githubusercontent.com/olbauday/FPL-Core-Insights/main/data",
     "season": "2025-2026"
   },
 

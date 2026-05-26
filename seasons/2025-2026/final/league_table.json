@@ -1,0 +1,97 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "fetched_at": "2026-05-26T15:44:54.246339+00:00",
+    "current_gw": 38,
+    "source": "fpl-api"
+  },
+  "data": {
+    "league_name": "Ballon d\u2019FPL",
+    "standings": [
+      {
+        "rank": 1,
+        "last_rank": 1,
+        "rank_delta": 0,
+        "entry_id": 822500,
+        "entry_name": "wirtzplay",
+        "manager_name": "Fredrick Soong",
+        "gw_pts": 52,
+        "total": 2341,
+        "gap_to_first": 0,
+        "gap_to_next": 0
+      },
+      {
+        "rank": 2,
+        "last_rank": 2,
+        "rank_delta": 0,
+        "entry_id": 1837531,
+        "entry_name": "MOUsalah",
+        "manager_name": "Hoe Mun Ho",
+        "gw_pts": 57,
+        "total": 2328,
+        "gap_to_first": 13,
+        "gap_to_next": 13
+      },
+      {
+        "rank": 3,
+        "last_rank": 3,
+        "rank_delta": 0,
+        "entry_id": 1353220,
+        "entry_name": "Virgil Wirtz Sausage",
+        "manager_name": "RS Kwa",
+        "gw_pts": 55,
+        "total": 2245,
+        "gap_to_first": 96,
+        "gap_to_next": 83
+      },
+      {
+        "rank": 4,
+        "last_rank": 4,
+        "rank_delta": 0,
+        "entry_id": 638664,
+        "entry_name": "Kurt Tay FC",
+        "manager_name": "Y L",
+        "gw_pts": 45,
+        "total": 2211,
+        "gap_to_first": 130,
+        "gap_to_next": 34
+      },
+      {
+        "rank": 5,
+        "last_rank": 5,
+        "rank_delta": 0,
+        "entry_id": 61955,
+        "entry_name": "HaaCunha Mateta",
+        "manager_name": "HengHong Seah",
+        "gw_pts": 46,
+        "total": 2199,
+        "gap_to_first": 142,
+        "gap_to_next": 12
+      },
+      {
+        "rank": 6,
+        "last_rank": 6,
+        "rank_delta": 0,
+        "entry_id": 2414293,
+        "entry_name": "WinningEleven",
+        "manager_name": "Ritchie Lai",
+        "gw_pts": 61,
+        "total": 2115,
+        "gap_to_first": 226,
+        "gap_to_next": 84
+      },
+      {
+        "rank": 7,
+        "last_rank": 7,
+        "rank_delta": 0,
+        "entry_id": 1823633,
+        "entry_name": "Great Eastern",
+        "manager_name": "Lionel T",
+        "gw_pts": 53,
+        "total": 1957,
+        "gap_to_first": 384,
+        "gap_to_next": 158
+      }
+    ]
+  }
+}
