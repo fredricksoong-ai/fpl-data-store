@@ -1,0 +1,66 @@
+name: FPL Live Pipeline
+
+# ── Triggers ──────────────────────────────────────────────────────────────────
+#
+# Runs every 30 minutes during Premier League match windows (UTC):
+#
+#   Saturdays:    11:30 – 22:00  covers 12:30 PM – 11 PM UK
+#   Sundays:      11:30 – 20:00  covers 12:30 PM – 9 PM UK
+#   Mon–Fri eve:  18:00 – 22:00  covers midweek + FA Cup + rare fixtures
+#
+# Script exits immediately if season_state.json mode is offseason/preseason.
+# So during off-season these triggers fire but cost ~1 second each — negligible.
+#
+on:
+  schedule:
+    - cron: '0,30 11-21 * * 6'    # Saturdays
+    - cron: '0,30 11-20 * * 0'    # Sundays
+    - cron: '0,30 18-21 * * 1-5'  # Mon–Fri evenings
+
+  # Manual trigger — useful for testing or emergency refresh
+  workflow_dispatch:
+
+# ── Permissions ───────────────────────────────────────────────────────────────
+permissions:
+  contents: write
+
+# ── Job ───────────────────────────────────────────────────────────────────────
+jobs:
+  live-update:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Run live pipeline
+        run: python3 live_pipeline.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "FPL Live Bot"
+          git config user.email "live-bot@github-actions"
+
+          git add live/live_gw.json
+
+          GW=$(python3 -c "
+          import json
+          with open('meta/season_state.json') as f:
+              d = json.load(f)
+          print(d.get('current_gw', '?'))
+          ")
+
+          TIMESTAMP=$(date -u '+%H:%M UTC')
+
+          if git diff --staged --quiet; then
+            echo "No changes — scores unchanged since last run"
+          else
+            git commit -m "Live [GW${GW}] ${TIMESTAMP}"
+            git push
+          fi
