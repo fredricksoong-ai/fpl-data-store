@@ -4,8 +4,8 @@ name: FPL Data Pipeline
 on:
   schedule:
     # Twice daily — timed for Singapore timezone
-    - cron: '0 22 * * *'   # 10 PM UTC = 6 AM SGT  (pre-deadline morning update)
-    - cron: '0 12 * * *'   # 12 PM UTC = 8 PM SGT  (post-match evening update)
+    - cron: '30 5 * * *'   # 05:30 UTC = 1:30 PM SGT (30 min after CI morning refresh)
+    - cron: '30 17 * * *'   # 17:30 UTC = 1:30 AM SGT (30 min after CI evening refresh)
 
   # Manual trigger — run anytime from GitHub UI
   workflow_dispatch:
