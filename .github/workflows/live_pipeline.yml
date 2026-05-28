@@ -13,9 +13,9 @@ name: FPL Live Pipeline
 #
 on:
   schedule:
-    - cron: '0,30 11-21 * * 6'    # Saturdays
-    - cron: '0,30 11-20 * * 0'    # Sundays
-    - cron: '0,30 18-21 * * 1-5'  # Mon–Fri evenings
+    - cron: '0,30 11-22 * * 6'    # Saturdays
+    - cron: '0,30 11-22 * * 0'    # Sundays
+    - cron: '0,30 11-22 * * 1-5'  # Mon–Fri evenings
 
   # Manual trigger — useful for testing or emergency refresh
   workflow_dispatch:
