@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "fetched_at": "2026-05-28T00:42:50.805275+00:00",
+    "current_gw": 10,
+    "source": "fpl-api+core-insights"
+  },
+  "data": {
+    "current_gw": {
+      "id": 10,
+      "name": "Gameweek 10",
+      "deadline": "2025-11-01T13:30:00Z",
+      "deadline_sgt": "2025-11-01 21:30 SGT",
+      "finished": true
+    },
+    "next_gw": {
+      "id": 11,
+      "name": "Gameweek 11",
+      "deadline": "2025-11-08T11:00:00Z",
+      "deadline_sgt": "2025-11-08 19:00 SGT",
+      "finished": true
+    },
+    "previous_gw": {
+      "id": 9,
+      "name": "Gameweek 9",
+      "deadline": "2025-10-24T17:30:00Z",
+      "deadline_sgt": "2025-10-25 01:30 SGT",
+      "finished": true,
+      "average_score": 46,
+      "highest_score": 124,
+      "most_captained_id": 430,
+      "most_transferred_in_id": 714
+    }
+  }
+}

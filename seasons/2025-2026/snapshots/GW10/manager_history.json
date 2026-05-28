@@ -1,0 +1,1031 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "fetched_at": "2026-05-28T00:42:50.293907+00:00",
+    "current_gw": 10,
+    "source": "fpl-api"
+  },
+  "data": {
+    "managers": {
+      "822500": {
+        "entry_id": 822500,
+        "chips_used": [
+          {
+            "name": "bboost",
+            "gw": 1
+          },
+          {
+            "name": "freehit",
+            "gw": 2
+          },
+          {
+            "name": "wildcard",
+            "gw": 3
+          },
+          {
+            "name": "3xc",
+            "gw": 6
+          }
+        ],
+        "gws": [
+          {
+            "gw": 1,
+            "pts": 72,
+            "total": 72,
+            "overall_rank": 728920,
+            "percentile_rank": 10,
+            "rank_delta": null,
+            "hits": 0,
+            "bench_pts": 0,
+            "value": 1000,
+            "bank": 0,
+            "chip": "bboost"
+          },
+          {
+            "gw": 2,
+            "pts": 61,
+            "total": 133,
+            "overall_rank": 469753,
+            "percentile_rank": 25,
+            "rank_delta": -259167,
+            "hits": 0,
+            "bench_pts": 9,
+            "value": 1001,
+            "bank": 0,
+            "chip": "freehit"
+          },
+          {
+            "gw": 3,
+            "pts": 43,
+            "total": 176,
+            "overall_rank": 1124694,
+            "percentile_rank": 65,
+            "rank_delta": 654941,
+            "hits": 0,
+            "bench_pts": 15,
+            "value": 1008,
+            "bank": 0,
+            "chip": "wildcard"
+          },
+          {
+            "gw": 4,
+            "pts": 75,
+            "total": 251,
+            "overall_rank": 780406,
+            "percentile_rank": 20,
+            "rank_delta": -344288,
+            "hits": 0,
+            "bench_pts": 6,
+            "value": 1013,
+            "bank": 16,
+            "chip": null
+          },
+          {
+            "gw": 5,
+            "pts": 43,
+            "total": 294,
+            "overall_rank": 1003046,
+            "percentile_rank": 50,
+            "rank_delta": 222640,
+            "hits": 0,
+            "bench_pts": 8,
+            "value": 1019,
+            "bank": 12,
+            "chip": null
+          },
+          {
+            "gw": 6,
+            "pts": 76,
+            "total": 370,
+            "overall_rank": 420513,
+            "percentile_rank": 5,
+            "rank_delta": -582533,
+            "hits": 0,
+            "bench_pts": 11,
+            "value": 1018,
+            "bank": 32,
+            "chip": "3xc"
+          },
+          {
+            "gw": 7,
+            "pts": 72,
+            "total": 442,
+            "overall_rank": 397644,
+            "percentile_rank": 25,
+            "rank_delta": -22869,
+            "hits": 0,
+            "bench_pts": 12,
+            "value": 1017,
+            "bank": 38,
+            "chip": null
+          },
+          {
+            "gw": 8,
+            "pts": 78,
+            "total": 520,
+            "overall_rank": 230725,
+            "percentile_rank": 10,
+            "rank_delta": -166919,
+            "hits": 0,
+            "bench_pts": 10,
+            "value": 1022,
+            "bank": 31,
+            "chip": null
+          },
+          {
+            "gw": 9,
+            "pts": 55,
+            "total": 575,
+            "overall_rank": 175775,
+            "percentile_rank": 30,
+            "rank_delta": -54950,
+            "hits": 0,
+            "bench_pts": 4,
+            "value": 1024,
+            "bank": 31,
+            "chip": null
+          },
+          {
+            "gw": 10,
+            "pts": 61,
+            "total": 636,
+            "overall_rank": 360724,
+            "percentile_rank": 65,
+            "rank_delta": 184949,
+            "hits": 0,
+            "bench_pts": 13,
+            "value": 1027,
+            "bank": 39,
+            "chip": null
+          }
+        ]
+      },
+      "1837531": {
+        "entry_id": 1837531,
+        "chips_used": [
+          {
+            "name": "bboost",
+            "gw": 1
+          },
+          {
+            "name": "wildcard",
+            "gw": 4
+          },
+          {
+            "name": "3xc",
+            "gw": 6
+          }
+        ],
+        "gws": [
+          {
+            "gw": 1,
+            "pts": 65,
+            "total": 65,
+            "overall_rank": 1743774,
+            "percentile_rank": 20,
+            "rank_delta": null,
+            "hits": 0,
+            "bench_pts": 0,
+            "value": 1000,
+            "bank": 20,
+            "chip": "bboost"
+          },
+          {
+            "gw": 2,
+            "pts": 59,
+            "total": 124,
+            "overall_rank": 1190219,
+            "percentile_rank": 30,
+            "rank_delta": -553555,
+            "hits": 0,
+            "bench_pts": 3,
+            "value": 1002,
+            "bank": 20,
+            "chip": null
+          },
+          {
+            "gw": 3,
+            "pts": 55,
+            "total": 179,
+            "overall_rank": 916077,
+            "percentile_rank": 30,
+            "rank_delta": -274142,
+            "hits": 0,
+            "bench_pts": 11,
+            "value": 1005,
+            "bank": 2,
+            "chip": null
+          },
+          {
+            "gw": 4,
+            "pts": 83,
+            "total": 262,
+            "overall_rank": 341345,
+            "percentile_rank": 10,
+            "rank_delta": -574732,
+            "hits": 0,
+            "bench_pts": 17,
+            "value": 1008,
+            "bank": 9,
+            "chip": "wildcard"
+          },
+          {
+            "gw": 5,
+            "pts": 38,
+            "total": 300,
+            "overall_rank": 705424,
+            "percentile_rank": 70,
+            "rank_delta": 364079,
+            "hits": 0,
+            "bench_pts": 13,
+            "value": 1011,
+            "bank": 7,
+            "chip": null
+          },
+          {
+            "gw": 6,
+            "pts": 66,
+            "total": 366,
+            "overall_rank": 532909,
+            "percentile_rank": 15,
+            "rank_delta": -172515,
+            "hits": 0,
+            "bench_pts": 5,
+            "value": 1014,
+            "bank": 27,
+            "chip": "3xc"
+          },
+          {
+            "gw": 7,
+            "pts": 73,
+            "total": 439,
+            "overall_rank": 467889,
+            "percentile_rank": 25,
+            "rank_delta": -65020,
+            "hits": 0,
+            "bench_pts": 3,
+            "value": 1017,
+            "bank": 27,
+            "chip": null
+          },
+          {
+            "gw": 8,
+            "pts": 79,
+            "total": 514,
+            "overall_rank": 328616,
+            "percentile_rank": 10,
+            "rank_delta": -139273,
+            "hits": 4,
+            "bench_pts": 9,
+            "value": 1018,
+            "bank": 1,
+            "chip": null
+          },
+          {
+            "gw": 9,
+            "pts": 34,
+            "total": 548,
+            "overall_rank": 669399,
+            "percentile_rank": 85,
+            "rank_delta": 340783,
+            "hits": 0,
+            "bench_pts": 29,
+            "value": 1021,
+            "bank": 1,
+            "chip": null
+          },
+          {
+            "gw": 10,
+            "pts": 62,
+            "total": 610,
+            "overall_rank": 1020429,
+            "percentile_rank": 65,
+            "rank_delta": 351030,
+            "hits": 0,
+            "bench_pts": 20,
+            "value": 1021,
+            "bank": 1,
+            "chip": null
+          }
+        ]
+      },
+      "1353220": {
+        "entry_id": 1353220,
+        "chips_used": [
+          {
+            "name": "wildcard",
+            "gw": 6
+          }
+        ],
+        "gws": [
+          {
+            "gw": 1,
+            "pts": 57,
+            "total": 57,
+            "overall_rank": 3654196,
+            "percentile_rank": 40,
+            "rank_delta": null,
+            "hits": 0,
+            "bench_pts": 5,
+            "value": 1000,
+            "bank": 5,
+            "chip": null
+          },
+          {
+            "gw": 2,
+            "pts": 58,
+            "total": 115,
+            "overall_rank": 2478284,
+            "percentile_rank": 30,
+            "rank_delta": -1175912,
+            "hits": 0,
+            "bench_pts": 7,
+            "value": 1001,
+            "bank": 5,
+            "chip": null
+          },
+          {
+            "gw": 3,
+            "pts": 54,
+            "total": 165,
+            "overall_rank": 2503597,
+            "percentile_rank": 35,
+            "rank_delta": 25313,
+            "hits": 4,
+            "bench_pts": 6,
+            "value": 1002,
+            "bank": 4,
+            "chip": null
+          },
+          {
+            "gw": 4,
+            "pts": 78,
+            "total": 239,
+            "overall_rank": 1722938,
+            "percentile_rank": 15,
+            "rank_delta": -780659,
+            "hits": 4,
+            "bench_pts": 7,
+            "value": 1003,
+            "bank": 3,
+            "chip": null
+          },
+          {
+            "gw": 5,
+            "pts": 40,
+            "total": 275,
+            "overall_rank": 2623383,
+            "percentile_rank": 65,
+            "rank_delta": 900445,
+            "hits": 4,
+            "bench_pts": 10,
+            "value": 1006,
+            "bank": 0,
+            "chip": null
+          },
+          {
+            "gw": 6,
+            "pts": 67,
+            "total": 342,
+            "overall_rank": 1633655,
+            "percentile_rank": 15,
+            "rank_delta": -989728,
+            "hits": 0,
+            "bench_pts": 8,
+            "value": 1005,
+            "bank": 17,
+            "chip": "wildcard"
+          },
+          {
+            "gw": 7,
+            "pts": 67,
+            "total": 409,
+            "overall_rank": 1699217,
+            "percentile_rank": 40,
+            "rank_delta": 65562,
+            "hits": 0,
+            "bench_pts": 11,
+            "value": 1009,
+            "bank": 17,
+            "chip": null
+          },
+          {
+            "gw": 8,
+            "pts": 66,
+            "total": 475,
+            "overall_rank": 1630317,
+            "percentile_rank": 30,
+            "rank_delta": -68900,
+            "hits": 0,
+            "bench_pts": 13,
+            "value": 1014,
+            "bank": 25,
+            "chip": null
+          },
+          {
+            "gw": 9,
+            "pts": 35,
+            "total": 510,
+            "overall_rank": 2301509,
+            "percentile_rank": 85,
+            "rank_delta": 671192,
+            "hits": 0,
+            "bench_pts": 26,
+            "value": 1017,
+            "bank": 19,
+            "chip": null
+          },
+          {
+            "gw": 10,
+            "pts": 51,
+            "total": 561,
+            "overall_rank": 3381325,
+            "percentile_rank": 90,
+            "rank_delta": 1079816,
+            "hits": 0,
+            "bench_pts": 13,
+            "value": 1018,
+            "bank": 1,
+            "chip": null
+          }
+        ]
+      },
+      "638664": {
+        "entry_id": 638664,
+        "chips_used": [
+          {
+            "name": "wildcard",
+            "gw": 8
+          }
+        ],
+        "gws": [
+          {
+            "gw": 1,
+            "pts": 54,
+            "total": 54,
+            "overall_rank": 4551053,
+            "percentile_rank": 50,
+            "rank_delta": null,
+            "hits": 0,
+            "bench_pts": 4,
+            "value": 1000,
+            "bank": 5,
+            "chip": null
+          },
+          {
+            "gw": 2,
+            "pts": 59,
+            "total": 113,
+            "overall_rank": 2841827,
+            "percentile_rank": 30,
+            "rank_delta": -1709226,
+            "hits": 0,
+            "bench_pts": 7,
+            "value": 1001,
+            "bank": 5,
+            "chip": null
+          },
+          {
+            "gw": 3,
+            "pts": 53,
+            "total": 166,
+            "overall_rank": 2304325,
+            "percentile_rank": 35,
+            "rank_delta": -537502,
+            "hits": 0,
+            "bench_pts": 10,
+            "value": 1001,
+            "bank": 11,
+            "chip": null
+          },
+          {
+            "gw": 4,
+            "pts": 59,
+            "total": 225,
+            "overall_rank": 3255461,
+            "percentile_rank": 65,
+            "rank_delta": 951136,
+            "hits": 0,
+            "bench_pts": 12,
+            "value": 1002,
+            "bank": 5,
+            "chip": null
+          },
+          {
+            "gw": 5,
+            "pts": 43,
+            "total": 268,
+            "overall_rank": 3321565,
+            "percentile_rank": 50,
+            "rank_delta": 66104,
+            "hits": 0,
+            "bench_pts": 17,
+            "value": 1000,
+            "bank": 5,
+            "chip": null
+          },
+          {
+            "gw": 6,
+            "pts": 53,
+            "total": 321,
+            "overall_rank": 3095822,
+            "percentile_rank": 40,
+            "rank_delta": -225743,
+            "hits": 0,
+            "bench_pts": 7,
+            "value": 998,
+            "bank": 5,
+            "chip": null
+          },
+          {
+            "gw": 7,
+            "pts": 76,
+            "total": 397,
+            "overall_rank": 2395178,
+            "percentile_rank": 20,
+            "rank_delta": -700644,
+            "hits": 0,
+            "bench_pts": 11,
+            "value": 1000,
+            "bank": 5,
+            "chip": null
+          },
+          {
+            "gw": 8,
+            "pts": 57,
+            "total": 454,
+            "overall_rank": 2739151,
+            "percentile_rank": 50,
+            "rank_delta": 343973,
+            "hits": 0,
+            "bench_pts": 14,
+            "value": 1002,
+            "bank": 12,
+            "chip": "wildcard"
+          },
+          {
+            "gw": 9,
+            "pts": 61,
+            "total": 515,
+            "overall_rank": 1998214,
+            "percentile_rank": 15,
+            "rank_delta": -740937,
+            "hits": 0,
+            "bench_pts": 21,
+            "value": 1005,
+            "bank": 12,
+            "chip": null
+          },
+          {
+            "gw": 10,
+            "pts": 67,
+            "total": 582,
+            "overall_rank": 2231128,
+            "percentile_rank": 50,
+            "rank_delta": 232914,
+            "hits": 0,
+            "bench_pts": 5,
+            "value": 1010,
+            "bank": 6,
+            "chip": null
+          }
+        ]
+      },
+      "61955": {
+        "entry_id": 61955,
+        "chips_used": [
+          {
+            "name": "bboost",
+            "gw": 1
+          },
+          {
+            "name": "wildcard",
+            "gw": 3
+          },
+          {
+            "name": "3xc",
+            "gw": 6
+          }
+        ],
+        "gws": [
+          {
+            "gw": 1,
+            "pts": 80,
+            "total": 80,
+            "overall_rank": 204537,
+            "percentile_rank": 5,
+            "rank_delta": null,
+            "hits": 0,
+            "bench_pts": 0,
+            "value": 1000,
+            "bank": 0,
+            "chip": "bboost"
+          },
+          {
+            "gw": 2,
+            "pts": 18,
+            "total": 98,
+            "overall_rank": 5939885,
+            "percentile_rank": 100,
+            "rank_delta": 5735348,
+            "hits": 0,
+            "bench_pts": 8,
+            "value": 1000,
+            "bank": 0,
+            "chip": null
+          },
+          {
+            "gw": 3,
+            "pts": 56,
+            "total": 154,
+            "overall_rank": 4150981,
+            "percentile_rank": 25,
+            "rank_delta": -1788904,
+            "hits": 0,
+            "bench_pts": 12,
+            "value": 1001,
+            "bank": 0,
+            "chip": "wildcard"
+          },
+          {
+            "gw": 4,
+            "pts": 74,
+            "total": 228,
+            "overall_rank": 2822493,
+            "percentile_rank": 25,
+            "rank_delta": -1328488,
+            "hits": 0,
+            "bench_pts": 11,
+            "value": 1004,
+            "bank": 0,
+            "chip": null
+          },
+          {
+            "gw": 5,
+            "pts": 69,
+            "total": 297,
+            "overall_rank": 836341,
+            "percentile_rank": 1,
+            "rank_delta": -1986152,
+            "hits": 0,
+            "bench_pts": 16,
+            "value": 1007,
+            "bank": 16,
+            "chip": null
+          },
+          {
+            "gw": 6,
+            "pts": 65,
+            "total": 362,
+            "overall_rank": 654798,
+            "percentile_rank": 20,
+            "rank_delta": -181543,
+            "hits": 0,
+            "bench_pts": 3,
+            "value": 1013,
+            "bank": 75,
+            "chip": "3xc"
+          },
+          {
+            "gw": 7,
+            "pts": 68,
+            "total": 430,
+            "overall_rank": 729096,
+            "percentile_rank": 35,
+            "rank_delta": 74298,
+            "hits": 0,
+            "bench_pts": 3,
+            "value": 1014,
+            "bank": 68,
+            "chip": null
+          },
+          {
+            "gw": 8,
+            "pts": 77,
+            "total": 507,
+            "overall_rank": 462479,
+            "percentile_rank": 10,
+            "rank_delta": -266617,
+            "hits": 0,
+            "bench_pts": 14,
+            "value": 1017,
+            "bank": 12,
+            "chip": null
+          },
+          {
+            "gw": 9,
+            "pts": 36,
+            "total": 543,
+            "overall_rank": 819781,
+            "percentile_rank": 85,
+            "rank_delta": 357302,
+            "hits": 0,
+            "bench_pts": 14,
+            "value": 1018,
+            "bank": 2,
+            "chip": null
+          },
+          {
+            "gw": 10,
+            "pts": 71,
+            "total": 610,
+            "overall_rank": 1033833,
+            "percentile_rank": 40,
+            "rank_delta": 214052,
+            "hits": 4,
+            "bench_pts": 8,
+            "value": 1019,
+            "bank": 9,
+            "chip": null
+          }
+        ]
+      },
+      "2414293": {
+        "entry_id": 2414293,
+        "chips_used": [
+          {
+            "name": "freehit",
+            "gw": 3
+          },
+          {
+            "name": "wildcard",
+            "gw": 10
+          }
+        ],
+        "gws": [
+          {
+            "gw": 1,
+            "pts": 54,
+            "total": 54,
+            "overall_rank": 4551053,
+            "percentile_rank": 50,
+            "rank_delta": null,
+            "hits": 0,
+            "bench_pts": 9,
+            "value": 1000,
+            "bank": 10,
+            "chip": null
+          },
+          {
+            "gw": 2,
+            "pts": 54,
+            "total": 108,
+            "overall_rank": 3954130,
+            "percentile_rank": 45,
+            "rank_delta": -596923,
+            "hits": 0,
+            "bench_pts": 10,
+            "value": 1001,
+            "bank": 10,
+            "chip": null
+          },
+          {
+            "gw": 3,
+            "pts": 57,
+            "total": 165,
+            "overall_rank": 2416114,
+            "percentile_rank": 25,
+            "rank_delta": -1538016,
+            "hits": 0,
+            "bench_pts": 10,
+            "value": 1001,
+            "bank": 10,
+            "chip": "freehit"
+          },
+          {
+            "gw": 4,
+            "pts": 88,
+            "total": 249,
+            "overall_rank": 917855,
+            "percentile_rank": 5,
+            "rank_delta": -1498259,
+            "hits": 4,
+            "bench_pts": 7,
+            "value": 1001,
+            "bank": 39,
+            "chip": null
+          },
+          {
+            "gw": 5,
+            "pts": 30,
+            "total": 279,
+            "overall_rank": 2164540,
+            "percentile_rank": 90,
+            "rank_delta": 1246685,
+            "hits": 0,
+            "bench_pts": 6,
+            "value": 1003,
+            "bank": 39,
+            "chip": null
+          },
+          {
+            "gw": 6,
+            "pts": 75,
+            "total": 350,
+            "overall_rank": 1185117,
+            "percentile_rank": 10,
+            "rank_delta": -979423,
+            "hits": 4,
+            "bench_pts": -1,
+            "value": 1002,
+            "bank": 0,
+            "chip": null
+          },
+          {
+            "gw": 7,
+            "pts": 69,
+            "total": 415,
+            "overall_rank": 1389573,
+            "percentile_rank": 35,
+            "rank_delta": 204456,
+            "hits": 4,
+            "bench_pts": 10,
+            "value": 1007,
+            "bank": 0,
+            "chip": null
+          },
+          {
+            "gw": 8,
+            "pts": 66,
+            "total": 481,
+            "overall_rank": 1351087,
+            "percentile_rank": 30,
+            "rank_delta": -38486,
+            "hits": 0,
+            "bench_pts": 17,
+            "value": 1014,
+            "bank": 11,
+            "chip": null
+          },
+          {
+            "gw": 9,
+            "pts": 34,
+            "total": 515,
+            "overall_rank": 2034223,
+            "percentile_rank": 90,
+            "rank_delta": 683136,
+            "hits": 0,
+            "bench_pts": 28,
+            "value": 1015,
+            "bank": 27,
+            "chip": null
+          },
+          {
+            "gw": 10,
+            "pts": 74,
+            "total": 589,
+            "overall_rank": 1906838,
+            "percentile_rank": 30,
+            "rank_delta": -127385,
+            "hits": 0,
+            "bench_pts": 6,
+            "value": 1016,
+            "bank": 0,
+            "chip": "wildcard"
+          }
+        ]
+      },
+      "1823633": {
+        "entry_id": 1823633,
+        "chips_used": [
+          {
+            "name": "wildcard",
+            "gw": 4
+          }
+        ],
+        "gws": [
+          {
+            "gw": 1,
+            "pts": 44,
+            "total": 44,
+            "overall_rank": 7400945,
+            "percentile_rank": 80,
+            "rank_delta": null,
+            "hits": 0,
+            "bench_pts": 16,
+            "value": 1000,
+            "bank": 30,
+            "chip": null
+          },
+          {
+            "gw": 2,
+            "pts": 60,
+            "total": 104,
+            "overall_rank": 4810709,
+            "percentile_rank": 25,
+            "rank_delta": -2590236,
+            "hits": 0,
+            "bench_pts": 1,
+            "value": 1001,
+            "bank": 40,
+            "chip": null
+          },
+          {
+            "gw": 3,
+            "pts": 27,
+            "total": 127,
+            "overall_rank": 8073389,
+            "percentile_rank": 100,
+            "rank_delta": 3262680,
+            "hits": 4,
+            "bench_pts": 17,
+            "value": 1004,
+            "bank": 3,
+            "chip": null
+          },
+          {
+            "gw": 4,
+            "pts": 59,
+            "total": 186,
+            "overall_rank": 7896223,
+            "percentile_rank": 65,
+            "rank_delta": -177166,
+            "hits": 0,
+            "bench_pts": 12,
+            "value": 1008,
+            "bank": 8,
+            "chip": "wildcard"
+          },
+          {
+            "gw": 5,
+            "pts": 71,
+            "total": 257,
+            "overall_rank": 4624228,
+            "percentile_rank": 1,
+            "rank_delta": -3271995,
+            "hits": 0,
+            "bench_pts": 13,
+            "value": 1010,
+            "bank": 8,
+            "chip": null
+          },
+          {
+            "gw": 6,
+            "pts": 38,
+            "total": 295,
+            "overall_rank": 5340823,
+            "percentile_rank": 65,
+            "rank_delta": 716595,
+            "hits": 0,
+            "bench_pts": 4,
+            "value": 1015,
+            "bank": 4,
+            "chip": null
+          },
+          {
+            "gw": 7,
+            "pts": 48,
+            "total": 339,
+            "overall_rank": 6572661,
+            "percentile_rank": 80,
+            "rank_delta": 1231838,
+            "hits": 4,
+            "bench_pts": 13,
+            "value": 1019,
+            "bank": 25,
+            "chip": null
+          },
+          {
+            "gw": 8,
+            "pts": 73,
+            "total": 412,
+            "overall_rank": 5356063,
+            "percentile_rank": 15,
+            "rank_delta": -1216598,
+            "hits": 0,
+            "bench_pts": 11,
+            "value": 1023,
+            "bank": 19,
+            "chip": null
+          },
+          {
+            "gw": 9,
+            "pts": 33,
+            "total": 441,
+            "overall_rank": 6450089,
+            "percentile_rank": 90,
+            "rank_delta": 1094026,
+            "hits": 4,
+            "bench_pts": 3,
+            "value": 1024,
+            "bank": 29,
+            "chip": null
+          },
+          {
+            "gw": 10,
+            "pts": 75,
+            "total": 516,
+            "overall_rank": 5910677,
+            "percentile_rank": 25,
+            "rank_delta": -539412,
+            "hits": 0,
+            "bench_pts": 6,
+            "value": 1025,
+            "bank": 48,
+            "chip": null
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "fetched_at": "2026-05-28T00:42:51.147262+00:00",
+    "current_gw": 10,
+    "source": "fpl-api"
+  },
+  "data": {
+    "bank": 39,
+    "squad_value": 1027,
+    "event_transfers": 1,
+    "event_transfers_cost": 0,
+    "active_chip": null,
+    "picks": [
+      {
+        "position": 1,
+        "player_id": 1,
+        "name": "Raya",
+        "is_captain": false,
+        "is_vice_captain": false,
+        "multiplier": 1,
+        "on_bench": false,
+        "bench_order": null
+      },
+      {
+        "position": 2,
+        "player_id": 256,
+        "name": "Mu\u00f1oz",
+        "is_captain": false,
+        "is_vice_captain": false,
+        "multiplier": 1,
+        "on_bench": false,
+        "bench_order": null
+      },
+      {
+        "position": 3,
+        "player_id": 7,
+        "name": "Calafiori",
+        "is_captain": false,
+        "is_vice_captain": false,
+        "multiplier": 1,
+        "on_bench": false,
+        "bench_order": null
+      },
+      {
+        "position": 4,
+        "player_id": 575,
+        "name": "Van de Ven",
+        "is_captain": false,
+        "is_vice_captain": false,
+        "multiplier": 1,
+        "on_bench": false,
+        "bench_order": null
+      },
+      {
+        "position": 5,
+        "player_id": 82,
+        "name": "Semenyo",
+        "is_captain": false,
+        "is_vice_captain": false,
+        "multiplier": 1,
+        "on_bench": false,
+        "bench_order": null
+      },
+      {
+        "position": 6,
+        "player_id": 237,
+        "name": "Enzo",
+        "is_captain": false,
+        "is_vice_captain": false,
+        "multiplier": 1,
+        "on_bench": false,
+        "bench_order": null
+      },
+      {
+        "position": 7,
+        "player_id": 384,
+        "name": "Gakpo",
+        "is_captain": false,
+        "is_vice_captain": false,
+        "multiplier": 1,
+        "on_bench": false,
+        "bench_order": null
+      },
+      {
+        "position": 8,
+        "player_id": 427,
+        "name": "Reijnders",
+        "is_captain": false,
+        "is_vice_captain": false,
+        "multiplier": 1,
+        "on_bench": false,
+        "bench_order": null
+      },
+      {
+        "position": 9,
+        "player_id": 714,
+        "name": "Woltemade",
+        "is_captain": false,
+        "is_vice_captain": true,
+        "multiplier": 1,
+        "on_bench": false,
+        "bench_order": null
+      },
+      {
+        "position": 10,
+        "player_id": 430,
+        "name": "Haaland",
+        "is_captain": true,
+        "is_vice_captain": false,
+        "multiplier": 2,
+        "on_bench": false,
+        "bench_order": null
+      },
+      {
+        "position": 11,
+        "player_id": 178,
+        "name": "Welbeck",
+        "is_captain": false,
+        "is_vice_captain": false,
+        "multiplier": 1,
+        "on_bench": false,
+        "bench_order": null
+      },
+      {
+        "position": 12,
+        "player_id": 470,
+        "name": "D\u00fabravka",
+        "is_captain": false,
+        "is_vice_captain": false,
+        "multiplier": 0,
+        "on_bench": true,
+        "bench_order": 1
+      },
+      {
+        "position": 13,
+        "player_id": 224,
+        "name": "Cucurella",
+        "is_captain": false,
+        "is_vice_captain": false,
+        "multiplier": 0,
+        "on_bench": true,
+        "bench_order": 2
+      },
+      {
+        "position": 14,
+        "player_id": 72,
+        "name": "Senesi",
+        "is_captain": false,
+        "is_vice_captain": false,
+        "multiplier": 0,
+        "on_bench": true,
+        "bench_order": 3
+      },
+      {
+        "position": 15,
+        "player_id": 660,
+        "name": "Stach",
+        "is_captain": false,
+        "is_vice_captain": false,
+        "multiplier": 0,
+        "on_bench": true,
+        "bench_order": 4
+      }
+    ]
+  }
+}

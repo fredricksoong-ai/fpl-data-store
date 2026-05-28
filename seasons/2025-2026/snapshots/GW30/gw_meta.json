@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "fetched_at": "2026-05-28T00:51:19.128013+00:00",
+    "current_gw": 30,
+    "source": "fpl-api+core-insights"
+  },
+  "data": {
+    "current_gw": {
+      "id": 30,
+      "name": "Gameweek 30",
+      "deadline": "2026-03-14T13:30:00Z",
+      "deadline_sgt": "2026-03-14 21:30 SGT",
+      "finished": true
+    },
+    "next_gw": {
+      "id": 31,
+      "name": "Gameweek 31",
+      "deadline": "2026-03-20T18:30:00Z",
+      "deadline_sgt": "2026-03-21 02:30 SGT",
+      "finished": true
+    },
+    "previous_gw": {
+      "id": 29,
+      "name": "Gameweek 29",
+      "deadline": "2026-03-03T18:00:00Z",
+      "deadline_sgt": "2026-03-04 02:00 SGT",
+      "finished": true,
+      "average_score": 54,
+      "highest_score": 143,
+      "most_captained_id": 430,
+      "most_transferred_in_id": 661
+    }
+  }
+}

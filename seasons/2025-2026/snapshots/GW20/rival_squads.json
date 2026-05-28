@@ -1,0 +1,852 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "fetched_at": "2026-05-28T00:48:59.705733+00:00",
+    "current_gw": 20,
+    "source": "fpl-api"
+  },
+  "data": {
+    "rivals": {
+      "1837531": {
+        "active_chip": null,
+        "picks": [
+          {
+            "position": 1,
+            "player_id": 470,
+            "name": "D\u00fabravka",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 2,
+            "player_id": 295,
+            "name": "Keane",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 3,
+            "player_id": 403,
+            "name": "Gvardiol",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 4,
+            "player_id": 226,
+            "name": "Chalobah",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 5,
+            "player_id": 16,
+            "name": "Saka",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 6,
+            "player_id": 417,
+            "name": "Cherki",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 7,
+            "player_id": 47,
+            "name": "Rogers",
+            "is_captain": true,
+            "is_vice_captain": false,
+            "multiplier": 2,
+            "on_bench": false
+          },
+          {
+            "position": 8,
+            "player_id": 457,
+            "name": "Casemiro",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 9,
+            "player_id": 517,
+            "name": "Anderson",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 10,
+            "player_id": 430,
+            "name": "Haaland",
+            "is_captain": false,
+            "is_vice_captain": true,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 11,
+            "player_id": 714,
+            "name": "Woltemade",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 12,
+            "player_id": 220,
+            "name": "S\u00e1nchez",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 13,
+            "player_id": 661,
+            "name": "Ekitik\u00e9",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 14,
+            "player_id": 317,
+            "name": "Andersen",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 15,
+            "player_id": 541,
+            "name": "Reinildo",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          }
+        ]
+      },
+      "1353220": {
+        "active_chip": null,
+        "picks": [
+          {
+            "position": 1,
+            "player_id": 1,
+            "name": "Raya",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 2,
+            "player_id": 440,
+            "name": "Dalot",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 3,
+            "player_id": 5,
+            "name": "Gabriel",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 4,
+            "player_id": 295,
+            "name": "Keane",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 5,
+            "player_id": 450,
+            "name": "Cunha",
+            "is_captain": false,
+            "is_vice_captain": true,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 6,
+            "player_id": 236,
+            "name": "Neto",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 7,
+            "player_id": 16,
+            "name": "Saka",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 8,
+            "player_id": 414,
+            "name": "Foden",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 9,
+            "player_id": 136,
+            "name": "Thiago",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 10,
+            "player_id": 691,
+            "name": "Calvert-Lewin",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 11,
+            "player_id": 430,
+            "name": "Haaland",
+            "is_captain": true,
+            "is_vice_captain": false,
+            "multiplier": 2,
+            "on_bench": false
+          },
+          {
+            "position": 12,
+            "player_id": 470,
+            "name": "D\u00fabravka",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 13,
+            "player_id": 694,
+            "name": "Mukiele",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 14,
+            "player_id": 660,
+            "name": "Stach",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 15,
+            "player_id": 317,
+            "name": "Andersen",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          }
+        ]
+      },
+      "638664": {
+        "active_chip": null,
+        "picks": [
+          {
+            "position": 1,
+            "player_id": 470,
+            "name": "D\u00fabravka",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 2,
+            "player_id": 575,
+            "name": "Van de Ven",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 3,
+            "player_id": 295,
+            "name": "Keane",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 4,
+            "player_id": 725,
+            "name": "Hincapie",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 5,
+            "player_id": 329,
+            "name": "Wilson",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 6,
+            "player_id": 16,
+            "name": "Saka",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 7,
+            "player_id": 450,
+            "name": "Cunha",
+            "is_captain": false,
+            "is_vice_captain": true,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 8,
+            "player_id": 414,
+            "name": "Foden",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 9,
+            "player_id": 497,
+            "name": "L.Miley",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 10,
+            "player_id": 430,
+            "name": "Haaland",
+            "is_captain": true,
+            "is_vice_captain": false,
+            "multiplier": 2,
+            "on_bench": false
+          },
+          {
+            "position": 11,
+            "player_id": 337,
+            "name": "Ra\u00fal",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 12,
+            "player_id": 220,
+            "name": "S\u00e1nchez",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 13,
+            "player_id": 661,
+            "name": "Ekitik\u00e9",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 14,
+            "player_id": 260,
+            "name": "Gu\u00e9hi",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 15,
+            "player_id": 411,
+            "name": "O'Reilly",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          }
+        ]
+      },
+      "61955": {
+        "active_chip": null,
+        "picks": [
+          {
+            "position": 1,
+            "player_id": 1,
+            "name": "Raya",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 2,
+            "player_id": 295,
+            "name": "Keane",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 3,
+            "player_id": 407,
+            "name": "Matheus N.",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 4,
+            "player_id": 575,
+            "name": "Van de Ven",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 5,
+            "player_id": 382,
+            "name": "Wirtz",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 6,
+            "player_id": 16,
+            "name": "Saka",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 7,
+            "player_id": 414,
+            "name": "Foden",
+            "is_captain": false,
+            "is_vice_captain": true,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 8,
+            "player_id": 582,
+            "name": "Kudus",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 9,
+            "player_id": 136,
+            "name": "Thiago",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 10,
+            "player_id": 691,
+            "name": "Calvert-Lewin",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 11,
+            "player_id": 430,
+            "name": "Haaland",
+            "is_captain": true,
+            "is_vice_captain": false,
+            "multiplier": 2,
+            "on_bench": false
+          },
+          {
+            "position": 12,
+            "player_id": 470,
+            "name": "D\u00fabravka",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 13,
+            "player_id": 160,
+            "name": "Minteh",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 14,
+            "player_id": 443,
+            "name": "Shaw",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 15,
+            "player_id": 226,
+            "name": "Chalobah",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          }
+        ]
+      },
+      "2414293": {
+        "active_chip": null,
+        "picks": [
+          {
+            "position": 1,
+            "player_id": 670,
+            "name": "Roefs",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 2,
+            "player_id": 5,
+            "name": "Gabriel",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 3,
+            "player_id": 373,
+            "name": "Virgil",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 4,
+            "player_id": 36,
+            "name": "Cash",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 5,
+            "player_id": 47,
+            "name": "Rogers",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 6,
+            "player_id": 414,
+            "name": "Foden",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 7,
+            "player_id": 450,
+            "name": "Cunha",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 8,
+            "player_id": 303,
+            "name": "Garner",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 9,
+            "player_id": 82,
+            "name": "Semenyo",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 10,
+            "player_id": 430,
+            "name": "Haaland",
+            "is_captain": true,
+            "is_vice_captain": false,
+            "multiplier": 2,
+            "on_bench": false
+          },
+          {
+            "position": 11,
+            "player_id": 691,
+            "name": "Calvert-Lewin",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 12,
+            "player_id": 470,
+            "name": "D\u00fabravka",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 13,
+            "player_id": 661,
+            "name": "Ekitik\u00e9",
+            "is_captain": false,
+            "is_vice_captain": true,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 14,
+            "player_id": 441,
+            "name": "Dorgu",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 15,
+            "player_id": 191,
+            "name": "Est\u00e8ve",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          }
+        ]
+      },
+      "1823633": {
+        "active_chip": null,
+        "picks": [
+          {
+            "position": 1,
+            "player_id": 470,
+            "name": "D\u00fabravka",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 2,
+            "player_id": 260,
+            "name": "Gu\u00e9hi",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 3,
+            "player_id": 440,
+            "name": "Dalot",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 4,
+            "player_id": 684,
+            "name": "Thiaw",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 5,
+            "player_id": 226,
+            "name": "Chalobah",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 6,
+            "player_id": 20,
+            "name": "Trossard",
+            "is_captain": false,
+            "is_vice_captain": true,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 7,
+            "player_id": 417,
+            "name": "Cherki",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 8,
+            "player_id": 47,
+            "name": "Rogers",
+            "is_captain": true,
+            "is_vice_captain": false,
+            "multiplier": 2,
+            "on_bench": false
+          },
+          {
+            "position": 9,
+            "player_id": 235,
+            "name": "Palmer",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 10,
+            "player_id": 390,
+            "name": "Gravenberch",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 11,
+            "player_id": 430,
+            "name": "Haaland",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 1,
+            "on_bench": false
+          },
+          {
+            "position": 12,
+            "player_id": 736,
+            "name": "Donnarumma",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 13,
+            "player_id": 661,
+            "name": "Ekitik\u00e9",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 14,
+            "player_id": 136,
+            "name": "Thiago",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          },
+          {
+            "position": 15,
+            "player_id": 191,
+            "name": "Est\u00e8ve",
+            "is_captain": false,
+            "is_vice_captain": false,
+            "multiplier": 0,
+            "on_bench": true
+          }
+        ]
+      }
+    }
+  }
+}
