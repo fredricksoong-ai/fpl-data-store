@@ -234,11 +234,12 @@ def compute_auto_flags(bootstrap_elements, ci_latest, config):
                 and p['minutes'] >= t['xgi_min_minutes']):
             add_flag(p['id'], 'xgi_elite')
 
-    # xgi_value: strong underlying numbers + affordable price
-    # Catches players with elite xGI not yet premium-priced
+    # xgi_value: strong underlying numbers + mid-price range
+    # Catches players with elite xGI in £6-7 range — value_gem misses these
     for p in candidates:
         if (p['xgi_per90'] >= t.get('xgi_value_min_xgi_per90', 0.55)
                 and p['price'] <= t.get('xgi_value_max_price', 7.0)
+                and p['price'] >= t.get('xgi_value_min_price', 6.0)
                 and p['minutes'] >= t['xgi_min_minutes']):
             add_flag(p['id'], 'xgi_value')
 
@@ -331,7 +332,8 @@ def build_player_scan(bootstrap, ci_latest, auto_flags, current_gw, config):
             'transfers_out_event': safe_int(e.get('transfers_out_event'), 0),
             'minutes': minutes,
             'xgi_per90': safe_float(e.get('expected_goal_involvements_per_90'), 0),
-            'flags': auto_flags.get(e['id'], [])
+            'flags': auto_flags.get(e['id'], []),
+            'flag_count': len(auto_flags.get(e['id'], []))
         })
 
     return make_envelope('fpl-api', current_gw, {'players': players})
@@ -416,7 +418,8 @@ def build_player_universe(bootstrap, ci_latest, fpl_teams, ci_teams,
             'team_strength_def_home': safe_int(team.get('strength_defence_home')),
             'team_strength_def_away': safe_int(team.get('strength_defence_away')),
             # Flags
-            'flags': auto_flags.get(e['id'], [])
+            'flags': auto_flags.get(e['id'], []),
+            'flag_count': len(auto_flags.get(e['id'], []))
         })
 
     return make_envelope('fpl-api+core-insights', current_gw, {'players': players})

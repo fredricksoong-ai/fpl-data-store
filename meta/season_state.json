@@ -5,7 +5,7 @@
   "next_gw": 31,
   "mode": "backtest",
   "mode_note": "Pipeline ran in backtest mode at GW30.",
-  "last_pipeline_run": "2026-05-28T14:56:36.628664+00:00",
+  "last_pipeline_run": "2026-05-29T04:20:59.194784+00:00",
   "ci_data_available": true,
   "fpl_api_available": true,
   "next_season_expected": "2026-08-01"

@@ -42,9 +42,9 @@
     "corner_taker_min_xgi_per90": 0.15,
     "xgi_value_max_price": 7.0,
     "xgi_value_min_xgi_per90": 0.55,
-    "cbit_per90_min": 10.0,
+    "cbit_per90_min": 11.5,
     "cbit_min_minutes": 900,
-    "gk_saves_per90_min": 3.0,
+    "gk_saves_per90_min": 3.2,
     "gk_min_minutes": 450,
     "price_rising_min_change": 3,
     "price_rising_min_form": 4.0,
@@ -52,7 +52,8 @@
     "rotation_risk_max_avg_mins": 50,
     "rotation_risk_min_total_mins": 1800,
     "cs_candidate_min_clean_sheets": 10,
-    "cs_candidate_min_minutes": 1800
+    "cs_candidate_min_minutes": 1800,
+    "xgi_value_min_price": 0.0
   },
   "update_schedule": {
     "twice_daily": [

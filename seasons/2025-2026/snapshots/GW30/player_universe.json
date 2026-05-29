@@ -1,7 +1,7 @@
 {
   "meta": {
     "schema_version": "1.0",
-    "fetched_at": "2026-05-28T14:54:19.105028+00:00",
+    "fetched_at": "2026-05-29T04:19:46.206165+00:00",
     "current_gw": 30,
     "source": "fpl-api+core-insights"
   },
@@ -50,7 +50,8 @@
           "ep_top_pos",
           "price_rising",
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 4
       },
       {
         "id": 5,
@@ -95,7 +96,8 @@
           "ep_top_pos",
           "price_rising",
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 4
       },
       {
         "id": 6,
@@ -139,7 +141,8 @@
           "ep_top_pos",
           "price_rising",
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 3
       },
       {
         "id": 8,
@@ -181,7 +184,8 @@
         "team_strength_def_away": 1320,
         "flags": [
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 16,
@@ -225,7 +229,8 @@
           "form_top20",
           "ep_top_pos",
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 3
       },
       {
         "id": 21,
@@ -266,9 +271,9 @@
         "team_strength_def_home": 1270,
         "team_strength_def_away": 1320,
         "flags": [
-          "cbit_strong",
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 666,
@@ -310,7 +315,8 @@
         "team_strength_def_away": 1320,
         "flags": [
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 725,
@@ -350,49 +356,8 @@
         "team_strength_att_away": 1390,
         "team_strength_def_home": 1270,
         "team_strength_def_away": 1320,
-        "flags": []
-      },
-      {
-        "id": 32,
-        "name": "Martinez",
-        "team_id": 2,
-        "team_short": "AVL",
-        "position": 1,
-        "price": 5.0,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 120,
-        "fpl_form": 2.5,
-        "ppg": 3.8,
-        "ep_next": 2.7,
-        "selected_pct": 4.4,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 2835,
-        "goals": 0,
-        "assists": 1,
-        "clean_sheets": 7,
-        "bonus": 11,
-        "xg_per90": 0.0,
-        "xa_per90": 0.0,
-        "xgi_per90": 0.0,
-        "xgc_per90": 1.36,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 0.0,
-        "tackles": 0,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 15,
-        "xg_delta": null,
-        "team_elo": 1920.0,
-        "team_strength_att_home": 1120,
-        "team_strength_att_away": 1210,
-        "team_strength_def_home": 1150,
-        "team_strength_def_away": 1250,
-        "flags": [
-          "gk_shot_stopper"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 47,
@@ -432,49 +397,8 @@
         "team_strength_att_away": 1210,
         "team_strength_def_home": 1150,
         "team_strength_def_away": 1250,
-        "flags": []
-      },
-      {
-        "id": 50,
-        "name": "Buend\u00eda",
-        "team_id": 2,
-        "team_short": "AVL",
-        "position": 3,
-        "price": 5.3,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 102,
-        "fpl_form": 3.8,
-        "ppg": 2.8,
-        "ep_next": 2.3,
-        "selected_pct": 0.4,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1753,
-        "goals": 6,
-        "assists": 2,
-        "clean_sheets": 3,
-        "bonus": 10,
-        "xg_per90": 0.17,
-        "xa_per90": 0.11,
-        "xgi_per90": 0.28,
-        "xgc_per90": 1.44,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 10.11,
-        "tackles": 49,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 8,
-        "xg_delta": 2.62,
-        "team_elo": 1920.0,
-        "team_strength_att_home": 1120,
-        "team_strength_att_away": 1210,
-        "team_strength_def_home": 1150,
-        "team_strength_def_away": 1250,
-        "flags": [
-          "cbit_strong"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 53,
@@ -516,49 +440,8 @@
         "team_strength_def_away": 1250,
         "flags": [
           "xgi_value"
-        ]
-      },
-      {
-        "id": 59,
-        "name": "Onana",
-        "team_id": 2,
-        "team_short": "AVL",
-        "position": 3,
-        "price": 4.8,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 76,
-        "fpl_form": 0.2,
-        "ppg": 3.0,
-        "ep_next": -0.5,
-        "selected_pct": 0.6,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1755,
-        "goals": 2,
-        "assists": 0,
-        "clean_sheets": 6,
-        "bonus": 4,
-        "xg_per90": 0.09,
-        "xa_per90": 0.04,
-        "xgi_per90": 0.13,
-        "xgc_per90": 1.46,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 11.23,
-        "tackles": 48,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 11,
-        "xg_delta": 0.32,
-        "team_elo": 1920.0,
-        "team_strength_att_home": 1120,
-        "team_strength_att_away": 1210,
-        "team_strength_def_home": 1150,
-        "team_strength_def_away": 1250,
-        "flags": [
-          "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 64,
@@ -601,7 +484,8 @@
         "flags": [
           "form_top20",
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 699,
@@ -642,51 +526,9 @@
         "team_strength_def_home": 1150,
         "team_strength_def_away": 1250,
         "flags": [
-          "cbit_strong",
           "corner_taker"
-        ]
-      },
-      {
-        "id": 190,
-        "name": "Ekdal",
-        "team_id": 3,
-        "team_short": "BUR",
-        "position": 2,
-        "price": 3.8,
-        "status": "a",
-        "cop_next": null,
-        "news": "",
-        "total_pts": 52,
-        "fpl_form": 0.8,
-        "ppg": 2.7,
-        "ep_next": 1.0,
-        "selected_pct": 0.7,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1539,
-        "goals": 0,
-        "assists": 0,
-        "clean_sheets": 2,
-        "bonus": 2,
-        "xg_per90": 0.01,
-        "xa_per90": 0.02,
-        "xgi_per90": 0.03,
-        "xgc_per90": 1.81,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 10.18,
-        "tackles": 24,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 0,
-        "xg_delta": -0.25,
-        "team_elo": 1665.0,
-        "team_strength_att_home": 910,
-        "team_strength_att_away": 1050,
-        "team_strength_def_home": 1040,
-        "team_strength_def_away": 1040,
-        "flags": [
-          "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 191,
@@ -726,51 +568,8 @@
         "team_strength_att_away": 1050,
         "team_strength_def_home": 1040,
         "team_strength_def_away": 1040,
-        "flags": [
-          "cbit_strong"
-        ]
-      },
-      {
-        "id": 205,
-        "name": "Cullen",
-        "team_id": 3,
-        "team_short": "BUR",
-        "position": 3,
-        "price": 4.9,
-        "status": "i",
-        "cop_next": 0,
-        "news": "Knee injury - Expected back 30 Sep",
-        "total_pts": 70,
-        "fpl_form": 0.0,
-        "ppg": 3.9,
-        "ep_next": 0.0,
-        "selected_pct": 0.8,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1513,
-        "goals": 2,
-        "assists": 2,
-        "clean_sheets": 3,
-        "bonus": 8,
-        "xg_per90": 0.06,
-        "xa_per90": 0.08,
-        "xgi_per90": 0.14,
-        "xgc_per90": 1.93,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 10.29,
-        "tackles": 32,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 0,
-        "xg_delta": 1.06,
-        "team_elo": 1665.0,
-        "team_strength_att_home": 910,
-        "team_strength_att_away": 1050,
-        "team_strength_def_home": 1040,
-        "team_strength_def_away": 1040,
-        "flags": [
-          "cbit_strong"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 215,
@@ -812,7 +611,8 @@
         "team_strength_def_away": 1040,
         "flags": [
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 470,
@@ -854,7 +654,8 @@
         "team_strength_def_away": 1040,
         "flags": [
           "gk_shot_stopper"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 614,
@@ -896,7 +697,8 @@
         "team_strength_def_away": 1040,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 722,
@@ -938,7 +740,8 @@
         "team_strength_def_away": 1040,
         "flags": [
           "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 67,
@@ -981,7 +784,8 @@
         "flags": [
           "ep_top_pos",
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 72,
@@ -1025,10 +829,10 @@
           "form_top20",
           "ep_top_pos",
           "value_gem",
-          "cbit_strong",
           "price_rising",
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 5
       },
       {
         "id": 73,
@@ -1070,7 +874,8 @@
         "team_strength_def_away": 1240,
         "flags": [
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 74,
@@ -1116,7 +921,8 @@
           "value_gem",
           "price_rising",
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 5
       },
       {
         "id": 77,
@@ -1158,9 +964,9 @@
         "team_strength_def_away": 1240,
         "flags": [
           "ep_top_pos",
-          "value_gem",
-          "cbit_strong"
-        ]
+          "value_gem"
+        ],
+        "flag_count": 2
       },
       {
         "id": 81,
@@ -1202,7 +1008,8 @@
         "team_strength_def_away": 1240,
         "flags": [
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 85,
@@ -1244,7 +1051,8 @@
         "team_strength_def_away": 1240,
         "flags": [
           "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 86,
@@ -1287,49 +1095,8 @@
         "flags": [
           "xgi_elite",
           "xgi_value"
-        ]
-      },
-      {
-        "id": 87,
-        "name": "Christie",
-        "team_id": 4,
-        "team_short": "BOU",
-        "position": 3,
-        "price": 4.9,
-        "status": "s",
-        "cop_next": 0,
-        "news": "Suspended until 29 Aug",
-        "total_pts": 47,
-        "fpl_form": -0.2,
-        "ppg": 1.8,
-        "ep_next": 0.0,
-        "selected_pct": 0.1,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 978,
-        "goals": 2,
-        "assists": 1,
-        "clean_sheets": 3,
-        "bonus": 2,
-        "xg_per90": 0.17,
-        "xa_per90": 0.07,
-        "xgi_per90": 0.24,
-        "xgc_per90": 1.76,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 11.32,
-        "tackles": 27,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 11,
-        "xg_delta": 0.19,
-        "team_elo": 1871.0,
-        "team_strength_att_home": 1060,
-        "team_strength_att_away": 1230,
-        "team_strength_def_home": 1240,
-        "team_strength_def_away": 1240,
-        "flags": [
-          "cbit_strong"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 90,
@@ -1371,7 +1138,8 @@
         "team_strength_def_away": 1240,
         "flags": [
           "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 97,
@@ -1411,7 +1179,8 @@
         "team_strength_att_away": 1230,
         "team_strength_def_home": 1240,
         "team_strength_def_away": 1240,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 100,
@@ -1451,49 +1220,8 @@
         "team_strength_att_away": 1230,
         "team_strength_def_home": 1240,
         "team_strength_def_away": 1240,
-        "flags": []
-      },
-      {
-        "id": 697,
-        "name": "Adli",
-        "team_id": 4,
-        "team_short": "BOU",
-        "position": 3,
-        "price": 5.4,
-        "status": "a",
-        "cop_next": null,
-        "news": "",
-        "total_pts": 67,
-        "fpl_form": 0.8,
-        "ppg": 2.2,
-        "ep_next": 0.7,
-        "selected_pct": 0.2,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1074,
-        "goals": 3,
-        "assists": 2,
-        "clean_sheets": 3,
-        "bonus": 4,
-        "xg_per90": 0.22,
-        "xa_per90": 0.14,
-        "xgi_per90": 0.36,
-        "xgc_per90": 1.53,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 10.31,
-        "tackles": 36,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 16,
-        "xg_delta": 0.4,
-        "team_elo": 1871.0,
-        "team_strength_att_home": 1060,
-        "team_strength_att_away": 1230,
-        "team_strength_def_home": 1240,
-        "team_strength_def_away": 1240,
-        "flags": [
-          "cbit_strong"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 807,
@@ -1537,7 +1265,8 @@
           "form_top20",
           "ep_top_pos",
           "value_gem"
-        ]
+        ],
+        "flag_count": 3
       },
       {
         "id": 83,
@@ -1580,7 +1309,8 @@
         "flags": [
           "form_top20",
           "value_gem"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 101,
@@ -1624,7 +1354,8 @@
           "ep_top_pos",
           "price_rising",
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 3
       },
       {
         "id": 110,
@@ -1666,91 +1397,8 @@
         "team_strength_def_away": 1270,
         "flags": [
           "cs_candidate"
-        ]
-      },
-      {
-        "id": 121,
-        "name": "Damsgaard",
-        "team_id": 5,
-        "team_short": "BRE",
-        "position": 3,
-        "price": 5.6,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 113,
-        "fpl_form": 4.5,
-        "ppg": 3.4,
-        "ep_next": 4.3,
-        "selected_pct": 0.8,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 2046,
-        "goals": 4,
-        "assists": 4,
-        "clean_sheets": 5,
-        "bonus": 9,
-        "xg_per90": 0.11,
-        "xa_per90": 0.24,
-        "xgi_per90": 0.35,
-        "xgc_per90": 1.39,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 10.6,
-        "tackles": 57,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 25,
-        "xg_delta": 1.39,
-        "team_elo": 1836.0,
-        "team_strength_att_home": 1120,
-        "team_strength_att_away": 1160,
-        "team_strength_def_home": 1150,
-        "team_strength_def_away": 1270,
-        "flags": [
-          "cbit_strong"
-        ]
-      },
-      {
-        "id": 125,
-        "name": "Janelt",
-        "team_id": 5,
-        "team_short": "BRE",
-        "position": 3,
-        "price": 4.9,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 74,
-        "fpl_form": 1.0,
-        "ppg": 3.0,
-        "ep_next": 0.3,
-        "selected_pct": 0.1,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1434,
-        "goals": 1,
-        "assists": 4,
-        "clean_sheets": 5,
-        "bonus": 6,
-        "xg_per90": 0.05,
-        "xa_per90": 0.14,
-        "xgi_per90": 0.19,
-        "xgc_per90": 1.67,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 11.49,
-        "tackles": 27,
-        "is_penalty_taker": false,
-        "is_corner_taker": true,
-        "form_last5": 2,
-        "xg_delta": 0.18,
-        "team_elo": 1836.0,
-        "team_strength_att_home": 1120,
-        "team_strength_att_away": 1160,
-        "team_strength_def_home": 1150,
-        "team_strength_def_away": 1270,
-        "flags": [
-          "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 126,
@@ -1792,49 +1440,8 @@
         "team_strength_def_away": 1270,
         "flags": [
           "corner_taker"
-        ]
-      },
-      {
-        "id": 129,
-        "name": "Yarmoliuk",
-        "team_id": 5,
-        "team_short": "BRE",
-        "position": 3,
-        "price": 5.0,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 104,
-        "fpl_form": 3.2,
-        "ppg": 2.8,
-        "ep_next": 3.7,
-        "selected_pct": 0.1,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 2652,
-        "goals": 1,
-        "assists": 3,
-        "clean_sheets": 8,
-        "bonus": 1,
-        "xg_per90": 0.04,
-        "xa_per90": 0.05,
-        "xgi_per90": 0.09,
-        "xgc_per90": 1.37,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 11.47,
-        "tackles": 69,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 5,
-        "xg_delta": -0.22,
-        "team_elo": 1836.0,
-        "team_strength_att_home": 1120,
-        "team_strength_att_away": 1160,
-        "team_strength_def_home": 1150,
-        "team_strength_def_away": 1270,
-        "flags": [
-          "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 136,
@@ -1874,7 +1481,8 @@
         "team_strength_att_away": 1160,
         "team_strength_def_home": 1150,
         "team_strength_def_away": 1270,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 139,
@@ -1916,7 +1524,8 @@
         "team_strength_def_away": 1280,
         "flags": [
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 145,
@@ -1958,7 +1567,8 @@
         "team_strength_def_away": 1280,
         "flags": [
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 148,
@@ -2000,7 +1610,8 @@
         "team_strength_def_away": 1280,
         "flags": [
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 151,
@@ -2042,7 +1653,8 @@
         "team_strength_def_away": 1280,
         "flags": [
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 163,
@@ -2085,133 +1697,8 @@
         "flags": [
           "ep_top_pos",
           "value_gem"
-        ]
-      },
-      {
-        "id": 166,
-        "name": "Ayari",
-        "team_id": 6,
-        "team_short": "BHA",
-        "position": 3,
-        "price": 4.8,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 98,
-        "fpl_form": 0.5,
-        "ppg": 3.4,
-        "ep_next": 0.7,
-        "selected_pct": 0.4,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1921,
-        "goals": 3,
-        "assists": 4,
-        "clean_sheets": 6,
-        "bonus": 7,
-        "xg_per90": 0.13,
-        "xa_per90": 0.05,
-        "xgi_per90": 0.18,
-        "xgc_per90": 1.26,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 10.54,
-        "tackles": 47,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 1,
-        "xg_delta": 0.3,
-        "team_elo": 1841.0,
-        "team_strength_att_home": 1140,
-        "team_strength_att_away": 1220,
-        "team_strength_def_home": 1200,
-        "team_strength_def_away": 1280,
-        "flags": [
-          "cbit_strong"
-        ]
-      },
-      {
-        "id": 167,
-        "name": "Baleba",
-        "team_id": 6,
-        "team_short": "BHA",
-        "position": 3,
-        "price": 4.5,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 56,
-        "fpl_form": 2.8,
-        "ppg": 1.8,
-        "ep_next": 3.3,
-        "selected_pct": 1.5,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1646,
-        "goals": 0,
-        "assists": 0,
-        "clean_sheets": 7,
-        "bonus": 0,
-        "xg_per90": 0.04,
-        "xa_per90": 0.04,
-        "xgi_per90": 0.08,
-        "xgc_per90": 1.12,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 11.43,
-        "tackles": 37,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 4,
-        "xg_delta": -0.78,
-        "team_elo": 1841.0,
-        "team_strength_att_home": 1140,
-        "team_strength_att_away": 1220,
-        "team_strength_def_home": 1200,
-        "team_strength_def_away": 1280,
-        "flags": [
-          "cbit_strong"
-        ]
-      },
-      {
-        "id": 169,
-        "name": "Gomez",
-        "team_id": 6,
-        "team_short": "BHA",
-        "position": 3,
-        "price": 4.9,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 97,
-        "fpl_form": 0.5,
-        "ppg": 3.0,
-        "ep_next": 0.3,
-        "selected_pct": 0.4,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 2117,
-        "goals": 5,
-        "assists": 1,
-        "clean_sheets": 8,
-        "bonus": 9,
-        "xg_per90": 0.27,
-        "xa_per90": 0.07,
-        "xgi_per90": 0.34,
-        "xgc_per90": 1.25,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 10.12,
-        "tackles": 77,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 27,
-        "xg_delta": -1.24,
-        "team_elo": 1841.0,
-        "team_strength_att_home": 1140,
-        "team_strength_att_away": 1220,
-        "team_strength_def_home": 1200,
-        "team_strength_def_away": 1280,
-        "flags": [
-          "cbit_strong"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 170,
@@ -2253,7 +1740,8 @@
         "team_strength_def_away": 1280,
         "flags": [
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 173,
@@ -2296,7 +1784,8 @@
         "flags": [
           "cbit_strong",
           "rotation_risk"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 178,
@@ -2338,7 +1827,8 @@
         "team_strength_def_away": 1280,
         "flags": [
           "xgi_value"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 783,
@@ -2380,7 +1870,8 @@
         "team_strength_def_away": 1280,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 220,
@@ -2420,7 +1911,8 @@
         "team_strength_att_away": 1140,
         "team_strength_def_home": 1250,
         "team_strength_def_away": 1250,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 225,
@@ -2462,7 +1954,8 @@
         "team_strength_def_away": 1250,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 226,
@@ -2502,49 +1995,8 @@
         "team_strength_att_away": 1140,
         "team_strength_def_home": 1250,
         "team_strength_def_away": 1250,
-        "flags": []
-      },
-      {
-        "id": 230,
-        "name": "Fofana",
-        "team_id": 7,
-        "team_short": "CHE",
-        "position": 2,
-        "price": 4.4,
-        "status": "s",
-        "cop_next": 0,
-        "news": "Suspended until 05 Sep",
-        "total_pts": 65,
-        "fpl_form": 1.2,
-        "ppg": 2.6,
-        "ep_next": 2.3,
-        "selected_pct": 0.4,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1718,
-        "goals": 0,
-        "assists": 2,
-        "clean_sheets": 4,
-        "bonus": 3,
-        "xg_per90": 0.04,
-        "xa_per90": 0.03,
-        "xgi_per90": 0.07,
-        "xgc_per90": 1.35,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 10.79,
-        "tackles": 19,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 5,
-        "xg_delta": -0.72,
-        "team_elo": 1830.0,
-        "team_strength_att_home": 1130,
-        "team_strength_att_away": 1140,
-        "team_strength_def_home": 1250,
-        "team_strength_def_away": 1250,
-        "flags": [
-          "cbit_strong"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 235,
@@ -2586,7 +2038,8 @@
         "team_strength_def_away": 1250,
         "flags": [
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 237,
@@ -2629,7 +2082,8 @@
         "flags": [
           "form_top20",
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 241,
@@ -2671,7 +2125,8 @@
         "team_strength_def_away": 1250,
         "flags": [
           "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 249,
@@ -2711,7 +2166,8 @@
         "team_strength_att_away": 1140,
         "team_strength_def_home": 1250,
         "team_strength_def_away": 1250,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 253,
@@ -2753,7 +2209,8 @@
         "team_strength_def_away": 1170,
         "flags": [
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 256,
@@ -2795,7 +2252,8 @@
         "team_strength_def_away": 1170,
         "flags": [
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 257,
@@ -2836,9 +2294,9 @@
         "team_strength_def_home": 1170,
         "team_strength_def_away": 1170,
         "flags": [
-          "cbit_strong",
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 258,
@@ -2880,7 +2338,8 @@
         "team_strength_def_away": 1170,
         "flags": [
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 261,
@@ -2922,7 +2381,8 @@
         "team_strength_def_away": 1170,
         "flags": [
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 272,
@@ -2964,49 +2424,8 @@
         "team_strength_def_away": 1170,
         "flags": [
           "cbit_strong"
-        ]
-      },
-      {
-        "id": 273,
-        "name": "Wharton",
-        "team_id": 8,
-        "team_short": "CRY",
-        "position": 3,
-        "price": 5.0,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 112,
-        "fpl_form": 3.6,
-        "ppg": 3.3,
-        "ep_next": 2.8,
-        "selected_pct": 0.7,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 2552,
-        "goals": 1,
-        "assists": 6,
-        "clean_sheets": 8,
-        "bonus": 8,
-        "xg_per90": 0.05,
-        "xa_per90": 0.26,
-        "xgi_per90": 0.31,
-        "xgc_per90": 1.38,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 10.69,
-        "tackles": 70,
-        "is_penalty_taker": false,
-        "is_corner_taker": true,
-        "form_last5": 22,
-        "xg_delta": -0.52,
-        "team_elo": 1797.0,
-        "team_strength_att_home": 1150,
-        "team_strength_att_away": 1200,
-        "team_strength_def_home": 1170,
-        "team_strength_def_away": 1170,
-        "flags": [
-          "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 580,
@@ -3048,49 +2467,8 @@
         "team_strength_def_away": 1170,
         "flags": [
           "corner_taker"
-        ]
-      },
-      {
-        "id": 723,
-        "name": "Canvot",
-        "team_id": 8,
-        "team_short": "CRY",
-        "position": 2,
-        "price": 4.5,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 72,
-        "fpl_form": 1.4,
-        "ppg": 3.6,
-        "ep_next": 1.0,
-        "selected_pct": 0.5,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1331,
-        "goals": 0,
-        "assists": 0,
-        "clean_sheets": 5,
-        "bonus": 9,
-        "xg_per90": 0.1,
-        "xa_per90": 0.02,
-        "xgi_per90": 0.12,
-        "xgc_per90": 1.61,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 11.43,
-        "tackles": 40,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 21,
-        "xg_delta": -1.48,
-        "team_elo": 1797.0,
-        "team_strength_att_home": 1150,
-        "team_strength_att_away": 1200,
-        "team_strength_def_home": 1170,
-        "team_strength_def_away": 1170,
-        "flags": [
-          "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 287,
@@ -3132,7 +2510,8 @@
         "team_strength_def_away": 1170,
         "flags": [
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 291,
@@ -3175,10 +2554,10 @@
         "flags": [
           "form_top20",
           "value_gem",
-          "cbit_strong",
           "price_rising",
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 4
       },
       {
         "id": 293,
@@ -3220,49 +2599,8 @@
         "team_strength_def_away": 1170,
         "flags": [
           "cs_candidate"
-        ]
-      },
-      {
-        "id": 295,
-        "name": "Keane",
-        "team_id": 9,
-        "team_short": "EVE",
-        "position": 2,
-        "price": 4.5,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 131,
-        "fpl_form": 2.8,
-        "ppg": 4.0,
-        "ep_next": 2.0,
-        "selected_pct": 3.1,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 2588,
-        "goals": 3,
-        "assists": 1,
-        "clean_sheets": 7,
-        "bonus": 8,
-        "xg_per90": 0.08,
-        "xa_per90": 0.02,
-        "xgi_per90": 0.1,
-        "xgc_per90": 1.55,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 10.5,
-        "tackles": 37,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 8,
-        "xg_delta": 0.7,
-        "team_elo": 1803.0,
-        "team_strength_att_home": 1130,
-        "team_strength_att_away": 1150,
-        "team_strength_def_home": 1140,
-        "team_strength_def_away": 1170,
-        "flags": [
-          "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 299,
@@ -3304,7 +2642,8 @@
         "team_strength_def_away": 1170,
         "flags": [
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 303,
@@ -3347,7 +2686,8 @@
         "flags": [
           "cbit_strong",
           "corner_taker"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 304,
@@ -3389,7 +2729,8 @@
         "team_strength_def_away": 1170,
         "flags": [
           "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 314,
@@ -3431,7 +2772,8 @@
         "team_strength_def_away": 1230,
         "flags": [
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 316,
@@ -3473,7 +2815,8 @@
         "team_strength_def_away": 1230,
         "flags": [
           "value_gem"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 317,
@@ -3513,94 +2856,8 @@
         "team_strength_att_away": 1170,
         "team_strength_def_home": 1120,
         "team_strength_def_away": 1230,
-        "flags": [
-          "cbit_strong"
-        ]
-      },
-      {
-        "id": 321,
-        "name": "J.Cuenca",
-        "team_id": 10,
-        "team_short": "FUL",
-        "position": 2,
-        "price": 4.3,
-        "status": "a",
-        "cop_next": null,
-        "news": "",
-        "total_pts": 39,
-        "fpl_form": 0.0,
-        "ppg": 2.6,
-        "ep_next": 0.0,
-        "selected_pct": 0.1,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 935,
-        "goals": 0,
-        "assists": 0,
-        "clean_sheets": 2,
-        "bonus": 1,
-        "xg_per90": 0.0,
-        "xa_per90": 0.05,
-        "xgi_per90": 0.05,
-        "xgc_per90": 1.41,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 11.26,
-        "tackles": 16,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 2,
-        "xg_delta": -0.05,
-        "team_elo": 1812.0,
-        "team_strength_att_home": 1090,
-        "team_strength_att_away": 1170,
-        "team_strength_def_home": 1120,
-        "team_strength_def_away": 1230,
-        "flags": [
-          "cbit_strong"
-        ]
-      },
-      {
-        "id": 328,
-        "name": "Sessegnon",
-        "team_id": 10,
-        "team_short": "FUL",
-        "position": 3,
-        "price": 5.4,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 95,
-        "fpl_form": 0.0,
-        "ppg": 3.5,
-        "ep_next": 2.1,
-        "selected_pct": 0.1,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1816,
-        "goals": 3,
-        "assists": 3,
-        "clean_sheets": 6,
-        "bonus": 8,
-        "xg_per90": 0.08,
-        "xa_per90": 0.09,
-        "xgi_per90": 0.17,
-        "xgc_per90": 1.3,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 10.8,
-        "tackles": 48,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 12,
-        "xg_delta": 1.4,
-        "team_elo": 1812.0,
-        "team_strength_att_home": 1090,
-        "team_strength_att_away": 1170,
-        "team_strength_def_home": 1120,
-        "team_strength_def_away": 1230,
-        "flags": [
-          "cbit_strong",
-          "rotation_risk"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 329,
@@ -3642,7 +2899,8 @@
         "team_strength_def_away": 1230,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 337,
@@ -3684,7 +2942,8 @@
         "team_strength_def_away": 1230,
         "flags": [
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 341,
@@ -3726,7 +2985,8 @@
         "team_strength_def_away": 1250,
         "flags": [
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 344,
@@ -3768,9 +3028,9 @@
         "team_strength_def_away": 1250,
         "flags": [
           "ep_top_pos",
-          "cbit_strong",
           "rotation_risk"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 354,
@@ -3812,49 +3072,8 @@
         "team_strength_def_away": 1250,
         "flags": [
           "cbit_strong"
-        ]
-      },
-      {
-        "id": 358,
-        "name": "Tanaka",
-        "team_id": 11,
-        "team_short": "LEE",
-        "position": 3,
-        "price": 4.8,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 67,
-        "fpl_form": 4.0,
-        "ppg": 2.4,
-        "ep_next": 4.0,
-        "selected_pct": 0.2,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1307,
-        "goals": 2,
-        "assists": 1,
-        "clean_sheets": 3,
-        "bonus": 4,
-        "xg_per90": 0.1,
-        "xa_per90": 0.1,
-        "xgi_per90": 0.2,
-        "xgc_per90": 1.48,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 10.12,
-        "tackles": 27,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 0,
-        "xg_delta": 0.56,
-        "team_elo": 1796.0,
-        "team_strength_att_home": 1050,
-        "team_strength_att_away": 1160,
-        "team_strength_def_home": 1150,
-        "team_strength_def_away": 1250,
-        "flags": [
-          "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 365,
@@ -3897,7 +3116,8 @@
         "flags": [
           "xgi_elite",
           "xgi_value"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 660,
@@ -3938,9 +3158,9 @@
         "team_strength_def_home": 1150,
         "team_strength_def_away": 1250,
         "flags": [
-          "cbit_strong",
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 691,
@@ -3987,7 +3207,8 @@
           "xgi_value",
           "price_rising",
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 6
       },
       {
         "id": 367,
@@ -4029,7 +3250,8 @@
         "team_strength_def_away": 1300,
         "flags": [
           "gk_shot_stopper"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 373,
@@ -4071,7 +3293,8 @@
         "team_strength_def_away": 1300,
         "flags": [
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 374,
@@ -4113,7 +3336,8 @@
         "team_strength_def_away": 1300,
         "flags": [
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 381,
@@ -4155,7 +3379,8 @@
         "team_strength_def_away": 1300,
         "flags": [
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 382,
@@ -4195,7 +3420,8 @@
         "team_strength_att_away": 1200,
         "team_strength_def_home": 1240,
         "team_strength_def_away": 1300,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 387,
@@ -4240,49 +3466,8 @@
           "ep_top_pos",
           "price_rising",
           "corner_taker"
-        ]
-      },
-      {
-        "id": 388,
-        "name": "C.Jones",
-        "team_id": 12,
-        "team_short": "LIV",
-        "position": 3,
-        "price": 5.4,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 81,
-        "fpl_form": 3.8,
-        "ppg": 2.4,
-        "ep_next": 3.5,
-        "selected_pct": 0.1,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1923,
-        "goals": 1,
-        "assists": 3,
-        "clean_sheets": 3,
-        "bonus": 6,
-        "xg_per90": 0.1,
-        "xa_per90": 0.13,
-        "xgi_per90": 0.23,
-        "xgc_per90": 1.47,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 11.09,
-        "tackles": 40,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 6,
-        "xg_delta": -1.21,
-        "team_elo": 1910.0,
-        "team_strength_att_home": 1120,
-        "team_strength_att_away": 1200,
-        "team_strength_def_home": 1240,
-        "team_strength_def_away": 1300,
-        "flags": [
-          "cbit_strong"
-        ]
+        ],
+        "flag_count": 4
       },
       {
         "id": 661,
@@ -4322,7 +3507,8 @@
         "team_strength_att_away": 1200,
         "team_strength_def_home": 1240,
         "team_strength_def_away": 1300,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 686,
@@ -4364,7 +3550,8 @@
         "team_strength_def_away": 1300,
         "flags": [
           "xgi_value"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 82,
@@ -4406,7 +3593,8 @@
         "team_strength_def_away": 1400,
         "flags": [
           "price_rising"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 260,
@@ -4449,7 +3637,8 @@
         "flags": [
           "price_rising",
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 402,
@@ -4489,7 +3678,8 @@
         "team_strength_att_away": 1310,
         "team_strength_def_home": 1310,
         "team_strength_def_away": 1400,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 407,
@@ -4531,7 +3721,8 @@
         "team_strength_def_away": 1400,
         "flags": [
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 408,
@@ -4573,7 +3764,8 @@
         "team_strength_def_away": 1400,
         "flags": [
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 411,
@@ -4615,7 +3807,8 @@
         "team_strength_def_away": 1400,
         "flags": [
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 416,
@@ -4657,7 +3850,8 @@
         "team_strength_def_away": 1400,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 417,
@@ -4700,7 +3894,8 @@
         "flags": [
           "xgi_elite",
           "xgi_value"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 418,
@@ -4743,7 +3938,8 @@
         "flags": [
           "form_top20",
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 421,
@@ -4785,7 +3981,8 @@
         "team_strength_def_away": 1400,
         "flags": [
           "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 423,
@@ -4827,7 +4024,8 @@
         "team_strength_def_away": 1400,
         "flags": [
           "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 430,
@@ -4873,7 +4071,8 @@
           "xgi_elite",
           "price_rising",
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 5
       },
       {
         "id": 736,
@@ -4916,7 +4115,8 @@
         "flags": [
           "ep_top_pos",
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 119,
@@ -4958,7 +4158,8 @@
         "team_strength_def_away": 1310,
         "flags": [
           "price_rising"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 440,
@@ -4998,7 +4199,8 @@
         "team_strength_att_away": 1190,
         "team_strength_def_home": 1240,
         "team_strength_def_away": 1310,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 441,
@@ -5041,7 +4243,8 @@
         "flags": [
           "form_top20",
           "value_gem"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 442,
@@ -5083,7 +4286,8 @@
         "team_strength_def_away": 1310,
         "flags": [
           "value_gem"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 443,
@@ -5126,7 +4330,8 @@
         "flags": [
           "value_gem",
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 449,
@@ -5172,7 +4377,8 @@
           "price_rising",
           "penalty_taker",
           "corner_taker"
-        ]
+        ],
+        "flag_count": 5
       },
       {
         "id": 457,
@@ -5214,7 +4420,8 @@
         "team_strength_def_away": 1310,
         "flags": [
           "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 458,
@@ -5255,9 +4462,9 @@
         "team_strength_def_home": 1240,
         "team_strength_def_away": 1310,
         "flags": [
-          "value_gem",
-          "cbit_strong"
-        ]
+          "value_gem"
+        ],
+        "flag_count": 1
       },
       {
         "id": 681,
@@ -5297,7 +4504,8 @@
         "team_strength_att_away": 1190,
         "team_strength_def_home": 1240,
         "team_strength_def_away": 1310,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 733,
@@ -5339,7 +4547,8 @@
         "team_strength_def_away": 1310,
         "flags": [
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 469,
@@ -5381,50 +4590,8 @@
         "team_strength_def_away": 1290,
         "flags": [
           "gk_shot_stopper"
-        ]
-      },
-      {
-        "id": 475,
-        "name": "Botman",
-        "team_id": 15,
-        "team_short": "NEW",
-        "position": 2,
-        "price": 4.9,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 89,
-        "fpl_form": 3.8,
-        "ppg": 3.6,
-        "ep_next": 4.0,
-        "selected_pct": 0.5,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1834,
-        "goals": 1,
-        "assists": 1,
-        "clean_sheets": 5,
-        "bonus": 6,
-        "xg_per90": 0.08,
-        "xa_per90": 0.04,
-        "xgi_per90": 0.12,
-        "xgc_per90": 1.35,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 10.6,
-        "tackles": 21,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 13,
-        "xg_delta": -0.73,
-        "team_elo": 1837.0,
-        "team_strength_att_home": 1130,
-        "team_strength_att_away": 1120,
-        "team_strength_def_home": 1110,
-        "team_strength_def_away": 1290,
-        "flags": [
-          "cbit_strong",
-          "rotation_risk"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 485,
@@ -5466,7 +4633,8 @@
         "team_strength_def_away": 1290,
         "flags": [
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 488,
@@ -5508,49 +4676,8 @@
         "team_strength_def_away": 1290,
         "flags": [
           "price_rising"
-        ]
-      },
-      {
-        "id": 490,
-        "name": "Joelinton",
-        "team_id": 15,
-        "team_short": "NEW",
-        "position": 3,
-        "price": 5.9,
-        "status": "i",
-        "cop_next": 0,
-        "news": "Thigh injury - Expected back 01 Jun",
-        "total_pts": 73,
-        "fpl_form": 1.5,
-        "ppg": 2.7,
-        "ep_next": 0.0,
-        "selected_pct": 0.3,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1950,
-        "goals": 2,
-        "assists": 1,
-        "clean_sheets": 5,
-        "bonus": 2,
-        "xg_per90": 0.11,
-        "xa_per90": 0.06,
-        "xgi_per90": 0.17,
-        "xgc_per90": 1.33,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 10.98,
-        "tackles": 43,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 7,
-        "xg_delta": -0.36,
-        "team_elo": 1837.0,
-        "team_strength_att_home": 1130,
-        "team_strength_att_away": 1120,
-        "team_strength_def_home": 1110,
-        "team_strength_def_away": 1290,
-        "flags": [
-          "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 491,
@@ -5592,7 +4719,8 @@
         "team_strength_def_away": 1290,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 497,
@@ -5632,7 +4760,8 @@
         "team_strength_att_away": 1120,
         "team_strength_def_home": 1110,
         "team_strength_def_away": 1290,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 500,
@@ -5677,7 +4806,8 @@
           "ep_top_pos",
           "value_gem",
           "xgi_value"
-        ]
+        ],
+        "flag_count": 4
       },
       {
         "id": 684,
@@ -5717,7 +4847,8 @@
         "team_strength_att_away": 1120,
         "team_strength_def_home": 1110,
         "team_strength_def_away": 1290,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 502,
@@ -5760,7 +4891,8 @@
         "flags": [
           "ep_top_pos",
           "gk_shot_stopper"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 515,
@@ -5802,7 +4934,8 @@
         "team_strength_def_away": 1170,
         "flags": [
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 517,
@@ -5848,49 +4981,8 @@
           "value_gem",
           "cbit_strong",
           "corner_taker"
-        ]
-      },
-      {
-        "id": 519,
-        "name": "Dominguez",
-        "team_id": 16,
-        "team_short": "NFO",
-        "position": 3,
-        "price": 5.0,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 48,
-        "fpl_form": 1.2,
-        "ppg": 1.8,
-        "ep_next": 1.0,
-        "selected_pct": 0.0,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1168,
-        "goals": 1,
-        "assists": 1,
-        "clean_sheets": 3,
-        "bonus": 3,
-        "xg_per90": 0.11,
-        "xa_per90": 0.06,
-        "xgi_per90": 0.17,
-        "xgc_per90": 1.79,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 11.02,
-        "tackles": 56,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 4,
-        "xg_delta": -0.47,
-        "team_elo": 1821.0,
-        "team_strength_att_home": 1130,
-        "team_strength_att_away": 1160,
-        "team_strength_def_home": 1120,
-        "team_strength_def_away": 1170,
-        "flags": [
-          "cbit_strong"
-        ]
+        ],
+        "flag_count": 5
       },
       {
         "id": 521,
@@ -5932,7 +5024,8 @@
         "team_strength_def_away": 1170,
         "flags": [
           "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 525,
@@ -5974,7 +5067,8 @@
         "team_strength_def_away": 1170,
         "flags": [
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 526,
@@ -6016,7 +5110,8 @@
         "team_strength_def_away": 1170,
         "flags": [
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 527,
@@ -6060,7 +5155,8 @@
           "ep_top_pos",
           "xgi_elite",
           "xgi_value"
-        ]
+        ],
+        "flag_count": 3
       },
       {
         "id": 531,
@@ -6100,9 +5196,8 @@
         "team_strength_att_away": 1170,
         "team_strength_def_home": 1040,
         "team_strength_def_away": 1130,
-        "flags": [
-          "cbit_strong"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 541,
@@ -6142,7 +5237,8 @@
         "team_strength_att_away": 1170,
         "team_strength_def_home": 1040,
         "team_strength_def_away": 1130,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 544,
@@ -6184,7 +5280,8 @@
         "team_strength_def_away": 1130,
         "flags": [
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 547,
@@ -6227,7 +5324,8 @@
         "flags": [
           "form_top20",
           "value_gem"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 668,
@@ -6268,9 +5366,9 @@
         "team_strength_def_home": 1040,
         "team_strength_def_away": 1130,
         "flags": [
-          "cbit_strong",
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 670,
@@ -6311,9 +5409,9 @@
         "team_strength_def_home": 1040,
         "team_strength_def_away": 1130,
         "flags": [
-          "gk_shot_stopper",
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 683,
@@ -6354,9 +5452,9 @@
         "team_strength_def_home": 1040,
         "team_strength_def_away": 1130,
         "flags": [
-          "cbit_strong",
           "cs_candidate"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 694,
@@ -6400,7 +5498,8 @@
           "form_top20",
           "value_gem",
           "price_rising"
-        ]
+        ],
+        "flag_count": 3
       },
       {
         "id": 570,
@@ -6442,7 +5541,8 @@
         "team_strength_def_away": 1150,
         "flags": [
           "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 575,
@@ -6482,7 +5582,8 @@
         "team_strength_att_away": 1090,
         "team_strength_def_home": 1150,
         "team_strength_def_away": 1150,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 584,
@@ -6524,7 +5625,8 @@
         "team_strength_def_away": 1150,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 585,
@@ -6567,7 +5669,8 @@
         "flags": [
           "cbit_strong",
           "rotation_risk"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 593,
@@ -6609,7 +5712,8 @@
         "team_strength_def_away": 1150,
         "flags": [
           "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 597,
@@ -6651,7 +5755,8 @@
         "team_strength_def_away": 1150,
         "flags": [
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 673,
@@ -6694,7 +5799,8 @@
         "flags": [
           "value_gem",
           "cbit_strong"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 600,
@@ -6737,49 +5843,8 @@
         "flags": [
           "gk_shot_stopper",
           "rotation_risk"
-        ]
-      },
-      {
-        "id": 606,
-        "name": "Mavropanos",
-        "team_id": 19,
-        "team_short": "WHU",
-        "position": 2,
-        "price": 4.5,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 122,
-        "fpl_form": 3.5,
-        "ppg": 3.9,
-        "ep_next": 2.5,
-        "selected_pct": 2.6,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 2532,
-        "goals": 3,
-        "assists": 0,
-        "clean_sheets": 6,
-        "bonus": 5,
-        "xg_per90": 0.09,
-        "xa_per90": 0.02,
-        "xgi_per90": 0.11,
-        "xgc_per90": 1.46,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 11.13,
-        "tackles": 40,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 23,
-        "xg_delta": 0.53,
-        "team_elo": 1768.0,
-        "team_strength_att_home": 1060,
-        "team_strength_att_away": 1080,
-        "team_strength_def_home": 1130,
-        "team_strength_def_away": 1180,
-        "flags": [
-          "cbit_strong"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 624,
@@ -6821,7 +5886,8 @@
         "team_strength_def_away": 1180,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 671,
@@ -6863,91 +5929,8 @@
         "team_strength_def_away": 1180,
         "flags": [
           "xgi_value"
-        ]
-      },
-      {
-        "id": 679,
-        "name": "Hermansen",
-        "team_id": 19,
-        "team_short": "WHU",
-        "position": 1,
-        "price": 4.2,
-        "status": "a",
-        "cop_next": null,
-        "news": "",
-        "total_pts": 76,
-        "fpl_form": 4.0,
-        "ppg": 4.2,
-        "ep_next": 2.8,
-        "selected_pct": 1.0,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1620,
-        "goals": 0,
-        "assists": 1,
-        "clean_sheets": 7,
-        "bonus": 8,
-        "xg_per90": 0.0,
-        "xa_per90": 0.0,
-        "xgi_per90": 0.0,
-        "xgc_per90": 1.33,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 0.0,
-        "tackles": 0,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 24,
-        "xg_delta": null,
-        "team_elo": 1768.0,
-        "team_strength_att_home": 1060,
-        "team_strength_att_away": 1080,
-        "team_strength_def_home": 1130,
-        "team_strength_def_away": 1180,
-        "flags": [
-          "gk_shot_stopper"
-        ]
-      },
-      {
-        "id": 708,
-        "name": "M.Fernandes",
-        "team_id": 19,
-        "team_short": "WHU",
-        "position": 3,
-        "price": 5.5,
-        "status": "a",
-        "cop_next": 100,
-        "news": "",
-        "total_pts": 135,
-        "fpl_form": 4.8,
-        "ppg": 3.8,
-        "ep_next": 3.0,
-        "selected_pct": 0.6,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 3017,
-        "goals": 3,
-        "assists": 4,
-        "clean_sheets": 8,
-        "bonus": 7,
-        "xg_per90": 0.06,
-        "xa_per90": 0.09,
-        "xgi_per90": 0.15,
-        "xgc_per90": 1.44,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 11.01,
-        "tackles": 103,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 13,
-        "xg_delta": 1.01,
-        "team_elo": 1768.0,
-        "team_strength_att_home": 1060,
-        "team_strength_att_away": 1080,
-        "team_strength_def_home": 1130,
-        "team_strength_def_away": 1180,
-        "flags": [
-          "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 718,
@@ -6989,7 +5972,8 @@
         "team_strength_def_away": 1180,
         "flags": [
           "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 627,
@@ -7031,49 +6015,8 @@
         "team_strength_def_away": 1070,
         "flags": [
           "gk_shot_stopper"
-        ]
-      },
-      {
-        "id": 631,
-        "name": "Agbadou",
-        "team_id": 20,
-        "team_short": "WOL",
-        "position": 2,
-        "price": 4.2,
-        "status": "u",
-        "cop_next": 0,
-        "news": "has joined Besiktas permanently.",
-        "total_pts": 23,
-        "fpl_form": 0.0,
-        "ppg": 1.6,
-        "ep_next": 0.0,
-        "selected_pct": 0.1,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1100,
-        "goals": 0,
-        "assists": 0,
-        "clean_sheets": 0,
-        "bonus": 0,
-        "xg_per90": 0.05,
-        "xa_per90": 0.03,
-        "xgi_per90": 0.08,
-        "xgc_per90": 1.49,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 10.23,
-        "tackles": 32,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 0,
-        "xg_delta": -0.57,
-        "team_elo": 1679.0,
-        "team_strength_att_home": 950,
-        "team_strength_att_away": 1050,
-        "team_strength_def_home": 1000,
-        "team_strength_def_away": 1070,
-        "flags": [
-          "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 633,
@@ -7115,7 +6058,8 @@
         "team_strength_def_away": 1070,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 643,
@@ -7157,7 +6101,8 @@
         "team_strength_def_away": 1070,
         "flags": [
           "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 646,
@@ -7199,49 +6144,8 @@
         "team_strength_def_away": 1070,
         "flags": [
           "cbit_strong"
-        ]
-      },
-      {
-        "id": 663,
-        "name": "J.Arias",
-        "team_id": 20,
-        "team_short": "WOL",
-        "position": 3,
-        "price": 4.9,
-        "status": "u",
-        "cop_next": 0,
-        "news": "has joined Palmeiras permanently.",
-        "total_pts": 45,
-        "fpl_form": 0.0,
-        "ppg": 2.0,
-        "ep_next": 0.0,
-        "selected_pct": 0.1,
-        "transfers_in_event": 0,
-        "transfers_out_event": 0,
-        "minutes": 1117,
-        "goals": 1,
-        "assists": 0,
-        "clean_sheets": 2,
-        "bonus": 2,
-        "xg_per90": 0.27,
-        "xa_per90": 0.05,
-        "xgi_per90": 0.32,
-        "xgc_per90": 1.29,
-        "cbi_per90": null,
-        "defensive_contribution_per90": 10.07,
-        "tackles": 43,
-        "is_penalty_taker": false,
-        "is_corner_taker": false,
-        "form_last5": 0,
-        "xg_delta": -2.38,
-        "team_elo": 1679.0,
-        "team_strength_att_home": 950,
-        "team_strength_att_away": 1050,
-        "team_strength_def_home": 1000,
-        "team_strength_def_away": 1070,
-        "flags": [
-          "cbit_strong"
-        ]
+        ],
+        "flag_count": 1
       }
     ]
   }
