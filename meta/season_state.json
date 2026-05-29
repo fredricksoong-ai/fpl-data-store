@@ -1,11 +1,11 @@
 {
   "current_season": "2025-2026",
-  "current_gw": 30,
-  "previous_gw": 29,
-  "next_gw": 31,
-  "mode": "backtest",
-  "mode_note": "Pipeline ran in backtest mode at GW30.",
-  "last_pipeline_run": "2026-05-29T04:20:59.194784+00:00",
+  "current_gw": 38,
+  "previous_gw": 37,
+  "next_gw": null,
+  "mode": "offseason",
+  "mode_note": "Pipeline ran in offseason mode at GW38.",
+  "last_pipeline_run": "2026-05-29T04:42:31.018285+00:00",
   "ci_data_available": true,
   "fpl_api_available": true,
   "next_season_expected": "2026-08-01"

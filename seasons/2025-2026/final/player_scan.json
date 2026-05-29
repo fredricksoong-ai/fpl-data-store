@@ -1,7 +1,7 @@
 {
   "meta": {
     "schema_version": "1.0",
-    "fetched_at": "2026-05-26T15:43:41.930496+00:00",
+    "fetched_at": "2026-05-29T04:40:55.118878+00:00",
     "current_gw": 38,
     "source": "fpl-api"
   },
@@ -25,8 +25,11 @@
         "xgi_per90": 0.0,
         "flags": [
           "form_top20",
-          "ep_top_pos"
-        ]
+          "ep_top_pos",
+          "price_rising",
+          "cs_candidate"
+        ],
+        "flag_count": 4
       },
       {
         "id": 2,
@@ -44,7 +47,8 @@
         "transfers_out_event": 0,
         "minutes": 90,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 4,
@@ -62,7 +66,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 5,
@@ -82,8 +87,11 @@
         "xgi_per90": 0.16,
         "flags": [
           "form_top20",
-          "ep_top_pos"
-        ]
+          "ep_top_pos",
+          "price_rising",
+          "cs_candidate"
+        ],
+        "flag_count": 4
       },
       {
         "id": 6,
@@ -102,8 +110,11 @@
         "minutes": 2614,
         "xgi_per90": 0.07,
         "flags": [
-          "ep_top_pos"
-        ]
+          "ep_top_pos",
+          "price_rising",
+          "cs_candidate"
+        ],
+        "flag_count": 3
       },
       {
         "id": 7,
@@ -121,7 +132,8 @@
         "transfers_out_event": 0,
         "minutes": 1697,
         "xgi_per90": 0.22,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 8,
@@ -139,7 +151,10 @@
         "transfers_out_event": 0,
         "minutes": 2452,
         "xgi_per90": 0.23,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 10,
@@ -157,7 +172,8 @@
         "transfers_out_event": 0,
         "minutes": 697,
         "xgi_per90": 0.04,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 11,
@@ -175,7 +191,8 @@
         "transfers_out_event": 0,
         "minutes": 699,
         "xgi_per90": 0.15,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 13,
@@ -193,7 +210,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 15,
@@ -211,7 +229,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 16,
@@ -232,10 +251,9 @@
         "flags": [
           "form_top20",
           "ep_top_pos",
-          "xgi_elite",
-          "penalty_taker",
-          "corner_taker"
-        ]
+          "penalty_taker"
+        ],
+        "flag_count": 3
       },
       {
         "id": 17,
@@ -253,7 +271,8 @@
         "transfers_out_event": 0,
         "minutes": 1363,
         "xgi_per90": 0.32,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 18,
@@ -271,7 +290,8 @@
         "transfers_out_event": 0,
         "minutes": 1205,
         "xgi_per90": 0.3,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 19,
@@ -289,7 +309,8 @@
         "transfers_out_event": 0,
         "minutes": 1065,
         "xgi_per90": 0.46,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 20,
@@ -307,7 +328,8 @@
         "transfers_out_event": 0,
         "minutes": 1997,
         "xgi_per90": 0.41,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 21,
@@ -327,7 +349,8 @@
         "xgi_per90": 0.3,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 22,
@@ -345,7 +368,8 @@
         "transfers_out_event": 0,
         "minutes": 1024,
         "xgi_per90": 0.43,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 24,
@@ -363,7 +387,8 @@
         "transfers_out_event": 0,
         "minutes": 101,
         "xgi_per90": 0.11,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 25,
@@ -381,7 +406,8 @@
         "transfers_out_event": 0,
         "minutes": 165,
         "xgi_per90": 0.17,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 26,
@@ -399,7 +425,8 @@
         "transfers_out_event": 0,
         "minutes": 2991,
         "xgi_per90": 0.16,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 30,
@@ -417,9 +444,8 @@
         "transfers_out_event": 0,
         "minutes": 577,
         "xgi_per90": 0.62,
-        "flags": [
-          "xgi_elite"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 31,
@@ -437,7 +463,8 @@
         "transfers_out_event": 0,
         "minutes": 418,
         "xgi_per90": 0.64,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 266,
@@ -455,7 +482,10 @@
         "transfers_out_event": 0,
         "minutes": 1885,
         "xgi_per90": 0.38,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ],
+        "flag_count": 1
       },
       {
         "id": 662,
@@ -473,7 +503,8 @@
         "transfers_out_event": 0,
         "minutes": 986,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 666,
@@ -492,9 +523,9 @@
         "minutes": 2217,
         "xgi_per90": 0.58,
         "flags": [
-          "ep_top_pos",
-          "xgi_elite"
-        ]
+          "ep_top_pos"
+        ],
+        "flag_count": 1
       },
       {
         "id": 700,
@@ -512,7 +543,8 @@
         "transfers_out_event": 0,
         "minutes": 152,
         "xgi_per90": 0.88,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 711,
@@ -530,7 +562,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 725,
@@ -548,7 +581,8 @@
         "transfers_out_event": 0,
         "minutes": 1787,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 759,
@@ -566,7 +600,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 32,
@@ -584,7 +619,8 @@
         "transfers_out_event": 0,
         "minutes": 2835,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 33,
@@ -602,7 +638,8 @@
         "transfers_out_event": 0,
         "minutes": 585,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 36,
@@ -620,7 +657,8 @@
         "transfers_out_event": 0,
         "minutes": 3016,
         "xgi_per90": 0.12,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 37,
@@ -639,8 +677,9 @@
         "minutes": 1842,
         "xgi_per90": 0.19,
         "flags": [
-          "corner_taker"
-        ]
+          "rotation_risk"
+        ],
+        "flag_count": 1
       },
       {
         "id": 38,
@@ -658,7 +697,8 @@
         "transfers_out_event": 0,
         "minutes": 3035,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 39,
@@ -676,7 +716,8 @@
         "transfers_out_event": 0,
         "minutes": 1590,
         "xgi_per90": 0.21,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 40,
@@ -694,7 +735,8 @@
         "transfers_out_event": 0,
         "minutes": 1322,
         "xgi_per90": 0.12,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 41,
@@ -712,7 +754,8 @@
         "transfers_out_event": 0,
         "minutes": 1673,
         "xgi_per90": 0.09,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 42,
@@ -730,7 +773,8 @@
         "transfers_out_event": 0,
         "minutes": 83,
         "xgi_per90": 0.01,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 44,
@@ -748,7 +792,8 @@
         "transfers_out_event": 0,
         "minutes": 1042,
         "xgi_per90": 0.02,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 47,
@@ -766,7 +811,8 @@
         "transfers_out_event": 0,
         "minutes": 3280,
         "xgi_per90": 0.31,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 48,
@@ -784,7 +830,10 @@
         "transfers_out_event": 0,
         "minutes": 1857,
         "xgi_per90": 0.22,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ],
+        "flag_count": 1
       },
       {
         "id": 49,
@@ -802,7 +851,8 @@
         "transfers_out_event": 0,
         "minutes": 450,
         "xgi_per90": 0.39,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 50,
@@ -820,7 +870,8 @@
         "transfers_out_event": 0,
         "minutes": 1753,
         "xgi_per90": 0.28,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 53,
@@ -839,8 +890,9 @@
         "minutes": 640,
         "xgi_per90": 0.62,
         "flags": [
-          "xgi_elite"
-        ]
+          "xgi_value"
+        ],
+        "flag_count": 1
       },
       {
         "id": 54,
@@ -858,7 +910,8 @@
         "transfers_out_event": 0,
         "minutes": 2136,
         "xgi_per90": 0.3,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 55,
@@ -876,7 +929,8 @@
         "transfers_out_event": 0,
         "minutes": 844,
         "xgi_per90": 0.3,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 58,
@@ -894,7 +948,8 @@
         "transfers_out_event": 0,
         "minutes": 1410,
         "xgi_per90": 0.08,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 59,
@@ -912,7 +967,8 @@
         "transfers_out_event": 0,
         "minutes": 1755,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 64,
@@ -933,7 +989,8 @@
         "flags": [
           "form_top20",
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 389,
@@ -951,7 +1008,8 @@
         "transfers_out_event": 0,
         "minutes": 110,
         "xgi_per90": 0.31,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 456,
@@ -969,7 +1027,8 @@
         "transfers_out_event": 0,
         "minutes": 863,
         "xgi_per90": 0.26,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 688,
@@ -987,7 +1046,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 699,
@@ -1007,7 +1067,8 @@
         "xgi_per90": 0.19,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 702,
@@ -1025,7 +1086,8 @@
         "transfers_out_event": 0,
         "minutes": 16,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 703,
@@ -1043,7 +1105,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 710,
@@ -1061,7 +1124,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 719,
@@ -1079,7 +1143,8 @@
         "transfers_out_event": 0,
         "minutes": 942,
         "xgi_per90": 0.04,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 754,
@@ -1097,7 +1162,8 @@
         "transfers_out_event": 0,
         "minutes": 25,
         "xgi_per90": 0.18,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 757,
@@ -1115,7 +1181,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 768,
@@ -1133,7 +1200,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 781,
@@ -1151,7 +1219,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 792,
@@ -1169,7 +1238,8 @@
         "transfers_out_event": 0,
         "minutes": 47,
         "xgi_per90": 0.2,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 808,
@@ -1187,7 +1257,8 @@
         "transfers_out_event": 0,
         "minutes": 278,
         "xgi_per90": 0.78,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 183,
@@ -1205,7 +1276,8 @@
         "transfers_out_event": 0,
         "minutes": 270,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 185,
@@ -1223,7 +1295,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 186,
@@ -1241,7 +1314,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 187,
@@ -1259,7 +1333,8 @@
         "transfers_out_event": 0,
         "minutes": 3095,
         "xgi_per90": 0.04,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 190,
@@ -1277,7 +1352,8 @@
         "transfers_out_event": 0,
         "minutes": 1539,
         "xgi_per90": 0.03,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 191,
@@ -1295,7 +1371,8 @@
         "transfers_out_event": 0,
         "minutes": 2933,
         "xgi_per90": 0.04,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 192,
@@ -1313,7 +1390,10 @@
         "transfers_out_event": 0,
         "minutes": 1825,
         "xgi_per90": 0.12,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ],
+        "flag_count": 1
       },
       {
         "id": 193,
@@ -1331,7 +1411,8 @@
         "transfers_out_event": 0,
         "minutes": 1574,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 194,
@@ -1349,7 +1430,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 195,
@@ -1367,7 +1449,8 @@
         "transfers_out_event": 0,
         "minutes": 1405,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 197,
@@ -1385,7 +1468,8 @@
         "transfers_out_event": 0,
         "minutes": 164,
         "xgi_per90": 0.34,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 198,
@@ -1403,7 +1487,8 @@
         "transfers_out_event": 0,
         "minutes": 1201,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 199,
@@ -1421,7 +1506,8 @@
         "transfers_out_event": 0,
         "minutes": 496,
         "xgi_per90": 0.01,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 200,
@@ -1439,9 +1525,8 @@
         "transfers_out_event": 0,
         "minutes": 2717,
         "xgi_per90": 0.26,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 202,
@@ -1459,7 +1544,8 @@
         "transfers_out_event": 0,
         "minutes": 1014,
         "xgi_per90": 0.22,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 203,
@@ -1477,7 +1563,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 205,
@@ -1495,7 +1582,8 @@
         "transfers_out_event": 0,
         "minutes": 1513,
         "xgi_per90": 0.14,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 206,
@@ -1513,7 +1601,8 @@
         "transfers_out_event": 0,
         "minutes": 1058,
         "xgi_per90": 0.29,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 207,
@@ -1531,7 +1620,8 @@
         "transfers_out_event": 0,
         "minutes": 1219,
         "xgi_per90": 0.22,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 209,
@@ -1549,7 +1639,8 @@
         "transfers_out_event": 0,
         "minutes": 1752,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 210,
@@ -1567,7 +1658,8 @@
         "transfers_out_event": 0,
         "minutes": 1259,
         "xgi_per90": 0.16,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 214,
@@ -1585,7 +1677,8 @@
         "transfers_out_event": 0,
         "minutes": 37,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 215,
@@ -1605,7 +1698,8 @@
         "xgi_per90": 0.43,
         "flags": [
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 216,
@@ -1623,7 +1717,8 @@
         "transfers_out_event": 0,
         "minutes": 69,
         "xgi_per90": 0.34,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 217,
@@ -1641,7 +1736,8 @@
         "transfers_out_event": 0,
         "minutes": 1361,
         "xgi_per90": 0.23,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 218,
@@ -1659,7 +1755,8 @@
         "transfers_out_event": 0,
         "minutes": 40,
         "xgi_per90": 0.65,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 470,
@@ -1677,7 +1774,10 @@
         "transfers_out_event": 0,
         "minutes": 3150,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [
+          "gk_shot_stopper"
+        ],
+        "flag_count": 1
       },
       {
         "id": 614,
@@ -1697,7 +1797,8 @@
         "xgi_per90": 0.17,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 676,
@@ -1715,7 +1816,8 @@
         "transfers_out_event": 0,
         "minutes": 2330,
         "xgi_per90": 0.12,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 680,
@@ -1733,7 +1835,8 @@
         "transfers_out_event": 0,
         "minutes": 843,
         "xgi_per90": 0.25,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 722,
@@ -1751,7 +1854,10 @@
         "transfers_out_event": 0,
         "minutes": 2100,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ],
+        "flag_count": 1
       },
       {
         "id": 776,
@@ -1769,7 +1875,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 784,
@@ -1787,7 +1894,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 820,
@@ -1805,7 +1913,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 67,
@@ -1824,8 +1933,10 @@
         "minutes": 3420,
         "xgi_per90": 0.0,
         "flags": [
-          "ep_top_pos"
-        ]
+          "ep_top_pos",
+          "cs_candidate"
+        ],
+        "flag_count": 2
       },
       {
         "id": 69,
@@ -1843,7 +1954,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 72,
@@ -1864,8 +1976,11 @@
         "flags": [
           "form_top20",
           "ep_top_pos",
-          "value_gem"
-        ]
+          "value_gem",
+          "price_rising",
+          "cs_candidate"
+        ],
+        "flag_count": 5
       },
       {
         "id": 73,
@@ -1885,7 +2000,8 @@
         "xgi_per90": 0.02,
         "flags": [
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 74,
@@ -1906,8 +2022,11 @@
         "flags": [
           "form_top20",
           "ep_top_pos",
-          "value_gem"
-        ]
+          "value_gem",
+          "price_rising",
+          "cs_candidate"
+        ],
+        "flag_count": 5
       },
       {
         "id": 75,
@@ -1925,7 +2044,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 76,
@@ -1943,7 +2063,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 77,
@@ -1964,7 +2085,8 @@
         "flags": [
           "ep_top_pos",
           "value_gem"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 80,
@@ -1982,7 +2104,8 @@
         "transfers_out_event": 0,
         "minutes": 34,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 81,
@@ -2002,7 +2125,8 @@
         "xgi_per90": 0.37,
         "flags": [
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 84,
@@ -2020,9 +2144,8 @@
         "transfers_out_event": 0,
         "minutes": 2732,
         "xgi_per90": 0.45,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 85,
@@ -2040,7 +2163,10 @@
         "transfers_out_event": 0,
         "minutes": 1769,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ],
+        "flag_count": 1
       },
       {
         "id": 86,
@@ -2059,8 +2185,10 @@
         "minutes": 1188,
         "xgi_per90": 0.7,
         "flags": [
-          "xgi_elite"
-        ]
+          "xgi_elite",
+          "xgi_value"
+        ],
+        "flag_count": 2
       },
       {
         "id": 87,
@@ -2078,7 +2206,8 @@
         "transfers_out_event": 0,
         "minutes": 978,
         "xgi_per90": 0.24,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 88,
@@ -2096,7 +2225,8 @@
         "transfers_out_event": 0,
         "minutes": 872,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 90,
@@ -2114,7 +2244,10 @@
         "transfers_out_event": 0,
         "minutes": 2848,
         "xgi_per90": 0.21,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ],
+        "flag_count": 1
       },
       {
         "id": 97,
@@ -2132,7 +2265,8 @@
         "transfers_out_event": 0,
         "minutes": 2741,
         "xgi_per90": 0.4,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 98,
@@ -2150,7 +2284,8 @@
         "transfers_out_event": 0,
         "minutes": 214,
         "xgi_per90": 0.87,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 100,
@@ -2168,7 +2303,8 @@
         "transfers_out_event": 0,
         "minutes": 1663,
         "xgi_per90": 0.53,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 391,
@@ -2186,7 +2322,8 @@
         "transfers_out_event": 0,
         "minutes": 105,
         "xgi_per90": 0.33,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 685,
@@ -2204,7 +2341,8 @@
         "transfers_out_event": 0,
         "minutes": 1275,
         "xgi_per90": 0.01,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 687,
@@ -2222,7 +2360,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 697,
@@ -2240,7 +2379,8 @@
         "transfers_out_event": 0,
         "minutes": 1074,
         "xgi_per90": 0.36,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 713,
@@ -2258,7 +2398,8 @@
         "transfers_out_event": 0,
         "minutes": 2315,
         "xgi_per90": 0.11,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 721,
@@ -2276,7 +2417,8 @@
         "transfers_out_event": 0,
         "minutes": 367,
         "xgi_per90": 0.09,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 756,
@@ -2294,7 +2436,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 782,
@@ -2312,7 +2455,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 799,
@@ -2330,7 +2474,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 801,
@@ -2348,7 +2493,8 @@
         "transfers_out_event": 0,
         "minutes": 135,
         "xgi_per90": 0.29,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 806,
@@ -2366,7 +2512,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 807,
@@ -2388,7 +2535,8 @@
           "form_top20",
           "ep_top_pos",
           "value_gem"
-        ]
+        ],
+        "flag_count": 3
       },
       {
         "id": 27,
@@ -2398,7 +2546,7 @@
         "price": 4.8,
         "status": "a",
         "total_pts": 13,
-        "fpl_form": 1.0,
+        "fpl_form": 0.2,
         "ppg": 1.3,
         "ep_next": 0.5,
         "selected_pct": 0.1,
@@ -2406,7 +2554,8 @@
         "transfers_out_event": 0,
         "minutes": 118,
         "xgi_per90": 0.62,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 83,
@@ -2416,7 +2565,7 @@
         "price": 5.6,
         "status": "a",
         "total_pts": 136,
-        "fpl_form": 5.0,
+        "fpl_form": 6.0,
         "ppg": 4.2,
         "ep_next": 5.3,
         "selected_pct": 1.6,
@@ -2425,8 +2574,10 @@
         "minutes": 2271,
         "xgi_per90": 0.47,
         "flags": [
+          "form_top20",
           "value_gem"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 101,
@@ -2436,7 +2587,7 @@
         "price": 4.8,
         "status": "a",
         "total_pts": 143,
-        "fpl_form": 4.2,
+        "fpl_form": 4.8,
         "ppg": 3.9,
         "ep_next": 3.3,
         "selected_pct": 12.0,
@@ -2445,8 +2596,11 @@
         "minutes": 3330,
         "xgi_per90": 0.01,
         "flags": [
-          "ep_top_pos"
-        ]
+          "ep_top_pos",
+          "price_rising",
+          "cs_candidate"
+        ],
+        "flag_count": 3
       },
       {
         "id": 102,
@@ -2464,7 +2618,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 104,
@@ -2482,7 +2637,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 105,
@@ -2500,7 +2656,8 @@
         "transfers_out_event": 0,
         "minutes": 90,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 106,
@@ -2510,7 +2667,7 @@
         "price": 4.9,
         "status": "a",
         "total_pts": 129,
-        "fpl_form": 3.0,
+        "fpl_form": 3.2,
         "ppg": 3.7,
         "ep_next": 2.5,
         "selected_pct": 2.4,
@@ -2518,7 +2675,8 @@
         "transfers_out_event": 0,
         "minutes": 2971,
         "xgi_per90": 0.12,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 107,
@@ -2528,7 +2686,7 @@
         "price": 4.8,
         "status": "a",
         "total_pts": 115,
-        "fpl_form": 3.8,
+        "fpl_form": 4.5,
         "ppg": 3.2,
         "ep_next": 3.0,
         "selected_pct": 1.5,
@@ -2536,7 +2694,8 @@
         "transfers_out_event": 0,
         "minutes": 1960,
         "xgi_per90": 0.26,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 108,
@@ -2546,7 +2705,7 @@
         "price": 4.4,
         "status": "a",
         "total_pts": 76,
-        "fpl_form": 1.2,
+        "fpl_form": 1.5,
         "ppg": 2.8,
         "ep_next": 1.0,
         "selected_pct": 0.2,
@@ -2554,7 +2713,10 @@
         "transfers_out_event": 0,
         "minutes": 1805,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ],
+        "flag_count": 1
       },
       {
         "id": 109,
@@ -2572,7 +2734,8 @@
         "transfers_out_event": 0,
         "minutes": 1322,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 110,
@@ -2582,7 +2745,7 @@
         "price": 4.6,
         "status": "a",
         "total_pts": 113,
-        "fpl_form": 1.8,
+        "fpl_form": 2.0,
         "ppg": 3.1,
         "ep_next": 1.3,
         "selected_pct": 1.0,
@@ -2590,7 +2753,10 @@
         "transfers_out_event": 0,
         "minutes": 3258,
         "xgi_per90": 0.12,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 111,
@@ -2608,7 +2774,8 @@
         "transfers_out_event": 0,
         "minutes": 318,
         "xgi_per90": 0.02,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 113,
@@ -2618,7 +2785,7 @@
         "price": 4.4,
         "status": "a",
         "total_pts": 113,
-        "fpl_form": 2.8,
+        "fpl_form": 3.5,
         "ppg": 3.5,
         "ep_next": 2.0,
         "selected_pct": 1.0,
@@ -2626,7 +2793,8 @@
         "transfers_out_event": 0,
         "minutes": 2761,
         "xgi_per90": 0.16,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 116,
@@ -2636,7 +2804,7 @@
         "price": 4.0,
         "status": "a",
         "total_pts": 37,
-        "fpl_form": 0.8,
+        "fpl_form": 1.0,
         "ppg": 1.8,
         "ep_next": 0.3,
         "selected_pct": 0.3,
@@ -2644,7 +2812,8 @@
         "transfers_out_event": 0,
         "minutes": 679,
         "xgi_per90": 0.08,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 120,
@@ -2654,7 +2823,7 @@
         "price": 6.8,
         "status": "a",
         "total_pts": 125,
-        "fpl_form": 3.0,
+        "fpl_form": 3.2,
         "ppg": 3.6,
         "ep_next": 1.5,
         "selected_pct": 1.3,
@@ -2662,7 +2831,8 @@
         "transfers_out_event": 0,
         "minutes": 2744,
         "xgi_per90": 0.47,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 121,
@@ -2672,7 +2842,7 @@
         "price": 5.6,
         "status": "a",
         "total_pts": 113,
-        "fpl_form": 4.0,
+        "fpl_form": 4.5,
         "ppg": 3.4,
         "ep_next": 4.3,
         "selected_pct": 0.8,
@@ -2680,7 +2850,8 @@
         "transfers_out_event": 0,
         "minutes": 2046,
         "xgi_per90": 0.35,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 122,
@@ -2698,7 +2869,8 @@
         "transfers_out_event": 0,
         "minutes": 45,
         "xgi_per90": 0.02,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 123,
@@ -2716,7 +2888,8 @@
         "transfers_out_event": 0,
         "minutes": 100,
         "xgi_per90": 0.66,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 124,
@@ -2734,7 +2907,8 @@
         "transfers_out_event": 0,
         "minutes": 1911,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 125,
@@ -2744,7 +2918,7 @@
         "price": 4.9,
         "status": "a",
         "total_pts": 74,
-        "fpl_form": 0.8,
+        "fpl_form": 1.0,
         "ppg": 3.0,
         "ep_next": 0.3,
         "selected_pct": 0.1,
@@ -2752,9 +2926,8 @@
         "transfers_out_event": 0,
         "minutes": 1434,
         "xgi_per90": 0.19,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 126,
@@ -2764,7 +2937,7 @@
         "price": 4.9,
         "status": "a",
         "total_pts": 98,
-        "fpl_form": 4.2,
+        "fpl_form": 2.8,
         "ppg": 2.7,
         "ep_next": 4.3,
         "selected_pct": 0.1,
@@ -2774,7 +2947,8 @@
         "xgi_per90": 0.33,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 129,
@@ -2784,7 +2958,7 @@
         "price": 5.0,
         "status": "a",
         "total_pts": 104,
-        "fpl_form": 3.4,
+        "fpl_form": 3.2,
         "ppg": 2.8,
         "ep_next": 3.7,
         "selected_pct": 0.1,
@@ -2792,7 +2966,8 @@
         "transfers_out_event": 0,
         "minutes": 2652,
         "xgi_per90": 0.09,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 130,
@@ -2810,7 +2985,8 @@
         "transfers_out_event": 0,
         "minutes": 38,
         "xgi_per90": 0.23,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 136,
@@ -2820,7 +2996,7 @@
         "price": 7.2,
         "status": "a",
         "total_pts": 181,
-        "fpl_form": 2.6,
+        "fpl_form": 3.0,
         "ppg": 4.8,
         "ep_next": 2.3,
         "selected_pct": 30.2,
@@ -2828,9 +3004,8 @@
         "transfers_out_event": 0,
         "minutes": 3282,
         "xgi_per90": 0.61,
-        "flags": [
-          "xgi_elite"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 748,
@@ -2840,7 +3015,7 @@
         "price": 4.9,
         "status": "a",
         "total_pts": 2,
-        "fpl_form": 0.4,
+        "fpl_form": 0.5,
         "ppg": 1.0,
         "ep_next": 0.0,
         "selected_pct": 0.0,
@@ -2848,7 +3023,8 @@
         "transfers_out_event": 0,
         "minutes": 2,
         "xgi_per90": 3.6,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 797,
@@ -2866,7 +3042,8 @@
         "transfers_out_event": 0,
         "minutes": 1,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 810,
@@ -2884,7 +3061,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 819,
@@ -2902,7 +3080,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 823,
@@ -2920,7 +3099,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 824,
@@ -2938,7 +3118,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 826,
@@ -2956,7 +3137,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 138,
@@ -2974,7 +3156,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 139,
@@ -2992,7 +3175,10 @@
         "transfers_out_event": 0,
         "minutes": 3420,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 140,
@@ -3010,7 +3196,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 143,
@@ -3028,7 +3215,8 @@
         "transfers_out_event": 0,
         "minutes": 799,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 144,
@@ -3046,7 +3234,8 @@
         "transfers_out_event": 0,
         "minutes": 193,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 145,
@@ -3066,7 +3255,8 @@
         "xgi_per90": 0.37,
         "flags": [
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 146,
@@ -3084,7 +3274,8 @@
         "transfers_out_event": 0,
         "minutes": 2837,
         "xgi_per90": 0.08,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 148,
@@ -3102,7 +3293,10 @@
         "transfers_out_event": 0,
         "minutes": 3130,
         "xgi_per90": 0.16,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 149,
@@ -3120,7 +3314,8 @@
         "transfers_out_event": 0,
         "minutes": 103,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 151,
@@ -3138,7 +3333,10 @@
         "transfers_out_event": 0,
         "minutes": 3210,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 152,
@@ -3156,7 +3354,8 @@
         "transfers_out_event": 0,
         "minutes": 1047,
         "xgi_per90": 0.12,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 153,
@@ -3174,7 +3373,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 156,
@@ -3192,7 +3392,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 157,
@@ -3210,7 +3411,8 @@
         "transfers_out_event": 0,
         "minutes": 1714,
         "xgi_per90": 0.35,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 158,
@@ -3228,7 +3430,8 @@
         "transfers_out_event": 0,
         "minutes": 1776,
         "xgi_per90": 0.3,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 159,
@@ -3246,7 +3449,8 @@
         "transfers_out_event": 0,
         "minutes": 38,
         "xgi_per90": 0.14,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 160,
@@ -3264,7 +3468,8 @@
         "transfers_out_event": 0,
         "minutes": 2389,
         "xgi_per90": 0.33,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 162,
@@ -3282,7 +3487,8 @@
         "transfers_out_event": 0,
         "minutes": 708,
         "xgi_per90": 0.35,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 163,
@@ -3303,7 +3509,8 @@
         "flags": [
           "ep_top_pos",
           "value_gem"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 164,
@@ -3321,7 +3528,8 @@
         "transfers_out_event": 0,
         "minutes": 202,
         "xgi_per90": 0.62,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 166,
@@ -3339,7 +3547,8 @@
         "transfers_out_event": 0,
         "minutes": 1921,
         "xgi_per90": 0.18,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 167,
@@ -3357,7 +3566,8 @@
         "transfers_out_event": 0,
         "minutes": 1646,
         "xgi_per90": 0.08,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 169,
@@ -3375,7 +3585,8 @@
         "transfers_out_event": 0,
         "minutes": 2117,
         "xgi_per90": 0.34,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 170,
@@ -3395,7 +3606,8 @@
         "xgi_per90": 0.2,
         "flags": [
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 173,
@@ -3413,7 +3625,11 @@
         "transfers_out_event": 0,
         "minutes": 1901,
         "xgi_per90": 0.18,
-        "flags": []
+        "flags": [
+          "cbit_strong",
+          "rotation_risk"
+        ],
+        "flag_count": 2
       },
       {
         "id": 178,
@@ -3432,8 +3648,9 @@
         "minutes": 2249,
         "xgi_per90": 0.55,
         "flags": [
-          "xgi_elite"
-        ]
+          "xgi_value"
+        ],
+        "flag_count": 1
       },
       {
         "id": 180,
@@ -3451,7 +3668,8 @@
         "transfers_out_event": 0,
         "minutes": 132,
         "xgi_per90": 0.38,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 181,
@@ -3469,7 +3687,8 @@
         "transfers_out_event": 0,
         "minutes": 351,
         "xgi_per90": 0.68,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 744,
@@ -3487,7 +3706,8 @@
         "transfers_out_event": 0,
         "minutes": 1,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 761,
@@ -3505,7 +3725,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 783,
@@ -3525,7 +3746,8 @@
         "xgi_per90": 0.3,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 795,
@@ -3543,7 +3765,8 @@
         "transfers_out_event": 0,
         "minutes": 92,
         "xgi_per90": 0.03,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 220,
@@ -3561,7 +3784,8 @@
         "transfers_out_event": 0,
         "minutes": 3040,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 221,
@@ -3579,7 +3803,8 @@
         "transfers_out_event": 0,
         "minutes": 378,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 223,
@@ -3597,7 +3822,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 224,
@@ -3615,7 +3841,8 @@
         "transfers_out_event": 0,
         "minutes": 2706,
         "xgi_per90": 0.19,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 225,
@@ -3635,7 +3862,8 @@
         "xgi_per90": 0.2,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 226,
@@ -3653,7 +3881,8 @@
         "transfers_out_event": 0,
         "minutes": 2780,
         "xgi_per90": 0.08,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 227,
@@ -3671,7 +3900,8 @@
         "transfers_out_event": 0,
         "minutes": 225,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 228,
@@ -3689,7 +3919,8 @@
         "transfers_out_event": 0,
         "minutes": 2255,
         "xgi_per90": 0.18,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 229,
@@ -3707,7 +3938,8 @@
         "transfers_out_event": 0,
         "minutes": 470,
         "xgi_per90": 0.01,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 230,
@@ -3725,7 +3957,8 @@
         "transfers_out_event": 0,
         "minutes": 1718,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 231,
@@ -3743,7 +3976,8 @@
         "transfers_out_event": 0,
         "minutes": 100,
         "xgi_per90": 0.32,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 232,
@@ -3761,7 +3995,8 @@
         "transfers_out_event": 0,
         "minutes": 788,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 233,
@@ -3779,7 +4014,8 @@
         "transfers_out_event": 0,
         "minutes": 657,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 235,
@@ -3798,9 +4034,9 @@
         "minutes": 1954,
         "xgi_per90": 0.6,
         "flags": [
-          "xgi_elite",
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 236,
@@ -3818,9 +4054,8 @@
         "transfers_out_event": 0,
         "minutes": 2629,
         "xgi_per90": 0.39,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 237,
@@ -3841,7 +4076,8 @@
         "flags": [
           "form_top20",
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 238,
@@ -3859,7 +4095,8 @@
         "transfers_out_event": 0,
         "minutes": 839,
         "xgi_per90": 0.54,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 239,
@@ -3877,7 +4114,8 @@
         "transfers_out_event": 0,
         "minutes": 486,
         "xgi_per90": 0.32,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 241,
@@ -3895,7 +4133,10 @@
         "transfers_out_event": 0,
         "minutes": 2796,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ],
+        "flag_count": 1
       },
       {
         "id": 244,
@@ -3913,7 +4154,8 @@
         "transfers_out_event": 0,
         "minutes": 374,
         "xgi_per90": 0.18,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 245,
@@ -3931,7 +4173,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 246,
@@ -3949,7 +4192,8 @@
         "transfers_out_event": 0,
         "minutes": 1247,
         "xgi_per90": 0.2,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 247,
@@ -3967,7 +4211,8 @@
         "transfers_out_event": 0,
         "minutes": 26,
         "xgi_per90": 0.03,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 249,
@@ -3985,9 +4230,8 @@
         "transfers_out_event": 0,
         "minutes": 2658,
         "xgi_per90": 0.57,
-        "flags": [
-          "xgi_elite"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 250,
@@ -4005,7 +4249,8 @@
         "transfers_out_event": 0,
         "minutes": 1092,
         "xgi_per90": 0.39,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 252,
@@ -4023,7 +4268,8 @@
         "transfers_out_event": 0,
         "minutes": 265,
         "xgi_per90": 0.62,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 453,
@@ -4041,7 +4287,8 @@
         "transfers_out_event": 0,
         "minutes": 1261,
         "xgi_per90": 0.51,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 672,
@@ -4059,7 +4306,8 @@
         "transfers_out_event": 0,
         "minutes": 1139,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 743,
@@ -4077,7 +4325,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 789,
@@ -4095,7 +4344,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 803,
@@ -4113,7 +4363,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 829,
@@ -4131,7 +4382,8 @@
         "transfers_out_event": 0,
         "minutes": 45,
         "xgi_per90": 0.24,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 833,
@@ -4149,7 +4401,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 834,
@@ -4167,7 +4420,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 840,
@@ -4185,7 +4439,8 @@
         "transfers_out_event": 0,
         "minutes": 1,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 253,
@@ -4203,7 +4458,10 @@
         "transfers_out_event": 0,
         "minutes": 3330,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 254,
@@ -4221,7 +4479,8 @@
         "transfers_out_event": 0,
         "minutes": 90,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 255,
@@ -4239,7 +4498,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 256,
@@ -4257,7 +4517,10 @@
         "transfers_out_event": 0,
         "minutes": 2400,
         "xgi_per90": 0.24,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 257,
@@ -4275,7 +4538,10 @@
         "transfers_out_event": 0,
         "minutes": 3085,
         "xgi_per90": 0.09,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 258,
@@ -4293,7 +4559,10 @@
         "transfers_out_event": 0,
         "minutes": 3253,
         "xgi_per90": 0.11,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 259,
@@ -4311,7 +4580,8 @@
         "transfers_out_event": 0,
         "minutes": 99,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 261,
@@ -4329,7 +4599,10 @@
         "transfers_out_event": 0,
         "minutes": 2825,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 262,
@@ -4347,7 +4620,8 @@
         "transfers_out_event": 0,
         "minutes": 550,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 263,
@@ -4365,7 +4639,8 @@
         "transfers_out_event": 0,
         "minutes": 592,
         "xgi_per90": 0.16,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 265,
@@ -4383,7 +4658,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 267,
@@ -4401,7 +4677,8 @@
         "transfers_out_event": 0,
         "minutes": 2173,
         "xgi_per90": 0.5,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 268,
@@ -4419,7 +4696,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 270,
@@ -4437,7 +4715,8 @@
         "transfers_out_event": 0,
         "minutes": 1560,
         "xgi_per90": 0.17,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 271,
@@ -4455,7 +4734,10 @@
         "transfers_out_event": 0,
         "minutes": 1899,
         "xgi_per90": 0.23,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ],
+        "flag_count": 1
       },
       {
         "id": 272,
@@ -4473,7 +4755,10 @@
         "transfers_out_event": 0,
         "minutes": 1722,
         "xgi_per90": 0.18,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ],
+        "flag_count": 1
       },
       {
         "id": 273,
@@ -4491,9 +4776,8 @@
         "transfers_out_event": 0,
         "minutes": 2552,
         "xgi_per90": 0.31,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 274,
@@ -4511,7 +4795,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 276,
@@ -4529,7 +4814,8 @@
         "transfers_out_event": 0,
         "minutes": 785,
         "xgi_per90": 0.31,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 281,
@@ -4547,7 +4833,8 @@
         "transfers_out_event": 0,
         "minutes": 3,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 283,
@@ -4565,9 +4852,8 @@
         "transfers_out_event": 0,
         "minutes": 2210,
         "xgi_per90": 0.64,
-        "flags": [
-          "xgi_elite"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 284,
@@ -4585,7 +4871,8 @@
         "transfers_out_event": 0,
         "minutes": 414,
         "xgi_per90": 0.48,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 286,
@@ -4603,7 +4890,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 580,
@@ -4623,7 +4911,8 @@
         "xgi_per90": 0.2,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 654,
@@ -4641,7 +4930,8 @@
         "transfers_out_event": 0,
         "minutes": 2301,
         "xgi_per90": 0.25,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 677,
@@ -4659,7 +4949,8 @@
         "transfers_out_event": 0,
         "minutes": 909,
         "xgi_per90": 0.23,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 690,
@@ -4677,7 +4968,8 @@
         "transfers_out_event": 0,
         "minutes": 90,
         "xgi_per90": 0.18,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 712,
@@ -4695,7 +4987,8 @@
         "transfers_out_event": 0,
         "minutes": 2074,
         "xgi_per90": 0.47,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 723,
@@ -4713,7 +5006,8 @@
         "transfers_out_event": 0,
         "minutes": 1331,
         "xgi_per90": 0.12,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 732,
@@ -4731,7 +5025,8 @@
         "transfers_out_event": 0,
         "minutes": 159,
         "xgi_per90": 0.29,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 762,
@@ -4749,7 +5044,8 @@
         "transfers_out_event": 0,
         "minutes": 7,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 773,
@@ -4767,7 +5063,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 780,
@@ -4785,7 +5082,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 793,
@@ -4803,7 +5101,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 242,
@@ -4821,7 +5120,8 @@
         "transfers_out_event": 0,
         "minutes": 2629,
         "xgi_per90": 0.33,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 243,
@@ -4839,7 +5139,8 @@
         "transfers_out_event": 0,
         "minutes": 351,
         "xgi_per90": 0.47,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 287,
@@ -4857,7 +5158,10 @@
         "transfers_out_event": 0,
         "minutes": 3420,
         "xgi_per90": 0.01,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 288,
@@ -4875,7 +5179,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 290,
@@ -4893,7 +5198,8 @@
         "transfers_out_event": 0,
         "minutes": 678,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 291,
@@ -4913,8 +5219,11 @@
         "xgi_per90": 0.13,
         "flags": [
           "form_top20",
-          "value_gem"
-        ]
+          "value_gem",
+          "price_rising",
+          "cs_candidate"
+        ],
+        "flag_count": 4
       },
       {
         "id": 292,
@@ -4932,7 +5241,8 @@
         "transfers_out_event": 0,
         "minutes": 2959,
         "xgi_per90": 0.08,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 293,
@@ -4950,7 +5260,10 @@
         "transfers_out_event": 0,
         "minutes": 3118,
         "xgi_per90": 0.08,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 294,
@@ -4968,7 +5281,8 @@
         "transfers_out_event": 0,
         "minutes": 19,
         "xgi_per90": 0.81,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 295,
@@ -4986,7 +5300,8 @@
         "transfers_out_event": 0,
         "minutes": 2588,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 296,
@@ -5004,7 +5319,8 @@
         "transfers_out_event": 0,
         "minutes": 238,
         "xgi_per90": 0.03,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 298,
@@ -5022,7 +5338,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 299,
@@ -5042,7 +5359,8 @@
         "xgi_per90": 0.36,
         "flags": [
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 300,
@@ -5060,9 +5378,8 @@
         "transfers_out_event": 0,
         "minutes": 1161,
         "xgi_per90": 0.26,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 301,
@@ -5080,7 +5397,8 @@
         "transfers_out_event": 0,
         "minutes": 679,
         "xgi_per90": 0.23,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 302,
@@ -5098,7 +5416,8 @@
         "transfers_out_event": 0,
         "minutes": 2094,
         "xgi_per90": 0.17,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 303,
@@ -5117,8 +5436,10 @@
         "minutes": 3413,
         "xgi_per90": 0.22,
         "flags": [
+          "cbit_strong",
           "corner_taker"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 304,
@@ -5136,7 +5457,10 @@
         "transfers_out_event": 0,
         "minutes": 1477,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ],
+        "flag_count": 1
       },
       {
         "id": 305,
@@ -5154,7 +5478,8 @@
         "transfers_out_event": 0,
         "minutes": 524,
         "xgi_per90": 0.18,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 306,
@@ -5172,7 +5497,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 307,
@@ -5190,7 +5516,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 310,
@@ -5208,7 +5535,10 @@
         "transfers_out_event": 0,
         "minutes": 1898,
         "xgi_per90": 0.41,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ],
+        "flag_count": 1
       },
       {
         "id": 311,
@@ -5226,7 +5556,8 @@
         "transfers_out_event": 0,
         "minutes": 1551,
         "xgi_per90": 0.53,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 419,
@@ -5244,7 +5575,8 @@
         "transfers_out_event": 0,
         "minutes": 1627,
         "xgi_per90": 0.3,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 630,
@@ -5262,7 +5594,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 667,
@@ -5280,7 +5613,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 707,
@@ -5298,7 +5632,8 @@
         "transfers_out_event": 0,
         "minutes": 349,
         "xgi_per90": 0.09,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 728,
@@ -5316,7 +5651,8 @@
         "transfers_out_event": 0,
         "minutes": 675,
         "xgi_per90": 0.14,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 779,
@@ -5334,7 +5670,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 314,
@@ -5354,7 +5691,8 @@
         "xgi_per90": 0.0,
         "flags": [
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 316,
@@ -5374,7 +5712,8 @@
         "xgi_per90": 0.16,
         "flags": [
           "value_gem"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 317,
@@ -5392,7 +5731,8 @@
         "transfers_out_event": 0,
         "minutes": 2882,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 318,
@@ -5410,7 +5750,8 @@
         "transfers_out_event": 0,
         "minutes": 2532,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 319,
@@ -5428,7 +5769,10 @@
         "transfers_out_event": 0,
         "minutes": 1838,
         "xgi_per90": 0.14,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ],
+        "flag_count": 1
       },
       {
         "id": 320,
@@ -5446,7 +5790,8 @@
         "transfers_out_event": 0,
         "minutes": 812,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 321,
@@ -5464,7 +5809,8 @@
         "transfers_out_event": 0,
         "minutes": 935,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 322,
@@ -5482,7 +5828,8 @@
         "transfers_out_event": 0,
         "minutes": 1791,
         "xgi_per90": 0.12,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 323,
@@ -5500,7 +5847,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 324,
@@ -5518,9 +5866,8 @@
         "transfers_out_event": 0,
         "minutes": 2420,
         "xgi_per90": 0.24,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 325,
@@ -5538,7 +5885,8 @@
         "transfers_out_event": 0,
         "minutes": 1909,
         "xgi_per90": 0.27,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 328,
@@ -5556,7 +5904,10 @@
         "transfers_out_event": 0,
         "minutes": 1816,
         "xgi_per90": 0.17,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ],
+        "flag_count": 1
       },
       {
         "id": 329,
@@ -5576,7 +5927,8 @@
         "xgi_per90": 0.36,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 330,
@@ -5594,7 +5946,8 @@
         "transfers_out_event": 0,
         "minutes": 2904,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 331,
@@ -5612,7 +5965,8 @@
         "transfers_out_event": 0,
         "minutes": 756,
         "xgi_per90": 0.24,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 332,
@@ -5630,7 +5984,8 @@
         "transfers_out_event": 0,
         "minutes": 1730,
         "xgi_per90": 0.22,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 335,
@@ -5648,7 +6003,8 @@
         "transfers_out_event": 0,
         "minutes": 1290,
         "xgi_per90": 0.22,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 336,
@@ -5666,7 +6022,8 @@
         "transfers_out_event": 0,
         "minutes": 89,
         "xgi_per90": 0.59,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 337,
@@ -5686,7 +6043,8 @@
         "xgi_per90": 0.52,
         "flags": [
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 338,
@@ -5704,7 +6062,8 @@
         "transfers_out_event": 0,
         "minutes": 987,
         "xgi_per90": 0.31,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 424,
@@ -5722,7 +6081,8 @@
         "transfers_out_event": 0,
         "minutes": 1030,
         "xgi_per90": 0.31,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 664,
@@ -5740,7 +6100,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 727,
@@ -5758,7 +6119,8 @@
         "transfers_out_event": 0,
         "minutes": 1067,
         "xgi_per90": 0.46,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 731,
@@ -5776,7 +6138,8 @@
         "transfers_out_event": 0,
         "minutes": 1030,
         "xgi_per90": 0.24,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 737,
@@ -5794,7 +6157,8 @@
         "transfers_out_event": 0,
         "minutes": 49,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 770,
@@ -5812,7 +6176,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 786,
@@ -5830,7 +6195,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 168,
@@ -5848,7 +6214,8 @@
         "transfers_out_event": 0,
         "minutes": 81,
         "xgi_per90": 0.38,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 339,
@@ -5866,7 +6233,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 340,
@@ -5884,7 +6252,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 341,
@@ -5904,7 +6273,8 @@
         "xgi_per90": 0.0,
         "flags": [
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 342,
@@ -5922,7 +6292,8 @@
         "transfers_out_event": 0,
         "minutes": 2795,
         "xgi_per90": 0.17,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 343,
@@ -5940,7 +6311,8 @@
         "transfers_out_event": 0,
         "minutes": 2935,
         "xgi_per90": 0.11,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 344,
@@ -5959,8 +6331,10 @@
         "minutes": 1888,
         "xgi_per90": 0.08,
         "flags": [
-          "ep_top_pos"
-        ]
+          "ep_top_pos",
+          "rotation_risk"
+        ],
+        "flag_count": 2
       },
       {
         "id": 345,
@@ -5978,7 +6352,8 @@
         "transfers_out_event": 0,
         "minutes": 429,
         "xgi_per90": 0.04,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 346,
@@ -5996,7 +6371,8 @@
         "transfers_out_event": 0,
         "minutes": 8,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 347,
@@ -6014,7 +6390,8 @@
         "transfers_out_event": 0,
         "minutes": 2637,
         "xgi_per90": 0.14,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 348,
@@ -6032,7 +6409,8 @@
         "transfers_out_event": 0,
         "minutes": 2952,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 350,
@@ -6050,7 +6428,8 @@
         "transfers_out_event": 0,
         "minutes": 2449,
         "xgi_per90": 0.3,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 351,
@@ -6068,7 +6447,8 @@
         "transfers_out_event": 0,
         "minutes": 521,
         "xgi_per90": 0.2,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 352,
@@ -6086,7 +6466,8 @@
         "transfers_out_event": 0,
         "minutes": 262,
         "xgi_per90": 0.18,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 353,
@@ -6104,7 +6485,8 @@
         "transfers_out_event": 0,
         "minutes": 547,
         "xgi_per90": 0.27,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 354,
@@ -6122,7 +6504,10 @@
         "transfers_out_event": 0,
         "minutes": 3119,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ],
+        "flag_count": 1
       },
       {
         "id": 356,
@@ -6140,7 +6525,8 @@
         "transfers_out_event": 0,
         "minutes": 1318,
         "xgi_per90": 0.09,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 358,
@@ -6158,7 +6544,8 @@
         "transfers_out_event": 0,
         "minutes": 1307,
         "xgi_per90": 0.2,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 362,
@@ -6176,7 +6563,8 @@
         "transfers_out_event": 0,
         "minutes": 244,
         "xgi_per90": 0.38,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 365,
@@ -6195,8 +6583,10 @@
         "minutes": 1065,
         "xgi_per90": 0.74,
         "flags": [
-          "xgi_elite"
-        ]
+          "xgi_elite",
+          "xgi_value"
+        ],
+        "flag_count": 2
       },
       {
         "id": 493,
@@ -6214,9 +6604,8 @@
         "transfers_out_event": 0,
         "minutes": 1003,
         "xgi_per90": 0.28,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 660,
@@ -6236,7 +6625,8 @@
         "xgi_per90": 0.28,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 665,
@@ -6254,7 +6644,8 @@
         "transfers_out_event": 0,
         "minutes": 1440,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 691,
@@ -6276,9 +6667,11 @@
           "form_top20",
           "ep_top_pos",
           "value_gem",
-          "xgi_elite",
+          "xgi_value",
+          "price_rising",
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 6
       },
       {
         "id": 698,
@@ -6296,7 +6689,8 @@
         "transfers_out_event": 0,
         "minutes": 1553,
         "xgi_per90": 0.38,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 706,
@@ -6314,7 +6708,10 @@
         "transfers_out_event": 0,
         "minutes": 1893,
         "xgi_per90": 0.15,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ],
+        "flag_count": 1
       },
       {
         "id": 787,
@@ -6332,7 +6729,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 837,
@@ -6350,7 +6748,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 838,
@@ -6368,7 +6767,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 839,
@@ -6386,7 +6786,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 366,
@@ -6404,7 +6805,8 @@
         "transfers_out_event": 0,
         "minutes": 2340,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 367,
@@ -6422,7 +6824,10 @@
         "transfers_out_event": 0,
         "minutes": 867,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [
+          "gk_shot_stopper"
+        ],
+        "flag_count": 1
       },
       {
         "id": 368,
@@ -6440,7 +6845,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 369,
@@ -6458,7 +6864,8 @@
         "transfers_out_event": 0,
         "minutes": 212,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 370,
@@ -6476,7 +6883,8 @@
         "transfers_out_event": 0,
         "minutes": 1032,
         "xgi_per90": 0.18,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 371,
@@ -6494,7 +6902,8 @@
         "transfers_out_event": 0,
         "minutes": 2251,
         "xgi_per90": 0.09,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 372,
@@ -6512,7 +6921,8 @@
         "transfers_out_event": 0,
         "minutes": 1165,
         "xgi_per90": 0.19,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 373,
@@ -6530,7 +6940,10 @@
         "transfers_out_event": 0,
         "minutes": 3420,
         "xgi_per90": 0.14,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 374,
@@ -6548,7 +6961,10 @@
         "transfers_out_event": 0,
         "minutes": 3090,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 375,
@@ -6566,7 +6982,8 @@
         "transfers_out_event": 0,
         "minutes": 928,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 376,
@@ -6584,7 +7001,8 @@
         "transfers_out_event": 0,
         "minutes": 594,
         "xgi_per90": 0.14,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 378,
@@ -6602,7 +7020,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 379,
@@ -6620,7 +7039,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 380,
@@ -6638,7 +7058,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 381,
@@ -6657,10 +7078,9 @@
         "minutes": 2144,
         "xgi_per90": 0.58,
         "flags": [
-          "xgi_elite",
-          "penalty_taker",
-          "corner_taker"
-        ]
+          "penalty_taker"
+        ],
+        "flag_count": 1
       },
       {
         "id": 382,
@@ -6678,7 +7098,8 @@
         "transfers_out_event": 0,
         "minutes": 2374,
         "xgi_per90": 0.45,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 384,
@@ -6696,7 +7117,8 @@
         "transfers_out_event": 0,
         "minutes": 2736,
         "xgi_per90": 0.42,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 385,
@@ -6714,7 +7136,8 @@
         "transfers_out_event": 0,
         "minutes": 317,
         "xgi_per90": 0.58,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 386,
@@ -6732,7 +7155,8 @@
         "transfers_out_event": 0,
         "minutes": 2654,
         "xgi_per90": 0.19,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 387,
@@ -6753,8 +7177,10 @@
         "flags": [
           "form_top20",
           "ep_top_pos",
+          "price_rising",
           "corner_taker"
-        ]
+        ],
+        "flag_count": 4
       },
       {
         "id": 388,
@@ -6772,7 +7198,8 @@
         "transfers_out_event": 0,
         "minutes": 1923,
         "xgi_per90": 0.23,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 390,
@@ -6790,7 +7217,8 @@
         "transfers_out_event": 0,
         "minutes": 2991,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 392,
@@ -6808,7 +7236,8 @@
         "transfers_out_event": 0,
         "minutes": 170,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 393,
@@ -6826,7 +7255,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 396,
@@ -6844,7 +7274,8 @@
         "transfers_out_event": 0,
         "minutes": 21,
         "xgi_per90": 1.68,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 398,
@@ -6862,7 +7293,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 499,
@@ -6880,7 +7312,8 @@
         "transfers_out_event": 0,
         "minutes": 694,
         "xgi_per90": 0.35,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 661,
@@ -6898,9 +7331,8 @@
         "transfers_out_event": 0,
         "minutes": 1797,
         "xgi_per90": 0.63,
-        "flags": [
-          "xgi_elite"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 686,
@@ -6919,8 +7351,9 @@
         "minutes": 547,
         "xgi_per90": 0.55,
         "flags": [
-          "xgi_elite"
-        ]
+          "xgi_value"
+        ],
+        "flag_count": 1
       },
       {
         "id": 692,
@@ -6938,7 +7371,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 746,
@@ -6956,7 +7390,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 760,
@@ -6974,7 +7409,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 830,
@@ -6992,7 +7428,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 832,
@@ -7010,7 +7447,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 82,
@@ -7028,7 +7466,10 @@
         "transfers_out_event": 0,
         "minutes": 3200,
         "xgi_per90": 0.4,
-        "flags": []
+        "flags": [
+          "price_rising"
+        ],
+        "flag_count": 1
       },
       {
         "id": 182,
@@ -7046,7 +7487,8 @@
         "transfers_out_event": 0,
         "minutes": 360,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 260,
@@ -7064,7 +7506,11 @@
         "transfers_out_event": 0,
         "minutes": 3150,
         "xgi_per90": 0.19,
-        "flags": []
+        "flags": [
+          "price_rising",
+          "cs_candidate"
+        ],
+        "flag_count": 2
       },
       {
         "id": 401,
@@ -7082,7 +7528,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 402,
@@ -7100,7 +7547,8 @@
         "transfers_out_event": 0,
         "minutes": 971,
         "xgi_per90": 0.24,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 403,
@@ -7118,7 +7566,8 @@
         "transfers_out_event": 0,
         "minutes": 1370,
         "xgi_per90": 0.2,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 405,
@@ -7136,7 +7585,8 @@
         "transfers_out_event": 0,
         "minutes": 686,
         "xgi_per90": 0.16,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 406,
@@ -7154,7 +7604,8 @@
         "transfers_out_event": 0,
         "minutes": 1427,
         "xgi_per90": 0.12,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 407,
@@ -7172,7 +7623,10 @@
         "transfers_out_event": 0,
         "minutes": 2861,
         "xgi_per90": 0.08,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 408,
@@ -7190,7 +7644,10 @@
         "transfers_out_event": 0,
         "minutes": 2139,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 409,
@@ -7208,7 +7665,8 @@
         "transfers_out_event": 0,
         "minutes": 436,
         "xgi_per90": 0.02,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 410,
@@ -7226,7 +7684,8 @@
         "transfers_out_event": 0,
         "minutes": 401,
         "xgi_per90": 0.35,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 411,
@@ -7244,7 +7703,10 @@
         "transfers_out_event": 0,
         "minutes": 2643,
         "xgi_per90": 0.3,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 413,
@@ -7262,7 +7724,8 @@
         "transfers_out_event": 0,
         "minutes": 691,
         "xgi_per90": 0.46,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 414,
@@ -7280,7 +7743,8 @@
         "transfers_out_event": 0,
         "minutes": 2078,
         "xgi_per90": 0.47,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 415,
@@ -7298,7 +7762,8 @@
         "transfers_out_event": 0,
         "minutes": 817,
         "xgi_per90": 0.46,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 416,
@@ -7318,7 +7783,8 @@
         "xgi_per90": 0.22,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 417,
@@ -7337,8 +7803,10 @@
         "minutes": 1772,
         "xgi_per90": 0.67,
         "flags": [
-          "xgi_elite"
-        ]
+          "xgi_elite",
+          "xgi_value"
+        ],
+        "flag_count": 2
       },
       {
         "id": 418,
@@ -7359,7 +7827,8 @@
         "flags": [
           "form_top20",
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 421,
@@ -7377,7 +7846,10 @@
         "transfers_out_event": 0,
         "minutes": 1510,
         "xgi_per90": 0.22,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ],
+        "flag_count": 1
       },
       {
         "id": 422,
@@ -7395,7 +7867,8 @@
         "transfers_out_event": 0,
         "minutes": 125,
         "xgi_per90": 0.39,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 423,
@@ -7413,7 +7886,10 @@
         "transfers_out_event": 0,
         "minutes": 1561,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ],
+        "flag_count": 1
       },
       {
         "id": 427,
@@ -7431,7 +7907,8 @@
         "transfers_out_event": 0,
         "minutes": 1623,
         "xgi_per90": 0.39,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 428,
@@ -7449,7 +7926,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 430,
@@ -7471,8 +7949,10 @@
           "form_top20",
           "ep_top_pos",
           "xgi_elite",
+          "price_rising",
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 5
       },
       {
         "id": 736,
@@ -7491,8 +7971,10 @@
         "minutes": 3060,
         "xgi_per90": 0.0,
         "flags": [
-          "ep_top_pos"
-        ]
+          "ep_top_pos",
+          "cs_candidate"
+        ],
+        "flag_count": 2
       },
       {
         "id": 742,
@@ -7510,7 +7992,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 763,
@@ -7528,7 +8011,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 764,
@@ -7546,7 +8030,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 794,
@@ -7564,7 +8049,8 @@
         "transfers_out_event": 0,
         "minutes": 135,
         "xgi_per90": 0.21,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 119,
@@ -7574,7 +8060,7 @@
         "price": 8.3,
         "status": "a",
         "total_pts": 148,
-        "fpl_form": 4.4,
+        "fpl_form": 4.8,
         "ppg": 4.5,
         "ep_next": 3.2,
         "selected_pct": 15.0,
@@ -7583,9 +8069,9 @@
         "minutes": 2611,
         "xgi_per90": 0.58,
         "flags": [
-          "xgi_elite",
-          "corner_taker"
-        ]
+          "price_rising"
+        ],
+        "flag_count": 1
       },
       {
         "id": 431,
@@ -7603,7 +8089,8 @@
         "transfers_out_event": 0,
         "minutes": 540,
         "xgi_per90": 0.01,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 434,
@@ -7621,7 +8108,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 435,
@@ -7639,7 +8127,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 436,
@@ -7657,7 +8146,8 @@
         "transfers_out_event": 0,
         "minutes": 1170,
         "xgi_per90": 0.17,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 437,
@@ -7667,7 +8157,7 @@
         "price": 4.8,
         "status": "a",
         "total_pts": 51,
-        "fpl_form": 3.0,
+        "fpl_form": 3.8,
         "ppg": 2.8,
         "ep_next": 2.2,
         "selected_pct": 0.4,
@@ -7675,7 +8165,8 @@
         "transfers_out_event": 0,
         "minutes": 1229,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 438,
@@ -7685,7 +8176,7 @@
         "price": 4.9,
         "status": "a",
         "total_pts": 53,
-        "fpl_form": 3.6,
+        "fpl_form": 4.2,
         "ppg": 2.6,
         "ep_next": 3.0,
         "selected_pct": 0.3,
@@ -7693,7 +8184,8 @@
         "transfers_out_event": 0,
         "minutes": 977,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 439,
@@ -7711,7 +8203,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 440,
@@ -7721,7 +8214,7 @@
         "price": 4.5,
         "status": "a",
         "total_pts": 111,
-        "fpl_form": 1.2,
+        "fpl_form": 0.5,
         "ppg": 3.3,
         "ep_next": 1.5,
         "selected_pct": 3.8,
@@ -7729,7 +8222,8 @@
         "transfers_out_event": 0,
         "minutes": 2609,
         "xgi_per90": 0.16,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 441,
@@ -7739,7 +8233,7 @@
         "price": 4.1,
         "status": "a",
         "total_pts": 95,
-        "fpl_form": 4.2,
+        "fpl_form": 5.2,
         "ppg": 3.7,
         "ep_next": 0.8,
         "selected_pct": 2.4,
@@ -7747,7 +8241,11 @@
         "transfers_out_event": 0,
         "minutes": 1440,
         "xgi_per90": 0.27,
-        "flags": []
+        "flags": [
+          "form_top20",
+          "value_gem"
+        ],
+        "flag_count": 2
       },
       {
         "id": 442,
@@ -7757,7 +8255,7 @@
         "price": 4.4,
         "status": "a",
         "total_pts": 90,
-        "fpl_form": 5.4,
+        "fpl_form": 5.0,
         "ppg": 3.9,
         "ep_next": 5.2,
         "selected_pct": 1.7,
@@ -7766,9 +8264,9 @@
         "minutes": 1649,
         "xgi_per90": 0.09,
         "flags": [
-          "form_top20",
           "value_gem"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 443,
@@ -7787,8 +8285,10 @@
         "minutes": 3220,
         "xgi_per90": 0.08,
         "flags": [
-          "value_gem"
-        ]
+          "value_gem",
+          "cs_candidate"
+        ],
+        "flag_count": 2
       },
       {
         "id": 444,
@@ -7798,7 +8298,7 @@
         "price": 4.1,
         "status": "a",
         "total_pts": 56,
-        "fpl_form": 0.6,
+        "fpl_form": 0.5,
         "ppg": 1.8,
         "ep_next": 0.5,
         "selected_pct": 1.2,
@@ -7806,7 +8306,8 @@
         "transfers_out_event": 0,
         "minutes": 1730,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 446,
@@ -7824,7 +8325,8 @@
         "transfers_out_event": 0,
         "minutes": 2,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 447,
@@ -7834,7 +8336,7 @@
         "price": 3.7,
         "status": "a",
         "total_pts": 42,
-        "fpl_form": 0.6,
+        "fpl_form": 0.2,
         "ppg": 2.5,
         "ep_next": 0.8,
         "selected_pct": 2.6,
@@ -7842,7 +8344,8 @@
         "transfers_out_event": 0,
         "minutes": 920,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 448,
@@ -7860,7 +8363,8 @@
         "transfers_out_event": 0,
         "minutes": 15,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 449,
@@ -7870,7 +8374,7 @@
         "price": 10.4,
         "status": "a",
         "total_pts": 235,
-        "fpl_form": 7.2,
+        "fpl_form": 7.8,
         "ppg": 6.7,
         "ep_next": 5.5,
         "selected_pct": 48.0,
@@ -7881,9 +8385,11 @@
         "flags": [
           "form_top20",
           "xgi_elite",
+          "price_rising",
           "penalty_taker",
           "corner_taker"
-        ]
+        ],
+        "flag_count": 5
       },
       {
         "id": 450,
@@ -7893,7 +8399,7 @@
         "price": 8.1,
         "status": "a",
         "total_pts": 143,
-        "fpl_form": 3.6,
+        "fpl_form": 4.5,
         "ppg": 4.3,
         "ep_next": 4.5,
         "selected_pct": 8.7,
@@ -7901,7 +8407,8 @@
         "transfers_out_event": 0,
         "minutes": 2493,
         "xgi_per90": 0.37,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 452,
@@ -7911,7 +8418,7 @@
         "price": 6.2,
         "status": "a",
         "total_pts": 91,
-        "fpl_form": 2.8,
+        "fpl_form": 3.2,
         "ppg": 2.8,
         "ep_next": 1.8,
         "selected_pct": 1.3,
@@ -7919,7 +8426,8 @@
         "transfers_out_event": 0,
         "minutes": 2339,
         "xgi_per90": 0.39,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 455,
@@ -7929,7 +8437,7 @@
         "price": 5.9,
         "status": "a",
         "total_pts": 58,
-        "fpl_form": 2.2,
+        "fpl_form": 2.5,
         "ppg": 2.5,
         "ep_next": 1.5,
         "selected_pct": 0.3,
@@ -7937,7 +8445,8 @@
         "transfers_out_event": 0,
         "minutes": 1010,
         "xgi_per90": 0.28,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 457,
@@ -7947,7 +8456,7 @@
         "price": 5.8,
         "status": "a",
         "total_pts": 165,
-        "fpl_form": 3.4,
+        "fpl_form": 1.2,
         "ppg": 4.9,
         "ep_next": 0.0,
         "selected_pct": 3.8,
@@ -7955,7 +8464,10 @@
         "transfers_out_event": 0,
         "minutes": 2575,
         "xgi_per90": 0.3,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ],
+        "flag_count": 1
       },
       {
         "id": 458,
@@ -7965,7 +8477,7 @@
         "price": 4.7,
         "status": "a",
         "total_pts": 73,
-        "fpl_form": 4.8,
+        "fpl_form": 5.0,
         "ppg": 2.6,
         "ep_next": 5.5,
         "selected_pct": 1.4,
@@ -7973,7 +8485,10 @@
         "transfers_out_event": 0,
         "minutes": 1653,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [
+          "value_gem"
+        ],
+        "flag_count": 1
       },
       {
         "id": 459,
@@ -7991,7 +8506,8 @@
         "transfers_out_event": 0,
         "minutes": 876,
         "xgi_per90": 0.09,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 461,
@@ -8009,7 +8525,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 462,
@@ -8027,7 +8544,8 @@
         "transfers_out_event": 0,
         "minutes": 107,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 466,
@@ -8037,7 +8555,7 @@
         "price": 5.8,
         "status": "a",
         "total_pts": 42,
-        "fpl_form": 0.8,
+        "fpl_form": 1.0,
         "ppg": 1.8,
         "ep_next": 0.8,
         "selected_pct": 0.4,
@@ -8045,7 +8563,8 @@
         "transfers_out_event": 0,
         "minutes": 607,
         "xgi_per90": 0.46,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 467,
@@ -8063,7 +8582,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 681,
@@ -8073,7 +8593,7 @@
         "price": 7.2,
         "status": "d",
         "total_pts": 111,
-        "fpl_form": 2.6,
+        "fpl_form": 1.2,
         "ppg": 3.7,
         "ep_next": 1.6,
         "selected_pct": 4.6,
@@ -8081,7 +8601,8 @@
         "transfers_out_event": 0,
         "minutes": 1630,
         "xgi_per90": 0.53,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 733,
@@ -8091,7 +8612,7 @@
         "price": 5.1,
         "status": "a",
         "total_pts": 109,
-        "fpl_form": 4.2,
+        "fpl_form": 4.5,
         "ppg": 3.4,
         "ep_next": 3.8,
         "selected_pct": 3.6,
@@ -8101,7 +8622,8 @@
         "xgi_per90": 0.0,
         "flags": [
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 755,
@@ -8119,7 +8641,8 @@
         "transfers_out_event": 0,
         "minutes": 40,
         "xgi_per90": 0.24,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 769,
@@ -8137,7 +8660,8 @@
         "transfers_out_event": 0,
         "minutes": 15,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 771,
@@ -8155,7 +8679,8 @@
         "transfers_out_event": 0,
         "minutes": 17,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 788,
@@ -8173,7 +8698,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 827,
@@ -8191,7 +8717,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 52,
@@ -8209,7 +8736,8 @@
         "transfers_out_event": 0,
         "minutes": 1441,
         "xgi_per90": 0.16,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 135,
@@ -8227,9 +8755,8 @@
         "transfers_out_event": 0,
         "minutes": 517,
         "xgi_per90": 0.63,
-        "flags": [
-          "xgi_elite"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 469,
@@ -8247,7 +8774,10 @@
         "transfers_out_event": 0,
         "minutes": 2416,
         "xgi_per90": 0.01,
-        "flags": []
+        "flags": [
+          "gk_shot_stopper"
+        ],
+        "flag_count": 1
       },
       {
         "id": 471,
@@ -8265,7 +8795,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 473,
@@ -8283,9 +8814,8 @@
         "transfers_out_event": 0,
         "minutes": 2176,
         "xgi_per90": 0.15,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 474,
@@ -8303,7 +8833,8 @@
         "transfers_out_event": 0,
         "minutes": 1089,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 475,
@@ -8321,7 +8852,10 @@
         "transfers_out_event": 0,
         "minutes": 1834,
         "xgi_per90": 0.12,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ],
+        "flag_count": 1
       },
       {
         "id": 476,
@@ -8339,7 +8873,8 @@
         "transfers_out_event": 0,
         "minutes": 2195,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 477,
@@ -8357,7 +8892,8 @@
         "transfers_out_event": 0,
         "minutes": 1326,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 478,
@@ -8375,7 +8911,8 @@
         "transfers_out_event": 0,
         "minutes": 1586,
         "xgi_per90": 0.12,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 479,
@@ -8393,7 +8930,8 @@
         "transfers_out_event": 0,
         "minutes": 45,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 481,
@@ -8411,7 +8949,8 @@
         "transfers_out_event": 0,
         "minutes": 7,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 483,
@@ -8429,7 +8968,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 485,
@@ -8448,9 +8988,9 @@
         "minutes": 1798,
         "xgi_per90": 0.61,
         "flags": [
-          "xgi_elite",
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 486,
@@ -8468,7 +9008,8 @@
         "transfers_out_event": 0,
         "minutes": 1302,
         "xgi_per90": 0.23,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 487,
@@ -8486,7 +9027,8 @@
         "transfers_out_event": 0,
         "minutes": 1951,
         "xgi_per90": 0.45,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 488,
@@ -8504,7 +9046,10 @@
         "transfers_out_event": 0,
         "minutes": 2456,
         "xgi_per90": 0.38,
-        "flags": []
+        "flags": [
+          "price_rising"
+        ],
+        "flag_count": 1
       },
       {
         "id": 489,
@@ -8522,7 +9067,8 @@
         "transfers_out_event": 0,
         "minutes": 1606,
         "xgi_per90": 0.32,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 490,
@@ -8540,7 +9086,8 @@
         "transfers_out_event": 0,
         "minutes": 1950,
         "xgi_per90": 0.17,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 491,
@@ -8560,7 +9107,8 @@
         "xgi_per90": 0.16,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 494,
@@ -8578,7 +9126,8 @@
         "transfers_out_event": 0,
         "minutes": 972,
         "xgi_per90": 0.22,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 497,
@@ -8596,7 +9145,8 @@
         "transfers_out_event": 0,
         "minutes": 1493,
         "xgi_per90": 0.21,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 500,
@@ -8618,8 +9168,9 @@
           "form_top20",
           "ep_top_pos",
           "value_gem",
-          "xgi_elite"
-        ]
+          "xgi_value"
+        ],
+        "flag_count": 4
       },
       {
         "id": 501,
@@ -8637,7 +9188,8 @@
         "transfers_out_event": 0,
         "minutes": 13,
         "xgi_per90": 0.21,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 674,
@@ -8655,7 +9207,8 @@
         "transfers_out_event": 0,
         "minutes": 1003,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 684,
@@ -8673,7 +9226,8 @@
         "transfers_out_event": 0,
         "minutes": 2963,
         "xgi_per90": 0.18,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 689,
@@ -8691,7 +9245,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 714,
@@ -8709,7 +9264,10 @@
         "transfers_out_event": 0,
         "minutes": 1896,
         "xgi_per90": 0.38,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ],
+        "flag_count": 1
       },
       {
         "id": 753,
@@ -8727,7 +9285,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 765,
@@ -8745,7 +9304,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 772,
@@ -8763,7 +9323,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 12,
@@ -8781,7 +9342,8 @@
         "transfers_out_event": 0,
         "minutes": 352,
         "xgi_per90": 0.11,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 400,
@@ -8799,7 +9361,8 @@
         "transfers_out_event": 0,
         "minutes": 270,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 426,
@@ -8817,7 +9380,8 @@
         "transfers_out_event": 0,
         "minutes": 288,
         "xgi_per90": 0.18,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 502,
@@ -8836,8 +9400,10 @@
         "minutes": 2667,
         "xgi_per90": 0.0,
         "flags": [
-          "ep_top_pos"
-        ]
+          "ep_top_pos",
+          "gk_shot_stopper"
+        ],
+        "flag_count": 2
       },
       {
         "id": 505,
@@ -8855,7 +9421,8 @@
         "transfers_out_event": 0,
         "minutes": 3375,
         "xgi_per90": 0.04,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 506,
@@ -8873,7 +9440,8 @@
         "transfers_out_event": 0,
         "minutes": 2130,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 507,
@@ -8891,7 +9459,8 @@
         "transfers_out_event": 0,
         "minutes": 1587,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 508,
@@ -8909,7 +9478,8 @@
         "transfers_out_event": 0,
         "minutes": 3203,
         "xgi_per90": 0.17,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 510,
@@ -8927,7 +9497,8 @@
         "transfers_out_event": 0,
         "minutes": 514,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 511,
@@ -8945,7 +9516,8 @@
         "transfers_out_event": 0,
         "minutes": 1340,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 513,
@@ -8963,7 +9535,8 @@
         "transfers_out_event": 0,
         "minutes": 165,
         "xgi_per90": 0.01,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 514,
@@ -8981,7 +9554,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 515,
@@ -9001,7 +9575,8 @@
         "xgi_per90": 0.39,
         "flags": [
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 516,
@@ -9019,7 +9594,10 @@
         "transfers_out_event": 0,
         "minutes": 1838,
         "xgi_per90": 0.29,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ],
+        "flag_count": 1
       },
       {
         "id": 517,
@@ -9041,8 +9619,10 @@
           "form_top20",
           "ep_top_pos",
           "value_gem",
+          "cbit_strong",
           "corner_taker"
-        ]
+        ],
+        "flag_count": 5
       },
       {
         "id": 519,
@@ -9060,7 +9640,8 @@
         "transfers_out_event": 0,
         "minutes": 1168,
         "xgi_per90": 0.17,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 521,
@@ -9078,7 +9659,10 @@
         "transfers_out_event": 0,
         "minutes": 2073,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ],
+        "flag_count": 1
       },
       {
         "id": 522,
@@ -9096,7 +9680,8 @@
         "transfers_out_event": 0,
         "minutes": 602,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 523,
@@ -9114,7 +9699,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 525,
@@ -9134,7 +9720,8 @@
         "xgi_per90": 0.46,
         "flags": [
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 526,
@@ -9154,7 +9741,8 @@
         "xgi_per90": 0.3,
         "flags": [
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 527,
@@ -9174,8 +9762,10 @@
         "xgi_per90": 0.83,
         "flags": [
           "ep_top_pos",
-          "xgi_elite"
-        ]
+          "xgi_elite",
+          "xgi_value"
+        ],
+        "flag_count": 3
       },
       {
         "id": 669,
@@ -9193,7 +9783,8 @@
         "transfers_out_event": 0,
         "minutes": 1167,
         "xgi_per90": 0.2,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 675,
@@ -9211,7 +9802,8 @@
         "transfers_out_event": 0,
         "minutes": 45,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 693,
@@ -9229,9 +9821,8 @@
         "transfers_out_event": 0,
         "minutes": 1676,
         "xgi_per90": 0.32,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 715,
@@ -9249,7 +9840,8 @@
         "transfers_out_event": 0,
         "minutes": 437,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 716,
@@ -9267,7 +9859,8 @@
         "transfers_out_event": 0,
         "minutes": 1025,
         "xgi_per90": 0.16,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 734,
@@ -9285,7 +9878,8 @@
         "transfers_out_event": 0,
         "minutes": 549,
         "xgi_per90": 0.26,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 805,
@@ -9303,7 +9897,8 @@
         "transfers_out_event": 0,
         "minutes": 126,
         "xgi_per90": 0.57,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 814,
@@ -9321,7 +9916,8 @@
         "transfers_out_event": 0,
         "minutes": 353,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 835,
@@ -9339,7 +9935,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 836,
@@ -9357,7 +9954,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 841,
@@ -9375,7 +9973,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 529,
@@ -9393,7 +9992,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 531,
@@ -9411,7 +10011,8 @@
         "transfers_out_event": 0,
         "minutes": 2144,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 532,
@@ -9429,9 +10030,8 @@
         "transfers_out_event": 0,
         "minutes": 3032,
         "xgi_per90": 0.13,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 535,
@@ -9449,7 +10049,8 @@
         "transfers_out_event": 0,
         "minutes": 319,
         "xgi_per90": 0.03,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 539,
@@ -9467,7 +10068,8 @@
         "transfers_out_event": 0,
         "minutes": 565,
         "xgi_per90": 0.04,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 541,
@@ -9485,7 +10087,8 @@
         "transfers_out_event": 0,
         "minutes": 1966,
         "xgi_per90": 0.04,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 542,
@@ -9503,7 +10106,8 @@
         "transfers_out_event": 0,
         "minutes": 133,
         "xgi_per90": 0.01,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 543,
@@ -9521,7 +10125,8 @@
         "transfers_out_event": 0,
         "minutes": 649,
         "xgi_per90": 0.14,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 544,
@@ -9541,7 +10146,8 @@
         "xgi_per90": 0.26,
         "flags": [
           "penalty_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 546,
@@ -9559,7 +10165,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 547,
@@ -9580,7 +10187,8 @@
         "flags": [
           "form_top20",
           "value_gem"
-        ]
+        ],
+        "flag_count": 2
       },
       {
         "id": 548,
@@ -9598,7 +10206,8 @@
         "transfers_out_event": 0,
         "minutes": 399,
         "xgi_per90": 0.31,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 550,
@@ -9616,7 +10225,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 551,
@@ -9634,7 +10244,8 @@
         "transfers_out_event": 0,
         "minutes": 758,
         "xgi_per90": 0.21,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 552,
@@ -9652,7 +10263,8 @@
         "transfers_out_event": 0,
         "minutes": 2891,
         "xgi_per90": 0.09,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 553,
@@ -9670,7 +10282,8 @@
         "transfers_out_event": 0,
         "minutes": 1553,
         "xgi_per90": 0.19,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 554,
@@ -9688,7 +10301,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 557,
@@ -9706,7 +10320,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 560,
@@ -9724,7 +10339,8 @@
         "transfers_out_event": 0,
         "minutes": 1148,
         "xgi_per90": 0.4,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 561,
@@ -9742,7 +10358,8 @@
         "transfers_out_event": 0,
         "minutes": 751,
         "xgi_per90": 0.29,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 562,
@@ -9760,7 +10377,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 668,
@@ -9780,7 +10398,8 @@
         "xgi_per90": 0.15,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 670,
@@ -9798,7 +10417,10 @@
         "transfers_out_event": 0,
         "minutes": 3150,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 678,
@@ -9816,7 +10438,8 @@
         "transfers_out_event": 0,
         "minutes": 125,
         "xgi_per90": 0.11,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 683,
@@ -9834,7 +10457,10 @@
         "transfers_out_event": 0,
         "minutes": 2797,
         "xgi_per90": 0.08,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ],
+        "flag_count": 1
       },
       {
         "id": 694,
@@ -9854,8 +10480,10 @@
         "xgi_per90": 0.14,
         "flags": [
           "form_top20",
-          "value_gem"
-        ]
+          "value_gem",
+          "price_rising"
+        ],
+        "flag_count": 3
       },
       {
         "id": 724,
@@ -9873,7 +10501,8 @@
         "transfers_out_event": 0,
         "minutes": 1681,
         "xgi_per90": 0.09,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 730,
@@ -9891,7 +10520,8 @@
         "transfers_out_event": 0,
         "minutes": 1920,
         "xgi_per90": 0.31,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 735,
@@ -9909,7 +10539,8 @@
         "transfers_out_event": 0,
         "minutes": 634,
         "xgi_per90": 0.11,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 774,
@@ -9927,7 +10558,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 800,
@@ -9945,7 +10577,8 @@
         "transfers_out_event": 0,
         "minutes": 38,
         "xgi_per90": 0.09,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 812,
@@ -9963,7 +10596,8 @@
         "transfers_out_event": 0,
         "minutes": 270,
         "xgi_per90": 0.01,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 813,
@@ -9981,7 +10615,8 @@
         "transfers_out_event": 0,
         "minutes": 401,
         "xgi_per90": 0.2,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 821,
@@ -9999,7 +10634,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 822,
@@ -10017,7 +10653,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 565,
@@ -10035,7 +10672,8 @@
         "transfers_out_event": 0,
         "minutes": 2790,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 566,
@@ -10053,7 +10691,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 567,
@@ -10071,7 +10710,8 @@
         "transfers_out_event": 0,
         "minutes": 630,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 568,
@@ -10089,7 +10729,8 @@
         "transfers_out_event": 0,
         "minutes": 2793,
         "xgi_per90": 0.17,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 569,
@@ -10107,7 +10748,10 @@
         "transfers_out_event": 0,
         "minutes": 1869,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ],
+        "flag_count": 1
       },
       {
         "id": 570,
@@ -10125,7 +10769,10 @@
         "transfers_out_event": 0,
         "minutes": 1489,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ],
+        "flag_count": 1
       },
       {
         "id": 571,
@@ -10143,7 +10790,8 @@
         "transfers_out_event": 0,
         "minutes": 136,
         "xgi_per90": 0.37,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 572,
@@ -10161,7 +10809,8 @@
         "transfers_out_event": 0,
         "minutes": 515,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 573,
@@ -10179,7 +10828,8 @@
         "transfers_out_event": 0,
         "minutes": 2049,
         "xgi_per90": 0.12,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 574,
@@ -10197,7 +10847,8 @@
         "transfers_out_event": 0,
         "minutes": 1335,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 575,
@@ -10215,7 +10866,8 @@
         "transfers_out_event": 0,
         "minutes": 3041,
         "xgi_per90": 0.09,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 581,
@@ -10233,7 +10885,8 @@
         "transfers_out_event": 0,
         "minutes": 34,
         "xgi_per90": 0.72,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 582,
@@ -10251,7 +10904,8 @@
         "transfers_out_event": 0,
         "minutes": 1535,
         "xgi_per90": 0.25,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 583,
@@ -10269,7 +10923,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 584,
@@ -10289,7 +10944,8 @@
         "xgi_per90": 0.33,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 585,
@@ -10307,7 +10963,11 @@
         "transfers_out_event": 0,
         "minutes": 1880,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [
+          "cbit_strong",
+          "rotation_risk"
+        ],
+        "flag_count": 2
       },
       {
         "id": 586,
@@ -10325,7 +10985,8 @@
         "transfers_out_event": 0,
         "minutes": 955,
         "xgi_per90": 0.16,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 587,
@@ -10343,7 +11004,8 @@
         "transfers_out_event": 0,
         "minutes": 600,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 588,
@@ -10361,7 +11023,8 @@
         "transfers_out_event": 0,
         "minutes": 972,
         "xgi_per90": 0.29,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 591,
@@ -10379,7 +11042,8 @@
         "transfers_out_event": 0,
         "minutes": 1471,
         "xgi_per90": 0.17,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 593,
@@ -10397,7 +11061,10 @@
         "transfers_out_event": 0,
         "minutes": 1388,
         "xgi_per90": 0.18,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ],
+        "flag_count": 1
       },
       {
         "id": 595,
@@ -10415,7 +11082,8 @@
         "transfers_out_event": 0,
         "minutes": 14,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 596,
@@ -10433,7 +11101,8 @@
         "transfers_out_event": 0,
         "minutes": 997,
         "xgi_per90": 0.3,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 597,
@@ -10453,7 +11122,8 @@
         "xgi_per90": 0.47,
         "flags": [
           "ep_top_pos"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 673,
@@ -10472,9 +11142,10 @@
         "minutes": 2192,
         "xgi_per90": 0.14,
         "flags": [
-          "form_top20",
-          "value_gem"
-        ]
+          "value_gem",
+          "cbit_strong"
+        ],
+        "flag_count": 2
       },
       {
         "id": 717,
@@ -10492,9 +11163,8 @@
         "transfers_out_event": 0,
         "minutes": 1747,
         "xgi_per90": 0.36,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 726,
@@ -10512,7 +11182,8 @@
         "transfers_out_event": 0,
         "minutes": 1655,
         "xgi_per90": 0.2,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 745,
@@ -10530,7 +11201,8 @@
         "transfers_out_event": 0,
         "minutes": 1,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 750,
@@ -10548,7 +11220,8 @@
         "transfers_out_event": 0,
         "minutes": 1,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 790,
@@ -10566,7 +11239,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 796,
@@ -10584,7 +11258,8 @@
         "transfers_out_event": 0,
         "minutes": 1183,
         "xgi_per90": 0.14,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 804,
@@ -10602,7 +11277,8 @@
         "transfers_out_event": 0,
         "minutes": 142,
         "xgi_per90": 0.03,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 811,
@@ -10620,7 +11296,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 818,
@@ -10638,7 +11315,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 326,
@@ -10656,7 +11334,8 @@
         "transfers_out_event": 0,
         "minutes": 376,
         "xgi_per90": 0.31,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 600,
@@ -10674,7 +11353,11 @@
         "transfers_out_event": 0,
         "minutes": 1800,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [
+          "gk_shot_stopper",
+          "rotation_risk"
+        ],
+        "flag_count": 2
       },
       {
         "id": 603,
@@ -10692,7 +11375,8 @@
         "transfers_out_event": 0,
         "minutes": 2706,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 605,
@@ -10710,7 +11394,8 @@
         "transfers_out_event": 0,
         "minutes": 1559,
         "xgi_per90": 0.04,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 606,
@@ -10728,7 +11413,8 @@
         "transfers_out_event": 0,
         "minutes": 2532,
         "xgi_per90": 0.11,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 607,
@@ -10746,7 +11432,8 @@
         "transfers_out_event": 0,
         "minutes": 180,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 608,
@@ -10764,7 +11451,8 @@
         "transfers_out_event": 0,
         "minutes": 656,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 609,
@@ -10782,7 +11470,10 @@
         "transfers_out_event": 0,
         "minutes": 1817,
         "xgi_per90": 0.03,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ],
+        "flag_count": 1
       },
       {
         "id": 610,
@@ -10800,7 +11491,8 @@
         "transfers_out_event": 0,
         "minutes": 2080,
         "xgi_per90": 0.04,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 612,
@@ -10818,7 +11510,8 @@
         "transfers_out_event": 0,
         "minutes": 1513,
         "xgi_per90": 0.29,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 613,
@@ -10836,7 +11529,8 @@
         "transfers_out_event": 0,
         "minutes": 2190,
         "xgi_per90": 0.26,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 615,
@@ -10854,9 +11548,8 @@
         "transfers_out_event": 0,
         "minutes": 2470,
         "xgi_per90": 0.32,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 618,
@@ -10874,7 +11567,8 @@
         "transfers_out_event": 0,
         "minutes": 175,
         "xgi_per90": 0.04,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 619,
@@ -10892,7 +11586,8 @@
         "transfers_out_event": 0,
         "minutes": 121,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 621,
@@ -10910,7 +11605,8 @@
         "transfers_out_event": 0,
         "minutes": 156,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 623,
@@ -10928,7 +11624,8 @@
         "transfers_out_event": 0,
         "minutes": 1162,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 624,
@@ -10948,7 +11645,8 @@
         "xgi_per90": 0.33,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 625,
@@ -10966,7 +11664,8 @@
         "transfers_out_event": 0,
         "minutes": 407,
         "xgi_per90": 0.26,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 659,
@@ -10984,7 +11683,8 @@
         "transfers_out_event": 0,
         "minutes": 1378,
         "xgi_per90": 0.09,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 671,
@@ -11003,8 +11703,9 @@
         "minutes": 1234,
         "xgi_per90": 0.59,
         "flags": [
-          "xgi_elite"
-        ]
+          "xgi_value"
+        ],
+        "flag_count": 1
       },
       {
         "id": 679,
@@ -11022,7 +11723,8 @@
         "transfers_out_event": 0,
         "minutes": 1620,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 708,
@@ -11040,7 +11742,8 @@
         "transfers_out_event": 0,
         "minutes": 3017,
         "xgi_per90": 0.15,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 718,
@@ -11058,7 +11761,10 @@
         "transfers_out_event": 0,
         "minutes": 971,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ],
+        "flag_count": 1
       },
       {
         "id": 738,
@@ -11076,7 +11782,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 747,
@@ -11094,7 +11801,8 @@
         "transfers_out_event": 0,
         "minutes": 113,
         "xgi_per90": 0.49,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 752,
@@ -11112,7 +11820,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 758,
@@ -11130,7 +11839,8 @@
         "transfers_out_event": 0,
         "minutes": 67,
         "xgi_per90": 0.14,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 785,
@@ -11148,7 +11858,8 @@
         "transfers_out_event": 0,
         "minutes": 819,
         "xgi_per90": 0.24,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 791,
@@ -11166,7 +11877,8 @@
         "transfers_out_event": 0,
         "minutes": 1384,
         "xgi_per90": 0.42,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 802,
@@ -11184,7 +11896,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 815,
@@ -11202,7 +11915,8 @@
         "transfers_out_event": 0,
         "minutes": 1254,
         "xgi_per90": 0.08,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 825,
@@ -11220,7 +11934,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 627,
@@ -11238,7 +11953,10 @@
         "transfers_out_event": 0,
         "minutes": 1080,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [
+          "gk_shot_stopper"
+        ],
+        "flag_count": 1
       },
       {
         "id": 628,
@@ -11256,7 +11974,8 @@
         "transfers_out_event": 0,
         "minutes": 2070,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 629,
@@ -11274,7 +11993,8 @@
         "transfers_out_event": 0,
         "minutes": 270,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 631,
@@ -11292,7 +12012,8 @@
         "transfers_out_event": 0,
         "minutes": 1100,
         "xgi_per90": 0.08,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 632,
@@ -11310,7 +12031,8 @@
         "transfers_out_event": 0,
         "minutes": 786,
         "xgi_per90": 0.03,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 633,
@@ -11330,7 +12052,8 @@
         "xgi_per90": 0.16,
         "flags": [
           "corner_taker"
-        ]
+        ],
+        "flag_count": 1
       },
       {
         "id": 634,
@@ -11348,7 +12071,8 @@
         "transfers_out_event": 0,
         "minutes": 2137,
         "xgi_per90": 0.14,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 635,
@@ -11366,7 +12090,8 @@
         "transfers_out_event": 0,
         "minutes": 954,
         "xgi_per90": 0.24,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 636,
@@ -11384,7 +12109,8 @@
         "transfers_out_event": 0,
         "minutes": 2552,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 637,
@@ -11402,7 +12128,8 @@
         "transfers_out_event": 0,
         "minutes": 1423,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 638,
@@ -11420,7 +12147,8 @@
         "transfers_out_event": 0,
         "minutes": 423,
         "xgi_per90": 0.08,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 640,
@@ -11438,7 +12166,8 @@
         "transfers_out_event": 0,
         "minutes": 257,
         "xgi_per90": 0.25,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 642,
@@ -11456,7 +12185,8 @@
         "transfers_out_event": 0,
         "minutes": 1439,
         "xgi_per90": 0.25,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 643,
@@ -11474,7 +12204,10 @@
         "transfers_out_event": 0,
         "minutes": 2760,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ],
+        "flag_count": 1
       },
       {
         "id": 644,
@@ -11492,7 +12225,8 @@
         "transfers_out_event": 0,
         "minutes": 1239,
         "xgi_per90": 0.16,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 645,
@@ -11510,7 +12244,8 @@
         "transfers_out_event": 0,
         "minutes": 228,
         "xgi_per90": 0.3,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 646,
@@ -11528,7 +12263,10 @@
         "transfers_out_event": 0,
         "minutes": 2829,
         "xgi_per90": 0.11,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ],
+        "flag_count": 1
       },
       {
         "id": 648,
@@ -11546,7 +12284,8 @@
         "transfers_out_event": 0,
         "minutes": 872,
         "xgi_per90": 0.21,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 651,
@@ -11564,7 +12303,8 @@
         "transfers_out_event": 0,
         "minutes": 12,
         "xgi_per90": 1.72,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 652,
@@ -11582,7 +12322,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 657,
@@ -11600,7 +12341,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 658,
@@ -11618,7 +12360,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 663,
@@ -11636,7 +12379,8 @@
         "transfers_out_event": 0,
         "minutes": 1117,
         "xgi_per90": 0.32,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 682,
@@ -11654,7 +12398,8 @@
         "transfers_out_event": 0,
         "minutes": 1042,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 695,
@@ -11672,7 +12417,10 @@
         "transfers_out_event": 0,
         "minutes": 1834,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ],
+        "flag_count": 1
       },
       {
         "id": 709,
@@ -11690,7 +12438,8 @@
         "transfers_out_event": 0,
         "minutes": 2356,
         "xgi_per90": 0.15,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 720,
@@ -11708,7 +12457,8 @@
         "transfers_out_event": 0,
         "minutes": 1402,
         "xgi_per90": 0.38,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 749,
@@ -11726,9 +12476,8 @@
         "transfers_out_event": 0,
         "minutes": 1787,
         "xgi_per90": 0.29,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 766,
@@ -11746,7 +12495,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 767,
@@ -11764,7 +12514,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 778,
@@ -11782,7 +12533,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 809,
@@ -11800,7 +12552,8 @@
         "transfers_out_event": 0,
         "minutes": 16,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 816,
@@ -11818,7 +12571,8 @@
         "transfers_out_event": 0,
         "minutes": 457,
         "xgi_per90": 0.11,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 817,
@@ -11836,7 +12590,8 @@
         "transfers_out_event": 0,
         "minutes": 1141,
         "xgi_per90": 0.29,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 828,
@@ -11854,7 +12609,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 831,
@@ -11872,7 +12628,8 @@
         "transfers_out_event": 0,
         "minutes": 0,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [],
+        "flag_count": 0
       }
     ]
   }
