@@ -189,6 +189,13 @@ def compute_auto_flags(bootstrap_elements, ci_latest, config):
             'minutes': minutes,
             'penalties_order': safe_float(ci.get('penalties_order')),
             'corners_order': safe_float(ci.get('corners_and_indirect_freekicks_order')),
+            # CI defensive metric (= (CBI + Tackles) / (mins/90))
+            'cbit_per90': safe_float(ci.get('defensive_contribution_per_90'), 0),
+            # FPL bootstrap fields
+            'saves': safe_int(e.get('saves'), 0),
+            'cost_change_start': safe_int(e.get('cost_change_start'), 0),
+            'clean_sheets': safe_int(e.get('clean_sheets'), 0),
+            'avg_mins_per_gw': round(safe_int(e.get('minutes'), 0) / 38, 1),
         })
 
     flagged = {}  # player_id -> [flag, ...]
@@ -221,17 +228,69 @@ def compute_auto_flags(bootstrap_elements, ci_latest, config):
                 and p['minutes'] >= 450):
             add_flag(p['id'], 'value_gem')
 
-    # xGI elite: high involvement per 90, enough minutes
+    # xgi_elite: high xGI per 90, enough minutes
     for p in candidates:
         if (p['xgi_per90'] >= t['xgi_per90_min']
                 and p['minutes'] >= t['xgi_min_minutes']):
             add_flag(p['id'], 'xgi_elite')
 
+    # xgi_value: strong underlying numbers + affordable price
+    # Catches players with elite xGI not yet premium-priced
+    for p in candidates:
+        if (p['xgi_per90'] >= t.get('xgi_value_min_xgi_per90', 0.55)
+                and p['price'] <= t.get('xgi_value_max_price', 7.0)
+                and p['minutes'] >= t['xgi_min_minutes']):
+            add_flag(p['id'], 'xgi_value')
+
+    # cbit_strong: high defensive contribution for DEF/MID
+    # Uses CI defensive_contribution_per_90 = (CBI + Tackles) / (mins/90)
+    for p in candidates:
+        if (p['position'] in (2, 3)
+                and p['cbit_per90'] >= t.get('cbit_per90_min', 10.0)
+                and p['minutes'] >= t.get('cbit_min_minutes', 450)):
+            add_flag(p['id'], 'cbit_strong')
+
+    # gk_shot_stopper: GKs with high saves per 90
+    # High saves = points (1 per 3) + BPS + bonus at shot-heavy teams
+    for p in candidates:
+        saves_per90 = (p['saves'] / p['minutes'] * 90) if p['minutes'] > 0 else 0
+        if (p['position'] == 1
+                and saves_per90 >= t.get('gk_saves_per90_min', 3.0)
+                and p['minutes'] >= t.get('gk_min_minutes', 450)):
+            add_flag(p['id'], 'gk_shot_stopper')
+
+    # price_rising: sustained price appreciation since season start
+    # Signals FPL popularity + form momentum (live season only)
+    for p in candidates:
+        if (p['cost_change_start'] >= t.get('price_rising_min_change', 3)
+                and p['form'] >= t.get('price_rising_min_form', 4.0)
+                and p['minutes'] >= t.get('price_rising_min_minutes', 450)):
+            add_flag(p['id'], 'price_rising')
+
+    # rotation_risk: negative signal — low avg minutes per GW
+    # Surfaces players with rotation concerns for the dashboard to highlight
+    for p in candidates:
+        if (p['avg_mins_per_gw'] <= t.get('rotation_risk_max_avg_mins', 55)
+                and p['minutes'] >= t.get('rotation_risk_min_total_mins', 900)):
+            add_flag(p['id'], 'rotation_risk')
+
+    # cs_candidate: DEF/GK at teams with strong clean sheet record
+    # Targets players at defensively solid teams for structural point floor
+    for p in candidates:
+        if (p['position'] in (1, 2)
+                and p['clean_sheets'] >= t.get('cs_candidate_min_clean_sheets', 10)
+                and p['minutes'] >= t.get('cs_candidate_min_minutes', 1800)):
+            add_flag(p['id'], 'cs_candidate')
+
     # Set piece takers (using penalties_order and corners_order — set_piece_threat is empty)
     for p in candidates:
-        if p['penalties_order'] is not None and p['penalties_order'] <= t['penalty_taker_order']:
+        if (p['penalties_order'] is not None
+                and p['penalties_order'] <= t['penalty_taker_order']
+                and p['minutes'] >= t.get('penalty_taker_min_minutes', 0)):
             add_flag(p['id'], 'penalty_taker')
-        if p['corners_order'] is not None and p['corners_order'] <= t['corner_taker_max_order']:
+        if (p['corners_order'] is not None
+                and p['corners_order'] <= t['corner_taker_max_order']
+                and p['xgi_per90'] >= t.get('corner_taker_min_xgi_per90', 0)):
             add_flag(p['id'], 'corner_taker')
 
     return flagged
@@ -835,7 +894,12 @@ def run_pipeline(mode='live', target_gw=None):
     print(f'  Total flagged: {len(auto_flags)} players')
 
     # Build full universe ID set
-    universe_ids = my_squad_ids | rival_ids | set(auto_flags.keys())
+    # rotation_risk warns only — do not add players to universe just for this
+    buy_flagged = set(
+        pid for pid, flags in auto_flags.items()
+        if set(flags) - {"rotation_risk"}
+    )
+    universe_ids = my_squad_ids | rival_ids | buy_flagged
     print(f'  Universe size: {len(universe_ids)} players')
 
     # ── 5. Build and write outputs ─────────────────────────────────────────

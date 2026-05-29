@@ -1,7 +1,7 @@
 {
   "meta": {
     "schema_version": "1.0",
-    "fetched_at": "2026-05-28T00:50:24.324641+00:00",
+    "fetched_at": "2026-05-28T14:54:19.084366+00:00",
     "current_gw": 30,
     "source": "fpl-api"
   },
@@ -25,7 +25,9 @@
         "xgi_per90": 0.0,
         "flags": [
           "form_top20",
-          "ep_top_pos"
+          "ep_top_pos",
+          "price_rising",
+          "cs_candidate"
         ]
       },
       {
@@ -82,7 +84,9 @@
         "xgi_per90": 0.16,
         "flags": [
           "form_top20",
-          "ep_top_pos"
+          "ep_top_pos",
+          "price_rising",
+          "cs_candidate"
         ]
       },
       {
@@ -102,7 +106,9 @@
         "minutes": 2614,
         "xgi_per90": 0.07,
         "flags": [
-          "ep_top_pos"
+          "ep_top_pos",
+          "price_rising",
+          "cs_candidate"
         ]
       },
       {
@@ -139,7 +145,9 @@
         "transfers_out_event": 0,
         "minutes": 2452,
         "xgi_per90": 0.23,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ]
       },
       {
         "id": 10,
@@ -232,9 +240,7 @@
         "flags": [
           "form_top20",
           "ep_top_pos",
-          "xgi_elite",
-          "penalty_taker",
-          "corner_taker"
+          "penalty_taker"
         ]
       },
       {
@@ -326,6 +332,7 @@
         "minutes": 3093,
         "xgi_per90": 0.3,
         "flags": [
+          "cbit_strong",
           "corner_taker"
         ]
       },
@@ -417,9 +424,7 @@
         "transfers_out_event": 0,
         "minutes": 577,
         "xgi_per90": 0.62,
-        "flags": [
-          "xgi_elite"
-        ]
+        "flags": []
       },
       {
         "id": 31,
@@ -455,7 +460,9 @@
         "transfers_out_event": 0,
         "minutes": 1885,
         "xgi_per90": 0.38,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ]
       },
       {
         "id": 662,
@@ -492,8 +499,7 @@
         "minutes": 2217,
         "xgi_per90": 0.58,
         "flags": [
-          "ep_top_pos",
-          "xgi_elite"
+          "ep_top_pos"
         ]
       },
       {
@@ -584,7 +590,9 @@
         "transfers_out_event": 0,
         "minutes": 2835,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [
+          "gk_shot_stopper"
+        ]
       },
       {
         "id": 33,
@@ -639,7 +647,7 @@
         "minutes": 1842,
         "xgi_per90": 0.19,
         "flags": [
-          "corner_taker"
+          "rotation_risk"
         ]
       },
       {
@@ -784,7 +792,9 @@
         "transfers_out_event": 0,
         "minutes": 1857,
         "xgi_per90": 0.22,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ]
       },
       {
         "id": 49,
@@ -820,7 +830,9 @@
         "transfers_out_event": 0,
         "minutes": 1753,
         "xgi_per90": 0.28,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 53,
@@ -839,7 +851,7 @@
         "minutes": 640,
         "xgi_per90": 0.62,
         "flags": [
-          "xgi_elite"
+          "xgi_value"
         ]
       },
       {
@@ -912,7 +924,9 @@
         "transfers_out_event": 0,
         "minutes": 1755,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 64,
@@ -1006,6 +1020,7 @@
         "minutes": 913,
         "xgi_per90": 0.19,
         "flags": [
+          "cbit_strong",
           "corner_taker"
         ]
       },
@@ -1277,7 +1292,9 @@
         "transfers_out_event": 0,
         "minutes": 1539,
         "xgi_per90": 0.03,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 191,
@@ -1295,7 +1312,9 @@
         "transfers_out_event": 0,
         "minutes": 2933,
         "xgi_per90": 0.04,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 192,
@@ -1313,7 +1332,9 @@
         "transfers_out_event": 0,
         "minutes": 1825,
         "xgi_per90": 0.12,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ]
       },
       {
         "id": 193,
@@ -1439,9 +1460,7 @@
         "transfers_out_event": 0,
         "minutes": 2717,
         "xgi_per90": 0.26,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": []
       },
       {
         "id": 202,
@@ -1495,7 +1514,9 @@
         "transfers_out_event": 0,
         "minutes": 1513,
         "xgi_per90": 0.14,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 206,
@@ -1677,7 +1698,9 @@
         "transfers_out_event": 0,
         "minutes": 3150,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [
+          "gk_shot_stopper"
+        ]
       },
       {
         "id": 614,
@@ -1751,7 +1774,9 @@
         "transfers_out_event": 0,
         "minutes": 2100,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 776,
@@ -1824,7 +1849,8 @@
         "minutes": 3420,
         "xgi_per90": 0.0,
         "flags": [
-          "ep_top_pos"
+          "ep_top_pos",
+          "cs_candidate"
         ]
       },
       {
@@ -1864,7 +1890,10 @@
         "flags": [
           "form_top20",
           "ep_top_pos",
-          "value_gem"
+          "value_gem",
+          "cbit_strong",
+          "price_rising",
+          "cs_candidate"
         ]
       },
       {
@@ -1906,7 +1935,9 @@
         "flags": [
           "form_top20",
           "ep_top_pos",
-          "value_gem"
+          "value_gem",
+          "price_rising",
+          "cs_candidate"
         ]
       },
       {
@@ -1963,7 +1994,8 @@
         "xgi_per90": 0.09,
         "flags": [
           "ep_top_pos",
-          "value_gem"
+          "value_gem",
+          "cbit_strong"
         ]
       },
       {
@@ -2020,9 +2052,7 @@
         "transfers_out_event": 0,
         "minutes": 2732,
         "xgi_per90": 0.45,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": []
       },
       {
         "id": 85,
@@ -2040,7 +2070,9 @@
         "transfers_out_event": 0,
         "minutes": 1769,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 86,
@@ -2059,7 +2091,8 @@
         "minutes": 1188,
         "xgi_per90": 0.7,
         "flags": [
-          "xgi_elite"
+          "xgi_elite",
+          "xgi_value"
         ]
       },
       {
@@ -2078,7 +2111,9 @@
         "transfers_out_event": 0,
         "minutes": 978,
         "xgi_per90": 0.24,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 88,
@@ -2114,7 +2149,9 @@
         "transfers_out_event": 0,
         "minutes": 2848,
         "xgi_per90": 0.21,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 97,
@@ -2240,7 +2277,9 @@
         "transfers_out_event": 0,
         "minutes": 1074,
         "xgi_per90": 0.36,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 713,
@@ -2446,7 +2485,9 @@
         "minutes": 3330,
         "xgi_per90": 0.01,
         "flags": [
-          "ep_top_pos"
+          "ep_top_pos",
+          "price_rising",
+          "cs_candidate"
         ]
       },
       {
@@ -2555,7 +2596,9 @@
         "transfers_out_event": 0,
         "minutes": 1805,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ]
       },
       {
         "id": 109,
@@ -2591,7 +2634,9 @@
         "transfers_out_event": 0,
         "minutes": 3258,
         "xgi_per90": 0.12,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ]
       },
       {
         "id": 111,
@@ -2681,7 +2726,9 @@
         "transfers_out_event": 0,
         "minutes": 2046,
         "xgi_per90": 0.35,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 122,
@@ -2754,7 +2801,7 @@
         "minutes": 1434,
         "xgi_per90": 0.19,
         "flags": [
-          "corner_taker"
+          "cbit_strong"
         ]
       },
       {
@@ -2793,7 +2840,9 @@
         "transfers_out_event": 0,
         "minutes": 2652,
         "xgi_per90": 0.09,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 130,
@@ -2829,9 +2878,7 @@
         "transfers_out_event": 0,
         "minutes": 3282,
         "xgi_per90": 0.61,
-        "flags": [
-          "xgi_elite"
-        ]
+        "flags": []
       },
       {
         "id": 748,
@@ -2993,7 +3040,9 @@
         "transfers_out_event": 0,
         "minutes": 3420,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ]
       },
       {
         "id": 140,
@@ -3103,7 +3152,9 @@
         "transfers_out_event": 0,
         "minutes": 3130,
         "xgi_per90": 0.16,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ]
       },
       {
         "id": 149,
@@ -3139,7 +3190,9 @@
         "transfers_out_event": 0,
         "minutes": 3210,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ]
       },
       {
         "id": 152,
@@ -3340,7 +3393,9 @@
         "transfers_out_event": 0,
         "minutes": 1921,
         "xgi_per90": 0.18,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 167,
@@ -3358,7 +3413,9 @@
         "transfers_out_event": 0,
         "minutes": 1646,
         "xgi_per90": 0.08,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 169,
@@ -3376,7 +3433,9 @@
         "transfers_out_event": 0,
         "minutes": 2117,
         "xgi_per90": 0.34,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 170,
@@ -3414,7 +3473,10 @@
         "transfers_out_event": 0,
         "minutes": 1901,
         "xgi_per90": 0.18,
-        "flags": []
+        "flags": [
+          "cbit_strong",
+          "rotation_risk"
+        ]
       },
       {
         "id": 178,
@@ -3433,7 +3495,7 @@
         "minutes": 2249,
         "xgi_per90": 0.55,
         "flags": [
-          "xgi_elite"
+          "xgi_value"
         ]
       },
       {
@@ -3726,7 +3788,9 @@
         "transfers_out_event": 0,
         "minutes": 1718,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 231,
@@ -3799,7 +3863,6 @@
         "minutes": 1954,
         "xgi_per90": 0.6,
         "flags": [
-          "xgi_elite",
           "penalty_taker"
         ]
       },
@@ -3819,9 +3882,7 @@
         "transfers_out_event": 0,
         "minutes": 2629,
         "xgi_per90": 0.39,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": []
       },
       {
         "id": 237,
@@ -3896,7 +3957,9 @@
         "transfers_out_event": 0,
         "minutes": 2796,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 244,
@@ -3986,9 +4049,7 @@
         "transfers_out_event": 0,
         "minutes": 2658,
         "xgi_per90": 0.57,
-        "flags": [
-          "xgi_elite"
-        ]
+        "flags": []
       },
       {
         "id": 250,
@@ -4204,7 +4265,9 @@
         "transfers_out_event": 0,
         "minutes": 3330,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ]
       },
       {
         "id": 254,
@@ -4258,7 +4321,9 @@
         "transfers_out_event": 0,
         "minutes": 2400,
         "xgi_per90": 0.24,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ]
       },
       {
         "id": 257,
@@ -4276,7 +4341,10 @@
         "transfers_out_event": 0,
         "minutes": 3085,
         "xgi_per90": 0.09,
-        "flags": []
+        "flags": [
+          "cbit_strong",
+          "cs_candidate"
+        ]
       },
       {
         "id": 258,
@@ -4294,7 +4362,9 @@
         "transfers_out_event": 0,
         "minutes": 3253,
         "xgi_per90": 0.11,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ]
       },
       {
         "id": 259,
@@ -4330,7 +4400,9 @@
         "transfers_out_event": 0,
         "minutes": 2825,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ]
       },
       {
         "id": 262,
@@ -4456,7 +4528,9 @@
         "transfers_out_event": 0,
         "minutes": 1899,
         "xgi_per90": 0.23,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ]
       },
       {
         "id": 272,
@@ -4474,7 +4548,9 @@
         "transfers_out_event": 0,
         "minutes": 1722,
         "xgi_per90": 0.18,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 273,
@@ -4493,7 +4569,7 @@
         "minutes": 2552,
         "xgi_per90": 0.31,
         "flags": [
-          "corner_taker"
+          "cbit_strong"
         ]
       },
       {
@@ -4566,9 +4642,7 @@
         "transfers_out_event": 0,
         "minutes": 2210,
         "xgi_per90": 0.64,
-        "flags": [
-          "xgi_elite"
-        ]
+        "flags": []
       },
       {
         "id": 284,
@@ -4714,7 +4788,9 @@
         "transfers_out_event": 0,
         "minutes": 1331,
         "xgi_per90": 0.12,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 732,
@@ -4858,7 +4934,9 @@
         "transfers_out_event": 0,
         "minutes": 3420,
         "xgi_per90": 0.01,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ]
       },
       {
         "id": 288,
@@ -4914,7 +4992,10 @@
         "xgi_per90": 0.13,
         "flags": [
           "form_top20",
-          "value_gem"
+          "value_gem",
+          "cbit_strong",
+          "price_rising",
+          "cs_candidate"
         ]
       },
       {
@@ -4951,7 +5032,9 @@
         "transfers_out_event": 0,
         "minutes": 3118,
         "xgi_per90": 0.08,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ]
       },
       {
         "id": 294,
@@ -4987,7 +5070,9 @@
         "transfers_out_event": 0,
         "minutes": 2588,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 296,
@@ -5061,9 +5146,7 @@
         "transfers_out_event": 0,
         "minutes": 1161,
         "xgi_per90": 0.26,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": []
       },
       {
         "id": 301,
@@ -5118,6 +5201,7 @@
         "minutes": 3413,
         "xgi_per90": 0.22,
         "flags": [
+          "cbit_strong",
           "corner_taker"
         ]
       },
@@ -5137,7 +5221,9 @@
         "transfers_out_event": 0,
         "minutes": 1477,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 305,
@@ -5209,7 +5295,9 @@
         "transfers_out_event": 0,
         "minutes": 1898,
         "xgi_per90": 0.41,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ]
       },
       {
         "id": 311,
@@ -5393,7 +5481,9 @@
         "transfers_out_event": 0,
         "minutes": 2882,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 318,
@@ -5429,7 +5519,9 @@
         "transfers_out_event": 0,
         "minutes": 1838,
         "xgi_per90": 0.14,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ]
       },
       {
         "id": 320,
@@ -5465,7 +5557,9 @@
         "transfers_out_event": 0,
         "minutes": 935,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 322,
@@ -5519,9 +5613,7 @@
         "transfers_out_event": 0,
         "minutes": 2420,
         "xgi_per90": 0.24,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": []
       },
       {
         "id": 325,
@@ -5557,7 +5649,10 @@
         "transfers_out_event": 0,
         "minutes": 1816,
         "xgi_per90": 0.17,
-        "flags": []
+        "flags": [
+          "cbit_strong",
+          "rotation_risk"
+        ]
       },
       {
         "id": 329,
@@ -5960,7 +6055,9 @@
         "minutes": 1888,
         "xgi_per90": 0.08,
         "flags": [
-          "ep_top_pos"
+          "ep_top_pos",
+          "cbit_strong",
+          "rotation_risk"
         ]
       },
       {
@@ -6123,7 +6220,9 @@
         "transfers_out_event": 0,
         "minutes": 3119,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 356,
@@ -6159,7 +6258,9 @@
         "transfers_out_event": 0,
         "minutes": 1307,
         "xgi_per90": 0.2,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 362,
@@ -6196,7 +6297,8 @@
         "minutes": 1065,
         "xgi_per90": 0.74,
         "flags": [
-          "xgi_elite"
+          "xgi_elite",
+          "xgi_value"
         ]
       },
       {
@@ -6215,9 +6317,7 @@
         "transfers_out_event": 0,
         "minutes": 1003,
         "xgi_per90": 0.28,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": []
       },
       {
         "id": 660,
@@ -6236,6 +6336,7 @@
         "minutes": 2369,
         "xgi_per90": 0.28,
         "flags": [
+          "cbit_strong",
           "corner_taker"
         ]
       },
@@ -6277,7 +6378,8 @@
           "form_top20",
           "ep_top_pos",
           "value_gem",
-          "xgi_elite",
+          "xgi_value",
+          "price_rising",
           "penalty_taker"
         ]
       },
@@ -6315,7 +6417,9 @@
         "transfers_out_event": 0,
         "minutes": 1893,
         "xgi_per90": 0.15,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ]
       },
       {
         "id": 787,
@@ -6423,7 +6527,9 @@
         "transfers_out_event": 0,
         "minutes": 867,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [
+          "gk_shot_stopper"
+        ]
       },
       {
         "id": 368,
@@ -6531,7 +6637,9 @@
         "transfers_out_event": 0,
         "minutes": 3420,
         "xgi_per90": 0.14,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ]
       },
       {
         "id": 374,
@@ -6549,7 +6657,9 @@
         "transfers_out_event": 0,
         "minutes": 3090,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ]
       },
       {
         "id": 375,
@@ -6658,9 +6768,7 @@
         "minutes": 2144,
         "xgi_per90": 0.58,
         "flags": [
-          "xgi_elite",
-          "penalty_taker",
-          "corner_taker"
+          "penalty_taker"
         ]
       },
       {
@@ -6754,6 +6862,7 @@
         "flags": [
           "form_top20",
           "ep_top_pos",
+          "price_rising",
           "corner_taker"
         ]
       },
@@ -6773,7 +6882,9 @@
         "transfers_out_event": 0,
         "minutes": 1923,
         "xgi_per90": 0.23,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 390,
@@ -6899,9 +7010,7 @@
         "transfers_out_event": 0,
         "minutes": 1797,
         "xgi_per90": 0.63,
-        "flags": [
-          "xgi_elite"
-        ]
+        "flags": []
       },
       {
         "id": 686,
@@ -6920,7 +7029,7 @@
         "minutes": 547,
         "xgi_per90": 0.55,
         "flags": [
-          "xgi_elite"
+          "xgi_value"
         ]
       },
       {
@@ -7029,7 +7138,9 @@
         "transfers_out_event": 0,
         "minutes": 3200,
         "xgi_per90": 0.4,
-        "flags": []
+        "flags": [
+          "price_rising"
+        ]
       },
       {
         "id": 182,
@@ -7065,7 +7176,10 @@
         "transfers_out_event": 0,
         "minutes": 3150,
         "xgi_per90": 0.19,
-        "flags": []
+        "flags": [
+          "price_rising",
+          "cs_candidate"
+        ]
       },
       {
         "id": 401,
@@ -7173,7 +7287,9 @@
         "transfers_out_event": 0,
         "minutes": 2861,
         "xgi_per90": 0.08,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ]
       },
       {
         "id": 408,
@@ -7191,7 +7307,9 @@
         "transfers_out_event": 0,
         "minutes": 2139,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ]
       },
       {
         "id": 409,
@@ -7245,7 +7363,9 @@
         "transfers_out_event": 0,
         "minutes": 2643,
         "xgi_per90": 0.3,
-        "flags": []
+        "flags": [
+          "cs_candidate"
+        ]
       },
       {
         "id": 413,
@@ -7338,7 +7458,8 @@
         "minutes": 1772,
         "xgi_per90": 0.67,
         "flags": [
-          "xgi_elite"
+          "xgi_elite",
+          "xgi_value"
         ]
       },
       {
@@ -7378,7 +7499,9 @@
         "transfers_out_event": 0,
         "minutes": 1510,
         "xgi_per90": 0.22,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 422,
@@ -7414,7 +7537,9 @@
         "transfers_out_event": 0,
         "minutes": 1561,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 427,
@@ -7472,6 +7597,7 @@
           "form_top20",
           "ep_top_pos",
           "xgi_elite",
+          "price_rising",
           "penalty_taker"
         ]
       },
@@ -7492,7 +7618,8 @@
         "minutes": 3060,
         "xgi_per90": 0.0,
         "flags": [
-          "ep_top_pos"
+          "ep_top_pos",
+          "cs_candidate"
         ]
       },
       {
@@ -7584,8 +7711,7 @@
         "minutes": 2611,
         "xgi_per90": 0.58,
         "flags": [
-          "xgi_elite",
-          "corner_taker"
+          "price_rising"
         ]
       },
       {
@@ -7790,7 +7916,8 @@
         "minutes": 3220,
         "xgi_per90": 0.08,
         "flags": [
-          "value_gem"
+          "value_gem",
+          "cs_candidate"
         ]
       },
       {
@@ -7884,6 +8011,7 @@
         "flags": [
           "form_top20",
           "xgi_elite",
+          "price_rising",
           "penalty_taker",
           "corner_taker"
         ]
@@ -7958,7 +8086,9 @@
         "transfers_out_event": 0,
         "minutes": 2575,
         "xgi_per90": 0.3,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 458,
@@ -7977,7 +8107,8 @@
         "minutes": 1653,
         "xgi_per90": 0.1,
         "flags": [
-          "value_gem"
+          "value_gem",
+          "cbit_strong"
         ]
       },
       {
@@ -8232,9 +8363,7 @@
         "transfers_out_event": 0,
         "minutes": 517,
         "xgi_per90": 0.63,
-        "flags": [
-          "xgi_elite"
-        ]
+        "flags": []
       },
       {
         "id": 469,
@@ -8252,7 +8381,9 @@
         "transfers_out_event": 0,
         "minutes": 2416,
         "xgi_per90": 0.01,
-        "flags": []
+        "flags": [
+          "gk_shot_stopper"
+        ]
       },
       {
         "id": 471,
@@ -8288,9 +8419,7 @@
         "transfers_out_event": 0,
         "minutes": 2176,
         "xgi_per90": 0.15,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": []
       },
       {
         "id": 474,
@@ -8326,7 +8455,10 @@
         "transfers_out_event": 0,
         "minutes": 1834,
         "xgi_per90": 0.12,
-        "flags": []
+        "flags": [
+          "cbit_strong",
+          "rotation_risk"
+        ]
       },
       {
         "id": 476,
@@ -8453,7 +8585,6 @@
         "minutes": 1798,
         "xgi_per90": 0.61,
         "flags": [
-          "xgi_elite",
           "penalty_taker"
         ]
       },
@@ -8509,7 +8640,9 @@
         "transfers_out_event": 0,
         "minutes": 2456,
         "xgi_per90": 0.38,
-        "flags": []
+        "flags": [
+          "price_rising"
+        ]
       },
       {
         "id": 489,
@@ -8545,7 +8678,9 @@
         "transfers_out_event": 0,
         "minutes": 1950,
         "xgi_per90": 0.17,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 491,
@@ -8623,7 +8758,7 @@
           "form_top20",
           "ep_top_pos",
           "value_gem",
-          "xgi_elite"
+          "xgi_value"
         ]
       },
       {
@@ -8714,7 +8849,9 @@
         "transfers_out_event": 0,
         "minutes": 1896,
         "xgi_per90": 0.38,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ]
       },
       {
         "id": 753,
@@ -8841,7 +8978,8 @@
         "minutes": 2667,
         "xgi_per90": 0.0,
         "flags": [
-          "ep_top_pos"
+          "ep_top_pos",
+          "gk_shot_stopper"
         ]
       },
       {
@@ -9024,7 +9162,9 @@
         "transfers_out_event": 0,
         "minutes": 1838,
         "xgi_per90": 0.29,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ]
       },
       {
         "id": 517,
@@ -9046,6 +9186,7 @@
           "form_top20",
           "ep_top_pos",
           "value_gem",
+          "cbit_strong",
           "corner_taker"
         ]
       },
@@ -9065,7 +9206,9 @@
         "transfers_out_event": 0,
         "minutes": 1168,
         "xgi_per90": 0.17,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 521,
@@ -9083,7 +9226,9 @@
         "transfers_out_event": 0,
         "minutes": 2073,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 522,
@@ -9179,7 +9324,8 @@
         "xgi_per90": 0.83,
         "flags": [
           "ep_top_pos",
-          "xgi_elite"
+          "xgi_elite",
+          "xgi_value"
         ]
       },
       {
@@ -9234,9 +9380,7 @@
         "transfers_out_event": 0,
         "minutes": 1676,
         "xgi_per90": 0.32,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": []
       },
       {
         "id": 715,
@@ -9416,7 +9560,9 @@
         "transfers_out_event": 0,
         "minutes": 2144,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 532,
@@ -9434,9 +9580,7 @@
         "transfers_out_event": 0,
         "minutes": 3032,
         "xgi_per90": 0.13,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": []
       },
       {
         "id": 535,
@@ -9784,6 +9928,7 @@
         "minutes": 2901,
         "xgi_per90": 0.15,
         "flags": [
+          "cbit_strong",
           "corner_taker"
         ]
       },
@@ -9803,7 +9948,10 @@
         "transfers_out_event": 0,
         "minutes": 3150,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [
+          "gk_shot_stopper",
+          "cs_candidate"
+        ]
       },
       {
         "id": 678,
@@ -9839,7 +9987,10 @@
         "transfers_out_event": 0,
         "minutes": 2797,
         "xgi_per90": 0.08,
-        "flags": []
+        "flags": [
+          "cbit_strong",
+          "cs_candidate"
+        ]
       },
       {
         "id": 694,
@@ -9859,7 +10010,8 @@
         "xgi_per90": 0.14,
         "flags": [
           "form_top20",
-          "value_gem"
+          "value_gem",
+          "price_rising"
         ]
       },
       {
@@ -10112,7 +10264,9 @@
         "transfers_out_event": 0,
         "minutes": 1869,
         "xgi_per90": 0.13,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ]
       },
       {
         "id": 570,
@@ -10130,7 +10284,9 @@
         "transfers_out_event": 0,
         "minutes": 1489,
         "xgi_per90": 0.06,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 571,
@@ -10312,7 +10468,10 @@
         "transfers_out_event": 0,
         "minutes": 1880,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [
+          "cbit_strong",
+          "rotation_risk"
+        ]
       },
       {
         "id": 586,
@@ -10402,7 +10561,9 @@
         "transfers_out_event": 0,
         "minutes": 1388,
         "xgi_per90": 0.18,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 595,
@@ -10477,7 +10638,8 @@
         "minutes": 2192,
         "xgi_per90": 0.14,
         "flags": [
-          "value_gem"
+          "value_gem",
+          "cbit_strong"
         ]
       },
       {
@@ -10496,9 +10658,7 @@
         "transfers_out_event": 0,
         "minutes": 1747,
         "xgi_per90": 0.36,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": []
       },
       {
         "id": 726,
@@ -10678,7 +10838,10 @@
         "transfers_out_event": 0,
         "minutes": 1800,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [
+          "gk_shot_stopper",
+          "rotation_risk"
+        ]
       },
       {
         "id": 603,
@@ -10732,7 +10895,9 @@
         "transfers_out_event": 0,
         "minutes": 2532,
         "xgi_per90": 0.11,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 607,
@@ -10786,7 +10951,9 @@
         "transfers_out_event": 0,
         "minutes": 1817,
         "xgi_per90": 0.03,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ]
       },
       {
         "id": 610,
@@ -10858,9 +11025,7 @@
         "transfers_out_event": 0,
         "minutes": 2470,
         "xgi_per90": 0.32,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": []
       },
       {
         "id": 618,
@@ -11007,7 +11172,7 @@
         "minutes": 1234,
         "xgi_per90": 0.59,
         "flags": [
-          "xgi_elite"
+          "xgi_value"
         ]
       },
       {
@@ -11026,7 +11191,9 @@
         "transfers_out_event": 0,
         "minutes": 1620,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [
+          "gk_shot_stopper"
+        ]
       },
       {
         "id": 708,
@@ -11044,7 +11211,9 @@
         "transfers_out_event": 0,
         "minutes": 3017,
         "xgi_per90": 0.15,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 718,
@@ -11062,7 +11231,9 @@
         "transfers_out_event": 0,
         "minutes": 971,
         "xgi_per90": 0.07,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 738,
@@ -11242,7 +11413,9 @@
         "transfers_out_event": 0,
         "minutes": 1080,
         "xgi_per90": 0.0,
-        "flags": []
+        "flags": [
+          "gk_shot_stopper"
+        ]
       },
       {
         "id": 628,
@@ -11296,7 +11469,9 @@
         "transfers_out_event": 0,
         "minutes": 1100,
         "xgi_per90": 0.08,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 632,
@@ -11478,7 +11653,9 @@
         "transfers_out_event": 0,
         "minutes": 2760,
         "xgi_per90": 0.05,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 644,
@@ -11532,7 +11709,9 @@
         "transfers_out_event": 0,
         "minutes": 2829,
         "xgi_per90": 0.11,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 648,
@@ -11640,7 +11819,9 @@
         "transfers_out_event": 0,
         "minutes": 1117,
         "xgi_per90": 0.32,
-        "flags": []
+        "flags": [
+          "cbit_strong"
+        ]
       },
       {
         "id": 682,
@@ -11676,7 +11857,9 @@
         "transfers_out_event": 0,
         "minutes": 1834,
         "xgi_per90": 0.1,
-        "flags": []
+        "flags": [
+          "rotation_risk"
+        ]
       },
       {
         "id": 709,
@@ -11730,9 +11913,7 @@
         "transfers_out_event": 0,
         "minutes": 1787,
         "xgi_per90": 0.29,
-        "flags": [
-          "corner_taker"
-        ]
+        "flags": []
       },
       {
         "id": 766,

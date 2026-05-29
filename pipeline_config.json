@@ -1,30 +1,32 @@
 {
   "schema_version": "1.0",
-
   "season": {
     "current": "2025-2026",
     "ci_path": "data/2025-2026",
     "mode": "offseason"
   },
-
   "fpl": {
     "my_entry_id": 822500,
     "league_id": 1822310,
-    "rival_entry_ids": [1837531, 1353220, 638664, 61955, 2414293, 1823633]
+    "rival_entry_ids": [
+      1837531,
+      1353220,
+      638664,
+      61955,
+      2414293,
+      1823633
+    ]
   },
-
   "core_insights": {
     "base_url": "https://raw.githubusercontent.com/olbauday/FPL-Core-Insights/main/data",
     "season": "2025-2026"
   },
-
   "windows": {
     "player_history_gws": 8,
     "fixture_lookahead_gws": 5,
     "fdr_avg_window": 3,
     "scan_min_minutes": 90
   },
-
   "auto_flags": {
     "form_top_n": 20,
     "ep_next_top_n_per_position": 8,
@@ -32,26 +34,54 @@
     "ownership_delta_min": 1.5,
     "value_gem_max_price": 6.0,
     "value_gem_min_form": 5.0,
-    "xgi_per90_min": 0.55,
+    "xgi_per90_min": 0.65,
     "xgi_min_minutes": 450,
     "penalty_taker_order": 1,
-    "corner_taker_max_order": 2
+    "penalty_taker_min_minutes": 600,
+    "corner_taker_max_order": 1,
+    "corner_taker_min_xgi_per90": 0.15,
+    "xgi_value_max_price": 7.0,
+    "xgi_value_min_xgi_per90": 0.55,
+    "cbit_per90_min": 10.0,
+    "cbit_min_minutes": 900,
+    "gk_saves_per90_min": 3.0,
+    "gk_min_minutes": 450,
+    "price_rising_min_change": 3,
+    "price_rising_min_form": 4.0,
+    "price_rising_min_minutes": 450,
+    "rotation_risk_max_avg_mins": 50,
+    "rotation_risk_min_total_mins": 1800,
+    "cs_candidate_min_clean_sheets": 10,
+    "cs_candidate_min_minutes": 1800
   },
-
   "update_schedule": {
-    "twice_daily": ["player_scan", "player_universe", "gw_meta"],
-    "post_gw": ["manager_history", "season_decisions", "league_table"],
-    "pre_deadline": ["my_squad", "rival_squads", "fixtures"],
-    "matchday": ["live_gw"],
-    "on_demand": ["player_history"]
+    "twice_daily": [
+      "player_scan",
+      "player_universe",
+      "gw_meta"
+    ],
+    "post_gw": [
+      "manager_history",
+      "season_decisions",
+      "league_table"
+    ],
+    "pre_deadline": [
+      "my_squad",
+      "rival_squads",
+      "fixtures"
+    ],
+    "matchday": [
+      "live_gw"
+    ],
+    "on_demand": [
+      "player_history"
+    ]
   },
-
   "output_paths": {
     "live": "live/",
     "season_final": "seasons/2025-2026/final/",
     "snapshots": "seasons/2025-2026/snapshots/"
   },
-
   "new_season_changes": [
     "Update season.current to 2026-2027",
     "Update core_insights.season to 2026-2027",
