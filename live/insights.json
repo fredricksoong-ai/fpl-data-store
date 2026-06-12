@@ -1,23 +1,29 @@
 {
   "meta": {
-    "generated_at": "2026-06-12T12:50:06.506457+00:00",
+    "generated_at": "2026-06-12T13:21:25.845171+00:00",
     "model": "gemini-2.5-flash",
-    "sig": "c15a09e385c5c5bfe2ede2392bb80713"
+    "sig": "5d480f70ab5d1c76ca74d4793915f64e"
   },
   "data": {
-    "headline": "Wirtzplay crowned Ballon d'FPL champion after thrilling final GW.",
+    "headline": "Final Push: Consolidate Lead with Haaland Captaincy and Key Transfers.",
     "team": [
-      "Haaland, B.Fernandes, Anderson led the team's strong finish.",
-      "Raya, Gabriel, Senesi also impressed with high form."
+      "Captain Haaland (40 form, 7.3 expected points) for a strong final Gameweek.",
+      "Consider transferring Tavernier or Welbeck to Watkins (40 form) to boost your attack.",
+      "Monitor B.Fernandes, who faces a challenging FDR 4.0 fixture for Manchester United.",
+      "Gro\u00df and Welbeck are underperforming with low expected points (3.7 and 3.0) for their fixtures."
     ],
     "league": [
-      "wirtzplay secures Ballon d'FPL title, finishing 1st overall.",
-      "Fredrick Soong wins by 13 points over MOUsalah."
+      "Rival MOUsalah is only 13 points behind; focus on maximizing points from your current squad.",
+      "Leverage Raya (ARS), Gabriel (ARS), Senesi (BOU), and Anderson (NFO) for strong expected points."
     ],
-    "market": [
-      "Watkins, Doku, Truffert ended the season in top form.",
-      "Truffert (BOU) showed strong form as a value gem.",
-      "An 8.0m bank offers significant flexibility for next season."
+    "stats": [
+      "Watkins (AVL) and Haaland (MCI) are top-form forwards with 40 points in the last five.",
+      "Truffert (BOU, 4.8m) and Senesi (BOU, 5.2m) are excellent value defenders with high form.",
+      "Doku (MCI, 6.5m) provides differential form in midfield with 38 points."
+    ],
+    "charts": [
+      "Identify high-form players like Watkins and Haaland for consistent returns.",
+      "Players from Arsenal and Bournemouth offer balanced fixtures (FDR 3.0) for your key assets."
     ]
   }
 }
