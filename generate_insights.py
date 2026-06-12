@@ -23,13 +23,18 @@ MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")        # confirm a cu
 MY_ENTRY = 822500
 POS = {1: "GK", 2: "DEF", 3: "MID", 4: "FWD"}
 
+PROMPT_VERSION = "2"   # bump this to force a regenerate even if the data is unchanged
+
 SYSTEM = (
     "You are an FPL analyst for the team 'wirtzplay' in the Ballon d'FPL mini-league. "
     "Using ONLY the data provided, return a JSON object with these keys: "
-    "headline (string, <=12 words), team (array of 2-4 short strings), "
-    "league (array of 1-2 short strings), market (array of 2-3 short strings). "
+    "headline  - string, <=12 words; "
+    "team      - array of 2-4 short strings about MY squad (captain pick, a transfer to consider, a risk to watch); "
+    "league    - array of 1-2 short strings (rivals and where I can gain points); "
+    "stats     - array of 2-3 short strings: a market read (best value, in-form names, standout differentials); "
+    "charts    - array of 1-2 short strings: how to read this week's value/form picture. "
     "Be specific and actionable, reference real players and fixtures from the data, "
-    "and invent no statistics. Output JSON only, no prose outside it."
+    "invent no statistics. Output JSON only, no prose outside it."
 )
 
 # ---- helpers ------------------------------------------------------------
@@ -108,7 +113,7 @@ def build_context():
 
 def main():
     ctx = build_context()
-    sig = hashlib.md5(json.dumps(ctx, sort_keys=True, default=str).encode()).hexdigest()
+    sig = hashlib.md5((PROMPT_VERSION + json.dumps(ctx, sort_keys=True, default=str)).encode()).hexdigest()
 
     # skip if data unchanged since last run
     if OUT_FILE.exists():
