@@ -33,7 +33,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           # GEMINI_MODEL: gemini-2.5-flash   # optionally pin/upgrade the model here
           # FPL_DATA_DIR: live               # change if your JSON lives elsewhere
-        run: python scripts/generate_insights.py
+        run: python generate_insights.py
 
       - name: Commit if changed
         run: |
