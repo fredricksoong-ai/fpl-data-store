@@ -1,7 +1,7 @@
 {
   "meta": {
     "schema_version": "1.0",
-    "fetched_at": "2026-06-17T10:15:44.725708+00:00",
+    "fetched_at": "2026-06-17T19:34:22.652194+00:00",
     "current_gw": 38,
     "source": "fpl-api"
   },
@@ -15,7 +15,7 @@
         "price": 6.2,
         "status": "a",
         "total_pts": 162,
-        "fpl_form": 3.0,
+        "fpl_form": 0.0,
         "ppg": 4.4,
         "ep_next": 8.8,
         "selected_pct": 36.4,
@@ -37,7 +37,7 @@
         "price": 4.0,
         "status": "a",
         "total_pts": 2,
-        "fpl_form": 1.0,
+        "fpl_form": 2.0,
         "ppg": 2.0,
         "ep_next": 1.0,
         "selected_pct": 0.4,
@@ -75,7 +75,7 @@
         "price": 7.3,
         "status": "a",
         "total_pts": 209,
-        "fpl_form": 3.5,
+        "fpl_form": 1.0,
         "ppg": 6.5,
         "ep_next": 8.8,
         "selected_pct": 45.4,
@@ -97,7 +97,7 @@
         "price": 6.3,
         "status": "a",
         "total_pts": 137,
-        "fpl_form": 4.0,
+        "fpl_form": 0.0,
         "ppg": 4.4,
         "ep_next": 7.5,
         "selected_pct": 17.1,
@@ -107,10 +107,9 @@
         "xgi_per90": 0.07,
         "flags": [
           "ep_top_pos",
-          "price_rising",
           "cs_candidate"
         ],
-        "flag_count": 3
+        "flag_count": 2
       },
       {
         "id": 7,
@@ -120,7 +119,7 @@
         "price": 5.6,
         "status": "a",
         "total_pts": 109,
-        "fpl_form": 4.5,
+        "fpl_form": 1.0,
         "ppg": 4.2,
         "ep_next": 4.8,
         "selected_pct": 6.0,
@@ -160,7 +159,7 @@
         "price": 5.0,
         "status": "a",
         "total_pts": 29,
-        "fpl_form": 1.5,
+        "fpl_form": 2.0,
         "ppg": 1.4,
         "ep_next": 4.5,
         "selected_pct": 1.9,
@@ -236,7 +235,7 @@
         "price": 10.0,
         "status": "a",
         "total_pts": 157,
-        "fpl_form": 5.0,
+        "fpl_form": 0.0,
         "ppg": 5.1,
         "ep_next": 7.0,
         "selected_pct": 11.6,
@@ -258,7 +257,7 @@
         "price": 7.8,
         "status": "a",
         "total_pts": 74,
-        "fpl_form": 1.5,
+        "fpl_form": 0.0,
         "ppg": 3.1,
         "ep_next": 3.5,
         "selected_pct": 1.7,
@@ -277,7 +276,7 @@
         "price": 6.8,
         "status": "a",
         "total_pts": 72,
-        "fpl_form": 5.5,
+        "fpl_form": 11.0,
         "ppg": 2.8,
         "ep_next": 2.2,
         "selected_pct": 0.8,
@@ -285,8 +284,10 @@
         "transfers_out_event": 0,
         "minutes": 1205,
         "xgi_per90": 0.3,
-        "flags": [],
-        "flag_count": 0
+        "flags": [
+          "form_top20"
+        ],
+        "flag_count": 1
       },
       {
         "id": 19,
@@ -296,7 +297,7 @@
         "price": 6.8,
         "status": "a",
         "total_pts": 57,
-        "fpl_form": 4.0,
+        "fpl_form": 7.0,
         "ppg": 1.9,
         "ep_next": 1.2,
         "selected_pct": 0.9,
@@ -304,8 +305,10 @@
         "transfers_out_event": 0,
         "minutes": 1065,
         "xgi_per90": 0.46,
-        "flags": [],
-        "flag_count": 0
+        "flags": [
+          "form_top20"
+        ],
+        "flag_count": 1
       },
       {
         "id": 20,
@@ -315,7 +318,7 @@
         "price": 6.6,
         "status": "a",
         "total_pts": 119,
-        "fpl_form": 1.5,
+        "fpl_form": 0.0,
         "ppg": 3.8,
         "ep_next": 5.5,
         "selected_pct": 1.8,
@@ -334,7 +337,7 @@
         "price": 7.2,
         "status": "a",
         "total_pts": 184,
-        "fpl_form": 2.5,
+        "fpl_form": 0.0,
         "ppg": 5.1,
         "ep_next": 4.8,
         "selected_pct": 23.3,
@@ -355,7 +358,7 @@
         "price": 5.3,
         "status": "a",
         "total_pts": 67,
-        "fpl_form": 0.5,
+        "fpl_form": 1.0,
         "ppg": 3.0,
         "ep_next": 0.8,
         "selected_pct": 0.7,
@@ -374,7 +377,7 @@
         "price": 5.1,
         "status": "a",
         "total_pts": 7,
-        "fpl_form": 0.5,
+        "fpl_form": 1.0,
         "ppg": 1.0,
         "ep_next": 1.0,
         "selected_pct": 0.1,
@@ -412,7 +415,7 @@
         "price": 4.9,
         "status": "a",
         "total_pts": 133,
-        "fpl_form": 1.5,
+        "fpl_form": 2.0,
         "ppg": 3.5,
         "ep_next": 3.0,
         "selected_pct": 2.7,
@@ -431,7 +434,7 @@
         "price": 7.3,
         "status": "a",
         "total_pts": 36,
-        "fpl_form": 6.0,
+        "fpl_form": 4.0,
         "ppg": 3.0,
         "ep_next": 4.2,
         "selected_pct": 0.7,
@@ -439,10 +442,8 @@
         "transfers_out_event": 0,
         "minutes": 577,
         "xgi_per90": 0.62,
-        "flags": [
-          "form_top20"
-        ],
-        "flag_count": 1
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 31,
@@ -452,7 +453,7 @@
         "price": 6.4,
         "status": "a",
         "total_pts": 24,
-        "fpl_form": 2.5,
+        "fpl_form": 5.0,
         "ppg": 1.7,
         "ep_next": 1.2,
         "selected_pct": 0.4,
@@ -471,7 +472,7 @@
         "price": 7.3,
         "status": "a",
         "total_pts": 113,
-        "fpl_form": 2.0,
+        "fpl_form": 1.0,
         "ppg": 3.4,
         "ep_next": 4.8,
         "selected_pct": 8.7,
@@ -492,7 +493,7 @@
         "price": 5.3,
         "status": "a",
         "total_pts": 40,
-        "fpl_form": 5.0,
+        "fpl_form": 4.0,
         "ppg": 2.0,
         "ep_next": 2.8,
         "selected_pct": 0.3,
@@ -500,10 +501,8 @@
         "transfers_out_event": 0,
         "minutes": 986,
         "xgi_per90": 0.07,
-        "flags": [
-          "value_gem"
-        ],
-        "flag_count": 1
+        "flags": [],
+        "flag_count": 0
       },
       {
         "id": 666,
@@ -534,7 +533,7 @@
         "price": 4.2,
         "status": "a",
         "total_pts": 16,
-        "fpl_form": 1.5,
+        "fpl_form": 3.0,
         "ppg": 2.7,
         "ep_next": 1.2,
         "selected_pct": 0.9,
@@ -572,7 +571,7 @@
         "price": 5.1,
         "status": "a",
         "total_pts": 87,
-        "fpl_form": 1.5,
+        "fpl_form": 2.0,
         "ppg": 3.5,
         "ep_next": 3.5,
         "selected_pct": 0.9,
@@ -1275,7 +1274,7 @@
         "price": 4.2,
         "status": "a",
         "total_pts": 7,
-        "fpl_form": 2.5,
+        "fpl_form": 3.0,
         "ppg": 2.3,
         "ep_next": 1.3,
         "selected_pct": 0.2,
@@ -1370,7 +1369,7 @@
         "price": 3.8,
         "status": "a",
         "total_pts": 85,
-        "fpl_form": 1.0,
+        "fpl_form": 0.0,
         "ppg": 2.5,
         "ep_next": 2.7,
         "selected_pct": 7.0,
@@ -1410,7 +1409,7 @@
         "price": 3.9,
         "status": "a",
         "total_pts": 47,
-        "fpl_form": 1.5,
+        "fpl_form": 2.0,
         "ppg": 2.4,
         "ep_next": 0.3,
         "selected_pct": 0.1,
@@ -1448,7 +1447,7 @@
         "price": 3.8,
         "status": "a",
         "total_pts": 25,
-        "fpl_form": 1.5,
+        "fpl_form": 2.0,
         "ppg": 1.2,
         "ep_next": 1.0,
         "selected_pct": 0.3,
@@ -1600,7 +1599,7 @@
         "price": 4.7,
         "status": "a",
         "total_pts": 51,
-        "fpl_form": 0.5,
+        "fpl_form": 1.0,
         "ppg": 2.2,
         "ep_next": 0.0,
         "selected_pct": 0.1,
@@ -1638,7 +1637,7 @@
         "price": 4.8,
         "status": "a",
         "total_pts": 56,
-        "fpl_form": 0.5,
+        "fpl_form": 0.0,
         "ppg": 1.7,
         "ep_next": 1.0,
         "selected_pct": 0.0,
@@ -1657,7 +1656,7 @@
         "price": 4.8,
         "status": "a",
         "total_pts": 59,
-        "fpl_form": 3.5,
+        "fpl_form": 5.0,
         "ppg": 2.0,
         "ep_next": 4.0,
         "selected_pct": 0.0,
@@ -1665,8 +1664,10 @@
         "transfers_out_event": 0,
         "minutes": 1259,
         "xgi_per90": 0.16,
-        "flags": [],
-        "flag_count": 0
+        "flags": [
+          "value_gem"
+        ],
+        "flag_count": 1
       },
       {
         "id": 214,
@@ -1695,7 +1696,7 @@
         "price": 5.3,
         "status": "a",
         "total_pts": 99,
-        "fpl_form": 5.0,
+        "fpl_form": 9.0,
         "ppg": 3.4,
         "ep_next": 2.7,
         "selected_pct": 0.8,
@@ -1704,10 +1705,11 @@
         "minutes": 1764,
         "xgi_per90": 0.43,
         "flags": [
+          "form_top20",
           "value_gem",
           "penalty_taker"
         ],
-        "flag_count": 2
+        "flag_count": 3
       },
       {
         "id": 216,
@@ -11757,10 +11759,9 @@
         "minutes": 1620,
         "xgi_per90": 0.0,
         "flags": [
-          "form_top20",
           "value_gem"
         ],
-        "flag_count": 2
+        "flag_count": 1
       },
       {
         "id": 708,
@@ -12639,10 +12640,9 @@
         "minutes": 1141,
         "xgi_per90": 0.29,
         "flags": [
-          "form_top20",
           "value_gem"
         ],
-        "flag_count": 2
+        "flag_count": 1
       },
       {
         "id": 828,
