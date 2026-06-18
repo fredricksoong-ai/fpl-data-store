@@ -132,7 +132,7 @@
 <body>
 <header class="wrap">
   <div class="hrow"><h1>⚽️ FPLanner ⚽️</h1><span class="hright"><span id="oddsslot"></span><span id="nextcd" class="hcd"></span></span></div>
-  <div class="updated">Last updated: <b>Thu 18 Jun at 20:57 SGT</b></div>
+  <div class="updated">Last updated: <b id="updatedTime">…</b></div>
 </header>
 
 <main class="wrap" id="myteam">
@@ -154,7 +154,7 @@
           <span class="lg green">9–13</span>
           <span class="lg purple">14+</span>
         </div>
-        <span id="whoBack" class="backbtn hidden" onclick="viewTeam('wirtzplay')" title="Back to my team"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-.5 4"/><path d="M20 4v5h-5"/></svg></span>
+        <span id="whoBack" class="backbtn hidden" onclick="backHome()" title="Back to my team"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-.5 4"/><path d="M20 4v5h-5"/></svg></span>
       </div>
     </div>
   </section>
@@ -192,33 +192,12 @@ document.getElementById('nextcd').innerHTML=`🔒 ${fmtCd((2*1440+14*60)*6e4)}`;
 /* squad pitch */
 // type,name,pts,own,played,C,VC,bench,opp,kickoff(when unplayed)
 // ...,opp,ko,goals,assists,transferredIn
-const SQ=[[1,"Raya",2,28,1,0,0,0,"CHE","",0,0,0],
-[2,"Senesi",6,12,1,0,0,0,"EVE","",0,1,0],[2,"O'Reilly",5,9,1,1,0,0,"WHU","",0,0,0],[2,"Cucurella",4,20,1,0,0,0,"ARS","",0,0,0],
-[3,"Semenyo",2,22,1,0,0,0,"EVE","",0,0,0],[3,"Foden",11,25,1,0,0,0,"WHU","",1,1,0],[3,"Mbeumo",6,18,1,0,0,0,"NEW","",0,1,0],[3,"Gakpo",1,30,1,0,0,0,"BHA","",0,0,0],[3,"Anderson",3,15,1,0,0,0,"NFO","",0,0,1],
-[4,"Haaland",7,49,1,0,1,0,"WHU","",1,0,0],[4,"Welbeck",0,8,0,0,0,0,"NFO","Sat 1500",0,0,0],
-[1,"Dúbravka",0,3,2,0,0,1,"LIV","",0,0,0],[2,"Hill",1,6,1,0,0,1,"EVE","",0,0,0],[2,"Van Hecke",2,4,1,0,0,1,"NFO","",0,0,0],[4,"Woltemade",2,5,1,0,0,1,"MUN","",0,0,0]];
+/* squads / stats / league are loaded live from v2.json — see the fetch at the bottom */
 function tier(p){const s=p[4];if(s===0)return"yet";if(s===2)return"dnp";const v=p[2];return v<=3?"red":v<=8?"gold":v<=13?"green":"purple";}
 const GAP=12, tileW=o=>120-Math.min(o,55)/55*40, TILEH=86;  // width scales by ownership (low own → wider); tall enough to clear corner badges
-// a distinct rival squad so tapping a league name visibly swaps the pitch  (+goals,assists,transferIn)
-// worst-case long real names, all pending kickoff (status 0), to stress-test tile text fit
-const SQ_MOU=[[1,"Mamardashvili",0,0.7,0,0,0,0,"WHU","Sat 1500",0,0,0],
-[2,"Walker-Peters",0,0.3,0,0,0,0,"ARS","Sat 1500",0,0,0],[2,"Van den Berg",0,1.0,0,0,0,0,"LIV","Sat 1730",0,0,0],[2,"Lewis-Skelly",0,1.9,0,0,0,0,"CHE","Sun 1400",0,0,0],
-[3,"Williams-Barnett",0,0.2,0,0,0,0,"NEW","Sat 1500",0,0,0],[3,"Da Silva Moreira",0,0.1,0,0,0,0,"BHA","Sat 1500",0,0,0],[3,"Mohamadou Kanté",0,0.1,0,0,0,0,"MUN","Sun 1630",0,0,0],[3,"Silcott-Duberry",0,0.1,0,0,0,0,"EVE","Sat 1730",0,0,0],[3,"Harriman-Annous",0,0.1,0,0,0,0,"FUL","Mon 2000",0,0,0],
-[4,"Calvert-Lewin",0,13.7,0,1,0,0,"BUR","Sat 1500",0,0,0],[4,"Strand Larsen",0,1.4,0,0,1,0,"WHU","Sun 1400",0,0,0],
-[1,"Ortega Moreno",0,0.2,0,0,0,1,"BHA","Sat 1730",0,0,0],[2,"Milosavljević",0,0.2,0,0,0,1,"AVL","Sat 1500",0,0,0],[3,"George Hemmings",0,0.1,0,0,0,1,"CRY","Mon 2000",0,0,0],[4,"Fábio Silva",0,0.2,0,0,0,1,"NFO","Sun 1400",0,0,0]];
-const SQUADS={"wirtzplay":SQ,"MOUsalah":SQ_MOU}, squadFor=t=>SQUADS[t]||SQ_MOU;
-const MYNAMES=new Set(SQ.map(p=>p[1]));        // to flag players I don't own when viewing rivals
-let VIEWING="wirtzplay";
-const GWNO=21;
-// per-team GW snapshot shown in the GK flanks (dynamic as you view teams)
-const STATS={
- "wirtzplay":{gw:39,avg:35,gwr:"4.3M",up:1,ml:"1st",gap:"+12",val:"£101.2m",bank:"1.4",op:759,ovr:"418K",ovrUp:1},
- "MOUsalah":{gw:48,avg:35,gwr:"1.2M",up:1,ml:"2nd",gap:"-12",val:"£103.4m",bank:"0.6",op:747,ovr:"642K",ovrUp:0},
- "HaaCunha Mateta":{gw:51,avg:35,gwr:"0.8M",up:1,ml:"3rd",gap:"-21",val:"£104.0m",bank:"0.2",op:738,ovr:"875K",ovrUp:1},
- "Kurt Tay FC":{gw:37,avg:35,gwr:"3.1M",up:0,ml:"4th",gap:"-53",val:"£100.6m",bank:"3.1",op:706,ovr:"2.0M",ovrUp:0},
- "WinningEleven":{gw:33,avg:35,gwr:"5.0M",up:0,ml:"5th",gap:"-69",val:"£99.8m",bank:"0.0",op:690,ovr:"1.1M",ovrUp:0},
- "Virgil Wirtz Sausage":{gw:44,avg:35,gwr:"2.0M",up:1,ml:"6th",gap:"-81",val:"£102.1m",bank:"1.1",op:678,ovr:"1.4M",ovrUp:1},
- "Great Eastern":{gw:29,avg:35,gwr:"6.2M",up:0,ml:"7th",gap:"-94",val:"£98.9m",bank:"4.5",op:665,ovr:"3.2M",ovrUp:0}};
+/* populated by the v2.json fetch at the bottom */
+let SQUADS={}, STATS={}, MYNAMES=new Set(), ME="wirtzplay", GWNO=0, VIEWING="wirtzplay";
+const squadFor=t=>SQUADS[t]||SQUADS[ME]||[];
 const gwCol=(gw,avg)=>{const r=gw/avg;return r<0.9?'bd':r<=1.1?'am':r<1.5?'gd':'pk';};
 const I_GOAL='⚽';
 const I_ASSIST='👟';
@@ -227,7 +206,7 @@ function bub(p,SC){let w=Math.round(tileW(p[3])*SC);if(p[0]===1)w=Math.round(w*1
   const sub=s===0?`${p[8]} • ${p[9]}`:s===2?`${p[8]} • DNP`:`${p[8]} • ${p[2]}`;
   const nf=Math.max(8.5,Math.min(12,h*0.145)).toFixed(1);
   const sf=Math.max(7,Math.min(9.5,h*0.105)).toFixed(1);
-  const g=p[10],a=p[11],ti=p[12],warn=VIEWING!=="wirtzplay"&&!MYNAMES.has(p[1]);
+  const g=p[10],a=p[11],ti=p[12],warn=VIEWING!==ME&&!MYNAMES.has(p[1]);
   let bd='';
   if(p[5])bd+='<span class="cnr c-tr b-cap">C</span>';else if(p[6])bd+='<span class="cnr c-tr b-vc">V</span>';
   if(g&&a)bd+=`<span class="cnr c-tl b-icon">${I_GOAL}</span><span class="cnr c-tl2 b-icon">${I_ASSIST}</span>`;
@@ -235,7 +214,7 @@ function bub(p,SC){let w=Math.round(tileW(p[3])*SC);if(p[0]===1)w=Math.round(w*1
   if(ti)bd+=`<span class="cnr c-bl">${I_XFER}</span>`;
   if(warn)bd+='<span class="cnr c-br b-warn">!</span>';
   return `<div class="bub ${tier(p)} ${p[5]?'cap':p[6]?'vc':''}" style="width:${w}px;height:${h}px"><div class="in"><span class="nm" style="font-size:${nf}px">${p[1]}</span><span class="sub" style="font-size:${sf}px">${sub}</span></div>${bd}</div>`;}
-function gwPill(team){const s=STATS[team]||STATS.wirtzplay;const sl='<span class="sl">•</span>';
+function gwPill(team){const s=STATS[team]||STATS[ME]||{gw:0,avg:1,ml:'',gap:'',op:0,ovr:'',ovrUp:0,gwr:'',up:0,val:'',bank:''};const sl='<span class="sl">•</span>';
   return `<span class="pill"><span class="k">GW</span><span class="mu">${GWNO}</span>${sl}<b class="${gwCol(s.gw,s.avg)}">${s.gw}</b><span class="mu">/${s.avg}</span>${sl}<b class="gd">${s.ml}</b> <span class="${s.gap[0]==='+'?'gd':'bd'}">${s.gap}</span>${sl}<span class="k">OP</span><b>${s.op}</b>${sl}<b>${s.ovr}</b> <span class="${s.ovrUp?'gd':'bd'}">${s.ovrUp?'▲':'▼'}</span>${sl}<b>${s.gwr}</b> <span class="${s.up?'gd':'bd'}">${s.up?'▲':'▼'}</span>${sl}<b>${s.val}</b><span class="mu"> +${s.bank}</span></span>`;}
 function renderPitch(team){
   VIEWING=team;
@@ -249,37 +228,27 @@ function renderPitch(team){
   document.getElementById('bench').innerHTML=benchArr.map(p=>bub(p,SC)).join('');
   document.getElementById('gwpill').innerHTML=gwPill(team);
   document.getElementById('whoName').textContent=team;
-  document.getElementById('whoBack').classList.toggle('hidden',team==="wirtzplay");
+  document.getElementById('whoBack').classList.toggle('hidden',team===ME);
 }
 function flash(el){el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1300);}
 function viewTeam(team){renderPitch(team);const c=document.getElementById('card-squad');c.scrollIntoView({behavior:'smooth',block:'start'});flash(c);}
-renderPitch("wirtzplay");
+function backHome(){viewTeam(ME);}
 
-/* league table */
-// rank,team,manager,captain,chipNow,chipsUsed,overallRank,gwPts,total,gapToLeader,xPts,xGI,isMe
-// rank,team,manager,captain,chipNow,chipsUsed[[name,count]],overallRank,gwPts,total,gap,xPts,xGI,isMe
-const LG=[
-[1,"wirtzplay","Fredrick Soong","Haaland","",[["BB",2],["FH",1],["WC",2],["TC",1]],"418.4k",39,759,0,46,0.5,1],
-[2,"MOUsalah","Hoe Mun Ho","Haaland","FH",[["BB",1],["WC",1],["TC",2],["FH",2]],"642.8k",48,747,12,54,0.4,0],
-[3,"HaaCunha Mateta","HengHong Seah","Haaland","",[["BB",1],["WC",2],["TC",1]],"874.9k",51,738,21,51,0.4,0],
-[4,"Kurt Tay FC","Y L","Haaland","TC",[["WC",1],["TC",2]],"2.0M",37,706,53,45,0.5,0],
-[5,"WinningEleven","Ritchie Lai","Haaland","TC",[["TC",1]],"1.1M",33,690,69,39,0.4,0],
-[6,"Virgil Wirtz Sausage","RS Kwa","Saka","",[["BB",2],["WC",1]],"1.4M",44,678,81,48,0.5,0],
-[7,"Great Eastern","Lionel T","Palmer","",[["WC",1]],"3.2M",29,665,94,41,0.4,0]];
+/* league table — rank,team,manager,captain,chipNow,chipsUsed[[name,count]],overallRank,gwPts,total,gap,xPts,xGI,isMe */
 const PERSON='<svg class="icn" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0z"/></svg>';
 const gwTier=v=>v<25?'red':v<45?'gold':v<=50?'green':'purple';
 const xpC=v=>v>=50?'g':v>=42?'a':'r';
-const chips=a=>a.map(([c,n])=>`<span class="${n>=2?'cu2':'cu1'}">${c}</span>`).join(' ');
-document.getElementById('lgtable').innerHTML=
+const chipList=a=>(a||[]).map(([c,n])=>`<span class="${n>=2?'cu2':'cu1'}">${c}</span>`).join(' ');
+function renderLeague(LG){document.getElementById('lgtable').innerHTML=
 `<thead><tr><th>Team</th><th class="r">GW Pts</th><th class="r">Total</th><th class="r">xPts</th><th class="r">xGI</th></tr></thead><tbody>`+
-LG.map(r=>{const me=r[12];return `<tr class="${me?'me':''}">
-<td><div><span class="rk">${r[0]}</span> <span class="lname ${me?'lme':''}" onclick="viewTeam('${r[1]}')">${r[1]}</span>${me?PERSON:''}${r[4]?`<span class="chipnow">${r[4]}</span>`:''}</div>
+(LG||[]).map(r=>{const me=r[12];return `<tr class="${me?'me':''}">
+<td><div><span class="rk">${r[0]}</span> <span class="lname ${me?'lme':''}" onclick="viewTeam('${r[1].replace(/'/g,"\\'")}')">${r[1]}</span>${me?PERSON:''}${r[4]?`<span class="chipnow">${r[4]}</span>`:''}</div>
 <div class="lsub">${r[2]} · ${r[3]}</div>
-<div class="lsub2">${chips(r[5])} · ${r[6]}</div></td>
+<div class="lsub2">${chipList(r[5])} · ${r[6]}</div></td>
 <td class="r"><span class="gwbox ${gwTier(r[7])}">${r[7]}</span></td>
 <td class="r"><b>${r[8]}</b>${r[9]?`<span class="gap">+${r[9]}</span>`:''}</td>
 <td class="r"><span class="xv ${xpC(r[10])}">${r[10]}</span></td>
-<td class="r"><span class="xv ${r[11]>=0.45?'g':'r'}">${r[11].toFixed(1)}</span></td></tr>`}).join('')+`</tbody>`;
+<td class="r"><span class="xv ${r[11]>=0.45?'g':'r'}">${(+r[11]).toFixed(1)}</span></td></tr>`}).join('')+`</tbody>`;}
 
 /* nav: no toggle. default = myteam (cards: squad, league). mid = next-card / home */
 const VIEW_ORDER=[["model","Model"],["stats","Stats"],["captain","Captain"],["thisgw","This GW"]];
@@ -303,6 +272,21 @@ function barAction(a,e){if(e)e.stopPropagation();closeSheets();toast(a==='rebuil
 function toast(t){const el=document.getElementById('bbtoast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1300);}
 document.addEventListener('click',e=>{if(!e.target.closest('.bsheet,.bottombar,.bbhit'))closeSheets();});
 renderTabSheet();updateMid();
+
+/* ===== live data ===== */
+fetch('v2.json',{cache:'no-store'}).then(r=>r.json()).then(V=>{
+  SQUADS=V.squads||{}; STATS=V.stats||{}; ME=V.me||'wirtzplay'; GWNO=V.event||0; VIEWING=ME;
+  MYNAMES=new Set((SQUADS[ME]||[]).map(p=>p[1]));
+  try{
+    const d=new Date(V.generated.replace(' ','T').replace(' UTC','')+':00Z');
+    document.getElementById('updatedTime').textContent=d.toLocaleString('en-SG',{timeZone:'Asia/Singapore',weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',hour12:false})+' SGT';
+  }catch(e){document.getElementById('updatedTime').textContent=V.generated;}
+  renderPitch(ME);
+  renderLeague(V.league);
+}).catch(e=>{
+  document.getElementById('pitchrows').innerHTML='<div style="padding:30px 16px;text-align:center;color:var(--bad)">Couldn\'t load live data (v2.json).</div>';
+  document.getElementById('updatedTime').textContent='—';
+});
 </script>
 </body>
 </html>
