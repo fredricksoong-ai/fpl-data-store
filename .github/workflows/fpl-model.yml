@@ -46,4 +46,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy model-app/site --project-name=wirtzplay-model --branch=main --commit-dirty=true
+          command: pages deploy model-app/site --project-name=wirtzplay --branch=main --commit-dirty=true
