@@ -40,6 +40,7 @@
 
   /* legend + pitch */
   .legend{flex:1;display:flex;justify-content:center;flex-wrap:wrap;gap:8px;align-items:center;font-size:8.5px;color:var(--muted)}
+  .lg.dnp{color:var(--faint)} .ld.dnpd{background:repeating-linear-gradient(45deg,currentColor,currentColor 1.5px,transparent 1.5px,transparent 3px)}
   .lg{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
   .ld{width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;flex:none}
   .gkrow{display:flex;align-items:center;justify-content:space-between;gap:6px}
@@ -52,10 +53,11 @@
   .pitch::after{content:"";position:absolute;left:50%;top:48%;width:110px;height:110px;border:1px solid rgba(255,255,255,.05);border-radius:50%;transform:translate(-50%,-50%)}
   #pitchrows .prow{position:relative;display:flex;justify-content:center;align-items:center;gap:13px;margin:8px 0}
   .prow{position:relative;display:flex;justify-content:center;align-items:center;gap:13px;margin:8px 0}
-  .bub{position:relative;display:flex;align-items:center;justify-content:center;border-radius:50%;text-align:center;flex:none}
-  .bub .in{display:flex;flex-direction:column;align-items:center;gap:1px;padding:0 2px;line-height:1.0}
-  .bub .nm{font-weight:700;word-break:break-word}
+  .bub{position:relative;display:flex;align-items:center;justify-content:center;border-radius:11px;text-align:center;flex:none;padding:0 4px}
+  .bub .in{display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.05;max-width:100%;padding:0 1px}
+  .bub .nm{font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:break-word;line-height:1.08;max-width:100%}
   .bub .sub{font-weight:600;opacity:.82;white-space:nowrap}
+  .bub.dnp{background:repeating-linear-gradient(45deg,rgba(255,255,255,.03),rgba(255,255,255,.03) 5px,rgba(255,255,255,.085) 5px,rgba(255,255,255,.085) 10px);border:2px solid rgba(255,255,255,.16);color:var(--muted)}
   .bub.yet{background:rgba(255,255,255,.03);border:2px solid rgba(255,255,255,.22);color:var(--muted)}
   .bub.red{background:rgba(248,113,113,.15);border:2px solid var(--bad);color:#fca5a5}
   .bub.gold{background:rgba(224,181,58,.15);border:2px solid #cda227;color:#f3d785}
@@ -92,7 +94,8 @@
   #whoName{color:var(--muted);font-weight:700;font-size:13px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .who-val{color:var(--faint);font-size:11px;font-weight:600;white-space:nowrap}
   .gwpills{display:flex;justify-content:center;width:100%}
-  .gwpills .pill{padding:4px 11px;font-size:9.5px;white-space:nowrap}
+  .gwpills .pill{padding:4px 10px;font-size:8.5px;white-space:nowrap;letter-spacing:-.1px}
+  .gwpills .pill b{font-weight:700} .gwpills .pill .sl{margin:0 3px}
   .pitch-bottom{display:flex;align-items:center;gap:8px;margin-top:10px}
   #whoBack{flex:none}
   .tm{cursor:pointer} tr:not(.me) .tm:active{color:var(--fpl)}
@@ -144,11 +147,12 @@
       <div class="bench" id="bench"></div>
       <div class="pitch-bottom">
         <div class="legend">
-          <span class="lg yet"><span class="ld"></span>Yet to play</span>
-          <span class="lg red"><span class="ld"></span>0–3</span>
-          <span class="lg gold"><span class="ld"></span>4–8</span>
-          <span class="lg green"><span class="ld"></span>9–13</span>
-          <span class="lg purple"><span class="ld"></span>14+</span>
+          <span class="lg yet">Yet to play</span>
+          <span class="lg dnp">DNP</span>
+          <span class="lg red">0–3</span>
+          <span class="lg gold">4–8</span>
+          <span class="lg green">9–13</span>
+          <span class="lg purple">14+</span>
         </div>
         <span id="whoBack" class="backbtn hidden" onclick="viewTeam('wirtzplay')" title="Back to my team"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-.5 4"/><path d="M20 4v5h-5"/></svg></span>
       </div>
@@ -192,15 +196,16 @@ const SQ=[[1,"Raya",2,28,1,0,0,0,"CHE","",0,0,0],
 [2,"Senesi",6,12,1,0,0,0,"EVE","",0,1,0],[2,"O'Reilly",5,9,1,1,0,0,"WHU","",0,0,0],[2,"Cucurella",4,20,1,0,0,0,"ARS","",0,0,0],
 [3,"Semenyo",2,22,1,0,0,0,"EVE","",0,0,0],[3,"Foden",11,25,1,0,0,0,"WHU","",1,1,0],[3,"Mbeumo",6,18,1,0,0,0,"NEW","",0,1,0],[3,"Gakpo",1,30,1,0,0,0,"BHA","",0,0,0],[3,"Anderson",3,15,1,0,0,0,"NFO","",0,0,1],
 [4,"Haaland",7,49,1,0,1,0,"WHU","",1,0,0],[4,"Welbeck",0,8,0,0,0,0,"NFO","Sat 1500",0,0,0],
-[1,"Dúbravka",0,3,1,0,0,1,"LIV","",0,0,0],[2,"Hill",1,6,1,0,0,1,"EVE","",0,0,0],[2,"Van Hecke",2,4,1,0,0,1,"NFO","",0,0,0],[4,"Woltemade",2,5,1,0,0,1,"MUN","",0,0,0]];
-function tier(p){if(!p[4])return"yet";const v=p[2];return v<=3?"red":v<=8?"gold":v<=13?"green":"purple";}
-const GAP=13, rOf=o=>46-Math.min(o,55)/55*10;
+[1,"Dúbravka",0,3,2,0,0,1,"LIV","",0,0,0],[2,"Hill",1,6,1,0,0,1,"EVE","",0,0,0],[2,"Van Hecke",2,4,1,0,0,1,"NFO","",0,0,0],[4,"Woltemade",2,5,1,0,0,1,"MUN","",0,0,0]];
+function tier(p){const s=p[4];if(s===0)return"yet";if(s===2)return"dnp";const v=p[2];return v<=3?"red":v<=8?"gold":v<=13?"green":"purple";}
+const GAP=12, tileW=o=>120-Math.min(o,55)/55*40, TILEH=86;  // width scales by ownership (low own → wider); tall enough to clear corner badges
 // a distinct rival squad so tapping a league name visibly swaps the pitch  (+goals,assists,transferIn)
-const SQ_MOU=[[1,"Sánchez",4,15,1,0,0,0,"BRE","",0,0,0],
-[2,"Gabriel",6,31,1,0,0,0,"CHE","",0,1,0],[2,"Gvardiol",2,18,1,0,0,0,"WHU","",0,0,0],[2,"Mukiele",8,4,1,0,0,0,"AVL","",0,1,0],
-[3,"Salah",14,42,1,1,0,0,"LEE","",2,1,0],[3,"Saka",6,38,1,0,0,0,"CHE","",0,1,0],[3,"Palmer",2,29,1,0,0,0,"ARS","",0,0,0],[3,"Kudus",2,12,1,0,0,0,"AVL","",0,0,0],[3,"Rogers",9,11,1,0,0,0,"WHU","",1,1,0],
-[4,"Haaland",7,49,1,0,1,0,"WHU","",1,0,0],[4,"Isak",1,33,1,0,0,0,"BRE","",0,0,0],
-[1,"Pickford",3,12,1,0,0,1,"FUL","",0,0,0],[2,"Andersen",2,8,1,0,0,1,"FUL","",0,0,0],[2,"Kerkez",1,9,1,0,0,1,"EVE","",0,0,0],[4,"Mateta",5,17,1,0,0,1,"BRE","",0,0,0]];
+// worst-case long real names, all pending kickoff (status 0), to stress-test tile text fit
+const SQ_MOU=[[1,"Mamardashvili",0,0.7,0,0,0,0,"WHU","Sat 1500",0,0,0],
+[2,"Walker-Peters",0,0.3,0,0,0,0,"ARS","Sat 1500",0,0,0],[2,"Van den Berg",0,1.0,0,0,0,0,"LIV","Sat 1730",0,0,0],[2,"Lewis-Skelly",0,1.9,0,0,0,0,"CHE","Sun 1400",0,0,0],
+[3,"Williams-Barnett",0,0.2,0,0,0,0,"NEW","Sat 1500",0,0,0],[3,"Da Silva Moreira",0,0.1,0,0,0,0,"BHA","Sat 1500",0,0,0],[3,"Mohamadou Kanté",0,0.1,0,0,0,0,"MUN","Sun 1630",0,0,0],[3,"Silcott-Duberry",0,0.1,0,0,0,0,"EVE","Sat 1730",0,0,0],[3,"Harriman-Annous",0,0.1,0,0,0,0,"FUL","Mon 2000",0,0,0],
+[4,"Calvert-Lewin",0,13.7,0,1,0,0,"BUR","Sat 1500",0,0,0],[4,"Strand Larsen",0,1.4,0,0,1,0,"WHU","Sun 1400",0,0,0],
+[1,"Ortega Moreno",0,0.2,0,0,0,1,"BHA","Sat 1730",0,0,0],[2,"Milosavljević",0,0.2,0,0,0,1,"AVL","Sat 1500",0,0,0],[3,"George Hemmings",0,0.1,0,0,0,1,"CRY","Mon 2000",0,0,0],[4,"Fábio Silva",0,0.2,0,0,0,1,"NFO","Sun 1400",0,0,0]];
 const SQUADS={"wirtzplay":SQ,"MOUsalah":SQ_MOU}, squadFor=t=>SQUADS[t]||SQ_MOU;
 const MYNAMES=new Set(SQ.map(p=>p[1]));        // to flag players I don't own when viewing rivals
 let VIEWING="wirtzplay";
@@ -218,10 +223,10 @@ const gwCol=(gw,avg)=>{const r=gw/avg;return r<0.9?'bd':r<=1.1?'am':r<1.5?'gd':'
 const I_GOAL='⚽';
 const I_ASSIST='👟';
 const I_XFER='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h12M11 7l5 5-5 5"/></svg>';
-function bub(p,SC){const r=Math.round(rOf(p[3])*SC),d=2*r,played=p[4];
-  const sub=played?`${p[8]} • ${p[2]}`:`${p[8]} • ${p[9]}`;
-  const nf=Math.max(10,Math.min(13,r*0.30)).toFixed(1);
-  const sf=(played?Math.max(9,Math.min(10.8,r*0.26)):Math.max(8,Math.min(9.8,r*0.22))).toFixed(1);
+function bub(p,SC){let w=Math.round(tileW(p[3])*SC);if(p[0]===1)w=Math.round(w*1.5);const h=Math.round(TILEH*SC),s=p[4];  // GK alone in its row → wider tile
+  const sub=s===0?`${p[8]} • ${p[9]}`:s===2?`${p[8]} • DNP`:`${p[8]} • ${p[2]}`;
+  const nf=Math.max(8.5,Math.min(12,h*0.145)).toFixed(1);
+  const sf=Math.max(7,Math.min(9.5,h*0.105)).toFixed(1);
   const g=p[10],a=p[11],ti=p[12],warn=VIEWING!=="wirtzplay"&&!MYNAMES.has(p[1]);
   let bd='';
   if(p[5])bd+='<span class="cnr c-tr b-cap">C</span>';else if(p[6])bd+='<span class="cnr c-tr b-vc">V</span>';
@@ -229,14 +234,14 @@ function bub(p,SC){const r=Math.round(rOf(p[3])*SC),d=2*r,played=p[4];
   else if(g)bd+=`<span class="cnr c-tl b-icon">${I_GOAL}</span>`;else if(a)bd+=`<span class="cnr c-tl b-icon">${I_ASSIST}</span>`;
   if(ti)bd+=`<span class="cnr c-bl">${I_XFER}</span>`;
   if(warn)bd+='<span class="cnr c-br b-warn">!</span>';
-  return `<div class="bub ${tier(p)} ${p[5]?'cap':p[6]?'vc':''}" style="width:${d}px;height:${d}px"><div class="in"><span class="nm" style="font-size:${nf}px">${p[1]}</span><span class="sub" style="font-size:${sf}px">${sub}</span></div>${bd}</div>`;}
+  return `<div class="bub ${tier(p)} ${p[5]?'cap':p[6]?'vc':''}" style="width:${w}px;height:${h}px"><div class="in"><span class="nm" style="font-size:${nf}px">${p[1]}</span><span class="sub" style="font-size:${sf}px">${sub}</span></div>${bd}</div>`;}
 function gwPill(team){const s=STATS[team]||STATS.wirtzplay;const sl='<span class="sl">•</span>';
   return `<span class="pill"><span class="k">GW</span><span class="mu">${GWNO}</span>${sl}<b class="${gwCol(s.gw,s.avg)}">${s.gw}</b><span class="mu">/${s.avg}</span>${sl}<b class="gd">${s.ml}</b> <span class="${s.gap[0]==='+'?'gd':'bd'}">${s.gap}</span>${sl}<span class="k">OP</span><b>${s.op}</b>${sl}<b>${s.ovr}</b> <span class="${s.ovrUp?'gd':'bd'}">${s.ovrUp?'▲':'▼'}</span>${sl}<b>${s.gwr}</b> <span class="${s.up?'gd':'bd'}">${s.up?'▲':'▼'}</span>${sl}<b>${s.val}</b><span class="mu"> +${s.bank}</span></span>`;}
 function renderPitch(team){
   VIEWING=team;
   const sq=squadFor(team), st=sq.filter(p=>!p[7]), benchArr=sq.filter(p=>p[7]);
   const rows=[1,2,3,4].map(t=>st.filter(p=>p[0]===t)).filter(r=>r.length);
-  const rowW=a=>a.reduce((s,p)=>s+2*rOf(p[3]),0)+(a.length-1)*GAP;
+  const rowW=a=>a.reduce((s,p)=>s+tileW(p[3]),0)+(a.length-1)*GAP;
   const widest=Math.max(...rows.map(rowW), rowW(benchArr));
   const pr=document.getElementById('pitchrows');
   const SC=Math.min(1,((pr.clientWidth||340)-2)/widest);   // shrink uniformly so the widest row (up to 5) fits
