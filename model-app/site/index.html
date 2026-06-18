@@ -30,11 +30,12 @@ a{color:var(--good)}
 .rbtn{background:var(--card);border:1px solid var(--line);color:var(--muted);width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .rbtn svg{width:17px;height:17px} .rbtn:active{color:var(--good);transform:rotate(90deg)}
 
-/* WC sticky scrollable tabs */
-.tabs{display:flex;gap:6px;padding:8px 12px;position:sticky;top:0;background:var(--bg);z-index:30;overflow-x:auto;scrollbar-width:none}
+/* WC bottom-bar nav (thumb-reachable, horizontally scrollable) */
+.tabs{display:flex;gap:6px;padding:8px 12px calc(8px + env(safe-area-inset-bottom));position:fixed;left:0;right:0;bottom:0;background:rgba(11,18,32,.92);backdrop-filter:blur(14px) saturate(150%);-webkit-backdrop-filter:blur(14px) saturate(150%);border-top:1px solid var(--line);z-index:40;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tab{flex:0 0 auto;text-align:center;padding:8px 13px;border-radius:10px;background:var(--card2);border:1px solid var(--line);color:var(--muted);font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap}
+.tab{flex:0 0 auto;text-align:center;padding:8px 14px;border-radius:999px;background:var(--card2);border:1px solid var(--line);color:var(--muted);font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent}
 .tab.active{background:var(--home);border-color:var(--home);color:#fff}
+.tab:active{transform:scale(.95)}
 
 .wrap{max-width:1100px;margin:0 auto;padding:10px 12px}
 .panel{display:none} .panel.on{display:block}
@@ -128,8 +129,8 @@ const MY_ENTRY=822500;
 const RIVAL_IDS=[1837531,1353220,638664,61955,2414293,1823633];
 const POS={1:'GK',2:'DEF',3:'MID',4:'FWD'};
 const STR2POS={GKP:1,GK:1,DEF:2,MID:3,FWD:4};
-const POS_BG={1:'#3a3700',2:'#003a1c',3:'#00303a',4:'#3a0012'};
-const POS_C={1:'#ebff00',2:'#00ff85',3:'#05f0ff',4:'#e90052'};
+const POS_BG={1:'rgba(245,158,11,.16)',2:'rgba(52,211,153,.16)',3:'rgba(59,130,246,.18)',4:'rgba(248,113,113,.16)'};
+const POS_C={1:'#fbbf24',2:'#34d399',3:'#93c5fd',4:'#f87171'};
 const FDR_BG={1:'#375523',2:'#01fc7a',3:'#5a5a5a',4:'#7f1931',5:'#80072d'};
 const FDR_T={1:'#fff',2:'#000',3:'#fff',4:'#fff',5:'#fff'};
 const FLAG_C={form_top20:'#f97316',value_gem:'#22c55e',cs_candidate:'#3b82f6',price_rising:'#a855f7',cbit_strong:'#14b8a6',xgi_elite:'#eab308',xgi_value:'#ca8a04',gk_shot_stopper:'#6b7280',penalty_taker:'#ef4444',corner_taker:'#ec4899',rotation_risk:'#7f1d1d',ep_top_pos:'#60a5fa',form_top5:'#fb923c',value_play:'#4ade80',template_play:'#818cf8'};
@@ -261,6 +262,7 @@ function renderTeam(mySquad,pm,history,fixtures){
       <td data-v="${pl.xgi_per90||0}">${pl.xgi_per90!=null?pl.xgi_per90.toFixed(2):'—'}</td>
       <td data-v="${dT(pl)}" class="${dT(pl)>0?'up':dT(pl)<0?'down':''}">${fmtK(dT(pl))}</td>
       <td data-v="${fdr3||9}">${fdr3!=null?`<span class="fdr" style="background:${FDR_BG[Math.round(fdr3)]||'#444'};color:${FDR_T[Math.round(fdr3)]||'#fff'}">${fdr3.toFixed(1)}</span>`:'—'}</td>
+      <td data-v="${window._mxp?.[pick.player_id]??-1}">${window._mxp?.[pick.player_id]!=null?`<span style="color:var(--pick);font-weight:800">${window._mxp[pick.player_id].toFixed(1)}</span>`:'<span class="same">—</span>'}</td>
     </tr>`;
   }
   const head=`<thead><tr>
@@ -268,8 +270,9 @@ function renderTeam(mySquad,pm,history,fixtures){
     <th class="sortable" data-i="3" data-num="1">£</th><th class="sortable" data-i="4" data-num="1">Pts</th><th class="sortable" data-i="5" data-num="1">PPM</th>
     <th class="sortable" data-i="6" data-num="1">Own%</th><th class="sortable" data-i="7" data-num="1">Min%</th><th class="sortable" data-i="8" data-num="1">Form L5</th>
     <th class="sortable" data-i="9" data-num="1">xGI</th><th class="sortable" data-i="10" data-num="1">ΔT</th><th class="sortable" data-i="11" data-num="1">FDR3</th>
+    <th class="sortable" data-i="12" data-num="1">xPts</th>
   </tr></thead>`;
-  const sep=`<tr data-sep="1"><td colspan="12" style="padding:0;height:3px;background:linear-gradient(90deg,var(--pick),var(--home))"></td></tr>`;
+  const sep=`<tr data-sep="1"><td colspan="13" style="padding:0;height:3px;background:linear-gradient(90deg,var(--pick),var(--home))"></td></tr>`;
   return `<div class="sec"><div class="sec-t">My Squad</div></div>${tw}
     <div class="tscroll"><table class="stick" data-sortable>${head}<tbody>
       ${starters.map(p=>row(p,false)).join('')}${sep}${bench.map(p=>row(p,true)).join('')}
@@ -305,13 +308,12 @@ function renderHelper(mySquad,pm,players,fixtures){
     rep+=`<div style="margin:14px 2px 6px;font-weight:700;color:var(--muted)">${POS[pos]} ideas <span class="same" style="font-weight:400">· budget £${budget.toFixed(1)}m</span></div>
       <div class="tscroll"><table data-sortable><thead><tr><th>Player</th><th>Team</th><th>£</th><th class="sortable" data-i="3" data-num="1">EP</th><th class="sortable" data-i="4" data-num="1">Form</th><th>Budget</th></tr></thead><tbody>${rows||'<tr><td colspan="6" class="empty">—</td></tr>'}</tbody></table></div>`;
   });
-  return `<div class="sec"><div class="sec-t">Captain & transfers <span class="same" style="font-size:11px;font-weight:400">(FPL EP heuristic)</span></div></div>
-    <div style="font-weight:700;margin:0 2px 6px">⭐ Captain picks</div>
-    <div class="tscroll" style="margin-bottom:18px"><table><thead><tr><th>#</th><th>Player</th><th>Next fixture</th><th>EP</th><th>Form</th></tr></thead><tbody>${capRows}</tbody></table></div>
+  return `<div class="sec"><div class="sec-t">Transfers & watch-outs</div></div>
+    <div class="note">For captaincy use the model-driven Captain tab. This view flags squad risks and suggests replacements by FPL's own expected points.</div>
     <div style="font-weight:700;margin:0 2px 6px">⚠️ Watch-outs</div>
     <div class="tscroll" style="margin-bottom:6px"><table><thead><tr><th>Player</th><th>Pos</th><th>Why</th></tr></thead><tbody>${probRows}</tbody></table></div>
     <div style="font-weight:700;margin:18px 2px 0">🔁 Replacement ideas</div>${rep}
-    <div style="font-size:11px;color:var(--faint);margin-top:10px">For model-driven captaincy use the Captain tab. EP = FPL's expected points; budget assumes selling your priciest starter in that position.</div>`;
+    <div style="font-size:11px;color:var(--faint);margin-top:10px">Budget assumes selling your priciest starter in that position.</div>`;
 }
 
 function renderLeague(league,mgr){
@@ -370,6 +372,7 @@ function statsColumns(pos){
   else if(pos==='MID'||pos==='FWD'){C.push({h:'Def/90',num:1,v:p=>p.defensive_contribution_per90||0,cell:defc});C.push({h:'G',num:1,v:p=>p.goals||0,cell:p=>p.goals??'—'});C.push({h:'A',num:1,v:p=>p.assists||0,cell:p=>p.assists??'—'});C.push({h:'xGI/90',num:1,v:p=>p.xgi_per90||0,cell:p=>p.xgi_per90!=null?p.xgi_per90.toFixed(2):'—'});C.push({h:'PK',num:1,v:p=>p.is_penalty_taker?1:0,cell:p=>p.is_penalty_taker?'⚽':'—'});}
   else {C.push({h:'xGI/90',num:1,v:p=>p.xgi_per90||0,cell:p=>p.xgi_per90!=null?p.xgi_per90.toFixed(2):'—'});C.push({h:'Def/90',num:1,v:p=>p.defensive_contribution_per90||0,cell:defc});}
   C.push({h:'EP',num:1,v:p=>p.ep_next||0,cell:p=>p.ep_next!=null?(+p.ep_next).toFixed(1):'—'});
+  C.push({h:'xPts',num:1,v:p=>window._mxp?.[p.id]??-1,cell:p=>{const x=window._mxp?.[p.id];return x!=null?`<span style="color:var(--pick);font-weight:700">${x.toFixed(1)}</span>`:'—'}});
   C.push({h:'ΔT',num:1,v:p=>dT(p),cell:p=>`<span class="${dT(p)>0?'up':dT(p)<0?'down':''}">${fmtK(dT(p))}</span>`});
   C.push({h:'Flags',num:1,v:p=>(p.flags||[]).length,cell:p=>`${flagPills((p.flags||[]).slice(0,2))} ${starCount((p.flags||[]).length)}`});
   return C;
@@ -462,6 +465,8 @@ async function loadInsights(){
 /* ===================== MAIN ===================== */
 Promise.all([fetchAll(),fetchModel()]).then(([{results,errors},model])=>{
   MODEL=model;
+  // model expected-points lookup (by FPL element id) for the squad table + stats explorer
+  window._mxp={};[...(MODEL?.projection||[]),...(MODEL?.squad?.xi||[]),...(MODEL?.squad?.bench||[])].forEach(p=>{if(p&&p.id!=null&&p.xpts!=null)window._mxp[p.id]=p.xpts});
   const [uni,scan,history,fixtures,league,mySquad,rivals,gwMeta,mgr]=results;
   CURRENT_GW=gwMeta?.data?.current_gw?.id||MODEL?.event||38;
   const offseason=gwMeta?.data?.current_gw?.finished&&!gwMeta?.data?.next_gw;
@@ -478,15 +483,15 @@ Promise.all([fetchAll(),fetchModel()]).then(([{results,errors},model])=>{
     <div class="badge">Total <b>${me.total||'—'}</b></div>${errChips}
     <button class="rbtn" onclick="location.reload()" aria-label="Refresh">${I_REFRESH}</button></div></div>${offseason?'<div class="banner">Off-season · 2025/26 final data</div>':''}`;
 
-  const tabs=[['proj','GW Proj'],['captain','Captain'],['team','Team'],['stats','Stats'],['fixtures','Fixtures'],['league','League'],['charts','Charts'],['chips','Chips']];
+  const tabs=[['team','Squad'],['proj','GW Proj'],['captain','Captain'],['stats','Stats'],['fixtures','Fixtures'],['league','League'],['charts','Charts'],['chips','Chips']];
   const tabBar=`<div class="tabs">${tabs.map(([id,l],i)=>`<div class="tab${i===0?' active':''}" data-tab="${id}">${l}</div>`).join('')}</div>`;
 
   const app=document.getElementById('app');
   app.innerHTML=hdr+tabBar+`<div class="wrap">
-    <div id="p-proj" class="panel on">${renderProj(MODEL)}</div>
+    <div id="p-proj" class="panel">${renderProj(MODEL)}</div>
     <div id="p-captain" class="panel">${renderCaptainM(MODEL)}</div>
-    <div id="p-team" class="panel">
-      <div class="filters"><button class="fbtn on" data-tv="squad">Squad</button><button class="fbtn" data-tv="helper">Helper</button></div>
+    <div id="p-team" class="panel on">
+      <div class="filters"><button class="fbtn on" data-tv="squad">Squad</button><button class="fbtn" data-tv="helper">Transfers</button></div>
       <div id="tv-squad">${renderTeam(mySquad,pm,history,fixtures)}</div>
       <div id="tv-helper" style="display:none">${renderHelper(mySquad,pm,(uni?.data?.players||[]),fixtures)}</div></div>
     <div id="p-stats" class="panel">${renderStats(uni,scan,myIds)}</div>
