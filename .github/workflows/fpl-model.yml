@@ -1,0 +1,49 @@
+# Copy this file to:  .github/workflows/fpl-model.yml  in the fpl-data-store repo.
+#
+# Mirrors the World Cup app's predict.yml: build the data with Python, then deploy
+# the static folder to Cloudflare Pages via wrangler. Reuses the same two Cloudflare
+# secrets you already have on the wc26 repo — add them to fpl-data-store too:
+#   CLOUDFLARE_API_TOKEN   (Pages:Edit token)
+#   CLOUDFLARE_ACCOUNT_ID
+#
+# Deploys to a SEPARATE Pages project (wirtzplay-model) so your live wirtzplay site
+# is untouched while you test. We flip/merge later.
+
+name: FPL model — build & deploy
+
+on:
+  push:
+    branches: [main]
+    paths:                       # only rebuild when the model app changes
+      - "model-app/**"
+      - ".github/workflows/fpl-model.yml"
+  schedule:
+    - cron: "0 6 * * *"          # 06:00 UTC daily — refresh projections
+  workflow_dispatch: {}
+
+concurrency:
+  group: fpl-model-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: pip install -r model-app/requirements.txt
+
+      - name: Build projections
+        run: python model-app/build_predictions.py
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy model-app/site --project-name=wirtzplay-model --branch=main --commit-dirty=true

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1220">
+<title>wirtzplay — FPL Model</title>
+<style>
+  /* shared design tokens with the World Cup app */
+  :root{
+    --bg:#0b1220;--card:#121c2e;--card2:#0f1827;--line:#1f2c44;--ink:#e8eef7;--muted:#90a0b8;
+    --home:#3b82f6;--draw:#64748b;--away:#f59e0b;--good:#34d399;--bad:#f87171;--pick:#a78bfa;--you:#22d3ee;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;padding:env(safe-area-inset-top) 0 60px;touch-action:manipulation}
+  header{padding:14px 14px 4px}
+  h1{font-size:16px;margin:0}
+  .sub{color:var(--muted);font-size:12px;margin-top:4px}
+  .updated{color:var(--muted);font-size:11px;margin-top:6px} .updated b{color:var(--ink)}
+  .metrics{display:flex;gap:6px;padding:10px 14px 2px;flex-wrap:wrap}
+  .pill{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 9px;font-size:11px;color:var(--muted)}
+  .pill b{color:var(--ink)} .pill .p{color:var(--pick)} .pill .y{color:var(--you)} .pill .g{color:var(--good)}
+  .tabs{display:flex;gap:6px;padding:8px 12px;position:sticky;top:0;background:var(--bg);z-index:5;overflow-x:auto}
+  .tab{flex:1;min-width:70px;text-align:center;padding:9px 6px;border-radius:10px;background:var(--card2);border:1px solid var(--line);color:var(--muted);font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap}
+  .tab.active{background:var(--home);border-color:var(--home);color:#fff}
+  main{padding:4px 12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 13px;margin:9px 2px}
+  .frow{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .teams{font-weight:600} .teams .v{color:var(--muted);font-weight:400;margin:0 6px}
+  .meta{color:var(--muted);font-size:11px;margin-top:2px}
+  .score{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-weight:700;font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .bar{display:flex;height:9px;border-radius:6px;overflow:hidden;margin-top:10px;background:var(--card2)}
+  .bar i{display:block} .bar .h{background:var(--home)} .bar .d{background:var(--draw)} .bar .a{background:var(--away)}
+  .legend{display:flex;justify-content:space-between;margin-top:5px;font-size:11px;color:var(--muted)} .legend b{color:var(--ink)}
+  .row{display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--line)} .row:last-child{border:0}
+  .rank{width:20px;text-align:right;color:var(--muted);font-size:12px;flex:none}
+  .nm{flex:1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nm .t{color:var(--muted);font-weight:400;font-size:11px;margin-left:6px}
+  .pos{border-radius:6px;padding:2px 6px;font-size:10.5px;font-weight:700;flex:none}
+  .pos.GKP{background:rgba(148,163,184,.18);color:#cbd5e1} .pos.DEF{background:rgba(52,211,153,.16);color:var(--good)}
+  .pos.MID{background:rgba(59,130,246,.16);color:#93c5fd} .pos.FWD{background:rgba(245,158,11,.16);color:var(--away)}
+  .xp{font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums;flex:none;min-width:40px;text-align:right}
+  .xp.s{color:var(--pick)} .cap{color:var(--you);font-weight:800;margin-left:6px}
+  .muted{color:var(--muted)} .small{font-size:11px;color:var(--muted)}
+  .tilerow{display:flex;gap:8px;margin:2px 2px 4px}
+  .tile{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+  .tile .l{font-size:11px;color:var(--muted)} .tile .n{font-size:22px;font-weight:800;margin-top:2px;font-variant-numeric:tabular-nums}
+  .tlabel{font-size:10.5px;color:#6b7a90;text-transform:uppercase;letter-spacing:.4px;margin:14px 4px 2px}
+  .xfer{display:flex;align-items:center;gap:8px;font-size:13px}
+  .arrow{color:var(--pick);font-weight:800}
+  .gain{margin-left:auto;color:var(--good);font-weight:800;font-variant-numeric:tabular-nums;flex:none}
+  .hidden{display:none}
+  footer{color:var(--muted);font-size:11px;text-align:center;padding:18px 16px 0;line-height:1.5}
+  .note{background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.25);border-radius:10px;padding:8px 11px;margin:6px 2px;font-size:11.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header>
+  <h1>wirtzplay <span class="muted" style="font-weight:400">· FPL Model</span></h1>
+  <div class="sub" id="sub">loading…</div>
+  <div class="updated" id="updated"></div>
+</header>
+<div class="metrics" id="metrics"></div>
+<div class="tabs" id="tabs"></div>
+<main>
+  <div id="projection"></div>
+  <div id="captain" class="hidden"></div>
+  <div id="squad" class="hidden"></div>
+  <div id="transfers" class="hidden"></div>
+  <div id="chips" class="hidden"></div>
+</main>
+<footer id="foot"></footer>
+
+<script src="data.js"></script>
+<script>
+const VIEWS = [["projection","GW Proj"],["captain","Captain"],["squad","Squad"],["transfers","Transfers"],["chips","Chips"]];
+let D=null, active="projection";
+
+function pos(p){return `<span class="pos ${p}">${p}</span>`}
+function probBar(f){
+  const h=Math.round(f.p_home*100),d=Math.round(f.p_draw*100),a=Math.round(f.p_away*100);
+  return `<div class="bar"><i class="h" style="width:${h}%"></i><i class="d" style="width:${d}%"></i><i class="a" style="width:${a}%"></i></div>
+    <div class="legend"><span><b>${h}%</b> ${f.home}</span><span><b>${d}%</b> draw</span><span>${f.away} <b>${a}%</b></span></div>`;
+}
+
+function renderProjection(){
+  const fx = D.fixtures.map(f=>`<div class="card">
+      <div class="frow"><div class="teams">${f.home}<span class="v">v</span>${f.away}</div>
+        <div class="score">${f.xg_home} – ${f.xg_away} <span class="small">xG</span></div></div>
+      ${probBar(f)}</div>`).join("");
+  const top = D.projection.slice(0,18).map((p,i)=>`<div class="row">
+      <div class="rank">${i+1}</div>${pos(p.pos)}
+      <div class="nm">${p.name}<span class="t">${p.team}</span></div>
+      <div class="small" style="min-width:74px;text-align:right">${p.exp_goals}g ${p.exp_assists}a</div>
+      <div class="xp s">${p.xpts.toFixed(1)}</div></div>`).join("");
+  document.getElementById("projection").innerHTML =
+    `<div class="tlabel">Fixtures — model expected goals & win probability</div>${fx}
+     <div class="tlabel">Top projected players (expected points)</div><div class="card">${top}</div>`;
+}
+
+function renderCaptain(){
+  const rows = D.captaincy.map((c,i)=>`<div class="row">
+      <div class="rank">${i+1}</div>${pos(c.pos)}
+      <div class="nm">${c.name}<span class="t">${c.team}</span></div>
+      <div class="small" style="min-width:54px;text-align:right">${c.xpts.toFixed(1)} xP</div>
+      <div class="xp">${c.captain_ev.toFixed(1)}</div></div>`).join("");
+  document.getElementById("captain").innerHTML =
+    `<div class="note">Captain EV = expected points × 2 (the armband doubles the haul). Ranked by EV.</div>
+     <div class="card">${rows}</div>`;
+}
+
+function squadRow(p,bench){
+  const c = p.is_captain?`<span class="cap">C</span>`:(p.is_vice?`<span class="muted" style="margin-left:6px">V</span>`:"");
+  return `<div class="row"${bench?' style="opacity:.62"':''}>${pos(p.pos)}
+    <div class="nm">${p.name}<span class="t">${p.team}</span>${c}</div>
+    <div class="small" style="min-width:42px;text-align:right">£${p.price?.toFixed?.(1)??p.price}</div>
+    <div class="xp${p.is_captain?' s':''}">${(p.xpts*(p.is_captain?2:1)).toFixed(1)}</div></div>`;
+}
+function renderSquad(){
+  const s=D.squad;
+  document.getElementById("squad").innerHTML =
+    `<div class="tilerow">
+       <div class="tile"><div class="l">XI projected</div><div class="n">${s.xi_xpts.toFixed(1)}</div></div>
+       <div class="tile"><div class="l">Bench</div><div class="n muted">${s.bench_xpts.toFixed(1)}</div></div>
+     </div>
+     <div class="tlabel">Starting XI (captain counts double)</div>
+     <div class="card">${s.xi.map(p=>squadRow(p,false)).join("")}</div>
+     <div class="tlabel">Bench</div>
+     <div class="card">${s.bench.map(p=>squadRow(p,true)).join("")}</div>`;
+}
+
+function renderTransfers(){
+  const t = D.transfers.length ? D.transfers.map(x=>`<div class="card">
+      <div class="xfer">${pos(x.out.pos)}<span>${x.out.name} <span class="small">${x.out.team} · ${x.out.xpts.toFixed(1)}xP</span></span>
+        <span class="arrow">→</span><span>${x.in.name} <span class="small">${x.in.team} · ${x.in.xpts.toFixed(1)}xP</span></span>
+        <span class="gain">+${x.gain.toFixed(1)}</span></div></div>`).join("")
+    : `<div class="card muted">No upgrade clears the threshold this week.</div>`;
+  document.getElementById("transfers").innerHTML =
+    `<div class="note">Biggest single same-position upgrade by expected points. Sketch ignores budget/selling price — the live build adds bank + FT logic.</div>${t}`;
+}
+
+function renderChips(){
+  const c=D.chips;
+  document.getElementById("chips").innerHTML =
+    `<div class="tilerow">
+       <div class="tile"><div class="l">Triple Captain</div><div class="n p">+${c.triple_captain.ev_extra.toFixed(1)}</div>
+         <div class="small">${c.triple_captain.best_player} · ${c.triple_captain.note}</div></div>
+       <div class="tile"><div class="l">Bench Boost</div><div class="n g">+${c.bench_boost.ev_extra.toFixed(1)}</div>
+         <div class="small">${c.bench_boost.note}</div></div>
+     </div>
+     <div class="note">Illustrative EV. The live build scores Wildcard / Free Hit across the fixture run (the simulator), and only flags a chip when its EV clears a confirmed DGW/BGW.</div>`;
+}
+
+function select(v){
+  active=v;
+  VIEWS.forEach(([id])=>document.getElementById(id).classList.toggle("hidden",id!==v));
+  [...document.querySelectorAll(".tab")].forEach(t=>t.classList.toggle("active",t.dataset.v===v));
+}
+
+function boot(){
+  D = window.FPL_DATA;
+  if(!D){document.getElementById("sub").textContent="No data — run build_predictions.py";return;}
+  document.getElementById("sub").innerHTML = `Gameweek ${D.event} · ${D.season}`;
+  document.getElementById("updated").innerHTML = `model: <b>${D.model}</b> · built ${D.generated}`;
+  document.getElementById("metrics").innerHTML =
+    `<span class="pill">XI proj <b class="g">${D.squad.xi_xpts.toFixed(1)}</b></span>
+     <span class="pill">Captain <b class="y">${D.captaincy[0].name}</b> ${D.captaincy[0].captain_ev.toFixed(1)}</span>
+     <span class="pill">Best transfer <b class="p">+${(D.transfers[0]?.gain||0).toFixed(1)}</b></span>
+     <span class="pill">${D.fixtures.length} fixtures</span>`;
+  document.getElementById("tabs").innerHTML = VIEWS.map(([id,l])=>
+    `<div class="tab${id==='projection'?' active':''}" data-v="${id}" onclick="select('${id}')">${l}</div>`).join("");
+  document.getElementById("foot").innerHTML =
+    `Phase 3 sketch · World Cup engine → FPL · reads <b>fpl_predictions.json</b><br>data is a 2025-26 sample for layout; live build reads the upcoming GW.`;
+  renderProjection();renderCaptain();renderSquad();renderTransfers();renderChips();
+}
+boot();
+</script>
+</body>
+</html>
