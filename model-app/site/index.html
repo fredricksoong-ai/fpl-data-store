@@ -195,7 +195,7 @@ document.getElementById('nextcd').innerHTML=`🔒 ${fmtCd((2*1440+14*60)*6e4)}`;
 // ...,opp,ko,goals,assists,transferredIn
 /* squads / stats / league are loaded live from v2.json — see the fetch at the bottom */
 function tier(p){const s=p[4];if(s===0)return"yet";if(s===2)return"dnp";const v=p[2];return v<=3?"red":v<=8?"gold":v<=13?"green":"purple";}
-const GAP=6, tileW=o=>118-Math.min(o,55)/55*28, TILEH=60;  // width by ownership; lines of >3 split into two staggered rows so tiles stay wide
+const GAP=6, tileW=o=>122-Math.min(o,55)/55*28, TILEH=66;  // width by ownership; lines of >3 split into two staggered rows so tiles stay wide
 /* populated by the v2.json fetch at the bottom */
 let SQUADS={}, STATS={}, MYNAMES=new Set(), ME="wirtzplay", GWNO=0, VIEWING="wirtzplay";
 const squadFor=t=>SQUADS[t]||SQUADS[ME]||[];
@@ -226,11 +226,12 @@ function renderPitch(team){
   const sq=squadFor(team), st=sq.filter(p=>!p[7]), benchArr=sq.filter(p=>p[7]);
   const subrows=[];[1,2,3,4].forEach(t=>{const l=st.filter(p=>p[0]===t);if(l.length)splitLine(l).forEach(r=>subrows.push(r));});  // lines of >3 → two staggered sub-rows
   const rowW=a=>a.reduce((s,p)=>s+tileW(p[3]),0)+(a.length-1)*GAP;
-  const widest=Math.max(...subrows.map(rowW), benchArr.length?rowW(benchArr):0, 1);
   const pr=document.getElementById('pitchrows');
-  const SC=Math.min(1,((pr.clientWidth||340)-2)/widest);
+  const avail=(pr.clientWidth||340)-2;
+  const SC=Math.min(1, avail/Math.max(...subrows.map(rowW),1));               // starters scale off their own ≤3 rows → bigger tiles
+  const BSC=Math.min(SC, avail/(benchArr.length?rowW(benchArr):1));           // bench keeps all 4 in one row, never bigger than starters
   pr.innerHTML=subrows.map(r=>`<div class="prow">${r.map(p=>bub(p,SC)).join('')}</div>`).join('');
-  document.getElementById('bench').innerHTML=benchArr.map(p=>bub(p,SC)).join('');
+  document.getElementById('bench').innerHTML=benchArr.map(p=>bub(p,BSC)).join('');
   document.getElementById('gwpill').innerHTML=gwPill(team);
   document.getElementById('whoName').textContent=team;
   document.getElementById('whoBack').classList.toggle('hidden',team===ME);
