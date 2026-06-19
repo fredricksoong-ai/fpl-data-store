@@ -49,13 +49,13 @@
   .gkstats b{color:var(--ink);font-weight:800} .gk-s{font-size:9px;letter-spacing:.3px;color:var(--faint);text-transform:uppercase} .gk-m{color:var(--faint)}
   .lg.yet{color:var(--faint)}.lg.red{color:var(--bad)}.lg.gold{color:#e0b53a}.lg.green{color:var(--good)}.lg.purple{color:var(--pick)}
   .pitch{position:relative;border:1px solid var(--line);border-radius:18px;padding:12px 8px 14px;overflow:hidden;background:radial-gradient(120% 80% at 50% -10%,rgba(0,255,133,.05),transparent 55%),var(--card2)}
-  .pitch::before{content:"";position:absolute;left:8%;right:8%;top:48%;height:1px;background:rgba(255,255,255,.05)}
+  .pitch::before{content:"";position:absolute;top:12%;bottom:24%;left:50%;width:1px;background:rgba(255,255,255,.05)}
   .pitch::after{content:"";position:absolute;left:50%;top:48%;width:110px;height:110px;border:1px solid rgba(255,255,255,.05);border-radius:50%;transform:translate(-50%,-50%)}
-  #pitchrows .prow{position:relative;display:flex;justify-content:center;align-items:center;gap:6px;margin:7px 0}
-  .prow{position:relative;display:flex;justify-content:center;align-items:center;gap:6px;margin:7px 0}
+  .pcols{display:flex;justify-content:center;align-items:center;gap:6px}
+  .pcol{display:flex;flex-direction:column;justify-content:center;gap:6px}
   .bub{position:relative;display:flex;align-items:center;justify-content:center;border-radius:11px;text-align:center;flex:none;padding:0 4px}
   .bub .in{display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.05;max-width:100%;padding:0 1px}
-  .bub .nm{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;line-height:1.1}
+  .bub .nm{font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:normal;overflow-wrap:normal;line-height:1.06;max-width:100%}
   .bub .sub{font-weight:600;opacity:.82;white-space:nowrap}
   .bub.dnp{background:repeating-linear-gradient(45deg,rgba(255,255,255,.03),rgba(255,255,255,.03) 5px,rgba(255,255,255,.085) 5px,rgba(255,255,255,.085) 10px);border:2px solid rgba(255,255,255,.16);color:var(--muted)}
   .bub.yet{background:rgba(255,255,255,.03);border:2px solid rgba(255,255,255,.22);color:var(--muted)}
@@ -196,7 +196,7 @@ document.getElementById('nextcd').innerHTML=`🔒 ${fmtCd((2*1440+14*60)*6e4)}`;
 // ...,opp,ko,goals,assists,transferredIn
 /* squads / stats / league are loaded live from v2.json — see the fetch at the bottom */
 function tier(p){const s=p[4];if(s===0)return"yet";if(s===2)return"dnp";const v=p[2];return v<=3?"red":v<=8?"gold":v<=13?"green":"purple";}
-const GAP=6, tileW=o=>118-Math.min(o,55)/55*34, TILEH=86;  // width scales by ownership (low own → wider); tall enough to clear corner badges
+const GAP=6;  // gap between columns and between tiles within a column (landscape pitch: GK·DEF·MID·FWD left→right)
 /* populated by the v2.json fetch at the bottom */
 let SQUADS={}, STATS={}, MYNAMES=new Set(), ME="wirtzplay", GWNO=0, VIEWING="wirtzplay";
 const squadFor=t=>SQUADS[t]||SQUADS[ME]||[];
@@ -204,10 +204,11 @@ const gwCol=(gw,avg)=>{const r=gw/avg;return r<0.9?'bd':r<=1.1?'am':r<1.5?'gd':'
 const I_GOAL='⚽';
 const I_ASSIST='👟';
 const I_XFER='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h12M11 7l5 5-5 5"/></svg>';
-function bub(p,SC){let w=Math.round(tileW(p[3])*SC);if(p[0]===1&&!p[7])w=Math.round(w*1.5);const h=Math.round(TILEH*SC),s=p[4];  // only the PITCH gk gets the wider tile (bench gk stays normal)
+function bub(p,colW){const w=colW,h=Math.round(68-Math.min(p[3],55)/55*18),s=p[4];  // width = column width; height encodes ownership (low own → taller = more impact)
   const sub=s===0?`${p[8]} • ${p[9]}`:s===2?`${p[8]} • DNP`:`${p[8]} • ${p[2]}`;
-  const nf=Math.max(7,Math.min(12,h*0.16,(w-12)/(p[1].length*0.62))).toFixed(1);  // shrink to fit name on one line
-  const sf=Math.max(7,Math.min(9.5,h*0.105)).toFixed(1);
+  const seg=Math.max(1,...String(p[1]).split(/[ \-]/).map(x=>x.length));  // longest unbreakable chunk
+  const nf=Math.max(8,Math.min(12.5,h*0.24,(w-12)/(seg*0.6))).toFixed(1);  // fit that chunk; names wrap at spaces/hyphens
+  const sf=Math.max(8,Math.min(10,h*0.17)).toFixed(1);
   const g=p[10],a=p[11],ti=p[12],warn=VIEWING!==ME&&!MYNAMES.has(p[1]);
   let bd='';
   if(p[5])bd+='<span class="cnr c-tr b-cap">C</span>';else if(p[6])bd+='<span class="cnr c-tr b-vc">V</span>';
@@ -217,19 +218,19 @@ function bub(p,SC){let w=Math.round(tileW(p[3])*SC);if(p[0]===1&&!p[7])w=Math.ro
   if(warn)bd+='<span class="cnr c-br b-warn">!</span>';
   return `<div class="bub ${tier(p)} ${p[5]?'cap':p[6]?'vc':''}" style="width:${w}px;height:${h}px"><div class="in"><span class="nm" style="font-size:${nf}px">${p[1]}</span><span class="sub" style="font-size:${sf}px">${sub}</span></div>${bd}</div>`;}
 function gwPill(team){const s=STATS[team]||STATS[ME]||{gw:0,avg:1,ml:'',gap:'',op:0,ovr:'',ovrUp:0,gwr:'',up:0,val:'',bank:''};const sl='<span class="sl">•</span>';
-  const top=`<span class="pill ptop"><span class="k">GW</span><span class="mu">${GWNO}</span>${sl}<b class="${gwCol(s.gw,s.avg)}">${s.gw}</b><span class="mu">/${s.avg}</span>${sl}<b class="gd">${s.ml}</b> <span class="${(s.gap+'')[0]==='+'?'gd':'bd'}">${s.gap}</span>${sl}<span class="k">GWR</span><b>${s.gwr}</b> <span class="${s.up?'gd':'bd'}">${s.up?'▲':'▼'}</span></span>`;
+  const top=`<span class="pill ptop"><span class="k">GW</span><b>${GWNO}</b>${sl}<b class="${gwCol(s.gw,s.avg)}">${s.gw}</b><span class="mu">/${s.avg}</span>${sl}<b class="gd">${s.ml}</b> <span class="${(s.gap+'')[0]==='+'?'gd':'bd'}">${s.gap}</span>${sl}<span class="k">GWR</span><b>${s.gwr}</b> <span class="${s.up?'gd':'bd'}">${s.up?'▲':'▼'}</span></span>`;
   const bot=`<span class="pill pbot"><span class="k">OP</span><b>${s.op}</b>${sl}<span class="k">OR</span><b>${s.ovr}</b> <span class="${s.ovrUp?'gd':'bd'}">${s.ovrUp?'▲':'▼'}</span>${sl}<b>${s.val}</b><span class="mu"> +${s.bank}</span></span>`;
   return top+bot;}
 function renderPitch(team){
   VIEWING=team;
   const sq=squadFor(team), st=sq.filter(p=>!p[7]), benchArr=sq.filter(p=>p[7]);
-  const rows=[1,2,3,4].map(t=>st.filter(p=>p[0]===t)).filter(r=>r.length);
-  const rowW=a=>a.reduce((s,p)=>s+tileW(p[3]),0)+(a.length-1)*GAP;
-  const widest=Math.max(...rows.map(rowW), rowW(benchArr));
+  const cols=[1,2,3,4].map(t=>st.filter(p=>p[0]===t)).filter(c=>c.length);  // GK,DEF,MID,FWD columns
   const pr=document.getElementById('pitchrows');
-  const SC=Math.min(1,((pr.clientWidth||340)-2)/widest);   // shrink uniformly so the widest row (up to 5) fits
-  pr.innerHTML=rows.map(r=>`<div class="prow">${r.map(p=>bub(p,SC)).join('')}</div>`).join('');
-  document.getElementById('bench').innerHTML=benchArr.map(p=>bub(p,SC)).join('');
+  const avail=(pr.clientWidth||340), n=cols.length||1;
+  const colW=Math.max(64,Math.floor((avail-(n-1)*GAP)/n));
+  pr.innerHTML=`<div class="pcols">`+cols.map(c=>`<div class="pcol">${c.map(p=>bub(p,colW)).join('')}</div>`).join('')+`</div>`;
+  const bn=benchArr.length||1, bw=Math.max(64,Math.floor((avail-(bn-1)*GAP)/bn));
+  document.getElementById('bench').innerHTML=benchArr.map(p=>bub(p,bw)).join('');
   document.getElementById('gwpill').innerHTML=gwPill(team);
   document.getElementById('whoName').textContent=team;
   document.getElementById('whoBack').classList.toggle('hidden',team===ME);
