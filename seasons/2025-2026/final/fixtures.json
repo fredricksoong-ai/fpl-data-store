@@ -1,7 +1,7 @@
 {
   "meta": {
     "schema_version": "1.0",
-    "fetched_at": "2026-06-18T19:38:45.374978+00:00",
+    "fetched_at": "2026-06-19T10:02:18.457282+00:00",
     "current_gw": 38,
     "source": "fpl-api"
   },
@@ -38,7 +38,7 @@
         "home_team": "BHA",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
+        "fdr_home": 2,
         "fdr_away": 4,
         "ko": "2025-08-16T14:00:00Z",
         "finished": true
@@ -87,7 +87,7 @@
         "away_team_id": 8,
         "away_team": "CRY",
         "fdr_home": 3,
-        "fdr_away": 3,
+        "fdr_away": 4,
         "ko": "2025-08-17T13:00:00Z",
         "finished": true
       },
@@ -159,7 +159,7 @@
         "away_team_id": 20,
         "away_team": "WOL",
         "fdr_home": 1,
-        "fdr_away": 4,
+        "fdr_away": 3,
         "ko": "2025-08-23T14:00:00Z",
         "finished": true
       },
@@ -230,7 +230,7 @@
         "home_team": "FUL",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2025-08-24T15:30:00Z",
         "finished": true
@@ -242,7 +242,7 @@
         "home_team": "NEW",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2025-08-25T19:00:00Z",
         "finished": true
@@ -254,8 +254,8 @@
         "home_team": "CHE",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
-        "fdr_away": 3,
+        "fdr_home": 2,
+        "fdr_away": 4,
         "ko": "2025-08-30T11:30:00Z",
         "finished": true
       },
@@ -387,7 +387,7 @@
         "away_team_id": 6,
         "away_team": "BHA",
         "fdr_home": 3,
-        "fdr_away": 4,
+        "fdr_away": 3,
         "ko": "2025-09-13T14:00:00Z",
         "finished": true
       },
@@ -470,7 +470,7 @@
         "home_team": "BUR",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 2,
         "ko": "2025-09-14T13:00:00Z",
         "finished": true
@@ -482,7 +482,7 @@
         "home_team": "MCI",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 5,
         "ko": "2025-09-14T15:30:00Z",
         "finished": true
@@ -579,7 +579,7 @@
         "away_team_id": 15,
         "away_team": "NEW",
         "fdr_home": 3,
-        "fdr_away": 4,
+        "fdr_away": 3,
         "ko": "2025-09-21T13:00:00Z",
         "finished": true
       },
@@ -614,7 +614,7 @@
         "home_team": "BRE",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2025-09-27T11:30:00Z",
         "finished": true
@@ -627,7 +627,7 @@
         "away_team_id": 6,
         "away_team": "BHA",
         "fdr_home": 3,
-        "fdr_away": 3,
+        "fdr_away": 4,
         "ko": "2025-09-27T14:00:00Z",
         "finished": true
       },
@@ -638,7 +638,7 @@
         "home_team": "CRY",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2025-09-27T14:00:00Z",
         "finished": true
@@ -698,7 +698,7 @@
         "home_team": "AVL",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
+        "fdr_home": 2,
         "fdr_away": 4,
         "ko": "2025-09-28T13:00:00Z",
         "finished": true
@@ -734,8 +734,8 @@
         "home_team": "BOU",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
-        "fdr_away": 4,
+        "fdr_home": 2,
+        "fdr_away": 3,
         "ko": "2025-10-03T19:00:00Z",
         "finished": true
       },
@@ -782,8 +782,8 @@
         "home_team": "CHE",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
-        "fdr_away": 3,
+        "fdr_home": 4,
+        "fdr_away": 4,
         "ko": "2025-10-04T16:30:00Z",
         "finished": true
       },
@@ -950,7 +950,7 @@
         "home_team": "LIV",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 4,
         "ko": "2025-10-19T15:30:00Z",
         "finished": true
@@ -987,7 +987,7 @@
         "away_team_id": 17,
         "away_team": "SUN",
         "fdr_home": 2,
-        "fdr_away": 3,
+        "fdr_away": 4,
         "ko": "2025-10-25T14:00:00Z",
         "finished": true
       },
@@ -998,7 +998,7 @@
         "home_team": "NEW",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
+        "fdr_home": 2,
         "fdr_away": 3,
         "ko": "2025-10-25T14:00:00Z",
         "finished": true
@@ -1022,7 +1022,7 @@
         "home_team": "BRE",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2025-10-25T19:00:00Z",
         "finished": true
@@ -1059,7 +1059,7 @@
         "away_team_id": 16,
         "away_team": "NFO",
         "fdr_home": 3,
-        "fdr_away": 4,
+        "fdr_away": 3,
         "ko": "2025-10-26T14:00:00Z",
         "finished": true
       },
@@ -1142,7 +1142,7 @@
         "home_team": "NFO",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2025-11-01T15:00:00Z",
         "finished": true
@@ -1214,7 +1214,7 @@
         "home_team": "TOT",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2025-11-08T12:30:00Z",
         "finished": true
@@ -1226,7 +1226,7 @@
         "home_team": "EVE",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
+        "fdr_home": 2,
         "fdr_away": 3,
         "ko": "2025-11-08T15:00:00Z",
         "finished": true
@@ -1263,7 +1263,7 @@
         "away_team_id": 20,
         "away_team": "WOL",
         "fdr_home": 1,
-        "fdr_away": 3,
+        "fdr_away": 4,
         "ko": "2025-11-08T20:00:00Z",
         "finished": true
       },
@@ -1322,7 +1322,7 @@
         "home_team": "MCI",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 5,
         "ko": "2025-11-09T16:30:00Z",
         "finished": true
@@ -1347,7 +1347,7 @@
         "away_team_id": 19,
         "away_team": "WHU",
         "fdr_home": 2,
-        "fdr_away": 4,
+        "fdr_away": 3,
         "ko": "2025-11-22T15:00:00Z",
         "finished": true
       },
@@ -1502,7 +1502,7 @@
         "home_team": "TOT",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
+        "fdr_home": 2,
         "fdr_away": 3,
         "ko": "2025-11-29T20:00:00Z",
         "finished": true
@@ -1514,7 +1514,7 @@
         "home_team": "CRY",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2025-11-30T12:00:00Z",
         "finished": true
@@ -1550,7 +1550,7 @@
         "home_team": "WHU",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2025-11-30T14:05:00Z",
         "finished": true
@@ -1563,7 +1563,7 @@
         "away_team_id": 1,
         "away_team": "ARS",
         "fdr_home": 4,
-        "fdr_away": 3,
+        "fdr_away": 4,
         "ko": "2025-11-30T16:30:00Z",
         "finished": true
       },
@@ -1575,7 +1575,7 @@
         "away_team_id": 9,
         "away_team": "EVE",
         "fdr_home": 3,
-        "fdr_away": 4,
+        "fdr_away": 3,
         "ko": "2025-12-02T19:30:00Z",
         "finished": true
       },
@@ -1707,7 +1707,7 @@
         "away_team_id": 7,
         "away_team": "CHE",
         "fdr_home": 3,
-        "fdr_away": 4,
+        "fdr_away": 3,
         "ko": "2025-12-06T15:00:00Z",
         "finished": true
       },
@@ -1766,7 +1766,7 @@
         "home_team": "LEE",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2025-12-06T17:30:00Z",
         "finished": true
@@ -1802,7 +1802,7 @@
         "home_team": "WOL",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 2,
         "ko": "2025-12-08T20:00:00Z",
         "finished": true
@@ -1815,7 +1815,7 @@
         "away_team_id": 9,
         "away_team": "EVE",
         "fdr_home": 3,
-        "fdr_away": 3,
+        "fdr_away": 4,
         "ko": "2025-12-13T15:00:00Z",
         "finished": true
       },
@@ -1838,7 +1838,7 @@
         "home_team": "BUR",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
+        "fdr_home": 2,
         "fdr_away": 2,
         "ko": "2025-12-13T17:30:00Z",
         "finished": true
@@ -1947,7 +1947,7 @@
         "away_team_id": 3,
         "away_team": "BUR",
         "fdr_home": 1,
-        "fdr_away": 4,
+        "fdr_away": 3,
         "ko": "2025-12-20T15:00:00Z",
         "finished": true
       },
@@ -1994,7 +1994,7 @@
         "home_team": "TOT",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2025-12-20T17:30:00Z",
         "finished": true
@@ -2030,7 +2030,7 @@
         "home_team": "AVL",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 4,
         "ko": "2025-12-21T16:30:00Z",
         "finished": true
@@ -2126,7 +2126,7 @@
         "home_team": "WHU",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
+        "fdr_home": 2,
         "fdr_away": 3,
         "ko": "2025-12-27T15:00:00Z",
         "finished": true
@@ -2139,7 +2139,7 @@
         "away_team_id": 2,
         "away_team": "AVL",
         "fdr_home": 3,
-        "fdr_away": 3,
+        "fdr_away": 4,
         "ko": "2025-12-27T17:30:00Z",
         "finished": true
       },
@@ -2187,7 +2187,7 @@
         "away_team_id": 4,
         "away_team": "BOU",
         "fdr_home": 3,
-        "fdr_away": 3,
+        "fdr_away": 4,
         "ko": "2025-12-30T19:30:00Z",
         "finished": true
       },
@@ -2246,7 +2246,7 @@
         "home_team": "CRY",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
+        "fdr_home": 2,
         "fdr_away": 3,
         "ko": "2026-01-01T17:30:00Z",
         "finished": true
@@ -2331,7 +2331,7 @@
         "away_team_id": 1,
         "away_team": "ARS",
         "fdr_home": 4,
-        "fdr_away": 4,
+        "fdr_away": 3,
         "ko": "2026-01-03T17:30:00Z",
         "finished": true
       },
@@ -2342,7 +2342,7 @@
         "home_team": "LEE",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2026-01-04T12:30:00Z",
         "finished": true
@@ -2390,7 +2390,7 @@
         "home_team": "FUL",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2026-01-04T15:15:00Z",
         "finished": true
@@ -2427,7 +2427,7 @@
         "away_team_id": 18,
         "away_team": "TOT",
         "fdr_home": 3,
-        "fdr_away": 4,
+        "fdr_away": 3,
         "ko": "2026-01-07T19:30:00Z",
         "finished": true
       },
@@ -2498,7 +2498,7 @@
         "home_team": "BUR",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 2,
         "ko": "2026-01-07T20:15:00Z",
         "finished": true
@@ -2522,7 +2522,7 @@
         "home_team": "ARS",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 5,
         "ko": "2026-01-08T20:00:00Z",
         "finished": true
@@ -2547,7 +2547,7 @@
         "away_team_id": 5,
         "away_team": "BRE",
         "fdr_home": 3,
-        "fdr_away": 3,
+        "fdr_away": 4,
         "ko": "2026-01-17T15:00:00Z",
         "finished": true
       },
@@ -2558,7 +2558,7 @@
         "home_team": "LEE",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
+        "fdr_home": 2,
         "fdr_away": 3,
         "ko": "2026-01-17T15:00:00Z",
         "finished": true
@@ -2702,8 +2702,8 @@
         "home_team": "BOU",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
-        "fdr_away": 4,
+        "fdr_home": 4,
+        "fdr_away": 3,
         "ko": "2026-01-24T17:30:00Z",
         "finished": true
       },
@@ -2750,7 +2750,7 @@
         "home_team": "ARS",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 5,
         "ko": "2026-01-25T16:30:00Z",
         "finished": true
@@ -2811,7 +2811,7 @@
         "away_team_id": 19,
         "away_team": "WHU",
         "fdr_home": 2,
-        "fdr_away": 3,
+        "fdr_away": 4,
         "ko": "2026-01-31T17:30:00Z",
         "finished": true
       },
@@ -2846,7 +2846,7 @@
         "home_team": "MUN",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
+        "fdr_home": 2,
         "fdr_away": 4,
         "ko": "2026-02-01T14:00:00Z",
         "finished": true
@@ -2931,7 +2931,7 @@
         "away_team_id": 2,
         "away_team": "AVL",
         "fdr_home": 3,
-        "fdr_away": 4,
+        "fdr_away": 3,
         "ko": "2026-02-07T15:00:00Z",
         "finished": true
       },
@@ -3015,7 +3015,7 @@
         "away_team_id": 11,
         "away_team": "LEE",
         "fdr_home": 2,
-        "fdr_away": 3,
+        "fdr_away": 4,
         "ko": "2026-02-10T19:30:00Z",
         "finished": true
       },
@@ -3050,7 +3050,7 @@
         "home_team": "WHU",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2026-02-10T20:15:00Z",
         "finished": true
@@ -3074,7 +3074,7 @@
         "home_team": "MCI",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
+        "fdr_home": 2,
         "fdr_away": 5,
         "ko": "2026-02-11T19:30:00Z",
         "finished": true
@@ -3110,7 +3110,7 @@
         "home_team": "SUN",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2026-02-11T20:15:00Z",
         "finished": true
@@ -3171,7 +3171,7 @@
         "away_team_id": 3,
         "away_team": "BUR",
         "fdr_home": 1,
-        "fdr_away": 3,
+        "fdr_away": 4,
         "ko": "2026-02-21T15:00:00Z",
         "finished": true
       },
@@ -3218,7 +3218,7 @@
         "home_team": "NFO",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2026-02-22T14:00:00Z",
         "finished": true
@@ -3230,7 +3230,7 @@
         "home_team": "SUN",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
+        "fdr_home": 2,
         "fdr_away": 3,
         "ko": "2026-02-22T14:00:00Z",
         "finished": true
@@ -3254,7 +3254,7 @@
         "home_team": "EVE",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2026-02-23T20:00:00Z",
         "finished": true
@@ -3279,7 +3279,7 @@
         "away_team_id": 17,
         "away_team": "SUN",
         "fdr_home": 2,
-        "fdr_away": 4,
+        "fdr_away": 3,
         "ko": "2026-02-28T12:30:00Z",
         "finished": true
       },
@@ -3387,7 +3387,7 @@
         "away_team_id": 5,
         "away_team": "BRE",
         "fdr_home": 3,
-        "fdr_away": 4,
+        "fdr_away": 3,
         "ko": "2026-03-03T19:30:00Z",
         "finished": true
       },
@@ -3422,7 +3422,7 @@
         "home_team": "WOL",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 2,
         "ko": "2026-03-03T20:15:00Z",
         "finished": true
@@ -3482,7 +3482,7 @@
         "home_team": "NEW",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2026-03-04T20:15:00Z",
         "finished": true
@@ -3543,7 +3543,7 @@
         "away_team_id": 15,
         "away_team": "NEW",
         "fdr_home": 3,
-        "fdr_away": 3,
+        "fdr_away": 4,
         "ko": "2026-03-14T17:30:00Z",
         "finished": true
       },
@@ -3590,7 +3590,7 @@
         "home_team": "NFO",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
+        "fdr_home": 2,
         "fdr_away": 3,
         "ko": "2026-03-15T14:00:00Z",
         "finished": true
@@ -3626,8 +3626,8 @@
         "home_team": "BOU",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
-        "fdr_away": 4,
+        "fdr_home": 4,
+        "fdr_away": 3,
         "ko": "2026-03-20T20:00:00Z",
         "finished": true
       },
@@ -3638,7 +3638,7 @@
         "home_team": "BHA",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 4,
         "ko": "2026-03-21T12:45:00Z",
         "finished": true
@@ -3770,7 +3770,7 @@
         "home_team": "LIV",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
+        "fdr_home": 2,
         "fdr_away": 4,
         "ko": "2026-04-11T16:30:00Z",
         "finished": true
@@ -3819,7 +3819,7 @@
         "away_team_id": 13,
         "away_team": "MCI",
         "fdr_home": 4,
-        "fdr_away": 3,
+        "fdr_away": 4,
         "ko": "2026-04-12T15:30:00Z",
         "finished": true
       },
@@ -3842,7 +3842,7 @@
         "home_team": "BRE",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
+        "fdr_home": 2,
         "fdr_away": 3,
         "ko": "2026-04-18T11:30:00Z",
         "finished": true
@@ -3890,8 +3890,8 @@
         "home_team": "CHE",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
-        "fdr_away": 3,
+        "fdr_home": 4,
+        "fdr_away": 4,
         "ko": "2026-04-18T19:00:00Z",
         "finished": true
       },
@@ -3914,7 +3914,7 @@
         "home_team": "EVE",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2026-04-19T13:00:00Z",
         "finished": true
@@ -3975,7 +3975,7 @@
         "away_team_id": 11,
         "away_team": "LEE",
         "fdr_home": 2,
-        "fdr_away": 4,
+        "fdr_away": 3,
         "ko": "2026-04-22T19:00:00Z",
         "finished": true
       },
@@ -4130,7 +4130,7 @@
         "home_team": "ARS",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
+        "fdr_home": 2,
         "fdr_away": 5,
         "ko": "2026-05-02T16:30:00Z",
         "finished": true
@@ -4143,7 +4143,7 @@
         "away_team_id": 8,
         "away_team": "CRY",
         "fdr_home": 3,
-        "fdr_away": 4,
+        "fdr_away": 3,
         "ko": "2026-05-03T13:00:00Z",
         "finished": true
       },
@@ -4154,7 +4154,7 @@
         "home_team": "MUN",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 4,
         "ko": "2026-05-03T14:30:00Z",
         "finished": true
@@ -4179,7 +4179,7 @@
         "away_team_id": 16,
         "away_team": "NFO",
         "fdr_home": 3,
-        "fdr_away": 3,
+        "fdr_away": 4,
         "ko": "2026-05-04T14:00:00Z",
         "finished": true
       },
@@ -4238,7 +4238,7 @@
         "home_team": "SUN",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 3,
         "ko": "2026-05-09T14:00:00Z",
         "finished": true
@@ -4334,7 +4334,7 @@
         "home_team": "AVL",
         "away_team_id": 12,
         "away_team": "LIV",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 4,
         "ko": "2026-05-15T19:00:00Z",
         "finished": true
@@ -4394,7 +4394,7 @@
         "home_team": "WOL",
         "away_team_id": 10,
         "away_team": "FUL",
-        "fdr_home": 3,
+        "fdr_home": 2,
         "fdr_away": 2,
         "ko": "2026-05-17T14:00:00Z",
         "finished": true
@@ -4431,7 +4431,7 @@
         "away_team_id": 13,
         "away_team": "MCI",
         "fdr_home": 4,
-        "fdr_away": 4,
+        "fdr_away": 3,
         "ko": "2026-05-19T18:30:00Z",
         "finished": true
       },
@@ -4443,7 +4443,7 @@
         "away_team_id": 18,
         "away_team": "TOT",
         "fdr_home": 3,
-        "fdr_away": 3,
+        "fdr_away": 4,
         "ko": "2026-05-19T19:15:00Z",
         "finished": true
       },
@@ -4454,7 +4454,7 @@
         "home_team": "BHA",
         "away_team_id": 14,
         "away_team": "MUN",
-        "fdr_home": 3,
+        "fdr_home": 4,
         "fdr_away": 4,
         "ko": "2026-05-24T15:00:00Z",
         "finished": true
@@ -4629,11 +4629,11 @@
           {
             "gw": 38,
             "opponent": "MUN",
-            "fdr": 3,
+            "fdr": 4,
             "home": true
           }
         ],
-        "avg_fdr_next3": 3.0
+        "avg_fdr_next3": 4.0
       },
       "7": {
         "next_fixtures": [
