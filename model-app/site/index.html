@@ -129,6 +129,26 @@
   .tabrow{padding:11px 10px;border-radius:9px;font-size:14px;cursor:pointer;color:var(--ink)}
   .tabrow.on{background:rgba(0,255,133,.14);color:var(--fpl);font-weight:600}
   .bbtoast{position:fixed;left:50%;transform:translateX(-50%);bottom:88px;z-index:48;background:#1d2b22;border:1px solid var(--line);color:var(--ink);font-size:12px;padding:8px 14px;border-radius:10px;opacity:0;transition:opacity .25s;pointer-events:none}.bbtoast.show{opacity:1}
+  /* title odds */
+  .tsub{color:var(--muted);font-size:12px;line-height:1.5;margin:2px 2px 12px}
+  .orow{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px solid var(--line)}
+  .orow:last-of-type{border-bottom:none}
+  .trk{width:20px;text-align:right;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+  .tnm{font-weight:700;font-size:14px}
+  .obar{height:7px;border-radius:5px;background:var(--card2);margin-top:5px;overflow:hidden}
+  .obar i{display:block;height:100%;background:var(--fpl);border-radius:5px}
+  .tmeta{font-size:10.5px;color:var(--muted);margin-top:4px}
+  .tpct{text-align:right;min-width:46px}.tpct b{color:var(--fpl);font-weight:800;font-size:13px}.tpct span{display:block;font-size:9.5px;color:var(--muted)}
+  .ctitle2{font-weight:800;font-size:13px;margin:18px 2px 8px;color:var(--ink)}
+  .ttab{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px;font-variant-numeric:tabular-nums}
+  .ttab th{background:var(--card2);color:var(--muted);font-size:10.5px;font-weight:700;padding:7px 8px;text-align:left;border-bottom:1px solid var(--line)}
+  .ttab th.r,.ttab td.r{text-align:right}
+  .ttab td{padding:7px 8px;border-bottom:1px solid var(--line)}
+  .ttab tr:last-child td{border-bottom:none}
+  .ttab .trk2{color:var(--muted);width:22px}.ttab .ttm{font-weight:600}
+  .ttab td.g{color:var(--good)}.ttab td.rd{color:var(--bad)}
+  .ttab tr.t4 td{background:rgba(0,255,133,.05)} .ttab tr.relrow td{background:rgba(248,113,113,.06)}
+  .tnote{color:var(--faint);font-size:10.5px;line-height:1.5;margin:12px 2px 2px}
 </style>
 </head>
 <body>
@@ -164,6 +184,14 @@
   <section class="card" id="card-league">
     <div class="ctitle">Ballon d'FPL · mini-league</div>
     <div class="lgcard"><table id="lgtable"></table></div>
+  </section>
+  <div style="height:55vh" aria-hidden="true"></div>
+</main>
+
+<main class="wrap" id="titleview" style="display:none">
+  <section class="card" id="card-title">
+    <div class="ctitle">Title Odds · 2026/27</div>
+    <div id="titlebody"></div>
   </section>
   <div style="height:55vh" aria-hidden="true"></div>
 </main>
@@ -268,15 +296,40 @@ function renderLeague(LG){document.getElementById('lgtable').innerHTML=
 <td class="r"><span class="xv ${r[11]>=0.45?'g':'r'}">${(+r[11]).toFixed(1)}</span></td></tr>`}).join('')+`</tbody>`;}
 
 /* nav: no toggle. default = myteam (cards: squad, league). mid = next-card / home */
-const VIEW_ORDER=[["model","Model"],["stats","Stats"],["captain","Captain"],["thisgw","This GW"]];
+const VIEW_ORDER=[["title","Title Odds"],["model","Model"],["stats","Stats"],["captain","Captain"],["thisgw","This GW"]];
+const REAL=new Set(["title"]);  // views with a real panel (others toast as placeholders)
 const BURGER=VIEW_ORDER.map(v=>v[0]); let activeView="myteam";
 const ICON_CHEV='<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/></svg>';
 const ICON_HOME='<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg>';
 function updateMid(){const b=document.getElementById('bbMid');const c=activeView==="myteam";b.innerHTML=c?ICON_CHEV:ICON_HOME;b.title=c?"Next card":"Home";}
 function selectView(v){activeView=v;
   document.getElementById('myteam').style.display=v==="myteam"?"":"none";
-  /* burger views would show/hide their panels here */
-  renderTabSheet();closeSheets();updateMid();if(v!=="myteam")toast(VIEW_ORDER.find(x=>x[0]===v)[1]+" — placeholder");window.scrollTo({top:0,behavior:'smooth'});}
+  document.getElementById('titleview').style.display=v==="title"?"":"none";
+  if(v==="title")renderTitle();
+  renderTabSheet();closeSheets();updateMid();
+  if(v!=="myteam"&&!REAL.has(v))toast(VIEW_ORDER.find(x=>x[0]===v)[1]+" — placeholder");
+  window.scrollTo({top:0,behavior:'smooth'});}
+let TITLE=null;
+const tpct=v=>v>=0.05?v.toFixed(0)+'%':'—';
+function renderTitle(){const el=document.getElementById('titlebody');
+  if(!TITLE){el.innerHTML='<div class="tsub">Loading…</div>';
+    fetch('titleodds.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{TITLE=d;renderTitle();})
+      .catch(()=>{el.innerHTML='<div class="tsub">Title odds unavailable — run the model to generate titleodds.json.</div>';});return;}
+  const t=TITLE.teams||[], mx=Math.max(...t.map(x=>x.title),1), cont=t.filter(x=>x.title>=0.1);
+  let html=`<div class="tsub">Each club's chance to <b>win the league</b> from ${(+TITLE.sims).toLocaleString()} simulated seasons — Dixon–Coles + Elo. Recalculates as results come in.</div>`;
+  html+=cont.map((r,i)=>`<div class="orow"><div class="trk">${i+1}</div>
+    <div style="flex:1;min-width:0"><div class="tnm">${r.team}</div>
+      <div class="obar"><i style="width:${Math.max(2,Math.round(r.title/mx*100))}%"></i></div>
+      <div class="tmeta">top 4 ${r.top4}% · rel ${r.releg}%</div></div>
+    <div class="tpct"><b>${r.title.toFixed(1)}%</b><span>title</span></div></div>`).join('');
+  html+=`<div class="ctitle2">Projected final table</div>
+    <div class="lgcard"><table class="ttab"><thead><tr><th>#</th><th>Team</th><th class="r">Pts</th><th class="r">GD</th><th class="r">Title</th><th class="r">Top 4</th><th class="r">Rel</th></tr></thead><tbody>`+
+    t.map(r=>`<tr class="${r.rank<=4?'t4':r.rank>=18?'relrow':''}"><td class="trk2">${r.rank}</td><td class="ttm">${r.team}</td>
+      <td class="r"><b>${r.pts}</b></td><td class="r ${r.gd>=0?'g':'rd'}">${r.gd>0?'+':''}${r.gd}</td>
+      <td class="r">${tpct(r.title)}</td><td class="r">${tpct(r.top4)}</td><td class="r">${tpct(r.releg)}</td></tr>`).join('')+
+    `</tbody></table></div>
+    <div class="tnote">Trained through ${TITLE.trained_through}. Promoted sides are modelled off older top-flight form until live results accrue.</div>`;
+  el.innerHTML=html;}
 const CARDS=["card-squad","card-league"];let _ci=0;
 function midAction(){ if(activeView!=="myteam"){selectView("myteam");return;}
   _ci=(_ci+1)%CARDS.length; const el=document.getElementById(CARDS[_ci]);
