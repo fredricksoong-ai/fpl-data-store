@@ -51,11 +51,11 @@
   .pitch{position:relative;border:1px solid var(--line);border-radius:18px;padding:12px 8px 14px;overflow:hidden;background:radial-gradient(120% 80% at 50% -10%,rgba(0,255,133,.05),transparent 55%),var(--card2)}
   .pitch::before{content:"";position:absolute;left:8%;right:8%;top:48%;height:1px;background:rgba(255,255,255,.05)}
   .pitch::after{content:"";position:absolute;left:50%;top:48%;width:110px;height:110px;border:1px solid rgba(255,255,255,.05);border-radius:50%;transform:translate(-50%,-50%)}
-  #pitchrows .prow{position:relative;display:flex;justify-content:center;align-items:center;gap:8px;margin:8px 0}
-  .prow{position:relative;display:flex;justify-content:center;align-items:center;gap:8px;margin:8px 0}
+  #pitchrows .prow{position:relative;display:flex;justify-content:center;align-items:center;gap:6px;margin:7px 0}
+  .prow{position:relative;display:flex;justify-content:center;align-items:center;gap:6px;margin:7px 0}
   .bub{position:relative;display:flex;align-items:center;justify-content:center;border-radius:11px;text-align:center;flex:none;padding:0 4px}
   .bub .in{display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.05;max-width:100%;padding:0 1px}
-  .bub .nm{font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:break-word;line-height:1.08;max-width:100%}
+  .bub .nm{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;line-height:1.1}
   .bub .sub{font-weight:600;opacity:.82;white-space:nowrap}
   .bub.dnp{background:repeating-linear-gradient(45deg,rgba(255,255,255,.03),rgba(255,255,255,.03) 5px,rgba(255,255,255,.085) 5px,rgba(255,255,255,.085) 10px);border:2px solid rgba(255,255,255,.16);color:var(--muted)}
   .bub.yet{background:rgba(255,255,255,.03);border:2px solid rgba(255,255,255,.22);color:var(--muted)}
@@ -72,7 +72,7 @@
   .b-icon{background:#0d1626;border-color:var(--card2)}
   .b-warn{background:var(--away);color:#3a2400;font-size:11px}
   .benchsep{height:1px;background:var(--line);margin:14px 12px 10px}
-  .bench{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:2px}.bench .bub{opacity:.85}
+  .bench{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;padding:2px}.bench .bub{opacity:.85}
 
   /* league table */
   .lgcard{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow-x:auto}
@@ -95,7 +95,7 @@
   .who-val{color:var(--faint);font-size:11px;font-weight:600;white-space:nowrap}
   .gwpills{display:flex;flex-direction:column;align-items:center;gap:5px;width:100%}
   .gwpills .pill{white-space:nowrap;letter-spacing:-.1px}
-  .gwpills .pill.ptop{padding:5px 12px;font-size:10.5px}
+  .gwpills .pill.ptop{padding:5px 12px;font-size:10.5px;border-color:rgba(0,255,133,.55);background:rgba(0,255,133,.07)}
   .gwpills .pill.pbot{padding:3px 11px;font-size:8.5px}
   .gwpills .pill b{font-weight:700} .gwpills .pill .sl{margin:0 3px}
   .pitch-bottom{display:flex;align-items:center;gap:8px;margin-top:10px}
@@ -196,7 +196,7 @@ document.getElementById('nextcd').innerHTML=`🔒 ${fmtCd((2*1440+14*60)*6e4)}`;
 // ...,opp,ko,goals,assists,transferredIn
 /* squads / stats / league are loaded live from v2.json — see the fetch at the bottom */
 function tier(p){const s=p[4];if(s===0)return"yet";if(s===2)return"dnp";const v=p[2];return v<=3?"red":v<=8?"gold":v<=13?"green":"purple";}
-const GAP=8, tileW=o=>118-Math.min(o,55)/55*34, TILEH=86;  // width scales by ownership (low own → wider); tall enough to clear corner badges
+const GAP=6, tileW=o=>118-Math.min(o,55)/55*34, TILEH=86;  // width scales by ownership (low own → wider); tall enough to clear corner badges
 /* populated by the v2.json fetch at the bottom */
 let SQUADS={}, STATS={}, MYNAMES=new Set(), ME="wirtzplay", GWNO=0, VIEWING="wirtzplay";
 const squadFor=t=>SQUADS[t]||SQUADS[ME]||[];
@@ -204,9 +204,9 @@ const gwCol=(gw,avg)=>{const r=gw/avg;return r<0.9?'bd':r<=1.1?'am':r<1.5?'gd':'
 const I_GOAL='⚽';
 const I_ASSIST='👟';
 const I_XFER='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h12M11 7l5 5-5 5"/></svg>';
-function bub(p,SC){let w=Math.round(tileW(p[3])*SC);if(p[0]===1)w=Math.round(w*1.5);const h=Math.round(TILEH*SC),s=p[4];  // GK alone in its row → wider tile
+function bub(p,SC){let w=Math.round(tileW(p[3])*SC);if(p[0]===1&&!p[7])w=Math.round(w*1.5);const h=Math.round(TILEH*SC),s=p[4];  // only the PITCH gk gets the wider tile (bench gk stays normal)
   const sub=s===0?`${p[8]} • ${p[9]}`:s===2?`${p[8]} • DNP`:`${p[8]} • ${p[2]}`;
-  const nf=Math.max(7.5,Math.min(12,h*0.16,(w-10)/(p[1].length*0.58))).toFixed(1);  // shrink to fit name on one line
+  const nf=Math.max(7,Math.min(12,h*0.16,(w-12)/(p[1].length*0.62))).toFixed(1);  // shrink to fit name on one line
   const sf=Math.max(7,Math.min(9.5,h*0.105)).toFixed(1);
   const g=p[10],a=p[11],ti=p[12],warn=VIEWING!==ME&&!MYNAMES.has(p[1]);
   let bd='';
