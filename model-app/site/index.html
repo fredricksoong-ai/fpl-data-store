@@ -56,7 +56,7 @@
   .bub .in{display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.05;max-width:100%;padding:0 1px}
   .bub .nm{font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:normal;overflow-wrap:normal;line-height:1.06;max-width:100%}
   .bub .sub{font-weight:600;opacity:.82;white-space:nowrap}
-  .bub .sub .xp{font-weight:700;color:var(--fpl)} .bub .sub .tm{color:var(--muted);font-weight:600} .bub .sub .pos{color:var(--muted);font-weight:700;letter-spacing:.3px}
+  .bub .sub .xp{font-weight:700;color:var(--ink)} .bub .sub .tm{color:var(--muted);font-weight:600} .bub .sub .pos{color:var(--muted);font-weight:700;letter-spacing:.3px}
   .bub.dnp{background:repeating-linear-gradient(45deg,rgba(255,255,255,.03),rgba(255,255,255,.03) 5px,rgba(255,255,255,.085) 5px,rgba(255,255,255,.085) 10px);border:2px solid rgba(255,255,255,.16);color:var(--muted)}
   .bub.yet{background:rgba(255,255,255,.03);border:2px solid rgba(255,255,255,.22);color:var(--muted)}
   .bub.red{background:rgba(248,113,113,.15);border:2px solid var(--bad);color:#fca5a5}
@@ -204,7 +204,7 @@ const gwCol=(gw,avg)=>{const r=gw/avg;return r<0.9?'bd':r<=1.1?'am':r<1.5?'gd':'
 const I_GOAL='⚽';
 const I_ASSIST='👟';
 const I_XFER='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h12M11 7l5 5-5 5"/></svg>';
-function bub(p,SC,H){const w=Math.round(tileW(p[3])*SC),h=Math.round(H!=null?H:TILEH*SC),s=p[4];  // width by ownership; H lets bench keep full height while width is scaled down
+function bub(p,SC,H,bn){const w=Math.round(tileW(p[3])*SC),h=Math.round(H!=null?H:TILEH*SC),s=p[4];  // width by ownership; H lets bench keep full height while width is scaled down; bn=bench
   const POS=['','GK','DEF','MID','FWD'][p[0]]||'';
   const fdrCol=d=>d>=4?'var(--bad)':(d>0&&d<=2)?'var(--good)':'var(--muted)';
   const xp=(p[13]!=null&&p[13]!=='')?(+p[13]).toFixed(1):'';
@@ -212,8 +212,10 @@ function bub(p,SC,H){const w=Math.round(tileW(p[3])*SC),h=Math.round(H!=null?H:T
   const l2=s===0?`<span style="color:${fdrCol(p[14])}">${p[8]}</span>${p[9]?` <span class="tm">${p[9]}</span>`:''}`
           :s===2?`${p[8]} • DNP`
           :`${p[8]} • ${p[2]} pts`;
-  // line 3: position + model projection (always shown)
-  const l3=`<span class="pos">${POS}</span>${xp?` • <span class="xp">${xp} xPts</span>`:''}`;
+  // line 3: position (+ inline xPts on wide starter tiles); narrow bench tiles push xPts to line 4
+  const xps=xp?`<span class="xp">${xp} xPts</span>`:'';
+  const l3=bn?`<span class="pos">${POS}</span>`:`<span class="pos">${POS}</span>${xp?` • ${xps}`:''}`;
+  const l4=(bn&&xp)?`<span class="sub" style="font-size:${Math.max(7.5,Math.min(10,h*0.20)).toFixed(1)}px">${xps}</span>`:'';
   const seg=Math.max(1,...String(p[1]).split(/[ \-]/).map(x=>x.length));  // longest unbreakable chunk
   const nf=Math.max(7.5,Math.min(12,h*0.30,(w-12)/(seg*0.6))).toFixed(1);  // fit that chunk; names wrap at spaces/hyphens
   const sf=Math.max(7.5,Math.min(10,h*0.20)).toFixed(1);
@@ -224,7 +226,7 @@ function bub(p,SC,H){const w=Math.round(tileW(p[3])*SC),h=Math.round(H!=null?H:T
   else if(g)bd+=`<span class="cnr c-tl b-icon">${I_GOAL}</span>`;else if(a)bd+=`<span class="cnr c-tl b-icon">${I_ASSIST}</span>`;
   if(ti)bd+=`<span class="cnr c-bl">${I_XFER}</span>`;
   if(warn)bd+='<span class="cnr c-br b-warn">!</span>';
-  return `<div class="bub ${tier(p)} ${p[5]?'cap':p[6]?'vc':''}" style="width:${w}px;height:${h}px"><div class="in"><span class="nm" style="font-size:${nf}px">${p[1]}</span><span class="sub" style="font-size:${sf}px">${l2}</span><span class="sub" style="font-size:${sf}px">${l3}</span></div>${bd}</div>`;}
+  return `<div class="bub ${tier(p)} ${p[5]?'cap':p[6]?'vc':''}" style="width:${w}px;height:${h}px"><div class="in"><span class="nm" style="font-size:${nf}px">${p[1]}</span><span class="sub" style="font-size:${sf}px">${l2}</span><span class="sub" style="font-size:${sf}px">${l3}</span>${l4}</div>${bd}</div>`;}
 function gwPill(team){const s=STATS[team]||STATS[ME]||{gw:0,avg:1,ml:'',gap:'',op:0,ovr:'',ovrUp:0,gwr:'',up:0,val:'',bank:''};const sl='<span class="sl">•</span>';
   const top=`<span class="pill ptop"><span class="k">GW</span><b>${GWNO}</b>${sl}<b class="${gwCol(s.gw,s.avg)}">${s.gw}</b><span class="mu">/${s.avg}</span>${sl}<b class="gd">${s.ml}</b> <span class="${(s.gap+'')[0]==='+'?'gd':'bd'}">${s.gap}</span>${sl}<span class="k">GWR</span><b>${s.gwr}</b> <span class="${s.up?'gd':'bd'}">${s.up?'▲':'▼'}</span></span>`;
   const bot=`<span class="pill pbot"><span class="k">OP</span><b>${s.op}</b>${sl}<span class="k">OR</span><b>${s.ovr}</b> <span class="${s.ovrUp?'gd':'bd'}">${s.ovrUp?'▲':'▼'}</span>${sl}<b>${s.val}</b><span class="mu"> +${s.bank}</span></span>`;
@@ -240,7 +242,7 @@ function renderPitch(team){
   const SC=Math.min(1, avail/Math.max(...subrows.map(rowW),1));               // starters scale off their own ≤3 rows → bigger tiles
   const BSC=Math.min(SC, (avail-6)/(benchArr.length?rowW(benchArr):1));        // bench keeps all 4 in one row, never bigger than starters
   pr.innerHTML=subrows.map(r=>`<div class="prow">${r.map(p=>bub(p,SC)).join('')}</div>`).join('');
-  document.getElementById('bench').innerHTML=benchArr.map(p=>bub(p,BSC,TILEH*SC)).join('');  // bench width scaled to fit 4, height matches starters for the 3rd line
+  document.getElementById('bench').innerHTML=benchArr.map(p=>bub(p,BSC,TILEH*SC,true)).join('');  // bench: width scaled to fit 4, full height, xPts on its own 4th line
   document.getElementById('gwpill').innerHTML=gwPill(team);
   document.getElementById('whoName').textContent=team;
   document.getElementById('whoBack').classList.toggle('hidden',team===ME);
