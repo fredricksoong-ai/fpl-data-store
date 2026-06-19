@@ -1,28 +1,22 @@
-# Copy this file to:  .github/workflows/fpl-model.yml  in the fpl-data-store repo.
-#
-# Mirrors the World Cup app's predict.yml: build the data with Python, then deploy
-# the static folder to Cloudflare Pages via wrangler. Reuses the same two Cloudflare
-# secrets you already have on the wc26 repo — add them to fpl-data-store too:
-#   CLOUDFLARE_API_TOKEN   (Pages:Edit token)
-#   CLOUDFLARE_ACCOUNT_ID
-#
-# Deploys to a SEPARATE Pages project (wirtzplay-model) so your live wirtzplay site
-# is untouched while you test. We flip/merge later.
+# .github/workflows/fpl-model.yml  — build live v2 data + deploy wirtzplay
+# Rebuilds v2.json from the FPL API every 3 hours (and on push / manual), then
+# deploys model-app/site to the Cloudflare Pages project "wirtzplay".
+# build_v2.py uses only Python's stdlib, so no pip install is needed.
 
-name: FPL model — build & deploy
+name: FPL — build & deploy
 
 on:
   push:
     branches: [main]
-    paths:                       # only rebuild when the model app changes
+    paths:
       - "model-app/**"
       - ".github/workflows/fpl-model.yml"
   schedule:
-    - cron: "0 6 * * *"          # 06:00 UTC daily — refresh projections
+    - cron: "0 */3 * * *"      # every 3 hours UTC
   workflow_dispatch: {}
 
 concurrency:
-  group: fpl-model-deploy
+  group: fpl-deploy
   cancel-in-progress: false
 
 jobs:
@@ -35,11 +29,8 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install deps
-        run: pip install -r model-app/requirements.txt
-
-      - name: Build projections
-        run: python model-app/build_predictions.py
+      - name: Build live v2 data
+        run: V2_OUT=model-app/site/v2.json python3 model-app/build_v2.py
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
