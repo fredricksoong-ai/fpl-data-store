@@ -68,8 +68,8 @@ def main() -> int:
         if f.get("kickoff_time"):
             d = dt.datetime.fromisoformat(f["kickoff_time"].replace("Z", "+00:00")).astimezone(dt.timezone(dt.timedelta(hours=8)))
             ko = d.strftime("%a %H%M")
-        team_fix[f["team_h"]] = {"opp": tshort.get(f["team_a"], "?"), "ko": ko, "started": f.get("started"), "finished": f.get("finished")}
-        team_fix[f["team_a"]] = {"opp": tshort.get(f["team_h"], "?"), "ko": ko, "started": f.get("started"), "finished": f.get("finished")}
+        team_fix[f["team_h"]] = {"opp": tshort.get(f["team_a"], "?"), "ko": ko, "started": f.get("started"), "finished": f.get("finished"), "fdr": f.get("team_h_difficulty", 0)}
+        team_fix[f["team_a"]] = {"opp": tshort.get(f["team_h"], "?"), "ko": ko, "started": f.get("started"), "finished": f.get("finished"), "fdr": f.get("team_a_difficulty", 0)}
 
     standings = get(f"/leagues-classic/{LEAGUE}/standings/")["standings"]["results"]
     leader_total = max((r["total"] for r in standings), default=0)
@@ -110,6 +110,8 @@ def main() -> int:
                 tf.get("opp", "?"), tf.get("ko", "") if status == 0 else "",
                 int(st.get("goals_scored", 0) or 0), int(st.get("assists", 0) or 0),
                 1 if (p["element"] not in prev_ids and prev_ids) else 0,
+                round(float(e.get("ep_next", 0) or 0), 1),   # 13 xPts (model ep_next; DC model later)
+                tf.get("fdr", 0),                            # 14 fixture difficulty 1–5
             ])
             if p["position"] <= 11:
                 xi_ep += float(e.get("ep_next", 0) or 0)

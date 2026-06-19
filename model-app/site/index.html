@@ -56,6 +56,7 @@
   .bub .in{display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.05;max-width:100%;padding:0 1px}
   .bub .nm{font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:normal;overflow-wrap:normal;line-height:1.06;max-width:100%}
   .bub .sub{font-weight:600;opacity:.82;white-space:nowrap}
+  .bub .sub .xp{font-weight:700;color:var(--fpl)} .bub .sub .xp.dim{color:var(--muted);font-weight:600;opacity:.85}
   .bub.dnp{background:repeating-linear-gradient(45deg,rgba(255,255,255,.03),rgba(255,255,255,.03) 5px,rgba(255,255,255,.085) 5px,rgba(255,255,255,.085) 10px);border:2px solid rgba(255,255,255,.16);color:var(--muted)}
   .bub.yet{background:rgba(255,255,255,.03);border:2px solid rgba(255,255,255,.22);color:var(--muted)}
   .bub.red{background:rgba(248,113,113,.15);border:2px solid var(--bad);color:#fca5a5}
@@ -204,7 +205,12 @@ const I_GOAL='⚽';
 const I_ASSIST='👟';
 const I_XFER='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h12M11 7l5 5-5 5"/></svg>';
 function bub(p,SC){const w=Math.round(tileW(p[3])*SC),h=Math.round(TILEH*SC),s=p[4];  // width by ownership (low own → wider = more impact)
-  const sub=s===0?`${p[8]} • ${p[9]}`:s===2?`${p[8]} • DNP`:`${p[8]} • ${p[2]}`;
+  const fdrCol=d=>d>=4?'var(--bad)':(d>0&&d<=2)?'var(--good)':'var(--muted)';
+  const xp=(p[13]!=null&&p[13]!=='')?(+p[13]).toFixed(1):'';
+  const opp0=`<span style="color:${fdrCol(p[14])}">${p[8]}</span>`;          // pre-game opponent tinted by fixture difficulty
+  const sub=s===0?`${opp0}${xp?` • <span class="xp">x${xp}</span>`:''}`
+           :s===2?`${p[8]} • DNP`
+           :`${p[8]} • ${p[2]}${xp?` <span class="xp dim">x${xp}</span>`:''}`; // post-game: actual + faded projection
   const seg=Math.max(1,...String(p[1]).split(/[ \-]/).map(x=>x.length));  // longest unbreakable chunk
   const nf=Math.max(7.5,Math.min(12,h*0.30,(w-12)/(seg*0.6))).toFixed(1);  // fit that chunk; names wrap at spaces/hyphens
   const sf=Math.max(7.5,Math.min(10,h*0.20)).toFixed(1);
