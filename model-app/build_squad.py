@@ -164,7 +164,8 @@ def main() -> int:
     cnt = {ps: sum(1 for i in s if i in xi and P[i]["pos"] == ps) for ps in PT}
     out = {"generated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"), "event": gw,
            "budget": BUDGET, "spend": spend, "xi_xph": xi_xph,
-           "formation": f"{cnt['DEF']}-{cnt['MID']}-{cnt['FWD']}", "rows": rows}
+           "formation": f"{cnt['DEF']}-{cnt['MID']}-{cnt['FWD']}", "rows": rows,
+           "ids": [P[i]["id"] for i in s]}
     OUT.write_text(json.dumps(out, ensure_ascii=False))
     print(f"wrote {OUT}: spend £{spend}m, XI {out['formation']}, XI xPts {xi_xph}")
     return 0

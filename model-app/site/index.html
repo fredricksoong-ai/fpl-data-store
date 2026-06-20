@@ -920,7 +920,7 @@ function renderChipPills(){const el=document.getElementById('bxvchips');if(!el)r
   const chips=CHIPS.chips||[];
   el.innerHTML=chips.map((c,i)=>{const live=c.advice&&c.advice!=='Hold';
     return `<span class="chippill ${live?'on':''}" onclick="chipNote(${i})"><b>${c.label}</b><span>${c.advice||'Hold'}</span></span>`;}).join('')
-    +(CHIPS.window?`<span class="m" style="font-size:10.5px;align-self:center;margin-left:2px">half ${CHIPS.half} plan · GW${CHIPS.window[0]}–${CHIPS.window[1]}</span>`:'');
+    +(CHIPS.window?`<span class="m" style="font-size:10.5px;align-self:center;margin-left:2px">based on ${CHIPS.basis||'your squad'} · half ${CHIPS.half} · GW${CHIPS.window[0]}–${CHIPS.window[1]}</span>`:'');
   chipNote(3);}  // default to the Triple Captain reasoning (most actionable)
 function chipNote(i){const c=(CHIPS&&CHIPS.chips||[])[i];const el=document.getElementById('bxvchipnote');if(!el||!c)return;
   el.innerHTML=`<b style="color:var(--ink)">${c.label} · ${c.advice}</b> — ${c.note}`;}
