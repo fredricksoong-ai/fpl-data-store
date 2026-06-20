@@ -152,6 +152,37 @@
   .bdg{width:11px;height:11px;vertical-align:-1px;margin-right:3px;object-fit:contain;display:inline-block}
   .bdg.lg{width:18px;height:18px;vertical-align:-4px;margin-right:6px}
   .ttab .ttm{display:flex;align-items:center}.tnm{display:flex;align-items:center}
+  /* xG page */
+  .err{padding:20px 4px;color:var(--muted);font-size:12.5px;line-height:1.5}
+  .oddsel{display:flex;gap:6px;flex-wrap:wrap;margin:0 2px 10px}
+  .oddsel .opt{font-size:12px;padding:5px 10px;border-radius:8px;background:var(--card2);border:1px solid var(--line);color:var(--muted);cursor:pointer}
+  .oddsel .opt.on{background:rgba(0,255,133,.16);border-color:rgba(0,255,133,.5);color:var(--fpl);font-weight:600}
+  .xgrow2{display:grid;grid-template-columns:64px 42px 62px 1fr 44px;gap:7px;align-items:center;padding:3px 0;font-size:12px}
+  .xg-head{color:#6b7a90;font-size:10.5px;padding-top:10px}
+  .xg-team{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .xg-d{color:var(--muted);font-size:11px;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .xgctl{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap}
+  .xgsel{flex:1;min-width:140px;background:var(--card2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 8px;font-size:12px;font-family:inherit}
+  .xgslide{display:flex;align-items:center;gap:8px;flex:1;min-width:150px;margin-top:12px}
+  .xgslide input[type=range]{flex:1;accent-color:#00ff85}
+  .xgslide .m{font-size:11px;white-space:nowrap;color:var(--muted);min-width:78px}
+  .xgreset{flex:none;width:34px;height:34px;border-radius:8px;background:var(--card2);border:1px solid var(--line);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .xgreset:active{transform:scale(.93)}
+  .xg-bar{position:relative;height:13px}
+  .xg-mid{position:absolute;left:50%;top:-1px;bottom:-1px;width:1px;background:var(--line)}
+  .xg-fill{position:absolute;top:2px;height:9px;border-radius:3px;min-width:2px}
+  .xg-val{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+  .xgdetail{font-size:11.5px;color:var(--muted);margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
+  .xgdetail:empty{display:none}
+  .xgd-h{margin-bottom:4px;font-size:12px} .xgd-sum{font-size:11px;line-height:1.4;margin:2px 0 7px}
+  .xggrow{padding:6px 0;border-top:1px solid var(--line)}
+  .xgg{display:grid;grid-template-columns:26px 56px 40px 46px 1fr;gap:8px;align-items:center;font-size:11.5px}
+  .xgg-head{color:#6b7a90;font-size:10.5px;padding-bottom:2px}
+  .xgg-gw{text-align:center;color:var(--muted)} .xgg-o{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .xgg-s{text-align:center;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+  .xgg-n{text-align:center;font-variant-numeric:tabular-nums;color:var(--muted)}
+  .xgg-l{text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .xgg-ctx{text-align:right;font-size:11px;color:var(--muted);margin-top:1px}
 </style>
 </head>
 <body>
@@ -195,6 +226,14 @@
   <section class="card" id="card-title">
     <div class="ctitle">Title Odds · 2026/27</div>
     <div id="titlebody"></div>
+  </section>
+  <div style="height:55vh" aria-hidden="true"></div>
+</main>
+
+<main class="wrap" id="xgview" style="display:none">
+  <section class="card" id="card-xg">
+    <div class="ctitle">xG · expected vs actual</div>
+    <div id="xg"></div>
   </section>
   <div style="height:55vh" aria-hidden="true"></div>
 </main>
@@ -303,8 +342,8 @@ function renderLeague(LG){document.getElementById('lgtable').innerHTML=
 <td class="r"><span class="xv ${r[11]>=0.45?'g':'r'}">${(+r[11]).toFixed(1)}</span></td></tr>`}).join('')+`</tbody>`;}
 
 /* nav: no toggle. default = myteam (cards: squad, league). mid = next-card / home */
-const VIEW_ORDER=[["title","Title Odds"],["model","Model"],["stats","Stats"],["captain","Captain"],["thisgw","This GW"]];
-const REAL=new Set(["title"]);  // views with a real panel (others toast as placeholders)
+const VIEW_ORDER=[["title","Title Odds"],["xg","xG"],["model","Model"],["stats","Stats"],["captain","Captain"],["thisgw","This GW"]];
+const REAL=new Set(["title","xg"]);  // views with a real panel (others toast as placeholders)
 const BURGER=VIEW_ORDER.map(v=>v[0]); let activeView="myteam";
 const ICON_CHEV='<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/></svg>';
 const ICON_HOME='<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg>';
@@ -312,7 +351,9 @@ function updateMid(){const b=document.getElementById('bbMid');const c=activeView
 function selectView(v){activeView=v;
   document.getElementById('myteam').style.display=v==="myteam"?"":"none";
   document.getElementById('titleview').style.display=v==="title"?"":"none";
+  document.getElementById('xgview').style.display=v==="xg"?"":"none";
   if(v==="title")renderTitle();
+  if(v==="xg")renderXG();
   renderTabSheet();closeSheets();updateMid();
   if(v!=="myteam"&&!REAL.has(v))toast(VIEW_ORDER.find(x=>x[0]===v)[1]+" — placeholder");
   window.scrollTo({top:0,behavior:'smooth'});}
@@ -337,6 +378,146 @@ function renderTitle(){const el=document.getElementById('titlebody');
     `</tbody></table></div>
     <div class="tnote">Trained through ${TITLE.trained_through}. Promoted sides are modelled off older top-flight form until live results accrue.</div>`;
   el.innerHTML=html;}
+
+/* ===== xG page (mirrors WC26) ===== */
+const code3=t=>t;                              // FPL identifiers are already 3-letter codes
+const flagImg=(t,sm)=>logo(t,sm?'':'lg');      // badge stand-in for WC26's flag
+const xgEliminated=()=>new Set();              // no knockouts in a league
+let XG=null, xgMode="xg", xgView="bars", xgCutoff=null, xgFocus="";
+function xgPlayed(){return XG&&XG.games?[...XG.games].sort((a,b)=>a.gw-b.gw):[];}
+function xgMaxGames(){const g=xgPlayed(),c={};g.forEach(f=>{c[f.h]=(c[f.h]||0)+1;c[f.a]=(c[f.a]||0)+1;});return Math.max(1,...Object.values(c),1);}
+function xgRows(cap){const g=xgPlayed(),teams={},cnt={};
+  g.forEach(f=>{[[f.h,f.gh,f.ga,f.xh,f.xa],[f.a,f.ga,f.gh,f.xa,f.xh]].forEach(([t,gf,ga,xf,xa])=>{
+    cnt[t]=(cnt[t]||0)+1; if(cap!=null&&cnt[t]>cap)return;
+    const o=teams[t]||(teams[t]={gp:0,gf:0,ga:0,xf:0,xa:0});o.gp++;o.gf+=gf;o.ga+=ga;o.xf+=xf;o.xa+=xa;});});
+  return Object.entries(teams).map(([t,o])=>{const xf=Math.round(o.xf*100)/100,xa=Math.round(o.xa*100)/100,xgd=Math.round((o.xf-o.xa)*100)/100,gd=o.gf-o.ga;
+    return {t,gp:o.gp,gf:o.gf,ga:o.ga,xf,xa,xgd,gd,luck:Math.round((gd-xgd)*100)/100};});}
+function renderXG(){const host=document.getElementById('xg');
+  if(!XG){host.innerHTML='<div class="err">Loading…</div>';
+    fetch('xg.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{XG=d;renderXG();}).catch(()=>{host.innerHTML='<div class="err">xG data unavailable.</div>';});return;}
+  const g=xgPlayed();
+  if(!g.length){host.innerHTML='<div class="err">No games played yet — the xG view fills in automatically once the season kicks off.</div>';return;}
+  const maxG=xgMaxGames(); if(xgCutoff==null||xgCutoff>maxG)xgCutoff=maxG;
+  const views=[["bars","Bars"],["map","Map"],["luck","Luck"],["finish","Finishing"]];
+  const vt=`<div class="oddsel" style="margin-top:4px">`+views.map(([k,l])=>`<span class="opt ${xgView===k?'on':''}" onclick="xgView='${k}';renderXG()">${l}</span>`).join("")+`</div>`;
+  const allT=[...new Set(g.flatMap(f=>[f.h,f.a]))].sort();
+  const sel=`<select class="xgsel" onchange="xgFocus=this.value;refreshXGChart()"><option value="">Find a team…</option>${allT.map(t=>`<option value="${t}" ${t===xgFocus?'selected':''}>${t}</option>`).join("")}</select>`;
+  const reset=`<button class="xgreset" onclick="xgFocus='';xgCutoff=null;renderXG()" title="Reset" aria-label="Reset"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a9 9 0 0 1 15-5l3 3M21 13a9 9 0 0 1-15 5l-3-3"/><path d="M21 4v5h-5M3 20v-5h5"/></svg></button>`;
+  const slider=maxG>1?`<div class="xgslide"><span class="m" id="xgcut"></span><input type="range" min="1" max="${maxG}" value="${xgCutoff}" oninput="xgCutoff=+this.value;refreshXGChart()"></div>`:"";
+  host.innerHTML=vt+`<div class="xgctl">${sel}${reset}</div><div id="xgchart"></div>${slider}`;
+  refreshXGChart();}
+function refreshXGChart(){const el=document.getElementById("xgchart");if(!el)return;
+  const rows=xgRows(xgCutoff);
+  const cut=document.getElementById("xgcut");if(cut)cut.textContent=xgCutoff>=xgMaxGames()?"All games":"thru GW"+xgCutoff;
+  if(xgView!=="bars"){el.innerHTML=xgChart(rows,xgView,xgFocus,xgEliminated())+`<div id="xgdetail" class="xgdetail"></div>`;if(xgFocus)xgPoint(xgFocus);return;}
+  const metric=r=>xgMode==="luck"?r.luck:r.xgd;
+  rows.sort((a,b)=>metric(b)-metric(a));
+  const maxAbs=Math.max(0.1,...rows.map(r=>Math.abs(metric(r))));
+  const sub=`<div class="oddsel" style="margin-top:6px"><span class="opt ${xgMode==='xg'?'on':''}" onclick="xgMode='xg';refreshXGChart()">By xG</span><span class="opt ${xgMode==='luck'?'on':''}" onclick="xgMode='luck';refreshXGChart()">By luck</span></div>`;
+  const lbl=xgMode==="luck"?"vs xG":"net xG";
+  const hdr=`<div class="xgrow2 xg-head"><span>team</span><span>goals</span><span>xG</span><span></span><span style="text-align:right">${lbl}</span></div>`;
+  const bars=rows.map(r=>{const v=metric(r),up=v>=0,w=Math.min(50,Math.abs(v)/maxAbs*50),c=v>0.05?'var(--good)':v<-0.05?'var(--bad)':'var(--muted)',dim=xgFocus&&r.t!==xgFocus;
+    return `<div class="xgrow2" style="${dim?'opacity:.3':r.t===xgFocus?'background:rgba(0,255,133,.12);border-radius:6px':''}">
+      <span class="xg-team">${logo(r.t)}${r.t}</span>
+      <span class="xg-d">${r.gf}–${r.ga}</span>
+      <span class="xg-d">${r.xf.toFixed(1)}–${r.xa.toFixed(1)}</span>
+      <div class="xg-bar"><span class="xg-mid"></span><span class="xg-fill" style="${up?'left:50%':'right:50%'};width:${w.toFixed(1)}%;background:${c}"></span></div>
+      <span class="xg-val" style="color:${c}">${v>0?'+':''}${v.toFixed(2)}</span></div>`;}).join("");
+  el.innerHTML=sub+hdr+`<div>${bars}</div>`;}
+function scatterSVG(items,cfg){
+  const W=340,H=306,ml=30,mr=12,mt=14,mb=38,pw=W-ml-mr,ph=H-mt-mb;
+  const sx=v=>ml+(v-cfg.xmin)/(cfg.xmax-cfg.xmin)*pw;
+  const sy=v=>cfg.flipY?mt+(v-cfg.ymin)/(cfg.ymax-cfg.ymin)*ph:mt+(cfg.ymax-v)/(cfg.ymax-cfg.ymin)*ph;
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${cfg.aria||'xG scatter'}">`;
+  (cfg.zones||[]).forEach(z=>{const xa=sx(z.x0),xb=sx(z.x1),ya=sy(z.y0),yb=sy(z.y1);s+=`<rect x="${Math.min(xa,xb).toFixed(1)}" y="${Math.min(ya,yb).toFixed(1)}" width="${Math.abs(xb-xa).toFixed(1)}" height="${Math.abs(yb-ya).toFixed(1)}" fill="${z.fill}"/>`;});
+  (cfg.tris||[]).forEach(t=>{s+=`<polygon points="${t.pts.map(([a,b])=>`${sx(a).toFixed(1)},${sy(b).toFixed(1)}`).join(" ")}" fill="${t.fill}"/>`;});
+  for(let q=Math.ceil(cfg.xmin);q<=Math.floor(cfg.xmax);q++){s+=`<line x1="${sx(q).toFixed(1)}" y1="${mt}" x2="${sx(q).toFixed(1)}" y2="${H-mb}" stroke="${q===0&&cfg.xmin<0?'#3a3a55':'#1b1b2b'}"/><text x="${sx(q).toFixed(1)}" y="${H-mb+13}" fill="#5b5b70" font-size="11" text-anchor="middle">${q}</text>`;}
+  for(let q=Math.ceil(cfg.ymin);q<=Math.floor(cfg.ymax);q++){s+=`<line x1="${ml}" y1="${sy(q).toFixed(1)}" x2="${W-mr}" y2="${sy(q).toFixed(1)}" stroke="${q===0&&cfg.ymin<0?'#3a3a55':'#1b1b2b'}"/><text x="${ml-4}" y="${(sy(q)+3).toFixed(1)}" fill="#5b5b70" font-size="11" text-anchor="end">${q}</text>`;}
+  if(cfg.diag){const a=Math.max(cfg.xmin,cfg.ymin),b=Math.min(cfg.xmax,cfg.ymax);s+=`<line x1="${sx(a).toFixed(1)}" y1="${sy(a).toFixed(1)}" x2="${sx(b).toFixed(1)}" y2="${sy(b).toFixed(1)}" stroke="#55557a" stroke-dasharray="3 3"/>`;}
+  (cfg.notes||[]).forEach(n=>{s+=`<text x="${sx(n.x).toFixed(1)}" y="${sy(n.y).toFixed(1)}" fill="${n.col}" font-size="11" font-weight="600" text-anchor="${n.anchor||'start'}">${n.t}</text>`;});
+  items.forEach(it=>{const X=sx(it.x),Y=sy(it.y);
+    if(it.ring)s+=`<circle cx="${X.toFixed(1)}" cy="${Y.toFixed(1)}" r="9" fill="none" stroke="#00ff85" stroke-width="2"/>`;
+    const r=it.big?6:3,op=it.dim?0.5:it.big?0.92:0.42;
+    s+=`<circle cx="${X.toFixed(1)}" cy="${Y.toFixed(1)}" r="${r}" fill="${it.col}" fill-opacity="${op}" style="cursor:pointer" onclick="xgPoint('${it.code}')"/>`;});
+  const placed=[],ov=(a,b)=>a[0]<b[0]+b[2]&&a[0]+a[2]>b[0]&&a[1]<b[1]+b[3]&&a[1]+a[3]>b[1];
+  const cands=[[8,3.5,'start'],[8,-8,'start'],[-8,3.5,'end'],[8,15,'start'],[8,-15,'start'],[-8,-8,'end'],[-8,15,'end']];
+  items.filter(it=>it.big).forEach(it=>{const X=sx(it.x),Y=sy(it.y),w=it.code.length*6.6+3,h=12;let ch=cands[0];
+    for(let ci=0;ci<cands.length;ci++){const c=cands[ci],lx=X+c[0],ly=Y+c[1],bx=c[2]==='end'?lx-w:lx,box=[bx,ly-h+2,w,h];
+      if(!placed.some(p=>ov(p,box))){ch=c;placed.push(box);break;}
+      if(ci===cands.length-1){const bx0=ch[2]==='end'?X+ch[0]-w:X+ch[0];placed.push([bx0,Y+ch[1]-h+2,w,h]);}}
+    s+=`<text x="${(X+ch[0]).toFixed(1)}" y="${(Y+ch[1]).toFixed(1)}" fill="${it.dim?'#7a7a90':'#e8e8f2'}" font-size="11" font-weight="600" text-anchor="${ch[2]}" style="cursor:pointer" onclick="xgPoint('${it.code}')">${it.code}</text>`;});
+  s+=`<text x="${(ml+pw/2).toFixed(1)}" y="${H-8}" fill="#8a8aa0" font-size="11" text-anchor="middle">${cfg.xlab}</text>`;
+  s+=`<text transform="translate(11,${mt+2}) rotate(-90)" fill="#8a8aa0" font-size="11" text-anchor="end">${cfg.ylab}</text>`;
+  return `<div style="margin-top:8px">${s}</svg></div>`;}
+function xgChart(rows,view,focus,elim){
+  const avg=a=>a.reduce((x,y)=>x+y,0)/a.length;
+  const colNet=n=>n>=1.5?'#1d9e75':n>=0.5?'#5dcaa5':n>-0.5?'#9a9aae':n>-1.5?'#ef9f27':'#e24b4a';
+  const colDiff=d=>d>0.4?'#1d9e75':d<-0.4?'#e24b4a':'#9a9aae';
+  const k=Math.max(1,Math.round(rows.length*0.1));
+  const pick=acc=>{const srt=[...rows].sort((a,b)=>acc(b)-acc(a));return new Set([...srt.slice(0,k),...srt.slice(-k)].map(r=>r.t));};
+  let items,cfg;
+  if(view==="map"){
+    const xf=r=>r.xf/r.gp,ya=r=>r.xa/r.gp,net=r=>xf(r)-ya(r);
+    const xmax=Math.max(2,Math.ceil(Math.max(...rows.map(xf))+0.2)),ymax=Math.max(2,Math.ceil(Math.max(...rows.map(ya))+0.2));
+    const lab=pick(net),mxf=avg(rows.map(xf)),mxa=avg(rows.map(ya));
+    items=rows.map(r=>({x:xf(r),y:ya(r),code:r.t,team:r.t,big:lab.has(r.t),col:colNet(net(r))}));
+    cfg={xmin:0,xmax,ymin:0,ymax,flipY:true,diag:false,xlab:"xG created →",ylab:"← xG conceded",aria:"attack vs defence",
+      zones:[{x0:mxf,x1:xmax,y0:0,y1:mxa,fill:'rgba(29,158,117,.08)'},{x0:0,x1:mxf,y0:mxa,y1:ymax,fill:'rgba(226,75,74,.08)'}],
+      notes:[{x:xmax-0.06,y:0.2,t:'dominant',col:'#5dcaa5',anchor:'end'},{x:0.06,y:ymax-0.1,t:'outclassed',col:'#ef9f27',anchor:'start'}]};
+  }else if(view==="luck"){
+    const xd=r=>(r.xf-r.xa)/r.gp,yd=r=>(r.gf-r.ga)/r.gp,luck=r=>yd(r)-xd(r);
+    const m=Math.max(1,Math.ceil(Math.max(...rows.map(r=>Math.max(Math.abs(xd(r)),Math.abs(yd(r)))))+0.2));
+    const lab=pick(luck);
+    items=rows.map(r=>({x:xd(r),y:yd(r),code:r.t,team:r.t,big:lab.has(r.t),col:colDiff(-luck(r))}));
+    cfg={xmin:-m,xmax:m,ymin:-m,ymax:m,flipY:false,diag:true,xlab:"xG diff →",ylab:"goal diff ↑",aria:"over/under-performance vs xG",
+      tris:[{pts:[[-m,m],[-m,-m],[m,m]],fill:'rgba(226,75,74,.07)'},{pts:[[m,-m],[-m,-m],[m,m]],fill:'rgba(29,158,117,.07)'}],
+      notes:[{x:-m+0.12,y:m-0.18,t:'overperforming',col:'#ef9f27',anchor:'start'},{x:m-0.12,y:-m+0.35,t:'underperforming',col:'#5dcaa5',anchor:'end'}]};
+  }else{
+    const xf=r=>r.xf/r.gp,gf=r=>r.gf/r.gp,fin=r=>gf(r)-xf(r);
+    const mx=Math.max(2,Math.ceil(Math.max(...rows.map(xf),...rows.map(gf))+0.2));
+    const lab=pick(fin);
+    items=rows.map(r=>({x:xf(r),y:gf(r),code:r.t,team:r.t,big:lab.has(r.t),col:colDiff(-fin(r))}));
+    cfg={xmin:0,xmax:mx,ymin:0,ymax:mx,flipY:false,diag:true,xlab:"xG created →",ylab:"goals scored ↑",aria:"finishing efficiency",
+      tris:[{pts:[[0,mx],[0,0],[mx,mx]],fill:'rgba(226,75,74,.07)'},{pts:[[mx,0],[0,0],[mx,mx]],fill:'rgba(29,158,117,.07)'}],
+      notes:[{x:0.12,y:mx-0.18,t:'clinical',col:'#ef9f27',anchor:'start'},{x:mx-0.12,y:0.35,t:'wasteful',col:'#5dcaa5',anchor:'end'}]};
+  }
+  if(focus){items.forEach(it=>{const f=it.team===focus;it.big=f;it.ring=f;if(!f){it.col='#3a3a52';it.dim=true;}});}
+  return scatterSVG(items,cfg);}
+function xgGameLabel(gd,xgd){const dom=gd===0?0.7:0.5;let t;
+  if(gd>0)t=xgd>=0.5?'deserved win':xgd<=-0.5?'smash & grab':'won a tight one';
+  else if(gd===0)t=xgd>=0.7?'dominated, drew':xgd<=-0.7?'stole a point':'fair draw';
+  else t=xgd>=0.7?'unlucky loss':xgd<=-0.7?'outplayed':'edged out';
+  const c=xgd>=dom?'var(--good)':xgd<=-dom?'var(--bad)':'var(--muted)';
+  return `<span style="color:${c};font-weight:600">${t}</span>`;}
+function xgContextNote(ew,gd){if(ew==null)return"";const pct=Math.round(ew*100);
+  if(ew>=0.6)return(gd<=0?"should've won · ":"won as expected · ")+`fav ${pct}%`;
+  if(ew<=0.30)return(gd>=0?"punched up · ":"lost as expected · ")+`dog ${pct}%`;
+  return `even matchup · ${pct}%`;}
+function xgPoint(code){const el=document.getElementById("xgdetail");if(!el)return;
+  const rows=xgRows(xgCutoff),r=rows.find(x=>x.t===code);if(!r)return;
+  const team=r.t,avg=a=>a.reduce((p,q)=>p+q,0)/a.length;let zone,zc;
+  if(xgView==="map"){const mxf=avg(rows.map(x=>x.xf/x.gp)),mxa=avg(rows.map(x=>x.xa/x.gp)),pf=r.xf/r.gp,pa=r.xa/r.gp;
+    if(pf>=mxf&&pa<=mxa){zone="dominant";zc="var(--good)";}else if(pf<mxf&&pa>mxa){zone="outclassed";zc="var(--bad)";}
+    else if(pf>=mxf&&pa>mxa){zone="busy both ends";zc="var(--muted)";}else{zone="quiet both ends";zc="var(--muted)";}}
+  else if(xgView==="luck"){const l=r.luck;zone=l<-0.3?"underperforming":l>0.3?"overperforming":"as expected";zc=l<-0.3?"var(--good)":l>0.3?"var(--bad)":"var(--muted)";}
+  else{const fd=r.gf-r.xf;zone=fd<-0.3?"wasteful":fd>0.3?"clinical":"as expected";zc=fd<-0.3?"var(--good)":fd>0.3?"var(--bad)":"var(--muted)";}
+  const gs=xgPlayed().filter(f=>f.h===team||f.a===team).slice(0,xgCutoff||99);
+  const G=gs.map(f=>{const home=team===f.h,opp=home?f.a:f.h;
+    const gf=home?f.gh:f.ga,ga=home?f.ga:f.gh;
+    const xgd=Math.round(((home?f.xh:f.xa)-(home?f.xa:f.xh))*100)/100,gd=gf-ga;
+    const ew=home?f.ph:f.pa,dom=gd===0?0.7:0.5;
+    return {gw:f.gw,opp,gf,ga,xgd,gd,ew,sig:xgd>=dom?'back':xgd<=-dom?'fade':'even'};});
+  const head=`<div class="xgg xgg-head"><span style="text-align:center">GW</span><span>Opp</span><span style="text-align:center">Score</span><span style="text-align:center">Net xG</span><span style="text-align:right">Remarks</span></div>`;
+  const games=G.map(g=>{const note=xgContextNote(g.ew,g.gd);
+    return `<div class="xggrow"><div class="xgg"><span class="xgg-gw">${g.gw}</span><span class="xgg-o">${logo(g.opp)}${g.opp}</span><span class="xgg-s">${g.gf}–${g.ga}</span><span class="xgg-n">${g.xgd>0?'+':''}${g.xgd.toFixed(1)}</span><span class="xgg-l">${xgGameLabel(g.gd,g.xgd)}</span></div>${note?`<div class="xgg-ctx">${note}</div>`:''}</div>`;}).join("");
+  let summary="";
+  if(G.length>=2){const n=G.length,back=G.filter(g=>g.sig==='back').length,fade=G.filter(g=>g.sig==='fade').length;
+    const vsStr=G.filter(g=>g.sig==='back'&&g.ew!=null&&g.ew<=0.30).length,need=Math.ceil(n*0.6);let verd,vc;
+    if(back>=need&&fade<=1){verd="consistent under-performer — back";vc="var(--good)";}
+    else if(fade>=need&&back<=1){verd="riding its luck — fade";vc="var(--bad)";}
+    else{verd="results match the level — no clear edge";vc="var(--muted)";}
+    summary=`<div class="xgd-sum"><span class="m">out-created ${back} of ${n}${fade?`, ${fade} against`:''}${vsStr?` · ${vsStr} vs stronger`:''} → </span><b style="color:${vc}">${verd}</b></div>`;}
+  el.innerHTML=`<div class="xgd-h">${logo(team,'lg')}<b style="color:var(--ink)">${team}</b> · <b style="color:${zc}">${zone}</b> <span class="tm">· ${r.gp} game${r.gp>1?'s':''}</span></div>${summary}${head}${games}`;}
 const CARDS=["card-squad","card-league"];let _ci=0;
 function midAction(){ if(activeView!=="myteam"){selectView("myteam");return;}
   _ci=(_ci+1)%CARDS.length; const el=document.getElementById(CARDS[_ci]);
