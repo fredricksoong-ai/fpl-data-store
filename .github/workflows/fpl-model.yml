@@ -1,7 +1,9 @@
-# .github/workflows/fpl-model.yml  — build live v2 data + deploy wirtzplay
-# Rebuilds v2.json from the FPL API every 3 hours (and on push / manual), then
-# deploys model-app/site to the Cloudflare Pages project "wirtzplay".
-# build_v2.py uses only Python's stdlib, so no pip install is needed.
+# .github/workflows/fpl-model.yml — refresh all FPLanner data feeds + deploy
+# Every 3 hours (and on push / manual) rebuilds the three JSON contracts the app
+# fetches, then deploys model-app/site to the Cloudflare Pages project "wirtzplay".
+#   v2.json        — live squad + mini-league (FPL API, stdlib)
+#   xg.json        — per-match team xG for/against (FPL API, stdlib)
+#   titleodds.json — model title/top-4/relegation odds (DC+Elo, needs pandas/numpy/scipy)
 
 name: FPL — build & deploy
 
@@ -29,8 +31,17 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Build live v2 data
+      - name: Install model deps
+        run: pip install pandas numpy scipy
+
+      - name: Build live squad + league (v2.json)
         run: V2_OUT=model-app/site/v2.json python3 model-app/build_v2.py
+
+      - name: Build xG feed (xg.json)
+        run: XG_OUT=model-app/site/xg.json python3 model-app/build_xg.py
+
+      - name: Build title odds (titleodds.json)
+        run: FPL_OUT_DIR="$PWD/model-app/site" python3 model-app/build_titleodds.py
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
