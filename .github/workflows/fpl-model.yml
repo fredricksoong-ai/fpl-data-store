@@ -74,6 +74,9 @@ jobs:
       - name: Build transfer targets (recommend.json)
         run: REC_OUT=model-app/site/recommend.json python3 model-app/build_recommend.py
 
+      - name: Build optimal squad (squad.json)
+        run: SQUAD_OUT=model-app/site/squad.json python3 model-app/build_squad.py
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:

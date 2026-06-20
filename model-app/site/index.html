@@ -332,6 +332,15 @@
   <div style="height:55vh" aria-hidden="true"></div>
 </main>
 
+<main class="wrap" id="bestxvview" style="display:none">
+  <section class="card" id="card-bestxv">
+    <div class="ctitle">Best XV · model squad</div>
+    <div id="bxvsum" class="tsub"></div>
+    <div class="pitch"><div id="bxvrows"></div><div class="benchsep"></div><div class="bench" id="bxvbench"></div></div>
+  </section>
+  <div style="height:55vh" aria-hidden="true"></div>
+</main>
+
 <div id="matchxgmodal" class="modal hidden" onclick="if(event.target===this)closeMatchXG()">
   <div class="modalbox">
     <div class="modalhd"><span id="mxgtitle" class="teams"></span><span class="mx" onclick="closeMatchXG()" title="Close">✕</span></div>
@@ -476,8 +485,8 @@ function renderLeague(LG){document.getElementById('lgtable').innerHTML=
 <td class="r"><span class="xv ${r[11]>=0.45?'g':'r'}">${(+r[11]).toFixed(1)}</span></td></tr>`}).join('')+`</tbody>`;}
 
 /* nav: no toggle. default = myteam (cards: squad, league). mid = next-card / home */
-const VIEW_ORDER=[["picks","Picks"],["transfers","Transfers"],["players","Players"],["title","Title Odds"],["xg","xG"],["mleague","Model League"]];
-const REAL=new Set(["picks","transfers","players","title","xg","mleague"]);  // all views have real panels
+const VIEW_ORDER=[["picks","Picks"],["bestxv","Best XV"],["transfers","Transfers"],["players","Players"],["title","Title Odds"],["xg","xG"],["mleague","Model League"]];
+const REAL=new Set(["picks","bestxv","transfers","players","title","xg","mleague"]);  // all views have real panels
 const BURGER=VIEW_ORDER.map(v=>v[0]); let activeView="myteam";
 const ICON_CHEV='<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/></svg>';
 const ICON_HOME='<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg>';
@@ -490,7 +499,9 @@ function selectView(v){activeView=v;
   document.getElementById('mleagueview').style.display=v==="mleague"?"":"none";
   document.getElementById('playersview').style.display=v==="players"?"":"none";
   document.getElementById('transfersview').style.display=v==="transfers"?"":"none";
+  document.getElementById('bestxvview').style.display=v==="bestxv"?"":"none";
   if(v==="title")renderTitle();
+  if(v==="bestxv")renderBestXV();
   if(v==="xg")renderXG();
   if(v==="picks")renderPicks();
   if(v==="mleague")renderModelLeague();
@@ -878,6 +889,23 @@ function renderRecommend(){const host=document.getElementById('recommend');
     ${p.flags.length?`<div class="pchips">${p.flags.map(fl=>`<span class="flg ${fl==='rotation_risk'?'flg-rot':''}">${FLAGLBL[fl]||fl}</span>`).join('')}</div>`:''}
   </div>`).join('');
   host.innerHTML=`<div class="tsub">The model's best picks over the next ${REC.horizon||5} gameweeks by expected points, with signal flags for conviction. Ranked per position — tap to switch lines.</div>${bar}${rows}`;}
+/* ===== Best XV (model's optimal £100 squad) ===== */
+let BXV=null;
+function renderBestXV(){const sum=document.getElementById('bxvsum');
+  if(!BXV){sum.textContent='Loading…';
+    fetch('squad.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{BXV=d;renderBestXV();}).catch(()=>{sum.innerHTML='<span class="err">Best XV unavailable.</span>';});return;}
+  const sq=BXV.rows||[];
+  if(!sq.length){sum.innerHTML='<span class="err">Best XV fills in once player projections are available.</span>';return;}
+  VIEWING=ME;  // these aren't a rival's players — suppress the "not in my team" badge
+  const st=sq.filter(p=>!p[7]), bench=sq.filter(p=>p[7]);
+  const subrows=[];[1,2,3,4].forEach(t=>{const l=st.filter(p=>p[0]===t);if(l.length)splitLine(l).forEach(r=>subrows.push(r));});
+  const rowW=a=>a.reduce((s,p)=>s+tileW(p[3]),0)+(a.length-1)*GAP;
+  const pr=document.getElementById('bxvrows'); const avail=(pr.clientWidth||340)-2;
+  const SC=Math.min(1,avail/Math.max(...subrows.map(rowW),1));
+  const BSC=Math.min(SC,(avail-6)/(bench.length?rowW(bench):1));
+  pr.innerHTML=subrows.map(r=>`<div class="prow">${r.map(p=>bub(p,SC)).join('')}</div>`).join('');
+  document.getElementById('bxvbench').innerHTML=bench.map(p=>bub(p,BSC,TILEH*SC,true)).join('');
+  sum.innerHTML=`Optimal £100 squad for the next 5 GWs — <b style="color:var(--ink)">${BXV.formation}</b> · spend <b style="color:var(--ink)">£${BXV.spend}m</b> · XI <b style="color:var(--fpl)">${BXV.xi_xph} xPts</b>. Maximises projected XI points; bench is budget fodder. Tap a tile to compare.`;}
 /* ===== Squad player modal: details + comparison vs replacements ===== */
 function closePM(){document.getElementById('playermodal').classList.add('hidden');}
 async function playerModal(name,posType){
