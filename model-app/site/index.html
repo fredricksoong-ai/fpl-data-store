@@ -243,6 +243,10 @@
   .chippill b{color:var(--ink);font-weight:700} .chippill span{font-variant-numeric:tabular-nums}
   .chippill.on{border-color:rgba(0,255,133,.5)} .chippill.on span{color:var(--fpl);font-weight:700}
   .chippill{cursor:pointer} .chipnote{font-size:11.5px;color:var(--muted);line-height:1.5;margin:0 2px 10px;min-height:1px}
+  .pmperf{font-size:13px;margin:6px 0 8px}
+  .diffcols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+  .diffh{font-size:10.5px;color:var(--faint);font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
+  .diffrow{display:flex;align-items:center;gap:4px;font-size:12px;padding:3px 0;font-variant-numeric:tabular-nums}
   .mshead{color:var(--muted);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.3px;margin:12px 0 5px}
   .msgrid{display:grid;grid-template-columns:1fr 40px 1fr 40px;gap:4px 8px;font-size:11.5px;align-items:center}
   .msgrid .gh{color:var(--faint);font-size:10px} .msl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .msc{text-align:center;color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums} .msr{text-align:right} .msd{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
@@ -280,6 +284,7 @@
         <span id="whoBack" class="backbtn hidden" onclick="backHome()" title="Back to my team"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-.5 4"/><path d="M20 4v5h-5"/></svg></span>
       </div>
     </div>
+    <div id="diffpanel"></div>
   </section>
 
   <section class="card" id="card-chips">
@@ -418,7 +423,7 @@ document.getElementById('nextcd').innerHTML=`🔒 ${fmtCd((2*1440+14*60)*6e4)}`;
 function tier(p){const s=p[4];if(s===0)return"yet";if(s===2)return"dnp";const v=p[2];return v<=3?"red":v<=8?"gold":v<=13?"green":"purple";}
 const GAP=6, tileW=o=>122-Math.min(o,55)/55*28, TILEH=84;  // width by ownership; lines of >3 split into two staggered rows so tiles stay wide; tall enough for 3 text lines
 /* populated by the v2.json fetch at the bottom */
-let SQUADS={}, STATS={}, MYNAMES=new Set(), ME="wirtzplay", GWNO=0, VIEWING="wirtzplay";
+let SQUADS={}, STATS={}, MYNAMES=new Set(), ME="wirtzplay", GWNO=0, VIEWING="wirtzplay", FIX={};
 const squadFor=t=>SQUADS[t]||SQUADS[ME]||[];
 const gwCol=(gw,avg)=>{const r=gw/avg;return r<0.9?'bd':r<=1.1?'am':r<1.5?'gd':'pk';};
 const I_GOAL='⚽';
@@ -476,7 +481,19 @@ function renderPitch(team){
   document.getElementById('gwpill').innerHTML=gwPill(team);
   document.getElementById('whoName').textContent=team;
   document.getElementById('whoBack').classList.toggle('hidden',team===ME);
+  renderDiff(team);
 }
+function renderDiff(team){const el=document.getElementById('diffpanel');if(!el)return;
+  if(team===ME||!SQUADS[ME]||!SQUADS[team]){el.innerHTML='';return;}
+  const mine=squadFor(ME), theirs=squadFor(team), xp=r=>r[13]||0;
+  const mn=new Set(mine.map(p=>p[1])), tn=new Set(theirs.map(p=>p[1]));
+  const theyHave=theirs.filter(p=>!mn.has(p[1])).sort((a,b)=>xp(b)-xp(a));
+  const youHave=mine.filter(p=>!tn.has(p[1])).sort((a,b)=>xp(b)-xp(a));
+  const tSum=theyHave.reduce((s,p)=>s+xp(p),0), ySum=youHave.reduce((s,p)=>s+xp(p),0), net=ySum-tSum;
+  const col=(p)=>`<div class="diffrow">${logo(p[17])}<span style="flex:1;overflow:hidden;text-overflow:ellipsis">${p[1]}</span><span class="m">${xp(p).toFixed(1)}</span></div>`;
+  el.innerHTML=`<div class="ctitle2" style="margin:12px 2px 6px">Differentials vs ${team}</div>
+    <div class="tsub">Net xPts on differentials: <b style="color:${net>=0?'var(--good)':'var(--bad)'}">${net>=0?'+':''}${net.toFixed(1)}</b> ${net>=0?'in your favour':'against you'} <span class="m">(yours ${ySum.toFixed(1)} vs theirs ${tSum.toFixed(1)})</span></div>
+    <div class="diffcols"><div><div class="diffh">They have (you don't)</div>${theyHave.map(col).join('')||'<div class="m">—</div>'}</div><div><div class="diffh">You have (they don't)</div>${youHave.map(col).join('')||'<div class="m">—</div>'}</div></div>`;}
 function flash(el){el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1300);}
 function viewTeam(team){renderPitch(team);const c=document.getElementById('card-squad');c.scrollIntoView({behavior:'smooth',block:'start'});flash(c);}
 function backHome(){viewTeam(ME);}
@@ -931,31 +948,48 @@ function chipPills(elId,noteId,key){const el=document.getElementById(elId);if(!e
     chipNote(key,3,noteId);});}
 function chipNote(key,i,noteId){const plan=CHIPS&&CHIPS[key],c=plan&&plan.chips&&plan.chips[i],el=document.getElementById(noteId);if(!el||!c)return;
   el.innerHTML=`<b style="color:var(--ink)">${c.label} · ${c.advice}</b> — ${c.note}`;}
-/* ===== Squad player modal: details + comparison vs replacements ===== */
+/* ===== Player modal: live performance + next fixtures (Card) | comparison (Compare) ===== */
+let pmName=null, pmType=null, pmTab='card';
 function closePM(){document.getElementById('playermodal').classList.add('hidden');}
-async function playerModal(name,posType){
+async function playerModal(name,posType){pmName=name;pmType=posType;pmTab='card';
   document.getElementById('playermodal').classList.remove('hidden');
-  const host=document.getElementById('pmbody'); host.innerHTML='<div class="err">Loading…</div>';
-  if(!PLAYERS){try{PLAYERS=await (await fetch('players.json',{cache:'no-store'})).json();}catch(e){host.innerHTML='<div class="err">Player data unavailable.</div>';return;}}
-  const pc=({1:'GK',2:'DEF',3:'MID',4:'FWD'})[posType]||posType, all=PLAYERS.players||[];
-  const me=all.find(p=>p.name===name&&p.pos===pc)||all.find(p=>p.name===name);
-  document.getElementById('pmtitle').innerHTML=me?`${logo(me.code)}${me.name} <span class="m" style="font-weight:400">${me.pos} · £${me.price.toFixed(1)}</span>`:name;
-  if(!me){host.innerHTML='<div class="err">No data for '+name+' yet — fills in once games are played.</div>';return;}
-  const XP=p=>(p.xph!=null?p.xph:(p.ep||0));
+  if(!PLAYERS){try{PLAYERS=await (await fetch('players.json',{cache:'no-store'})).json();}catch(e){}}
+  pmRender();}
+function pmSetTab(t){pmTab=t;pmRender();}
+function pmRender(){
+  const host=document.getElementById('pmbody');
+  const pc=({1:'GK',2:'DEF',3:'MID',4:'FWD'})[pmType]||pmType;
+  const live=(squadFor(VIEWING)||[]).find(r=>r[1]===pmName);
+  const all=(PLAYERS&&PLAYERS.players)||[];
+  const me=all.find(p=>p.name===pmName&&p.pos===pc)||all.find(p=>p.name===pmName);
+  const club=live?live[17]:(me?me.code:'');
+  document.getElementById('pmtitle').innerHTML=`${logo(club)}${pmName} <span class="m" style="font-weight:400">${pc}${me?` · £${me.price.toFixed(1)}`:''}</span>`;
+  const tabs=`<div class="oddsel"><span class="opt ${pmTab==='card'?'on':''}" onclick="pmSetTab('card')">Performance</span><span class="opt ${pmTab==='compare'?'on':''}" onclick="pmSetTab('compare')">Compare</span></div>`;
+  host.innerHTML=tabs+(pmTab==='card'?pmCard(live,me,club):pmCompare(me,pc));}
+function pmCard(live,me,club){
+  let perf='<div class="pmperf m">No live data — tap from a squad to see this gameweek.</div>';
+  if(live){const st=live[4],pts=live[2],mins=live[15],g=live[10],a=live[11],bonus=live[16],opp=live[8],ko=live[9],xp=live[13];
+    if(st===0)perf=`<div class="pmperf"><span class="m">Upcoming</span> ${opp?`vs <b style="color:var(--ink)">${opp}</b>`:''}${ko?` ${ko}`:''} · proj <b style="color:var(--fpl)">${xp}</b> xPts</div>`;
+    else if(st===2)perf=`<div class="pmperf"><b style="color:var(--ink)">${opp}</b> · <span class="m">did not play</span></div>`;
+    else perf=`<div class="pmperf"><b style="color:var(--ink)">${pts} pts</b> <span class="m">vs ${opp} · ${mins}′ · ${g}G ${a}A${bonus?` · ${bonus} bonus`:''}</span></div>`;}
+  const fdrCol=d=>d>=4?'var(--bad)':(d>0&&d<=2)?'var(--good)':'var(--muted)';
+  const fx=(FIX&&FIX[club])||[];
+  const next=`<div class="mshead">Next fixtures</div>`+(fx.length?`<div class="pchips">${fx.map(f=>`<span class="flg"><span class="m">GW${f.gw}</span> <span style="color:${fdrCol(f.fdr)}">${f.opp}</span> ${f.h?'(H)':'(A)'}</span>`).join('')}</div>`:`<div class="m" style="font-size:11px">Appear once the season is live.</div>`);
+  const seas=me?`<div class="pmet" style="margin-top:8px"><span class="m">form <b style="color:var(--ink)">${me.form}</b></span><span class="m">xPts·5 <b style="color:var(--ink)">${me.xph!=null?me.xph:me.ep}</b></span><span class="m">xGI90 <b style="color:var(--ink)">${me.xgi}</b></span><span class="m">own <b style="color:var(--ink)">${me.sel}%</b></span></div>${me.flags&&me.flags.length?`<div class="pchips">${me.flags.map(fl=>`<span class="flg ${fl==='rotation_risk'?'flg-rot':''}">${FLAGLBL[fl]||fl}</span>`).join('')}</div>`:''}`:'';
+  return perf+next+seas;}
+function pmCompare(me,pc){
+  if(!me)return '<div class="err">No comparison data for this player yet.</div>';
+  const all=(PLAYERS&&PLAYERS.players)||[], XP=p=>(p.xph!=null?p.xph:(p.ep||0));
   const pool=all.filter(p=>p.pos===me.pos&&p.min>=300);
-  const cand=pool.filter(p=>p.id!==me.id).sort((a,b)=>XP(b)-XP(a)).slice(0,8);
-  const shown=[me,...cand];
+  const cand=pool.filter(p=>p.id!==me.id).sort((a,b)=>XP(b)-XP(a)).slice(0,8), shown=[me,...cand];
   const xf=p=>p.price,yf=p=>XP(p), mx=(f,pad)=>Math.max(...shown.map(f))+pad, mn=(f,pad)=>Math.min(...shown.map(f))-pad;
   const cfg={xlab:'price £ →',ylab:'xPts (5 GW) ↑',xstep:1,ystep:2,flipY:false,click:'pmPoint',
     xmin:Math.floor(mn(xf,0.4)),xmax:Math.ceil(mx(xf,0.4)),ymin:Math.max(0,Math.floor(mn(yf,1))),ymax:Math.ceil(mx(yf,1))};
   const items=shown.map(p=>({x:xf(p),y:yf(p),lbl:p.name,code:String(p.id),big:true,ring:p.id===me.id,col:p.id===me.id?'#00ff85':'#5dcaa5'}));
   const ups=cand.filter(p=>XP(p)>XP(me)).slice(0,3);
   const upline=ups.length?ups.map(p=>`<div class="mxg-row"><span>${logo(p.code)}<b style="color:var(--ink)">${p.name}</b> <span class="m">£${p.price.toFixed(1)}</span></span><span><b style="color:var(--good)">+${(XP(p)-XP(me)).toFixed(1)} xPts</b></span></div>`).join(''):'<div class="mxg-row"><span class="m">No higher-xPts option in position over the next 5 GWs.</span></div>';
-  const metr=`<div class="pmet" style="margin:2px 0 4px"><span class="m">xPts·5 <b style="color:var(--ink)">${XP(me).toFixed(1)}</b></span><span class="m">form <b style="color:var(--ink)">${me.form}</b></span><span class="m">xGI90 <b style="color:var(--ink)">${me.xgi}</b></span><span class="m">own <b style="color:var(--ink)">${me.sel}%</b></span></div>`;
-  const flags=me.flags&&me.flags.length?`<div class="pchips">${me.flags.map(fl=>`<span class="flg ${fl==='rotation_risk'?'flg-rot':''}">${FLAGLBL[fl]||fl}</span>`).join('')}</div>`:'';
-  host.innerHTML=metr+flags+scatterSVG(items,cfg)+`<div class="mshead">Higher-xPts in ${me.pos} (next 5 GWs)</div><div class="mxg-sum">${upline}</div>`;
-}
-function pmPoint(id){const p=(PLAYERS.players||[]).find(x=>String(x.id)===String(id));if(p)playerModal(p.name,({GK:1,DEF:2,MID:3,FWD:4})[p.pos]);}
+  return scatterSVG(items,cfg)+`<div class="mshead">Higher-xPts in ${me.pos} (next 5 GWs)</div><div class="mxg-sum">${upline}</div>`;}
+function pmPoint(id){const p=(PLAYERS.players||[]).find(x=>String(x.id)===String(id));if(p){pmName=p.name;pmType=({GK:1,DEF:2,MID:3,FWD:4})[p.pos];pmTab='compare';pmRender();}}
 const CARDS=["card-squad","card-chips","card-league"];let _ci=0;
 function midAction(){ if(activeView!=="myteam"){selectView("myteam");return;}
   _ci=(_ci+1)%CARDS.length; const el=document.getElementById(CARDS[_ci]);
@@ -993,7 +1027,7 @@ renderTabSheet();updateMid();
 
 /* ===== live data ===== */
 fetch('v2.json',{cache:'no-store'}).then(r=>r.json()).then(V=>{
-  SQUADS=V.squads||{}; STATS=V.stats||{}; ME=V.me||'wirtzplay'; GWNO=V.event||0; VIEWING=ME; LAST_GEN=V.generated||"";
+  SQUADS=V.squads||{}; STATS=V.stats||{}; ME=V.me||'wirtzplay'; GWNO=V.event||0; VIEWING=ME; LAST_GEN=V.generated||""; FIX=V.fixtures||{};
   MYNAMES=new Set((SQUADS[ME]||[]).map(p=>p[1]));
   try{
     const d=new Date(V.generated.replace(' ','T').replace(' UTC','')+':00Z');

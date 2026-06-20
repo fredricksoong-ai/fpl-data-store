@@ -60,8 +60,17 @@ def main() -> int:
     except Exception:
         live = {}
 
+    all_fixtures = get("/fixtures/")
+    # next-5 upcoming fixtures per team (for the player card), code -> [{opp,h,fdr,gw}, ...]
+    fixmap = {}
+    for f in sorted([x for x in all_fixtures if x.get("event") and not x.get("finished")], key=lambda x: x["event"]):
+        h, a = tshort.get(f["team_h"], "?"), tshort.get(f["team_a"], "?")
+        fixmap.setdefault(h, []).append({"opp": a, "h": 1, "fdr": f.get("team_h_difficulty", 0), "gw": f["event"]})
+        fixmap.setdefault(a, []).append({"opp": h, "h": 0, "fdr": f.get("team_a_difficulty", 0), "gw": f["event"]})
+    fixmap = {k: v[:5] for k, v in fixmap.items()}
+
     # this GW fixtures → per-team opponent / kickoff / finished
-    fx = {f["id"]: f for f in get("/fixtures/") if f.get("event") == gw}
+    fx = {f["id"]: f for f in all_fixtures if f.get("event") == gw}
     team_fix = {}
     for f in fx.values():
         ko = ""
@@ -112,6 +121,9 @@ def main() -> int:
                 1 if (p["element"] not in prev_ids and prev_ids) else 0,
                 round(float(e.get("ep_next", 0) or 0), 1),   # 13 xPts (model ep_next; DC model later)
                 tf.get("fdr", 0),                            # 14 fixture difficulty 1–5
+                int(st.get("minutes", 0) or 0),              # 15 minutes this GW
+                int(st.get("bonus", 0) or 0),                # 16 bonus this GW
+                tshort.get(e.get("team"), "?"),              # 17 player's club code
             ])
             if p["position"] <= 11:
                 xi_ep += float(e.get("ep_next", 0) or 0)
@@ -154,7 +166,7 @@ def main() -> int:
 
     me = next((r["entry_name"] for r in standings if r["entry"] == MY_ENTRY), "wirtzplay")
     out = {"event": gw, "generated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
-           "me": me, "squads": squads, "stats": stats, "league": league}
+           "me": me, "squads": squads, "stats": stats, "league": league, "fixtures": fixmap}
     OUT.write_text(json.dumps(out, ensure_ascii=False))
     print(f"wrote {OUT}: GW{gw}, {len(squads)} squads, {len(league)} league rows, me={me}")
     return 0
