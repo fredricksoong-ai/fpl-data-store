@@ -566,21 +566,22 @@ function scatterSVG(items,cfg){
   let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${cfg.aria||'xG scatter'}">`;
   (cfg.zones||[]).forEach(z=>{const xa=sx(z.x0),xb=sx(z.x1),ya=sy(z.y0),yb=sy(z.y1);s+=`<rect x="${Math.min(xa,xb).toFixed(1)}" y="${Math.min(ya,yb).toFixed(1)}" width="${Math.abs(xb-xa).toFixed(1)}" height="${Math.abs(yb-ya).toFixed(1)}" fill="${z.fill}"/>`;});
   (cfg.tris||[]).forEach(t=>{s+=`<polygon points="${t.pts.map(([a,b])=>`${sx(a).toFixed(1)},${sy(b).toFixed(1)}`).join(" ")}" fill="${t.fill}"/>`;});
-  for(let q=Math.ceil(cfg.xmin);q<=Math.floor(cfg.xmax);q++){s+=`<line x1="${sx(q).toFixed(1)}" y1="${mt}" x2="${sx(q).toFixed(1)}" y2="${H-mb}" stroke="${q===0&&cfg.xmin<0?'#3a3a55':'#1b1b2b'}"/><text x="${sx(q).toFixed(1)}" y="${H-mb+13}" fill="#5b5b70" font-size="11" text-anchor="middle">${q}</text>`;}
-  for(let q=Math.ceil(cfg.ymin);q<=Math.floor(cfg.ymax);q++){s+=`<line x1="${ml}" y1="${sy(q).toFixed(1)}" x2="${W-mr}" y2="${sy(q).toFixed(1)}" stroke="${q===0&&cfg.ymin<0?'#3a3a55':'#1b1b2b'}"/><text x="${ml-4}" y="${(sy(q)+3).toFixed(1)}" fill="#5b5b70" font-size="11" text-anchor="end">${q}</text>`;}
+  const xst=cfg.xstep||1, yst=cfg.ystep||1, xfm=cfg.xfmt||(v=>v), yfm=cfg.yfmt||(v=>v), cl=cfg.click||'xgPoint';
+  for(let q=Math.ceil(cfg.xmin/xst)*xst;q<=cfg.xmax+1e-9;q+=xst){s+=`<line x1="${sx(q).toFixed(1)}" y1="${mt}" x2="${sx(q).toFixed(1)}" y2="${H-mb}" stroke="${Math.abs(q)<1e-9&&cfg.xmin<0?'#3a3a55':'#1b1b2b'}"/><text x="${sx(q).toFixed(1)}" y="${H-mb+13}" fill="#5b5b70" font-size="11" text-anchor="middle">${xfm(Math.round(q*100)/100)}</text>`;}
+  for(let q=Math.ceil(cfg.ymin/yst)*yst;q<=cfg.ymax+1e-9;q+=yst){s+=`<line x1="${ml}" y1="${sy(q).toFixed(1)}" x2="${W-mr}" y2="${sy(q).toFixed(1)}" stroke="${Math.abs(q)<1e-9&&cfg.ymin<0?'#3a3a55':'#1b1b2b'}"/><text x="${ml-4}" y="${(sy(q)+3).toFixed(1)}" fill="#5b5b70" font-size="11" text-anchor="end">${yfm(Math.round(q*100)/100)}</text>`;}
   if(cfg.diag){const a=Math.max(cfg.xmin,cfg.ymin),b=Math.min(cfg.xmax,cfg.ymax);s+=`<line x1="${sx(a).toFixed(1)}" y1="${sy(a).toFixed(1)}" x2="${sx(b).toFixed(1)}" y2="${sy(b).toFixed(1)}" stroke="#55557a" stroke-dasharray="3 3"/>`;}
   (cfg.notes||[]).forEach(n=>{s+=`<text x="${sx(n.x).toFixed(1)}" y="${sy(n.y).toFixed(1)}" fill="${n.col}" font-size="11" font-weight="600" text-anchor="${n.anchor||'start'}">${n.t}</text>`;});
   items.forEach(it=>{const X=sx(it.x),Y=sy(it.y);
     if(it.ring)s+=`<circle cx="${X.toFixed(1)}" cy="${Y.toFixed(1)}" r="9" fill="none" stroke="#00ff85" stroke-width="2"/>`;
     const r=it.big?6:3,op=it.dim?0.5:it.big?0.92:0.42;
-    s+=`<circle cx="${X.toFixed(1)}" cy="${Y.toFixed(1)}" r="${r}" fill="${it.col}" fill-opacity="${op}" style="cursor:pointer" onclick="xgPoint('${it.code}')"/>`;});
+    s+=`<circle cx="${X.toFixed(1)}" cy="${Y.toFixed(1)}" r="${r}" fill="${it.col}" fill-opacity="${op}" style="cursor:pointer" onclick="${cl}('${it.code}')"/>`;});
   const placed=[],ov=(a,b)=>a[0]<b[0]+b[2]&&a[0]+a[2]>b[0]&&a[1]<b[1]+b[3]&&a[1]+a[3]>b[1];
   const cands=[[8,3.5,'start'],[8,-8,'start'],[-8,3.5,'end'],[8,15,'start'],[8,-15,'start'],[-8,-8,'end'],[-8,15,'end']];
-  items.filter(it=>it.big).forEach(it=>{const X=sx(it.x),Y=sy(it.y),w=it.code.length*6.6+3,h=12;let ch=cands[0];
+  items.filter(it=>it.big).forEach(it=>{const X=sx(it.x),Y=sy(it.y),lbl=it.lbl||it.code,w=lbl.length*6.6+3,h=12;let ch=cands[0];
     for(let ci=0;ci<cands.length;ci++){const c=cands[ci],lx=X+c[0],ly=Y+c[1],bx=c[2]==='end'?lx-w:lx,box=[bx,ly-h+2,w,h];
       if(!placed.some(p=>ov(p,box))){ch=c;placed.push(box);break;}
       if(ci===cands.length-1){const bx0=ch[2]==='end'?X+ch[0]-w:X+ch[0];placed.push([bx0,Y+ch[1]-h+2,w,h]);}}
-    s+=`<text x="${(X+ch[0]).toFixed(1)}" y="${(Y+ch[1]).toFixed(1)}" fill="${it.dim?'#7a7a90':'#e8e8f2'}" font-size="11" font-weight="600" text-anchor="${ch[2]}" style="cursor:pointer" onclick="xgPoint('${it.code}')">${it.code}</text>`;});
+    s+=`<text x="${(X+ch[0]).toFixed(1)}" y="${(Y+ch[1]).toFixed(1)}" fill="${it.dim?'#7a7a90':'#e8e8f2'}" font-size="11" font-weight="600" text-anchor="${ch[2]}" style="cursor:pointer" onclick="${cl}('${it.code}')">${lbl}</text>`;});
   s+=`<text x="${(ml+pw/2).toFixed(1)}" y="${H-8}" fill="#8a8aa0" font-size="11" text-anchor="middle">${cfg.xlab}</text>`;
   s+=`<text transform="translate(11,${mt+2}) rotate(-90)" fill="#8a8aa0" font-size="11" text-anchor="end">${cfg.ylab}</text>`;
   return `<div style="margin-top:8px">${s}</svg></div>`;}
@@ -811,19 +812,49 @@ let PLAYERS=null, plPos='All';
 const FLAGLBL={form_top20:'Form',ep_top_pos:'EP',value_gem:'Value',price_rising:'Rising',cs_candidate:'CS',
   xgi_elite:'xGI elite',xgi_value:'xGI value',cbit_strong:'CBIT',corner_taker:'Corners',penalty_taker:'Pens',
   gk_shot_stopper:'Saves',rotation_risk:'Rotation'};
+let plMode='list', plView='value';
+const PLVIEWS=[['value','Value'],['threat','Threat'],['diff','Differential'],['def','Defence']];
 function renderPlayers(){const host=document.getElementById('players');
   if(!PLAYERS){host.innerHTML='<div class="err">Loading…</div>';
     fetch('players.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{PLAYERS=d;renderPlayers();}).catch(()=>{host.innerHTML='<div class="err">Player flags fill in once the season is underway.</div>';});return;}
   const all=PLAYERS.players||[];
-  if(!all.length){host.innerHTML='<div class="err">No flagged players yet — fills in as games are played.</div>';return;}
-  const list=plPos==='All'?all:all.filter(p=>p.pos===plPos);
-  const fbar=`<div class="oddsel">`+['All','GK','DEF','MID','FWD'].map(x=>`<span class="opt ${plPos===x?'on':''}" onclick="plPos='${x}';renderPlayers()">${x}</span>`).join('')+`</div>`;
+  if(!all.length){host.innerHTML='<div class="err">No data yet — fills in as games are played.</div>';return;}
+  const modebar=`<div class="oddsel"><span class="opt ${plMode==='list'?'on':''}" onclick="plMode='list';renderPlayers()">List</span><span class="opt ${plMode==='chart'?'on':''}" onclick="plMode='chart';renderPlayers()">Chart</span></div>`;
+  const posbar=`<div class="oddsel" style="margin-top:6px">`+['All','GK','DEF','MID','FWD'].map(x=>`<span class="opt ${plPos===x?'on':''}" onclick="plPos='${x}';renderPlayers()">${x}</span>`).join('')+`</div>`;
+  if(plMode==='chart'){
+    const vbar=`<div class="oddsel" style="margin-top:6px">`+PLVIEWS.map(([k,l])=>`<span class="opt ${plView===k?'on':''}" onclick="plView='${k}';drawPlScatter()">${l}</span>`).join('')+`</div>`;
+    host.innerHTML=`<div class="tsub">Where each player sits versus the field — pick a lens. Flagged players are highlighted green and labelled; tap any dot for detail. Through GW${PLAYERS.event}.</div>${modebar}${vbar}${posbar}<div id="plchart"></div><div id="pldetail" class="xgdetail"></div>`;
+    drawPlScatter();return;}
+  const list=all.filter(p=>p.flag_count>=1&&(plPos==='All'||p.pos===plPos));
   const rows=list.map(p=>`<div class="pcard2">
     <div class="ppl"><span class="pcnt c${Math.min(p.flag_count,5)}">${p.flag_count}</span>${logo(p.code)}<b>${p.name}</b><span class="m">&nbsp;${p.pos} · £${p.price.toFixed(1)}</span></div>
     <div class="pchips">${p.flags.map(fl=>`<span class="flg ${fl==='rotation_risk'?'flg-rot':''}">${FLAGLBL[fl]||fl}</span>`).join('')}</div>
     <div class="pmet"><span class="m">form <b style="color:var(--ink)">${p.form}</b></span><span class="m">xGI <b style="color:var(--ink)">${p.xgi}</b></span><span class="m">ep <b style="color:var(--ink)">${p.ep}</b></span><span class="m">${p.sel}%</span></div>
-  </div>`).join('');
-  host.innerHTML=`<div class="tsub">Players carrying ≥1 signal flag, ranked by conviction (flag count). More flags converging = stronger buy. <span style="color:var(--bad)">Rotation</span> is an avoid flag. Through GW${PLAYERS.event}.</div>${fbar}${rows}`;}
+  </div>`).join('')||'<div class="err">No flagged players in this position.</div>';
+  host.innerHTML=`<div class="tsub">Players carrying ≥1 signal flag, ranked by conviction (flag count). More flags converging = stronger buy. <span style="color:var(--bad)">Rotation</span> is an avoid flag. Through GW${PLAYERS.event}.</div>${modebar}${posbar}${rows}`;}
+function drawPlScatter(){const el=document.getElementById('plchart');if(!el)return;
+  let pool=(PLAYERS.players||[]).filter(p=>p.min>=300);
+  if(plPos!=='All')pool=pool.filter(p=>p.pos===plPos);
+  if(!pool.length){el.innerHTML='<div class="err">Not enough minutes played yet for this lens.</div>';return;}
+  const mx=(f,pad)=>Math.max(...pool.map(f))+pad, mn=(f,pad)=>Math.min(...pool.map(f))-pad;
+  let xf,yf,cfg;
+  if(plView==='value'){xf=p=>p.price;yf=p=>p.ep;
+    cfg={xlab:'price £ →',ylab:'model xPts ↑',xstep:2,ystep:1,xmin:Math.floor(mn(xf,0.3)),xmax:Math.ceil(mx(xf,0.3)),ymin:0,ymax:Math.ceil(mx(yf,0.3))};}
+  else if(plView==='threat'){xf=p=>p.xg90;yf=p=>p.xa90;
+    cfg={xlab:'xG /90 →',ylab:'xA /90 ↑',xstep:0.2,ystep:0.2,xmin:0,xmax:Math.max(0.4,Math.ceil(mx(xf,0.05)*5)/5),ymin:0,ymax:Math.max(0.4,Math.ceil(mx(yf,0.05)*5)/5)};}
+  else if(plView==='diff'){xf=p=>p.sel;yf=p=>p.form;
+    cfg={xlab:'ownership % →',ylab:'form ↑',xstep:10,ystep:2,xmin:0,xmax:Math.ceil(mx(xf,2)/10)*10,ymin:0,ymax:Math.ceil(mx(yf,1))};}
+  else{xf=p=>p.min;yf=p=>p.dc90;
+    cfg={xlab:'minutes →',ylab:'CBIT /90 ↑',xstep:500,ystep:4,xmin:0,xmax:Math.ceil(mx(xf,50)/500)*500,ymin:0,ymax:Math.max(4,Math.ceil(mx(yf,2)))};}
+  cfg.flipY=false;cfg.click='plPoint';
+  const items=pool.map(p=>({x:xf(p),y:yf(p),lbl:p.name,code:String(p.id),big:p.flag_count>=2,
+    col:p.flag_count>=1?'#34d399':'#5b6b85',dim:p.flag_count===0}));
+  el.innerHTML=scatterSVG(items,cfg);}
+function plPoint(id){const el=document.getElementById('pldetail');if(!el)return;
+  const p=(PLAYERS.players||[]).find(x=>String(x.id)===String(id));if(!p)return;
+  el.innerHTML=`<div class="xgd-h">${logo(p.code)}<b style="color:var(--ink)">${p.name}</b> <span class="m">${p.pos} · £${p.price.toFixed(1)} · ${p.code}</span></div>
+    <div class="pmet"><span class="m">xPts <b style="color:var(--ink)">${p.ep}</b></span><span class="m">form <b style="color:var(--ink)">${p.form}</b></span><span class="m">xG90 <b style="color:var(--ink)">${p.xg90}</b></span><span class="m">xA90 <b style="color:var(--ink)">${p.xa90}</b></span><span class="m">own <b style="color:var(--ink)">${p.sel}%</b></span></div>
+    ${p.flags.length?`<div class="pchips">${p.flags.map(fl=>`<span class="flg ${fl==='rotation_risk'?'flg-rot':''}">${FLAGLBL[fl]||fl}</span>`).join('')}</div>`:''}`;}
 /* ===== Transfers (model-ranked targets: xPts × flags) ===== */
 let REC=null, recPos='MID';
 function renderRecommend(){const host=document.getElementById('recommend');

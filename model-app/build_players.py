@@ -68,20 +68,23 @@ def main() -> int:
         if e.get("corners_and_indirect_freekicks_order") == 1 and xgi >= T["corner_xgi"]: flags.append("corner_taker")
         if e.get("penalties_order") == 1 and mins >= T["pen_min"]: flags.append("penalty_taker")
         if pos == "GK" and mins >= T["gk_min"] and (saves / mins * 90) >= T["gk_saves90"]: flags.append("gk_shot_stopper")
-        if not flags:
-            continue
         if (mins / 38.0) <= T["rot_avg"] and mins >= T["rot_total"]:
             flags.append("rotation_risk")
+        # keep ALL players (minutes>0) so the scatter can show the field; the list view filters to flagged
         players.append({"id": e["id"], "name": e.get("web_name"), "code": short[e["team"]], "pos": pos,
                         "price": round(price / 10.0, 1), "min": mins, "form": round(form, 1),
-                        "ep": round(ep, 1), "xgi": round(xgi, 2), "sel": f(e.get("selected_by_percent")),
+                        "ep": round(ep, 1), "xgi": round(xgi, 2), "dc90": round(dc90, 1),
+                        "xg90": round(f(e.get("expected_goals_per_90")), 2), "xa90": round(f(e.get("expected_assists_per_90")), 2),
+                        "g": e.get("goals_scored", 0) or 0, "a": e.get("assists", 0) or 0,
+                        "sel": f(e.get("selected_by_percent")),
                         "flags": flags, "flag_count": len([x for x in flags if x != "rotation_risk"])})
     players.sort(key=lambda p: (-p["flag_count"], -p["form"]))
 
     out = {"generated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
            "event": event, "players": players}
     OUT.write_text(json.dumps(out, ensure_ascii=False))
-    print(f"wrote {OUT}: {len(players)} flagged players (GW{event}); max flags {players[0]['flag_count'] if players else 0}")
+    nflag = sum(1 for p in players if p["flag_count"] >= 1)
+    print(f"wrote {OUT}: {len(players)} players ({nflag} flagged) GW{event}; max flags {players[0]['flag_count'] if players else 0}")
     return 0
 
 
