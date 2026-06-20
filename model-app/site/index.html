@@ -330,8 +330,9 @@ const I_GOAL='⚽';
 const I_ASSIST='👟';
 const I_XFER='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h12M11 7l5 5-5 5"/></svg>';
 /* PL club 3-letter code -> official badge code (resources.premierleague.com) */
-const BADGE={ARS:3,AVL:7,BHA:36,BOU:91,BRE:94,CHE:8,COV:45,CRY:31,EVE:11,FUL:54,HUL:88,IPS:40,LEE:2,LIV:14,MCI:43,MUN:1,NEW:4,NFO:17,SUN:56,TOT:6,BUR:90,WHU:21,WOL:39,LEI:13,SOU:20,IPW:40};
-const logo=(code,cls)=>BADGE[code]?`<img class="bdg${cls?' '+cls:''}" src="https://resources.premierleague.com/premierleague/badges/50/t${BADGE[code]}.png" alt="" loading="lazy">`:'';
+const BADGE={ARS:3,AVL:7,BHA:36,BOU:91,BRE:94,CHE:8,COV:9,CRY:31,EVE:11,FUL:54,HUL:88,IPS:40,LEE:2,LIV:14,MCI:43,MUN:1,NEW:4,NFO:17,SUN:56,TOT:6,BUR:90,WHU:21,WOL:39,LEI:13,SOU:20};
+const logo=(code,cls)=>{const id=BADGE[code];if(!id)return'';  // local self-hosted badge first, CDN fallback if not yet downloaded
+  return `<img class="bdg${cls?' '+cls:''}" src="badges/${code}.svg" onerror="this.onerror=null;this.src='https://resources.premierleague.com/premierleague25/badges-alt/${id}.svg'" alt="" loading="lazy">`;};
 function bub(p,SC,H,bn){const w=Math.round(tileW(p[3])*SC),h=Math.round(H!=null?H:TILEH*SC),s=p[4];  // width by ownership; H lets bench keep full height while width is scaled down; bn=bench
   const POS=['','GK','DEF','MID','FWD'][p[0]]||'';
   const fdrCol=d=>d>=4?'var(--bad)':(d>0&&d<=2)?'var(--good)':'var(--muted)';
