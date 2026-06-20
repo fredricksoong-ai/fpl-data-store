@@ -129,6 +129,7 @@
   .tabrow{padding:11px 10px;border-radius:9px;font-size:14px;cursor:pointer;color:var(--ink)}
   .tabrow.on{background:rgba(0,255,133,.14);color:var(--fpl);font-weight:600}
   .bbtoast{position:fixed;left:50%;transform:translateX(-50%);bottom:88px;z-index:48;background:#1d2b22;border:1px solid var(--line);color:var(--ink);font-size:12px;padding:8px 14px;border-radius:10px;opacity:0;transition:opacity .25s;pointer-events:none}.bbtoast.show{opacity:1}
+  @keyframes spin{to{transform:rotate(360deg)}} #bbDots.busy{color:var(--fpl)} #bbDots.busy svg{animation:spin .9s linear infinite}
   /* title odds */
   .tsub{color:var(--muted);font-size:12px;line-height:1.5;margin:2px 2px 12px}
   .orow{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px solid var(--line)}
@@ -282,10 +283,9 @@ function bub(p,SC,H,bn){const w=Math.round(tileW(p[3])*SC),h=Math.round(H!=null?
   const fdrCol=d=>d>=4?'var(--bad)':(d>0&&d<=2)?'var(--good)':'var(--muted)';
   const xp=(p[13]!=null&&p[13]!=='')?(+p[13]).toFixed(1):'';
   // line 2: pre-game = opp(FDR) + kickoff; once played = opp + points (FDR/timing drop away)
-  const ol=logo(p[8]);
-  const l2=s===0?`${ol}<span style="color:${fdrCol(p[14])}">${p[8]}</span>${p[9]?` <span class="tm">${p[9]}</span>`:''}`
-          :s===2?`${ol}${p[8]} • DNP`
-          :`${ol}${p[8]} • ${p[2]} pts`;
+  const l2=s===0?`<span style="color:${fdrCol(p[14])}">${p[8]}</span>${p[9]?` <span class="tm">${p[9]}</span>`:''}`
+          :s===2?`${p[8]} • DNP`
+          :`${p[8]} • ${p[2]} pts`;
   // line 3: position (+ inline xPts on wide starter tiles); narrow bench tiles push xPts to line 4
   const xps=xp?`<span class="xp">${xp} xPts</span>`:'';
   const l3=bn?`<span class="pos">${POS}</span>`:`<span class="pos">${POS}</span>${xp?` • ${xps}`:''}`;
@@ -526,14 +526,36 @@ function midAction(){ if(activeView!=="myteam"){selectView("myteam");return;}
 function renderTabSheet(){document.getElementById('sheetTabs').innerHTML=VIEW_ORDER.map(([id,l])=>`<div class="tabrow ${activeView===id?'on':''}" onclick="selectView('${id}')">${l}</div>`).join('');}
 function toggleSheet(w,e){if(e)e.stopPropagation();const a=document.getElementById('sheetActions'),t=document.getElementById('sheetTabs');const tg=w==="actions"?a:t,o=w==="actions"?t:a;o.classList.add('hidden');tg.classList.toggle('hidden');}
 function closeSheets(){document.getElementById('sheetActions').classList.add('hidden');document.getElementById('sheetTabs').classList.add('hidden');}
-function barAction(a,e){if(e)e.stopPropagation();closeSheets();toast(a==='rebuild'?'Rebuilding projections…':a==='export'?'Exported':'Copied for Claude');}
-function toast(t){const el=document.getElementById('bbtoast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1300);}
+function barAction(a,e){if(e)e.stopPropagation();closeSheets();
+  if(a==='rebuild')triggerRefresh();else toast(a==='export'?'Exported':'Copied for Claude');}
+function toast(t,ms=1300){const el=document.getElementById('bbtoast');el.textContent=t;el.classList.add('show');clearTimeout(toast._t);if(ms)toast._t=setTimeout(()=>el.classList.remove('show'),ms);}
+/* Rebuild: POST /refresh (Cloudflare worker → GitHub workflow_dispatch), then poll v2.json until it changes */
+let LAST_GEN="", refreshPoll=null;
+function bbBusy(on){document.getElementById('bbDots').classList.toggle('busy',on);}
+async function triggerRefresh(){
+  const d=document.getElementById('bbDots'); if(d.classList.contains('busy'))return;
+  const prev=LAST_GEN; bbBusy(true); toast('Triggering rebuild…',0);
+  const stop=()=>{clearInterval(refreshPoll);bbBusy(false);};
+  const fail=m=>{stop();toast('Rebuild failed: '+m,5000);console.error('rebuild',m);};
+  try{
+    const r=await fetch('/refresh',{method:'POST'}); const j=await r.json().catch(()=>({}));
+    if(!(r.ok&&j.ok)){fail((j&&j.error)||('HTTP '+r.status));return;}
+    let tries=0; const max=20, every=12000;       // ~4 min
+    clearInterval(refreshPoll);
+    refreshPoll=setInterval(async()=>{tries++;toast(`Building ${tries}/${max}…`,0);
+      try{const v=await (await fetch('v2.json',{cache:'no-store'})).json();
+        if(v.generated&&v.generated!==prev){stop();toast('Updated ✓',0);setTimeout(()=>location.reload(),900);return;}
+      }catch(e){}
+      if(tries>=max){stop();toast('Still building — reload shortly',6000);}
+    },every);
+  }catch(e){fail(String(e));}
+}
 document.addEventListener('click',e=>{if(!e.target.closest('.bsheet,.bottombar,.bbhit'))closeSheets();});
 renderTabSheet();updateMid();
 
 /* ===== live data ===== */
 fetch('v2.json',{cache:'no-store'}).then(r=>r.json()).then(V=>{
-  SQUADS=V.squads||{}; STATS=V.stats||{}; ME=V.me||'wirtzplay'; GWNO=V.event||0; VIEWING=ME;
+  SQUADS=V.squads||{}; STATS=V.stats||{}; ME=V.me||'wirtzplay'; GWNO=V.event||0; VIEWING=ME; LAST_GEN=V.generated||"";
   MYNAMES=new Set((SQUADS[ME]||[]).map(p=>p[1]));
   try{
     const d=new Date(V.generated.replace(' ','T').replace(' UTC','')+':00Z');
