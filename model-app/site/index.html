@@ -282,6 +282,12 @@
     </div>
   </section>
 
+  <section class="card" id="card-chips">
+    <div class="ctitle">Chip plan</div>
+    <div id="sqchips" class="chiprow"></div>
+    <div id="sqchipnote" class="chipnote"></div>
+  </section>
+
   <section class="card" id="card-league">
     <div class="ctitle">Ballon d'FPL · mini-league</div>
     <div class="lgcard"><table id="lgtable"></table></div>
@@ -912,17 +918,18 @@ function renderBestXV(){const sum=document.getElementById('bxvsum');
   const BSC=Math.min(SC,(avail-6)/(bench.length?rowW(bench):1));
   pr.innerHTML=subrows.map(r=>`<div class="prow">${r.map(p=>bub(p,SC)).join('')}</div>`).join('');
   document.getElementById('bxvbench').innerHTML=bench.map(p=>bub(p,BSC,TILEH*SC,true)).join('');
-  renderChipPills();
+  chipPills('bxvchips','bxvchipnote','bestxv');
   sum.innerHTML=`Optimal £100 squad for the next 5 GWs — <b style="color:var(--ink)">${BXV.formation}</b> · spend <b style="color:var(--ink)">£${BXV.spend}m</b> · XI <b style="color:var(--fpl)">${BXV.xi_xph} xPts</b>. Maximises projected XI points; bench is budget fodder. Tap a tile to compare.`;}
 let CHIPS=null;
-function renderChipPills(){const el=document.getElementById('bxvchips');if(!el)return;
-  if(!CHIPS){fetch('chips.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{CHIPS=d;renderChipPills();}).catch(()=>{el.innerHTML='';});return;}
-  const chips=CHIPS.chips||[];
-  el.innerHTML=chips.map((c,i)=>{const live=c.advice&&c.advice!=='Hold';
-    return `<span class="chippill ${live?'on':''}" onclick="chipNote(${i})"><b>${c.label}</b><span>${c.advice||'Hold'}</span></span>`;}).join('')
-    +(CHIPS.window?`<span class="m" style="font-size:10.5px;align-self:center;margin-left:2px">based on ${CHIPS.basis||'your squad'} · half ${CHIPS.half} · GW${CHIPS.window[0]}–${CHIPS.window[1]}</span>`:'');
-  chipNote(3);}  // default to the Triple Captain reasoning (most actionable)
-function chipNote(i){const c=(CHIPS&&CHIPS.chips||[])[i];const el=document.getElementById('bxvchipnote');if(!el||!c)return;
+function withChips(cb){if(CHIPS){cb();return;}fetch('chips.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{CHIPS=d;cb();}).catch(()=>{CHIPS={};cb();});}
+function chipPills(elId,noteId,key){const el=document.getElementById(elId);if(!el)return;
+  withChips(()=>{const plan=CHIPS&&CHIPS[key],note=document.getElementById(noteId);
+    if(!plan||!plan.chips||!plan.chips.length){el.innerHTML='';if(note)note.innerHTML=(key==='squad'?'<span class="m">Your squad\'s chip plan appears once your GW1 team is set — see Best XV until then.</span>':'');return;}
+    el.innerHTML=plan.chips.map((c,i)=>{const live=c.advice&&c.advice!=='Hold';
+      return `<span class="chippill ${live?'on':''}" onclick="chipNote('${key}',${i},'${noteId}')"><b>${c.label}</b><span>${c.advice||'Hold'}</span></span>`;}).join('')
+      +(CHIPS.window?`<span class="m" style="font-size:10.5px;align-self:center;margin-left:2px">based on ${plan.basis} · GW${CHIPS.window[0]}–${CHIPS.window[1]}</span>`:'');
+    chipNote(key,3,noteId);});}
+function chipNote(key,i,noteId){const plan=CHIPS&&CHIPS[key],c=plan&&plan.chips&&plan.chips[i],el=document.getElementById(noteId);if(!el||!c)return;
   el.innerHTML=`<b style="color:var(--ink)">${c.label} · ${c.advice}</b> — ${c.note}`;}
 /* ===== Squad player modal: details + comparison vs replacements ===== */
 function closePM(){document.getElementById('playermodal').classList.add('hidden');}
@@ -949,7 +956,7 @@ async function playerModal(name,posType){
   host.innerHTML=metr+flags+scatterSVG(items,cfg)+`<div class="mshead">Higher-xPts in ${me.pos} (next 5 GWs)</div><div class="mxg-sum">${upline}</div>`;
 }
 function pmPoint(id){const p=(PLAYERS.players||[]).find(x=>String(x.id)===String(id));if(p)playerModal(p.name,({GK:1,DEF:2,MID:3,FWD:4})[p.pos]);}
-const CARDS=["card-squad","card-league"];let _ci=0;
+const CARDS=["card-squad","card-chips","card-league"];let _ci=0;
 function midAction(){ if(activeView!=="myteam"){selectView("myteam");return;}
   _ci=(_ci+1)%CARDS.length; const el=document.getElementById(CARDS[_ci]);
   el.scrollIntoView({behavior:'smooth',block:'center'});
@@ -994,6 +1001,7 @@ fetch('v2.json',{cache:'no-store'}).then(r=>r.json()).then(V=>{
   }catch(e){document.getElementById('updatedTime').textContent=V.generated;}
   renderPitch(ME);
   renderLeague(V.league);
+  chipPills('sqchips','sqchipnote','squad');
 }).catch(e=>{
   document.getElementById('pitchrows').innerHTML='<div style="padding:30px 16px;text-align:center;color:var(--bad)">Couldn\'t load live data (v2.json).</div>';
   document.getElementById('updatedTime').textContent='—';
