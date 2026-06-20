@@ -67,6 +67,14 @@ def main() -> int:
         target = 1
         use_fpl = False  # no live season → static GW1
 
+    # market: read the throttled odds snapshot (built separately by build_odds.py)
+    odds_path = OUT.parent / "odds.json"
+    market = {}
+    try:
+        market = json.loads(odds_path.read_text()).get("events", {})
+    except Exception:
+        market = {}
+
     rows = []
     if use_fpl:
         gw_fix = [f for f in sched if f["event"] == target]
@@ -102,6 +110,9 @@ def main() -> int:
             "dc":  {"ph": round(dcp["home"], 3), "pd": round(dcp["draw"], 3), "pa": round(dcp["away"], 3), "score": tops[0][0] if tops else ""},
             "elo": {"ph": round(elop["home"], 3), "pd": round(elop["draw"], 3), "pa": round(elop["away"], 3), "score": f"{es_i}-{es_j}"},
         }
+        mk = market.get(f"{m['home']}|{m['away']}")
+        if mk:
+            models["market"] = {"ph": mk["ph"], "pd": mk["pd"], "pa": mk["pa"], "score": ""}
         rows.append({
             "gw": target, "home": m["home"], "away": m["away"], "kickoff": m["kickoff"],
             "ph": round(pen["home"], 3), "pd": round(pen["draw"], 3), "pa": round(pen["away"], 3),
