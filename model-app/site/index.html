@@ -223,6 +223,19 @@
   .mxg-fc{margin:8px 0 2px} .mxg-fcx{font-size:11px;color:var(--muted);text-align:center;margin-top:6px} .mxg-fcx b{color:var(--ink)}
   .mxg-sum{margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
   .mxg-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:4px 0;gap:8px}
+  .xgrow{display:flex;align-items:center;gap:8px;margin-top:9px;font-size:11.5px;color:var(--muted)}
+  .xghint{color:var(--faint);font-size:10.5px} .xgins{display:inline-flex;align-items:center;gap:5px;margin-left:auto}
+  .xgin{width:46px;padding:4px 6px;border:1px solid var(--line);border-radius:7px;background:rgba(255,255,255,.04);color:var(--ink);font-size:13px;text-align:center;font-weight:700;font-family:inherit}
+  .xgin:focus{outline:none;border-color:var(--fpl)}
+  /* players board */
+  .pcard2{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 2px}
+  .ppl{display:flex;align-items:center;gap:2px;font-size:14px}
+  .pcnt{flex:none;width:20px;height:20px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-right:7px;background:var(--card2);color:var(--muted)}
+  .pcnt.c2{background:rgba(224,181,58,.2);color:#f3d785}.pcnt.c3{background:rgba(52,211,153,.2);color:#82edc0}.pcnt.c4,.pcnt.c5{background:rgba(167,139,250,.22);color:#c9bcfa}
+  .pchips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+  .flg{background:var(--card2);border:1px solid var(--line);border-radius:6px;padding:2px 7px;font-size:10.5px;color:var(--muted)}
+  .flg-rot{border-color:rgba(248,113,113,.5);color:var(--bad)}
+  .pmet{display:flex;gap:14px;margin-top:8px;font-size:11px;font-variant-numeric:tabular-nums}
   .mshead{color:var(--muted);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.3px;margin:12px 0 5px}
   .msgrid{display:grid;grid-template-columns:1fr 40px 1fr 40px;gap:4px 8px;font-size:11.5px;align-items:center}
   .msgrid .gh{color:var(--faint);font-size:10px} .msl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .msc{text-align:center;color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums} .msr{text-align:right} .msd{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
@@ -301,6 +314,14 @@
   <div style="height:55vh" aria-hidden="true"></div>
 </main>
 
+<main class="wrap" id="playersview" style="display:none">
+  <section class="card" id="card-players">
+    <div class="ctitle">Players · signal flags</div>
+    <div id="players"></div>
+  </section>
+  <div style="height:55vh" aria-hidden="true"></div>
+</main>
+
 <div id="matchxgmodal" class="modal hidden" onclick="if(event.target===this)closeMatchXG()">
   <div class="modalbox">
     <div class="modalhd"><span id="mxgtitle" class="teams"></span><span class="mx" onclick="closeMatchXG()" title="Close">✕</span></div>
@@ -330,6 +351,7 @@
 <div id="bbtoast" class="bbtoast"></div>
 <div id="sheetActions" class="bsheet bsheet-l hidden">
   <div class="brow" onclick="barAction('rebuild',event)"><span class="bic">↻</span>Rebuild</div>
+  <div class="brow" onclick="barAction('syncxg',event)"><span class="bic">⇅</span>Sync xG</div>
   <div class="brow" onclick="barAction('export',event)"><span class="bic">⤒</span>Export</div>
   <div class="brow" onclick="barAction('copy',event)"><span class="bic">⧉</span>Copy for Claude</div>
 </div>
@@ -437,8 +459,8 @@ function renderLeague(LG){document.getElementById('lgtable').innerHTML=
 <td class="r"><span class="xv ${r[11]>=0.45?'g':'r'}">${(+r[11]).toFixed(1)}</span></td></tr>`}).join('')+`</tbody>`;}
 
 /* nav: no toggle. default = myteam (cards: squad, league). mid = next-card / home */
-const VIEW_ORDER=[["picks","Picks"],["title","Title Odds"],["xg","xG"],["mleague","Model League"],["stats","Stats"],["captain","Captain"]];
-const REAL=new Set(["picks","title","xg","mleague"]);  // views with a real panel (others toast as placeholders)
+const VIEW_ORDER=[["picks","Picks"],["players","Players"],["title","Title Odds"],["xg","xG"],["mleague","Model League"],["captain","Captain"]];
+const REAL=new Set(["picks","players","title","xg","mleague"]);  // views with a real panel (others toast as placeholders)
 const BURGER=VIEW_ORDER.map(v=>v[0]); let activeView="myteam";
 const ICON_CHEV='<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/></svg>';
 const ICON_HOME='<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg>';
@@ -449,10 +471,12 @@ function selectView(v){activeView=v;
   document.getElementById('xgview').style.display=v==="xg"?"":"none";
   document.getElementById('picksview').style.display=v==="picks"?"":"none";
   document.getElementById('mleagueview').style.display=v==="mleague"?"":"none";
+  document.getElementById('playersview').style.display=v==="players"?"":"none";
   if(v==="title")renderTitle();
   if(v==="xg")renderXG();
   if(v==="picks")renderPicks();
   if(v==="mleague")renderModelLeague();
+  if(v==="players")renderPlayers();
   renderTabSheet();closeSheets();updateMid();
   if(v!=="myteam"&&!REAL.has(v))toast(VIEW_ORDER.find(x=>x[0]===v)[1]+" — placeholder");
   window.scrollTo({top:0,behavior:'smooth'});}
@@ -633,6 +657,28 @@ const keyOf=f=>`${f.gw}|${f.home}|${f.away}`;
 const pickArr=f=>{const p=loadPk()[keyOf(f)];return (p&&p.length===2)?p:[null,null];};
 const isLocked=f=>f.finished||(!!f.kickoff&&Date.now()>=Date.parse(f.kickoff));
 const pcf=v=>Math.round((v||0)*100);
+/* manual FotMob match-xG (entered on finished cards, committed via Sync xG) */
+const XGKEY='fplanner_xg', XGDIRTY='fplanner_xg_dirty';
+const loadXGo=()=>{try{return JSON.parse(localStorage.getItem(XGKEY))||{}}catch(e){return{}}};
+const saveXGo=o=>{try{localStorage.setItem(XGKEY,JSON.stringify(o))}catch(e){}};
+const loadDirty=()=>{try{return new Set(JSON.parse(localStorage.getItem(XGDIRTY))||[])}catch(e){return new Set()}};
+const saveDirty=s=>{try{localStorage.setItem(XGDIRTY,JSON.stringify([...s]))}catch(e){}};
+function setXG(k,side,val,i){const X=loadXGo();const cur=(X[k]?X[k].slice():[null,null]);const v=parseFloat(val);
+  cur[side]=(val===''||!isFinite(v))?null:Math.max(0,Math.min(10,v));
+  if(cur[0]==null&&cur[1]==null)delete X[k];else X[k]=cur; saveXGo(X);
+  const d=loadDirty();d.add(k);saveDirty(d);}
+function xgRowFinished(f,i){const k=keyOf(f),X=loadXGo()[k]||[null,null];
+  const inp=(s,v)=>`<input class="xgin" type="text" inputmode="decimal" value="${v==null?'':v}" placeholder="–" onchange="setXG('${k}',${s},this.value,${i})">`;
+  return `<div class="xgrow"><span class="m">Match xG</span><span class="xghint">model ${f.xgh}–${f.xga}</span><span class="xgins">${inp(0,X[0])}<span class="m">–</span>${inp(1,X[1])}</span></div>`;}
+async function syncXG(){const dots=document.getElementById('bbDots');if(dots.classList.contains('busy'))return;
+  const X=loadXGo(),dirty=loadDirty();const keys=[...dirty].filter(k=>X[k]&&X[k][0]!=null&&X[k][1]!=null);
+  if(!keys.length){toast('No new xG to sync',2500);return;}
+  const payload={};keys.forEach(k=>payload[k]=X[k]);bbBusy(true);toast(`Syncing ${keys.length} match${keys.length>1?'es':''}…`,0);
+  try{const r=await fetch('/sync-xg',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({xg:payload})});
+    const j=await r.json().catch(()=>({}));
+    if(r.ok&&j.ok){const d=loadDirty();keys.forEach(k=>d.delete(k));saveDirty(d);bbBusy(false);toast(`Synced ${keys.length} ✓ — model rebuilds shortly`,5000);}
+    else{bbBusy(false);toast('Sync failed: '+((j&&j.error)||('HTTP '+r.status)),5000);}
+  }catch(e){bbBusy(false);toast('Sync failed: '+e,5000);}}
 const koLabel=iso=>{try{return new Date(iso).toLocaleString('en-SG',{timeZone:'Asia/Singapore',weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',hour12:false})+' SGT';}catch(e){return'';}};
 const dayLabel=k=>{const[y,m,d]=k.split('-').map(Number);return new Date(Date.UTC(y,m-1,d)).toLocaleDateString('en-GB',{weekday:'long',day:'2-digit',month:'long',timeZone:'UTC'});};
 function confidence(f){const a=[['home',f.ph,f.home],['draw',f.pd,'Draw'],['away',f.pa,f.away]].sort((x,y)=>y[1]-x[1])[0];return{kind:a[0],p:a[1],who:a[2],lvl:a[1]>=0.6?'strong':a[1]>=0.45?'lean':'toss'};}
@@ -683,7 +729,7 @@ function pickCard(f,i){const cf=confidence(f);
     <div class="formends"><span>${formStripArr(f.formH)}</span><span>${formStripArr(f.formA)}</span></div>
     <div class="tops">${tops}</div>
     ${modelSays(f)}
-    ${f.finished?`<div class="meta" style="margin-top:9px">Full time <b style="color:var(--ink)">${f.gh}–${f.ga}</b></div>`:''}
+    ${f.finished?`<div class="meta" style="margin-top:9px">Full time <b style="color:var(--ink)">${f.gh}–${f.ga}</b></div>`+xgRowFinished(f,i):''}
     <div class="pickbox"><div id="pk-${i}" style="flex:1">${pickUIFor(f,i)}</div></div>
     <div class="cardfoot"><button class="snapbtn" onclick="snapCard(this)" title="Save as image">📷</button><div class="vfill" id="vf-${i}">${validationLine(f,i)}</div>${isLocked(f)?`<button class="editbtn" onclick="editPick(${i})" title="Edit pick">✎</button>`:''}</div>
   </div>`;}
@@ -748,6 +794,24 @@ function drawMLChart(rows){if(!window.Chart)return;const ctx=document.getElement
     plugins:{legend:{labels:{color:'#90a0b8',boxWidth:10,font:{size:10}}}},
     scales:{x:{ticks:{color:'#647089',font:{size:9},maxTicksLimit:12},grid:{color:'rgba(255,255,255,.05)'}},
       y:{reverse:mlMode==='rps',ticks:{color:'#647089',font:{size:9}},grid:{color:'rgba(255,255,255,.05)'}}}}});}
+/* ===== Players (autoflag board, ported from fpl-data-store) ===== */
+let PLAYERS=null, plPos='All';
+const FLAGLBL={form_top20:'Form',ep_top_pos:'EP',value_gem:'Value',price_rising:'Rising',cs_candidate:'CS',
+  xgi_elite:'xGI elite',xgi_value:'xGI value',cbit_strong:'CBIT',corner_taker:'Corners',penalty_taker:'Pens',
+  gk_shot_stopper:'Saves',rotation_risk:'Rotation'};
+function renderPlayers(){const host=document.getElementById('players');
+  if(!PLAYERS){host.innerHTML='<div class="err">Loading…</div>';
+    fetch('players.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{PLAYERS=d;renderPlayers();}).catch(()=>{host.innerHTML='<div class="err">Player flags fill in once the season is underway.</div>';});return;}
+  const all=PLAYERS.players||[];
+  if(!all.length){host.innerHTML='<div class="err">No flagged players yet — fills in as games are played.</div>';return;}
+  const list=plPos==='All'?all:all.filter(p=>p.pos===plPos);
+  const fbar=`<div class="oddsel">`+['All','GK','DEF','MID','FWD'].map(x=>`<span class="opt ${plPos===x?'on':''}" onclick="plPos='${x}';renderPlayers()">${x}</span>`).join('')+`</div>`;
+  const rows=list.map(p=>`<div class="pcard2">
+    <div class="ppl"><span class="pcnt c${Math.min(p.flag_count,5)}">${p.flag_count}</span>${logo(p.code)}<b>${p.name}</b><span class="m">&nbsp;${p.pos} · £${p.price.toFixed(1)}</span></div>
+    <div class="pchips">${p.flags.map(fl=>`<span class="flg ${fl==='rotation_risk'?'flg-rot':''}">${FLAGLBL[fl]||fl}</span>`).join('')}</div>
+    <div class="pmet"><span class="m">form <b style="color:var(--ink)">${p.form}</b></span><span class="m">xGI <b style="color:var(--ink)">${p.xgi}</b></span><span class="m">ep <b style="color:var(--ink)">${p.ep}</b></span><span class="m">${p.sel}%</span></div>
+  </div>`).join('');
+  host.innerHTML=`<div class="tsub">Players carrying ≥1 signal flag, ranked by conviction (flag count). More flags converging = stronger buy. <span style="color:var(--bad)">Rotation</span> is an avoid flag. Through GW${PLAYERS.event}.</div>${fbar}${rows}`;}
 const CARDS=["card-squad","card-league"];let _ci=0;
 function midAction(){ if(activeView!=="myteam"){selectView("myteam");return;}
   _ci=(_ci+1)%CARDS.length; const el=document.getElementById(CARDS[_ci]);
@@ -757,7 +821,7 @@ function renderTabSheet(){document.getElementById('sheetTabs').innerHTML=VIEW_OR
 function toggleSheet(w,e){if(e)e.stopPropagation();const a=document.getElementById('sheetActions'),t=document.getElementById('sheetTabs');const tg=w==="actions"?a:t,o=w==="actions"?t:a;o.classList.add('hidden');tg.classList.toggle('hidden');}
 function closeSheets(){document.getElementById('sheetActions').classList.add('hidden');document.getElementById('sheetTabs').classList.add('hidden');}
 function barAction(a,e){if(e)e.stopPropagation();closeSheets();
-  if(a==='rebuild')triggerRefresh();else toast(a==='export'?'Exported':'Copied for Claude');}
+  if(a==='rebuild')triggerRefresh();else if(a==='syncxg')syncXG();else toast(a==='export'?'Exported':'Copied for Claude');}
 function toast(t,ms=1300){const el=document.getElementById('bbtoast');el.textContent=t;el.classList.add('show');clearTimeout(toast._t);if(ms)toast._t=setTimeout(()=>el.classList.remove('show'),ms);}
 /* Rebuild: POST /refresh (Cloudflare worker → GitHub workflow_dispatch), then poll v2.json until it changes */
 let LAST_GEN="", refreshPoll=null;

@@ -45,6 +45,12 @@ def main() -> int:
         for x in json.loads(Path(MODEL).read_text()).get("fixtures", []):
             probs[(x["gw"], x["home"], x["away"])] = (x.get("p_home"), x.get("p_away"))
 
+    # manual FotMob xG overrides (committed via the Sync xG button), keyed "gw|HOME|AWAY"
+    try:
+        overrides = json.loads((Path(__file__).resolve().parent / "data" / "xg_overrides.json").read_text())
+    except Exception:
+        overrides = {}
+
     games = []
     last = 0
     for gw in finished:
@@ -64,11 +70,15 @@ def main() -> int:
                 continue
             h, a = f["team_h"], f["team_a"]
             ph, pa = probs.get((gw, short[h], short[a]), (None, None))
+            xh, xa = round(team_xg.get(h, 0.0), 2), round(team_xg.get(a, 0.0), 2)
+            ov = overrides.get(f"{gw}|{short[h]}|{short[a]}")  # manual FotMob xG wins where present
+            manual = False
+            if ov and len(ov) == 2:
+                xh, xa = float(ov[0]), float(ov[1]); manual = True
             games.append({
                 "gw": gw, "h": short[h], "a": short[a],
                 "gh": int(f["team_h_score"]), "ga": int(f["team_a_score"]),
-                "xh": round(team_xg.get(h, 0.0), 2), "xa": round(team_xg.get(a, 0.0), 2),
-                "ph": ph, "pa": pa,
+                "xh": xh, "xa": xa, "ph": ph, "pa": pa, "m": 1 if manual else 0,
             })
             last = max(last, gw)
 

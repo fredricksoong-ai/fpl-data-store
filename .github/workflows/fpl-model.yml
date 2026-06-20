@@ -68,6 +68,9 @@ jobs:
       - name: Build Model League (modelleague.json)
         run: ML_OUT=model-app/site/modelleague.json python3 model-app/build_modelleague.py
 
+      - name: Build players (players.json)
+        run: PLAYERS_OUT=model-app/site/players.json python3 model-app/build_players.py
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
