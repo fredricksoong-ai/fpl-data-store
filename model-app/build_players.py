@@ -72,7 +72,7 @@ def main() -> int:
             continue
         if (mins / 38.0) <= T["rot_avg"] and mins >= T["rot_total"]:
             flags.append("rotation_risk")
-        players.append({"name": e.get("web_name"), "code": short[e["team"]], "pos": pos,
+        players.append({"id": e["id"], "name": e.get("web_name"), "code": short[e["team"]], "pos": pos,
                         "price": round(price / 10.0, 1), "min": mins, "form": round(form, 1),
                         "ep": round(ep, 1), "xgi": round(xgi, 2), "sel": f(e.get("selected_by_percent")),
                         "flags": flags, "flag_count": len([x for x in flags if x != "rotation_risk"])})

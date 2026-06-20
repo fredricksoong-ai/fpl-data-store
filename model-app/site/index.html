@@ -236,6 +236,8 @@
   .flg{background:var(--card2);border:1px solid var(--line);border-radius:6px;padding:2px 7px;font-size:10.5px;color:var(--muted)}
   .flg-rot{border-color:rgba(248,113,113,.5);color:var(--bad)}
   .pmet{display:flex;gap:14px;margin-top:8px;font-size:11px;font-variant-numeric:tabular-nums}
+  .recxp{margin-left:auto;font-weight:800;color:var(--fpl);font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .recxp span{font-size:9px;color:var(--muted);font-weight:600;margin-left:3px}
   .mshead{color:var(--muted);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.3px;margin:12px 0 5px}
   .msgrid{display:grid;grid-template-columns:1fr 40px 1fr 40px;gap:4px 8px;font-size:11.5px;align-items:center}
   .msgrid .gh{color:var(--faint);font-size:10px} .msl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .msc{text-align:center;color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums} .msr{text-align:right} .msd{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
@@ -318,6 +320,14 @@
   <section class="card" id="card-players">
     <div class="ctitle">Players · signal flags</div>
     <div id="players"></div>
+  </section>
+  <div style="height:55vh" aria-hidden="true"></div>
+</main>
+
+<main class="wrap" id="transfersview" style="display:none">
+  <section class="card" id="card-transfers">
+    <div class="ctitle">Transfers · model targets</div>
+    <div id="recommend"></div>
   </section>
   <div style="height:55vh" aria-hidden="true"></div>
 </main>
@@ -459,8 +469,8 @@ function renderLeague(LG){document.getElementById('lgtable').innerHTML=
 <td class="r"><span class="xv ${r[11]>=0.45?'g':'r'}">${(+r[11]).toFixed(1)}</span></td></tr>`}).join('')+`</tbody>`;}
 
 /* nav: no toggle. default = myteam (cards: squad, league). mid = next-card / home */
-const VIEW_ORDER=[["picks","Picks"],["players","Players"],["title","Title Odds"],["xg","xG"],["mleague","Model League"],["captain","Captain"]];
-const REAL=new Set(["picks","players","title","xg","mleague"]);  // views with a real panel (others toast as placeholders)
+const VIEW_ORDER=[["picks","Picks"],["transfers","Transfers"],["players","Players"],["title","Title Odds"],["xg","xG"],["mleague","Model League"]];
+const REAL=new Set(["picks","transfers","players","title","xg","mleague"]);  // all views have real panels
 const BURGER=VIEW_ORDER.map(v=>v[0]); let activeView="myteam";
 const ICON_CHEV='<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/></svg>';
 const ICON_HOME='<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg>';
@@ -472,11 +482,13 @@ function selectView(v){activeView=v;
   document.getElementById('picksview').style.display=v==="picks"?"":"none";
   document.getElementById('mleagueview').style.display=v==="mleague"?"":"none";
   document.getElementById('playersview').style.display=v==="players"?"":"none";
+  document.getElementById('transfersview').style.display=v==="transfers"?"":"none";
   if(v==="title")renderTitle();
   if(v==="xg")renderXG();
   if(v==="picks")renderPicks();
   if(v==="mleague")renderModelLeague();
   if(v==="players")renderPlayers();
+  if(v==="transfers")renderRecommend();
   renderTabSheet();closeSheets();updateMid();
   if(v!=="myteam"&&!REAL.has(v))toast(VIEW_ORDER.find(x=>x[0]===v)[1]+" — placeholder");
   window.scrollTo({top:0,behavior:'smooth'});}
@@ -812,6 +824,18 @@ function renderPlayers(){const host=document.getElementById('players');
     <div class="pmet"><span class="m">form <b style="color:var(--ink)">${p.form}</b></span><span class="m">xGI <b style="color:var(--ink)">${p.xgi}</b></span><span class="m">ep <b style="color:var(--ink)">${p.ep}</b></span><span class="m">${p.sel}%</span></div>
   </div>`).join('');
   host.innerHTML=`<div class="tsub">Players carrying ≥1 signal flag, ranked by conviction (flag count). More flags converging = stronger buy. <span style="color:var(--bad)">Rotation</span> is an avoid flag. Through GW${PLAYERS.event}.</div>${fbar}${rows}`;}
+/* ===== Transfers (model-ranked targets: xPts × flags) ===== */
+let REC=null, recPos='MID';
+function renderRecommend(){const host=document.getElementById('recommend');
+  if(!REC){host.innerHTML='<div class="err">Loading…</div>';
+    fetch('recommend.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{REC=d;renderRecommend();}).catch(()=>{host.innerHTML='<div class="err">Targets fill in once the gameweek is set.</div>';});return;}
+  const pos=REC.positions||{}, list=pos[recPos]||[];
+  const bar=`<div class="oddsel">`+['GK','DEF','MID','FWD'].map(x=>`<span class="opt ${recPos===x?'on':''}" onclick="recPos='${x}';renderRecommend()">${x}</span>`).join('')+`</div>`;
+  const rows=list.map((p,i)=>`<div class="pcard2">
+    <div class="ppl"><span class="pcnt c${Math.min(p.flag_count,5)}">${i+1}</span>${logo(p.code)}<b>${p.name}</b><span class="m">&nbsp;£${p.price.toFixed(1)}${p.opp?` · ${p.opp}(${p.venue})`:''}</span><span class="recxp">${p.xpts.toFixed(1)}<span>xPts</span></span></div>
+    ${p.flags.length?`<div class="pchips">${p.flags.map(fl=>`<span class="flg ${fl==='rotation_risk'?'flg-rot':''}">${FLAGLBL[fl]||fl}</span>`).join('')}</div>`:''}
+  </div>`).join('');
+  host.innerHTML=`<div class="tsub">The model's best picks for GW${REC.event} by expected points, with signal flags for conviction. Ranked per position — tap to switch lines.</div>${bar}${rows}`;}
 const CARDS=["card-squad","card-league"];let _ci=0;
 function midAction(){ if(activeView!=="myteam"){selectView("myteam");return;}
   _ci=(_ci+1)%CARDS.length; const el=document.getElementById(CARDS[_ci]);
