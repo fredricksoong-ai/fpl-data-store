@@ -184,6 +184,45 @@
   .xgg-n{text-align:center;font-variant-numeric:tabular-nums;color:var(--muted)}
   .xgg-l{text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .xgg-ctx{text-align:right;font-size:11px;color:var(--muted);margin-top:1px}
+  /* picks page */
+  .m{color:var(--muted)}
+  .pcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 13px;margin:9px 2px}
+  .frow{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .teams{font-weight:700;display:flex;align-items:center;flex-wrap:wrap} .teams .v{color:var(--muted);font-weight:400;margin:0 6px}
+  .teams.tappable{cursor:pointer} .xgcmp{font-size:11px;margin-left:7px;opacity:.6}
+  .meta{color:var(--muted);font-size:11px;margin-top:3px}
+  .bar{display:flex;height:9px;border-radius:6px;overflow:hidden;margin-top:10px;background:var(--card2)}
+  .bar i{display:block} .bar .h{background:var(--good)} .bar .d{background:#64748b} .bar .a{background:var(--away)}
+  .plegend{display:flex;justify-content:space-between;margin-top:5px;font-size:11px;color:var(--muted)} .plegend b{color:var(--ink)}
+  .formends{display:flex;justify-content:space-between;align-items:center;margin-top:9px}
+  .fdot{display:inline-block;min-width:17px;height:17px;border-radius:3px;font-size:10px;font-weight:700;text-align:center;line-height:17px;margin-right:2px;padding:0 2px}
+  .fdot.W{background:var(--good);color:#08111f} .fdot.D{background:#94a3b8;color:#0b1220} .fdot.L{background:var(--bad);color:#fff}
+  .tops{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+  .chip{background:var(--card2);border:1px solid var(--line);border-radius:7px;padding:3px 7px;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .chip.best{border-color:var(--pick);color:var(--ink)}
+  .rc-strong{color:var(--good)} .rc-lean{color:var(--away)} .rc-toss{color:var(--muted)}
+  .pickbox{display:flex;align-items:center;gap:10px;margin-top:11px;padding-top:10px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+  .pickwrap{flex:1;display:flex;flex-direction:column}
+  .hstepper{display:flex;align-items:center;justify-content:center;gap:14px}
+  .hbox{display:flex;align-items:stretch;height:36px;border-radius:9px;overflow:hidden;background:rgba(255,255,255,.05)}
+  .hbox .sbtn{width:38px}
+  .sbtn{border:none;background:rgba(255,255,255,.07);color:var(--ink);font-size:15px;font-weight:700;padding:4px 0;cursor:pointer;line-height:1;font-family:inherit}
+  .sbtn:active{background:rgba(255,255,255,.14)} .sbtn:disabled{opacity:.25;cursor:default}
+  .hbox .snum{display:flex;align-items:center;justify-content:center;min-width:34px;font-size:18px;padding:0;font-weight:800;color:var(--fpl);font-variant-numeric:tabular-nums} .snum.unset{color:var(--muted)}
+  .pcenter{color:var(--muted);font-size:12px;font-weight:600}
+  .pstat{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex:none}
+  .pstat.ok{background:var(--good);color:#0b1220} .pstat.lock{background:var(--card2);color:var(--muted)}
+  .cardfoot{display:flex;align-items:center;gap:8px;margin-top:8px;min-height:14px} .vfill{flex:1;text-align:center;font-size:11px}
+  .vok{color:var(--good);font-weight:700} .vbad{color:var(--bad);font-weight:700}
+  .dayhdr{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin:16px 2px 2px;padding-bottom:5px;border-bottom:1px solid var(--line)}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:50;padding:20px}
+  .modal.hidden{display:none}
+  .modalbox{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;width:100%;max-width:460px;max-height:85vh;overflow:auto}
+  .modalhd{display:flex;align-items:center;justify-content:space-between;font-weight:700;color:var(--ink);margin-bottom:10px}
+  .modalhd .mx{cursor:pointer;color:var(--muted);font-size:16px}
+  .mxg-fc{margin:8px 0 2px} .mxg-fcx{font-size:11px;color:var(--muted);text-align:center;margin-top:6px} .mxg-fcx b{color:var(--ink)}
+  .mxg-sum{margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
+  .mxg-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:4px 0;gap:8px}
 </style>
 </head>
 <body>
@@ -238,6 +277,21 @@
   </section>
   <div style="height:55vh" aria-hidden="true"></div>
 </main>
+
+<main class="wrap" id="picksview" style="display:none">
+  <section class="card" id="card-picks">
+    <div class="ctitle">Picks · gameweek predictions</div>
+    <div id="picks"></div>
+  </section>
+  <div style="height:55vh" aria-hidden="true"></div>
+</main>
+
+<div id="matchxgmodal" class="modal hidden" onclick="if(event.target===this)closeMatchXG()">
+  <div class="modalbox">
+    <div class="modalhd"><span id="mxgtitle" class="teams"></span><span class="mx" onclick="closeMatchXG()" title="Close">✕</span></div>
+    <div id="mxgbody"></div>
+  </div>
+</div>
 
 <div id="bbtoast" class="bbtoast"></div>
 <div id="sheetActions" class="bsheet bsheet-l hidden">
@@ -342,8 +396,8 @@ function renderLeague(LG){document.getElementById('lgtable').innerHTML=
 <td class="r"><span class="xv ${r[11]>=0.45?'g':'r'}">${(+r[11]).toFixed(1)}</span></td></tr>`}).join('')+`</tbody>`;}
 
 /* nav: no toggle. default = myteam (cards: squad, league). mid = next-card / home */
-const VIEW_ORDER=[["title","Title Odds"],["xg","xG"],["model","Model"],["stats","Stats"],["captain","Captain"],["thisgw","This GW"]];
-const REAL=new Set(["title","xg"]);  // views with a real panel (others toast as placeholders)
+const VIEW_ORDER=[["picks","Picks"],["title","Title Odds"],["xg","xG"],["model","Model"],["stats","Stats"],["captain","Captain"]];
+const REAL=new Set(["picks","title","xg"]);  // views with a real panel (others toast as placeholders)
 const BURGER=VIEW_ORDER.map(v=>v[0]); let activeView="myteam";
 const ICON_CHEV='<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/></svg>';
 const ICON_HOME='<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg>';
@@ -352,8 +406,10 @@ function selectView(v){activeView=v;
   document.getElementById('myteam').style.display=v==="myteam"?"":"none";
   document.getElementById('titleview').style.display=v==="title"?"":"none";
   document.getElementById('xgview').style.display=v==="xg"?"":"none";
+  document.getElementById('picksview').style.display=v==="picks"?"":"none";
   if(v==="title")renderTitle();
   if(v==="xg")renderXG();
+  if(v==="picks")renderPicks();
   renderTabSheet();closeSheets();updateMid();
   if(v!=="myteam"&&!REAL.has(v))toast(VIEW_ORDER.find(x=>x[0]===v)[1]+" — placeholder");
   window.scrollTo({top:0,behavior:'smooth'});}
@@ -481,8 +537,16 @@ function xgChart(rows,view,focus,elim){
       tris:[{pts:[[0,mx],[0,0],[mx,mx]],fill:'rgba(226,75,74,.07)'},{pts:[[mx,0],[0,0],[mx,mx]],fill:'rgba(29,158,117,.07)'}],
       notes:[{x:0.12,y:mx-0.18,t:'clinical',col:'#ef9f27',anchor:'start'},{x:mx-0.12,y:0.35,t:'wasteful',col:'#5dcaa5',anchor:'end'}]};
   }
-  if(focus){items.forEach(it=>{const f=it.team===focus;it.big=f;it.ring=f;if(!f){it.col='#3a3a52';it.dim=true;}});}
+  if(focus){const inF=t=>focus.has?focus.has(t):t===focus;
+    items.forEach(it=>{const f=inF(it.team);it.big=f;it.ring=f;if(!f){it.col='#3a3a52';it.dim=true;}});}
   return scatterSVG(items,cfg);}
+function teamZone(rows,r,view){const avg=a=>a.reduce((p,q)=>p+q,0)/a.length;
+  if(view==="map"){const mxf=avg(rows.map(x=>x.xf/x.gp)),mxa=avg(rows.map(x=>x.xa/x.gp)),pf=r.xf/r.gp,pa=r.xa/r.gp;
+    if(pf>=mxf&&pa<=mxa)return{zone:"dominant",zc:"var(--good)"};
+    if(pf<mxf&&pa>mxa)return{zone:"outclassed",zc:"var(--bad)"};
+    return{zone:pf>=mxf?"busy both ends":"quiet both ends",zc:"var(--muted)"};}
+  if(view==="luck"){const l=r.luck;return l<-0.3?{zone:"underperforming",zc:"var(--good)"}:l>0.3?{zone:"overperforming",zc:"var(--bad)"}:{zone:"as expected",zc:"var(--muted)"};}
+  const fd=r.gf-r.xf;return fd<-0.3?{zone:"wasteful",zc:"var(--good)"}:fd>0.3?{zone:"clinical",zc:"var(--bad)"}:{zone:"as expected",zc:"var(--muted)"};}
 function xgGameLabel(gd,xgd){const dom=gd===0?0.7:0.5;let t;
   if(gd>0)t=xgd>=0.5?'deserved win':xgd<=-0.5?'smash & grab':'won a tight one';
   else if(gd===0)t=xgd>=0.7?'dominated, drew':xgd<=-0.7?'stole a point':'fair draw';
@@ -518,6 +582,78 @@ function xgPoint(code){const el=document.getElementById("xgdetail");if(!el)retur
     else{verd="results match the level — no clear edge";vc="var(--muted)";}
     summary=`<div class="xgd-sum"><span class="m">out-created ${back} of ${n}${fade?`, ${fade} against`:''}${vsStr?` · ${vsStr} vs stronger`:''} → </span><b style="color:${vc}">${verd}</b></div>`;}
   el.innerHTML=`<div class="xgd-h">${logo(team,'lg')}<b style="color:var(--ink)">${team}</b> · <b style="color:${zc}">${zone}</b> <span class="tm">· ${r.gp} game${r.gp>1?'s':''}</span></div>${summary}${head}${games}`;}
+/* ===== Picks page (mirrors WC26) ===== */
+let PICKS=null; const LSKEY='fplanner_picks';
+const loadPk=()=>{try{return JSON.parse(localStorage.getItem(LSKEY))||{}}catch(e){return{}}};
+const savePk=o=>{try{localStorage.setItem(LSKEY,JSON.stringify(o))}catch(e){}};
+const keyOf=f=>`${f.gw}|${f.home}|${f.away}`;
+const pickArr=f=>{const p=loadPk()[keyOf(f)];return (p&&p.length===2)?p:[null,null];};
+const isLocked=f=>f.finished||(!!f.kickoff&&Date.now()>=Date.parse(f.kickoff));
+const pcf=v=>Math.round((v||0)*100);
+const koLabel=iso=>{try{return new Date(iso).toLocaleString('en-SG',{timeZone:'Asia/Singapore',weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',hour12:false})+' SGT';}catch(e){return'';}};
+const dayLabel=k=>{const[y,m,d]=k.split('-').map(Number);return new Date(Date.UTC(y,m-1,d)).toLocaleDateString('en-GB',{weekday:'long',day:'2-digit',month:'long',timeZone:'UTC'});};
+function confidence(f){const a=[['home',f.ph,f.home],['draw',f.pd,'Draw'],['away',f.pa,f.away]].sort((x,y)=>y[1]-x[1])[0];return{kind:a[0],p:a[1],who:a[2],lvl:a[1]>=0.6?'strong':a[1]>=0.45?'lean':'toss'};}
+const formStripArr=arr=>(!arr||!arr.length)?'<span class="m">—</span>':arr.map(g=>`<span class="fdot ${g}">${g}</span>`).join('');
+function pickUIFor(f,i){const yp=pickArr(f),locked=isLocked(f),a=yp[0],b=yp[1],both=a!=null&&b!=null;
+  const hbox=(side,val)=>`<div class="hbox"><button class="sbtn" ${locked?'disabled':''} onclick="bumpPick(${i},${side},-1)">−</button><div class="snum${val==null?' unset':''}">${val==null?'?':val}</div><button class="sbtn" ${locked?'disabled':''} onclick="bumpPick(${i},${side},1)">+</button></div>`;
+  const center=locked?`<span class="pstat lock">🔒</span>`:both?`<span class="pstat ok">✓</span>`:`<span class="pcenter">vs</span>`;
+  return `<div class="pickwrap"><div class="hstepper">${hbox(0,a)}${center}${hbox(1,b)}</div></div>`;}
+function validationLine(f,i){const yp=pickArr(f),a=yp[0],b=yp[1];
+  if(!f.finished)return isLocked(f)?(a!=null?'<span class="m">Locked — awaiting result</span>':'<span class="m">Locked — no pick made</span>'):(a!=null?'<span class="m">Pick saved · locks at kickoff</span>':'<span class="m">Tap + to set your score</span>');
+  const modelO=['home','draw','away'][[f.ph,f.pd,f.pa].indexOf(Math.max(f.ph,f.pd,f.pa))];
+  const actO=f.gh>f.ga?'home':f.gh<f.ga?'away':'draw', modelHit=modelO===actO;
+  if(a==null)return `<span class="m">No pick · FT ${f.gh}–${f.ga} · model ${modelHit?'✓':'✗'}</span>`;
+  const pkO=a>b?'home':a<b?'away':'draw', exact=a===f.gh&&b===f.ga, youHit=pkO===actO;
+  const tag=exact?'<span class="vok">✓ exact</span>':youHit?'<span class="vok">✓ result</span>':'<span class="vbad">✗ miss</span>';
+  return `<div>${tag} <span class="m">· you ${a}–${b} · model ${modelHit?'✓':'✗'}</span></div>`;}
+function pickCard(f,i){const cf=confidence(f);
+  const callTxt=cf.kind==='draw'?'Draw':`${cf.who} win`, callCol=cf.kind==='home'?'var(--good)':cf.kind==='away'?'var(--away)':'var(--muted)';
+  const lvlTxt=cf.lvl==='toss'?'toss-up':cf.lvl;
+  const tops=(f.tops||[]).slice(0,6).map((t,j)=>`<span class="chip ${j===0?'best':''}">${t[0]} · ${pcf(t[1])}%</span>`).join('');
+  return `<div class="pcard">
+    <div class="frow">
+      <div style="min-width:0"><div class="teams tappable" onclick="openMatchXG(${i})" title="Compare on the xG charts">${logo(f.home)}${f.home}<span class="v">v</span>${f.away}${logo(f.away)}<span class="xgcmp">📊</span></div>
+        <div class="meta">xG ${f.xgh}–${f.xga}${f.kickoff?` · ${koLabel(f.kickoff)}`:''} · GW${f.gw}</div></div>
+      <div style="text-align:right;flex-shrink:0"><div style="color:${callCol};font-weight:700;font-size:13px">${callTxt}</div><div style="font-size:11px"><span class="rc-${cf.lvl}">${lvlTxt}</span> <span class="m">· ${pcf(cf.p)}%</span></div></div>
+    </div>
+    <div class="bar"><i class="h" style="width:${pcf(f.ph)}%"></i><i class="d" style="width:${pcf(f.pd)}%"></i><i class="a" style="width:${pcf(f.pa)}%"></i></div>
+    <div class="plegend"><span style="color:var(--good)">${f.home} <b>${pcf(f.ph)}%</b></span><span>Draw <b>${pcf(f.pd)}%</b></span><span style="color:var(--away)">${f.away} <b>${pcf(f.pa)}%</b></span></div>
+    <div class="formends"><span>${formStripArr(f.formH)}</span><span>${formStripArr(f.formA)}</span></div>
+    <div class="tops">${tops}</div>
+    ${f.finished?`<div class="meta" style="margin-top:9px">Full time <b style="color:var(--ink)">${f.gh}–${f.ga}</b></div>`:''}
+    <div class="pickbox"><span>Your score</span><div id="pk-${i}">${pickUIFor(f,i)}</div></div>
+    <div class="cardfoot"><div class="vfill" id="vf-${i}">${validationLine(f,i)}</div></div>
+  </div>`;}
+function refreshPick(i){const f=PICKS.fixtures[i];const pk=document.getElementById('pk-'+i);if(pk)pk.innerHTML=pickUIFor(f,i);const vf=document.getElementById('vf-'+i);if(vf)vf.innerHTML=validationLine(f,i);}
+function bumpPick(i,side,delta){const f=PICKS.fixtures[i];if(isLocked(f))return;const k=keyOf(f),P=loadPk();const cur=(P[k]||[null,null]).slice();let v=cur[side];
+  if(v==null){if(delta>0){v=0;if(cur[1-side]==null)cur[1-side]=0;}}else{v+=delta;if(v<0)v=null;else if(v>10)v=10;}
+  cur[side]=v;P[k]=cur;savePk(P);refreshPick(i);}
+function renderPicks(){const host=document.getElementById('picks');
+  if(!PICKS){host.innerHTML='<div class="err">Loading…</div>';
+    fetch('picks.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{PICKS=d;renderPicks();}).catch(()=>{host.innerHTML='<div class="err">Picks data unavailable.</div>';});return;}
+  const fx=PICKS.fixtures||[];
+  if(!fx.length){host.innerHTML='<div class="err">No fixtures for the upcoming gameweek yet.</div>';return;}
+  let body='',cur=null;
+  fx.forEach((f,i)=>{const k=f.kickoff?f.kickoff.slice(0,10):('gw'+f.gw);if(k!==cur){cur=k;body+=`<div class="dayhdr">${f.kickoff?dayLabel(k):('Gameweek '+f.gw)}</div>`;}body+=pickCard(f,i);});
+  host.innerHTML=`<div class="tsub">Predict each scoreline for GW${PICKS.event}. Model call, win probabilities and likeliest scores shown — tap a matchup to compare both sides on xG. Picks lock at kickoff.</div>`+body;}
+let mxgIdx=null,mxgView='map';
+function openMatchXG(i){mxgIdx=i;mxgView='map';document.getElementById('matchxgmodal').classList.remove('hidden');
+  if(!XG)fetch('xg.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{XG=d;renderMatchXG();}).catch(renderMatchXG);else renderMatchXG();}
+function closeMatchXG(){document.getElementById('matchxgmodal').classList.add('hidden');}
+function renderMatchXG(){const f=PICKS.fixtures[mxgIdx],t1=f.home,t2=f.away,rows=xgRows(null),hi=new Set([t1,t2]);
+  document.getElementById('mxgtitle').innerHTML=`${logo(t1)}${t1}<span class="v">v</span>${t2}${logo(t2)}`;
+  const fc=`<div class="mxg-fc"><div class="bar"><i class="h" style="width:${pcf(f.ph)}%"></i><i class="d" style="width:${pcf(f.pd)}%"></i><i class="a" style="width:${pcf(f.pa)}%"></i></div>
+    <div class="plegend"><span style="color:var(--good)">${t1} <b>${pcf(f.ph)}%</b></span><span>Draw <b>${pcf(f.pd)}%</b></span><span style="color:var(--away)">${t2} <b>${pcf(f.pa)}%</b></span></div>
+    <div class="mxg-fcx">likeliest <b>${(f.tops&&f.tops[0])?f.tops[0][0]:'—'}</b> · xG ${f.xgh}–${f.xga}</div></div>`;
+  const present=rows.filter(r=>hi.has(r.t));let body;
+  if(!present.length){body=`<div class="err" style="text-align:center;padding:14px 0">No xG yet — these teams need to have played.</div>`;}
+  else{const views=[['map','Map'],['luck','Luck'],['finish','Finishing']];
+    const vt=`<div class="oddsel" style="margin-top:8px">`+views.map(([k,l])=>`<span class="opt ${mxgView===k?'on':''}" onclick="mxgView='${k}';renderMatchXG()">${l}</span>`).join('')+`</div>`;
+    const chart=xgChart(rows,mxgView,hi,xgEliminated());
+    const line=t=>{const r=rows.find(x=>x.t===t);if(!r)return `<div class="mxg-row"><span>${logo(t)}<b style="color:var(--ink)">${t}</b></span><span class="m">not played yet</span></div>`;
+      const z=teamZone(rows,r,mxgView);return `<div class="mxg-row"><span>${logo(t)}<b style="color:var(--ink)">${t}</b></span><span><b style="color:${z.zc}">${z.zone}</b> <span class="m">· net ${r.xgd>0?'+':''}${r.xgd.toFixed(2)} · ${r.gp}g</span></span></div>`;};
+    body=vt+chart+`<div class="mxg-sum">${line(t1)}${line(t2)}</div>`;}
+  document.getElementById('mxgbody').innerHTML=fc+body;}
 const CARDS=["card-squad","card-league"];let _ci=0;
 function midAction(){ if(activeView!=="myteam"){selectView("myteam");return;}
   _ci=(_ci+1)%CARDS.length; const el=document.getElementById(CARDS[_ci]);

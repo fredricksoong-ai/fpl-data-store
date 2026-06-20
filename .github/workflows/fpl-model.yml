@@ -43,6 +43,9 @@ jobs:
       - name: Build title odds (titleodds.json)
         run: FPL_OUT_DIR="$PWD/model-app/site" python3 model-app/build_titleodds.py
 
+      - name: Build picks (picks.json)
+        run: PICKS_OUT=model-app/site/picks.json python3 model-app/build_picks.py
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
