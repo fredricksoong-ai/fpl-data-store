@@ -39,10 +39,12 @@ jobs:
         run: pip install pandas numpy scipy
 
       # carry the live odds snapshot forward so build_odds can see its age (throttle)
-      - name: Carry over odds snapshot from the live site
+      - name: Carry over odds snapshot + market ledger from the live site
         run: |
           curl -fsS https://wirtzplay.pages.dev/odds.json -o model-app/site/odds.json \
             && echo "carried over odds snapshot" || echo "no live odds yet (first run or odds off)"
+          curl -fsS https://wirtzplay.pages.dev/market_history.json -o model-app/site/market_history.json \
+            && echo "carried over market ledger" || echo "no market ledger yet"
 
       - name: Build live squad + league (v2.json)
         run: V2_OUT=model-app/site/v2.json python3 model-app/build_v2.py
@@ -62,6 +64,9 @@ jobs:
 
       - name: Build picks (picks.json)
         run: PICKS_OUT=model-app/site/picks.json python3 model-app/build_picks.py
+
+      - name: Build Model League (modelleague.json)
+        run: ML_OUT=model-app/site/modelleague.json python3 model-app/build_modelleague.py
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3

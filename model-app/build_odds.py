@@ -110,7 +110,15 @@ def main() -> int:
                                      "pa": round(st.mean(as_), 4), "books": len(hs)}
         OUT.write_text(json.dumps({"fetched_at": dt.datetime.now(timezone.utc).isoformat(),
                                    "credits": credits, "events": out}, ensure_ascii=False))
-        print(f"  ok  odds.json [{why}]  {len(out)} matches priced | {credits} credits left")
+        # accumulate a frozen per-fixture market ledger so Model League can score Market over time
+        hist_path = OUT.parent / "market_history.json"
+        try:
+            hist = json.loads(hist_path.read_text()).get("events", {})
+        except Exception:
+            hist = {}
+        hist.update(out)  # first price seen for a fixture sticks until re-fetched; fine for scoring
+        hist_path.write_text(json.dumps({"updated": dt.datetime.now(timezone.utc).isoformat(), "events": hist}, ensure_ascii=False))
+        print(f"  ok  odds.json [{why}]  {len(out)} priced | {len(hist)} in ledger | {credits} credits left")
     except Exception as e:
         print(f"  WARN odds skipped (kept existing): {e}")
     return 0

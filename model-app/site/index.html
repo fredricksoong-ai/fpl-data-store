@@ -293,6 +293,14 @@
   <div style="height:55vh" aria-hidden="true"></div>
 </main>
 
+<main class="wrap" id="mleagueview" style="display:none">
+  <section class="card" id="card-mleague">
+    <div class="ctitle">Model League</div>
+    <div id="mleague"></div>
+  </section>
+  <div style="height:55vh" aria-hidden="true"></div>
+</main>
+
 <div id="matchxgmodal" class="modal hidden" onclick="if(event.target===this)closeMatchXG()">
   <div class="modalbox">
     <div class="modalhd"><span id="mxgtitle" class="teams"></span><span class="mx" onclick="closeMatchXG()" title="Close">✕</span></div>
@@ -317,6 +325,7 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 
 <div id="bbtoast" class="bbtoast"></div>
 <div id="sheetActions" class="bsheet bsheet-l hidden">
@@ -358,6 +367,12 @@ const I_XFER='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke
 const BADGE={ARS:3,AVL:7,BHA:36,BOU:91,BRE:94,CHE:8,COV:9,CRY:31,EVE:11,FUL:54,HUL:88,IPS:40,LEE:2,LIV:14,MCI:43,MUN:1,NEW:4,NFO:17,SUN:56,TOT:6,BUR:90,WHU:21,WOL:39,LEI:13,SOU:20};
 const logo=(code,cls)=>{const id=BADGE[code];if(!id)return'';  // local self-hosted badge first, CDN fallback if not yet downloaded
   return `<img class="bdg${cls?' '+cls:''}" src="badges/${code}.svg" onerror="this.onerror=null;this.src='https://resources.premierleague.com/premierleague25/badges-alt/${id}.svg'" alt="" loading="lazy">`;};
+// Odds API credit gauge (ring fills with credits left of the 500/mo cap) — mirrors WC26
+function oddsRing(c,cap=500){const frac=Math.max(0,Math.min(1,c/cap)),C=2*Math.PI*8,off=C*(1-frac);
+  const col=c>100?'var(--good)':c>30?'var(--away)':'var(--bad)';
+  return `<span class="pill" title="Odds API credits left this month (of ${cap})" style="display:inline-flex;align-items:center;gap:6px;padding:4px 9px">`+
+    `<svg width="16" height="16" viewBox="0 0 20 20" style="flex:none"><circle cx="10" cy="10" r="8" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="2.6"/>`+
+    `<circle cx="10" cy="10" r="8" fill="none" stroke="${col}" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 10 10)"/></svg><b>${c}</b></span>`;}
 function bub(p,SC,H,bn){const w=Math.round(tileW(p[3])*SC),h=Math.round(H!=null?H:TILEH*SC),s=p[4];  // width by ownership; H lets bench keep full height while width is scaled down; bn=bench
   const POS=['','GK','DEF','MID','FWD'][p[0]]||'';
   const fdrCol=d=>d>=4?'var(--bad)':(d>0&&d<=2)?'var(--good)':'var(--muted)';
@@ -422,8 +437,8 @@ function renderLeague(LG){document.getElementById('lgtable').innerHTML=
 <td class="r"><span class="xv ${r[11]>=0.45?'g':'r'}">${(+r[11]).toFixed(1)}</span></td></tr>`}).join('')+`</tbody>`;}
 
 /* nav: no toggle. default = myteam (cards: squad, league). mid = next-card / home */
-const VIEW_ORDER=[["picks","Picks"],["title","Title Odds"],["xg","xG"],["model","Model"],["stats","Stats"],["captain","Captain"]];
-const REAL=new Set(["picks","title","xg"]);  // views with a real panel (others toast as placeholders)
+const VIEW_ORDER=[["picks","Picks"],["title","Title Odds"],["xg","xG"],["mleague","Model League"],["stats","Stats"],["captain","Captain"]];
+const REAL=new Set(["picks","title","xg","mleague"]);  // views with a real panel (others toast as placeholders)
 const BURGER=VIEW_ORDER.map(v=>v[0]); let activeView="myteam";
 const ICON_CHEV='<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/></svg>';
 const ICON_HOME='<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg>';
@@ -433,9 +448,11 @@ function selectView(v){activeView=v;
   document.getElementById('titleview').style.display=v==="title"?"":"none";
   document.getElementById('xgview').style.display=v==="xg"?"":"none";
   document.getElementById('picksview').style.display=v==="picks"?"":"none";
+  document.getElementById('mleagueview').style.display=v==="mleague"?"":"none";
   if(v==="title")renderTitle();
   if(v==="xg")renderXG();
   if(v==="picks")renderPicks();
+  if(v==="mleague")renderModelLeague();
   renderTabSheet();closeSheets();updateMid();
   if(v!=="myteam"&&!REAL.has(v))toast(VIEW_ORDER.find(x=>x[0]===v)[1]+" — placeholder");
   window.scrollTo({top:0,behavior:'smooth'});}
@@ -702,6 +719,35 @@ function renderMatchXG(){const f=PICKS.fixtures[mxgIdx],t1=f.home,t2=f.away,rows
       const z=teamZone(rows,r,mxgView);return `<div class="mxg-row"><span>${logo(t)}<b style="color:var(--ink)">${t}</b></span><span><b style="color:${z.zc}">${z.zone}</b> <span class="m">· net ${r.xgd>0?'+':''}${r.xgd.toFixed(2)} · ${r.gp}g</span></span></div>`;};
     body=vt+chart+`<div class="mxg-sum">${line(t1)}${line(t2)}</div>`;}
   document.getElementById('mxgbody').innerHTML=fc+body;}
+/* ===== Model League (mirrors WC26 League) ===== */
+let ML=null, mlMode='points', mlChart=null;
+const ordn=n=>{const v=n%100;return n+(['th','st','nd','rd'][(v-20)%10]||['th','st','nd','rd'][v]||'th');};
+function youRow(games,gws){const P=loadPk();let rh=0,eh=0,g=0;const byw={};
+  games.forEach(m=>{const yp=P[`${m.gw}|${m.home}|${m.away}`];if(!yp||yp[0]==null)return;g++;
+    const o=m.gh>m.ga?0:m.gh<m.ga?2:1,p=yp[0]>yp[1]?0:yp[0]<yp[1]?2:1,r=p===o,e=yp[0]===m.gh&&yp[1]===m.ga;
+    if(r)rh++;if(e)eh++;byw[m.gw]=(byw[m.gw]||0)+(r?1:0)+(e?2:0);});
+  let cum=0;return {key:'you',label:'You',color:'#00ff85',games:g,result_hits:rh,exact_hits:eh,pts:rh*1+eh*2,rps:null,series:gws.map(w=>(cum+=byw[w]||0)),series_rps:gws.map(()=>null)};}
+function renderModelLeague(){const host=document.getElementById('mleague');
+  if(!ML){host.innerHTML='<div class="err">Loading…</div>';
+    fetch('modelleague.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{ML=d;renderModelLeague();}).catch(()=>{host.innerHTML='<div class="err">Model League fills in once gameweeks are played.</div>';});return;}
+  if(!ML.gws||!ML.gws.length){host.innerHTML='<div class="err">Model League fills in once gameweeks are played.</div>';return;}
+  const you=youRow(ML.games||[],ML.gws);
+  const rows=[...ML.models,...(you.games>0?[you]:[])].filter(r=>r.games>0).sort((a,b)=>(b.pts-a.pts)||((a.rps??9)-(b.rps??9)));
+  const wr=rows.filter(r=>r.rps!=null), bestR=wr.length?wr.reduce((a,b)=>a.rps<=b.rps?a:b):null;
+  const youR=rows.find(r=>r.key==='you'), youRank=youR?rows.indexOf(youR)+1:null;
+  const toggle=`<div class="oddsel"><span class="opt ${mlMode==='points'?'on':''}" onclick="mlMode='points';renderModelLeague()">Points</span><span class="opt ${mlMode==='rps'?'on':''}" onclick="mlMode='rps';renderModelLeague()">RPS</span></div>`;
+  const take=`<div class="tsub">Most points <b style="color:${rows[0].color}">${rows[0].label}</b>${bestR?` · sharpest <b style="color:${bestR.color}">${bestR.label}</b> <span class="m">rps ${bestR.rps.toFixed(3)}</span>`:''}${youR?` · you <b style="color:#00ff85">${ordn(youRank)}</b>`:''} <span class="m">· through GW${ML.event}</span></div>`;
+  const head=`<thead><tr><th>#</th><th>Model</th><th class="r">P</th><th class="r">R</th><th class="r">E</th><th class="r">Pts</th><th class="r">RPS</th></tr></thead>`;
+  const body=rows.map((r,i)=>`<tr><td class="trk2">${i+1}</td><td class="ttm"><span style="color:${r.color}">●</span>&nbsp;${r.label}</td><td class="r">${r.games}</td><td class="r">${r.result_hits}</td><td class="r">${r.exact_hits}</td><td class="r"><b>${r.pts}</b></td><td class="r">${r.rps!=null?r.rps.toFixed(3):'–'}</td></tr>`).join('');
+  host.innerHTML=`<div class="tsub">Each model's accuracy over played gameweeks — 1 pt for the result, 3 for the exact score, plus RPS (lower = sharper). Your saved picks are scored alongside.</div>${toggle}<div style="position:relative;height:210px;margin:6px 0 14px"><canvas id="mlchart"></canvas></div>${take}<div class="lgcard"><table class="ttab">${head}<tbody>${body}</tbody></table></div>`;
+  drawMLChart(rows);}
+function drawMLChart(rows){if(!window.Chart)return;const ctx=document.getElementById('mlchart');if(!ctx)return;if(mlChart){mlChart.destroy();mlChart=null;}
+  const labels=ML.gws.map(g=>'GW'+g);
+  const ds=rows.map(r=>({label:r.label,data:mlMode==='points'?r.series:r.series_rps,borderColor:r.color,backgroundColor:r.color,borderWidth:r.key==='you'?3:2,pointRadius:0,tension:.25,spanGaps:true}));
+  mlChart=new Chart(ctx,{type:'line',data:{labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{labels:{color:'#90a0b8',boxWidth:10,font:{size:10}}}},
+    scales:{x:{ticks:{color:'#647089',font:{size:9},maxTicksLimit:12},grid:{color:'rgba(255,255,255,.05)'}},
+      y:{reverse:mlMode==='rps',ticks:{color:'#647089',font:{size:9}},grid:{color:'rgba(255,255,255,.05)'}}}}});}
 const CARDS=["card-squad","card-league"];let _ci=0;
 function midAction(){ if(activeView!=="myteam"){selectView("myteam");return;}
   _ci=(_ci+1)%CARDS.length; const el=document.getElementById(CARDS[_ci]);
@@ -751,6 +797,10 @@ fetch('v2.json',{cache:'no-store'}).then(r=>r.json()).then(V=>{
   document.getElementById('pitchrows').innerHTML='<div style="padding:30px 16px;text-align:center;color:var(--bad)">Couldn\'t load live data (v2.json).</div>';
   document.getElementById('updatedTime').textContent='—';
 });
+/* odds-credit ring in the header (from the throttled odds.json) */
+fetch('odds.json',{cache:'no-store'}).then(r=>r.json()).then(o=>{
+  if(o&&o.credits!=null)document.getElementById('oddsslot').innerHTML=oddsRing(+o.credits);
+}).catch(()=>{});
 </script>
 </body>
 </html>
