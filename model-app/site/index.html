@@ -238,6 +238,11 @@
   .pmet{display:flex;gap:14px;margin-top:8px;font-size:11px;font-variant-numeric:tabular-nums}
   .recxp{margin-left:auto;font-weight:800;color:var(--fpl);font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
   .recxp span{font-size:9px;color:var(--muted);font-weight:600;margin-left:3px}
+  .chiprow{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 10px}
+  .chippill{display:inline-flex;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:11px;color:var(--muted);cursor:default}
+  .chippill b{color:var(--ink);font-weight:700} .chippill span{font-variant-numeric:tabular-nums}
+  .chippill.on{border-color:rgba(0,255,133,.5)} .chippill.on span{color:var(--fpl);font-weight:700}
+  .chippill{cursor:pointer} .chipnote{font-size:11.5px;color:var(--muted);line-height:1.5;margin:0 2px 10px;min-height:1px}
   .mshead{color:var(--muted);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.3px;margin:12px 0 5px}
   .msgrid{display:grid;grid-template-columns:1fr 40px 1fr 40px;gap:4px 8px;font-size:11.5px;align-items:center}
   .msgrid .gh{color:var(--faint);font-size:10px} .msl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .msc{text-align:center;color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums} .msr{text-align:right} .msd{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
@@ -335,6 +340,8 @@
 <main class="wrap" id="bestxvview" style="display:none">
   <section class="card" id="card-bestxv">
     <div class="ctitle">Best XV · model squad</div>
+    <div id="bxvchips" class="chiprow"></div>
+    <div id="bxvchipnote" class="chipnote"></div>
     <div id="bxvsum" class="tsub"></div>
     <div class="pitch"><div id="bxvrows"></div><div class="benchsep"></div><div class="bench" id="bxvbench"></div></div>
   </section>
@@ -905,7 +912,18 @@ function renderBestXV(){const sum=document.getElementById('bxvsum');
   const BSC=Math.min(SC,(avail-6)/(bench.length?rowW(bench):1));
   pr.innerHTML=subrows.map(r=>`<div class="prow">${r.map(p=>bub(p,SC)).join('')}</div>`).join('');
   document.getElementById('bxvbench').innerHTML=bench.map(p=>bub(p,BSC,TILEH*SC,true)).join('');
+  renderChipPills();
   sum.innerHTML=`Optimal £100 squad for the next 5 GWs — <b style="color:var(--ink)">${BXV.formation}</b> · spend <b style="color:var(--ink)">£${BXV.spend}m</b> · XI <b style="color:var(--fpl)">${BXV.xi_xph} xPts</b>. Maximises projected XI points; bench is budget fodder. Tap a tile to compare.`;}
+let CHIPS=null;
+function renderChipPills(){const el=document.getElementById('bxvchips');if(!el)return;
+  if(!CHIPS){fetch('chips.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{CHIPS=d;renderChipPills();}).catch(()=>{el.innerHTML='';});return;}
+  const chips=CHIPS.chips||[];
+  el.innerHTML=chips.map((c,i)=>{const live=c.advice&&c.advice!=='Hold';
+    return `<span class="chippill ${live?'on':''}" onclick="chipNote(${i})"><b>${c.label}</b><span>${c.advice||'Hold'}</span></span>`;}).join('')
+    +(CHIPS.window?`<span class="m" style="font-size:10.5px;align-self:center;margin-left:2px">half ${CHIPS.half} plan · GW${CHIPS.window[0]}–${CHIPS.window[1]}</span>`:'');
+  chipNote(3);}  // default to the Triple Captain reasoning (most actionable)
+function chipNote(i){const c=(CHIPS&&CHIPS.chips||[])[i];const el=document.getElementById('bxvchipnote');if(!el||!c)return;
+  el.innerHTML=`<b style="color:var(--ink)">${c.label} · ${c.advice}</b> — ${c.note}`;}
 /* ===== Squad player modal: details + comparison vs replacements ===== */
 function closePM(){document.getElementById('playermodal').classList.add('hidden');}
 async function playerModal(name,posType){

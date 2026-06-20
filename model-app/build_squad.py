@@ -32,19 +32,49 @@ def get(path):
     return json.loads(urllib.request.urlopen(req, timeout=30).read())
 
 
-def opp_map():
+def fixtures_info():
+    """Return (next_gw, opp_map_for_next_gw, chip_recommendations).
+    Chip timing keys off double/blank gameweeks; until the PL announces them the
+    advice is graceful 'Hold' guidance that auto-upgrades to 'Target GWx' later."""
+    from collections import Counter
+    chips_default = [
+        {"chip": "WC", "label": "Wildcard", "advice": "Hold", "note": "Save for the first big fixture swing — burning it early wastes flexibility."},
+        {"chip": "FH", "label": "Free Hit", "advice": "Hold", "note": "Best in a blank gameweek — none scheduled yet."},
+        {"chip": "BB", "label": "Bench Boost", "advice": "Hold", "note": "Best in a double gameweek — none scheduled yet."},
+        {"chip": "TC", "label": "Triple Captain", "advice": "Hold", "note": "Best on a premium in a double gameweek — none scheduled yet."},
+    ]
     try:
         boot = get("/bootstrap-static/"); short = {t["id"]: t["short_name"] for t in boot["teams"]}
+        nteams = len(boot["teams"])
         sched = [f for f in get("/fixtures/") if f.get("event")]
         un = sorted({f["event"] for f in sched if not f.get("finished")})
         gw = un[0] if un else 0
-        m = {}
+        opp = {}
         for f in sched:
             if f["event"] == gw:
-                m[short[f["team_h"]]] = short[f["team_a"]]; m[short[f["team_a"]]] = short[f["team_h"]]
-        return gw, m
+                opp[short[f["team_h"]]] = short[f["team_a"]]; opp[short[f["team_a"]]] = short[f["team_h"]]
+        dgw, bgw = [], []
+        for ev in un:
+            evfix = [f for f in sched if f["event"] == ev and not f.get("finished")]
+            if not evfix:
+                continue
+            cnt = Counter()
+            for f in evfix:
+                cnt[f["team_h"]] += 1; cnt[f["team_a"]] += 1
+            if any(v >= 2 for v in cnt.values()):
+                dgw.append(ev)
+            if len(cnt) < nteams:
+                bgw.append(ev)
+        ndg, nbg = (dgw[0] if dgw else None), (bgw[0] if bgw else None)
+        chips = [
+            {"chip": "WC", "label": "Wildcard", "advice": "Hold", "note": "Save for the first big fixture swing — burning it early wastes flexibility."},
+            {"chip": "FH", "label": "Free Hit", "advice": f"Target GW{nbg}" if nbg else "Hold", "note": "Best in a blank gameweek." + ("" if nbg else " None scheduled yet.")},
+            {"chip": "BB", "label": "Bench Boost", "advice": f"Target GW{ndg}" if ndg else "Hold", "note": "Best in a double gameweek." + ("" if ndg else " None scheduled yet.")},
+            {"chip": "TC", "label": "Triple Captain", "advice": f"Target GW{ndg}" if ndg else "Hold", "note": "Best on a premium in a double gameweek." + ("" if ndg else " None scheduled yet.")},
+        ]
+        return gw, opp, chips
     except Exception:
-        return 0, {}
+        return 0, {}, chips_default
 
 
 def solve_milp(P):
@@ -119,7 +149,7 @@ def main() -> int:
     except Exception as e:
         print(f"  milp unavailable ({e}); using greedy fallback"); s, xi = solve_greedy(P)
 
-    gw, opp = opp_map()
+    gw, opp, _chips = fixtures_info()
     members = [P[i] for i in s]
     # captain / vice = top two XI by xph
     xi_sorted = sorted([i for i in s if i in xi], key=lambda i: -P[i]["xph"])

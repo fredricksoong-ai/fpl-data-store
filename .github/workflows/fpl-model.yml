@@ -77,6 +77,9 @@ jobs:
       - name: Build optimal squad (squad.json)
         run: SQUAD_OUT=model-app/site/squad.json python3 model-app/build_squad.py
 
+      - name: Build chip plan (chips.json)
+        run: CHIPS_OUT=model-app/site/chips.json python3 model-app/build_chips.py
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
