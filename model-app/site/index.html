@@ -223,6 +223,13 @@
   .mxg-fc{margin:8px 0 2px} .mxg-fcx{font-size:11px;color:var(--muted);text-align:center;margin-top:6px} .mxg-fcx b{color:var(--ink)}
   .mxg-sum{margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
   .mxg-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:4px 0;gap:8px}
+  .mshead{color:var(--muted);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.3px;margin:12px 0 5px}
+  .msgrid{display:grid;grid-template-columns:1fr 40px 1fr 40px;gap:4px 8px;font-size:11.5px;align-items:center}
+  .msgrid .gh{color:var(--faint);font-size:10px} .msl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .msc{text-align:center;color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums} .msr{text-align:right} .msd{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+  .snapbtn{flex:none;background:none;border:none;color:var(--muted);font-size:15px;cursor:pointer;padding:0;line-height:1}
+  .editbtn{flex:none;background:none;border:1px solid var(--line);border-radius:7px;color:var(--muted);font-size:12px;cursor:pointer;padding:3px 8px;line-height:1}
+  #cardimg{max-width:100%;border-radius:10px;display:block}
+  .pbtn{width:100%;margin-top:14px;padding:10px;border-radius:9px;border:1px solid rgba(0,255,133,.5);background:rgba(0,255,133,.14);color:var(--fpl);font-weight:700;font-size:14px;cursor:pointer;font-family:inherit}
 </style>
 </head>
 <body>
@@ -292,6 +299,24 @@
     <div id="mxgbody"></div>
   </div>
 </div>
+
+<div id="editmodal" class="modal hidden" onclick="if(event.target===this)closeEdit()">
+  <div class="modalbox">
+    <div class="modalhd"><span>Edit pick</span><span class="mx" onclick="closeEdit()" title="Close">✕</span></div>
+    <div id="editbody"></div>
+    <button class="pbtn" onclick="saveEdit()">Save pick</button>
+  </div>
+</div>
+
+<div id="imgmodal" class="modal hidden" onclick="if(event.target===this)closeImg()">
+  <div class="modalbox">
+    <div class="modalhd"><span>Save as image</span><span class="mx" onclick="closeImg()" title="Close">✕</span></div>
+    <img id="cardimg" alt="pick card">
+    <div class="m" style="font-size:11px;margin-top:8px;text-align:center">Long-press / right-click the image to save or share.</div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <div id="bbtoast" class="bbtoast"></div>
 <div id="sheetActions" class="bsheet bsheet-l hidden">
@@ -599,14 +624,33 @@ function pickUIFor(f,i){const yp=pickArr(f),locked=isLocked(f),a=yp[0],b=yp[1],b
   const hbox=(side,val)=>`<div class="hbox"><button class="sbtn" ${locked?'disabled':''} onclick="bumpPick(${i},${side},-1)">−</button><div class="snum${val==null?' unset':''}">${val==null?'?':val}</div><button class="sbtn" ${locked?'disabled':''} onclick="bumpPick(${i},${side},1)">+</button></div>`;
   const center=locked?`<span class="pstat lock">🔒</span>`:both?`<span class="pstat ok">✓</span>`:`<span class="pcenter">vs</span>`;
   return `<div class="pickwrap"><div class="hstepper">${hbox(0,a)}${center}${hbox(1,b)}</div></div>`;}
+const RP=1, EXACT=3;  // scoring: 1 for the result, 3 for the exact score (accuracy-weighted)
 function validationLine(f,i){const yp=pickArr(f),a=yp[0],b=yp[1];
-  if(!f.finished)return isLocked(f)?(a!=null?'<span class="m">Locked — awaiting result</span>':'<span class="m">Locked — no pick made</span>'):(a!=null?'<span class="m">Pick saved · locks at kickoff</span>':'<span class="m">Tap + to set your score</span>');
-  const modelO=['home','draw','away'][[f.ph,f.pd,f.pa].indexOf(Math.max(f.ph,f.pd,f.pa))];
-  const actO=f.gh>f.ga?'home':f.gh<f.ga?'away':'draw', modelHit=modelO===actO;
-  if(a==null)return `<span class="m">No pick · FT ${f.gh}–${f.ga} · model ${modelHit?'✓':'✗'}</span>`;
-  const pkO=a>b?'home':a<b?'away':'draw', exact=a===f.gh&&b===f.ga, youHit=pkO===actO;
-  const tag=exact?'<span class="vok">✓ exact</span>':youHit?'<span class="vok">✓ result</span>':'<span class="vbad">✗ miss</span>';
-  return `<div>${tag} <span class="m">· you ${a}–${b} · model ${modelHit?'✓':'✗'}</span></div>`;}
+  if(!f.finished)return '';
+  if(a==null)return `<span class="m">No pick · FT ${f.gh}–${f.ga}</span>`;
+  const actO=f.gh>f.ga?'home':f.gh<f.ga?'away':'draw', pkO=a>b?'home':a<b?'away':'draw';
+  const exact=a===f.gh&&b===f.ga, youHit=pkO===actO;
+  const tag=exact?`<span class="vok">✓ exact +${EXACT}</span>`:youHit?`<span class="vok">✓ result +${RP}</span>`:'<span class="vbad">✗ miss</span>';
+  return `<div>${tag} <span class="m">· you ${a}–${b} · FT ${f.gh}–${f.ga}</span></div>`;}
+function modelSays(f){const M=f.models;if(!M)return'';
+  const order=[['ens','Ensemble','var(--pick)'],['dc','Dixon–Coles','#facc15'],['elo','Elo','#60a5fa'],['market','Market','#e5e7eb']];
+  const ens=M.ens, base=ens?[ens.ph,ens.pd,ens.pa]:null;
+  const rows=order.filter(([k])=>M[k]).map(([k,lbl,col])=>{const v=M[k],probs=[v.ph,v.pd,v.pa],idx=probs.indexOf(Math.max(...probs));
+    const team=idx===1?'Draw':(idx===0?f.home:f.away), rcol=idx===0?'var(--good)':idx===2?'var(--away)':'var(--muted)';
+    let delta='–',dcol='var(--muted)';
+    if(k!=='ens'&&base){const d=Math.round((probs[idx]-base[idx])*100);delta=`${d>=0?'+':''}${d}`;dcol=d>0?'var(--good)':d<0?'var(--bad)':'var(--muted)';}
+    return `<span class="msl"><span style="color:${col}">●</span> ${lbl}</span><span class="msc">${v.score||'–'}</span><span class="msr" style="color:${rcol}">${team} <b style="color:var(--ink)">${pcf(probs[idx])}%</b></span><span class="msd" style="color:${dcol}">${delta}</span>`;}).join('');
+  return `<div class="mshead">What each model says</div><div class="msgrid"><span></span><span class="gh" style="text-align:center">score</span><span class="gh" style="text-align:right">call</span><span class="gh" style="text-align:right">vs ens</span>${rows}</div>`;}
+let editIdx=null, editVal=[0,0];
+function editPick(i){editIdx=i;const yp=pickArr(PICKS.fixtures[i]);editVal=[yp[0]!=null?yp[0]:0,yp[1]!=null?yp[1]:0];renderEdit();document.getElementById('editmodal').classList.remove('hidden');}
+function renderEdit(){const f=PICKS.fixtures[editIdx];const box=s=>`<div class="hbox"><button class="sbtn" onclick="bumpEdit(${s},-1)">−</button><div class="snum">${editVal[s]}</div><button class="sbtn" onclick="bumpEdit(${s},1)">+</button></div>`;
+  document.getElementById('editbody').innerHTML=`<div class="teams" style="justify-content:center">${logo(f.home)}${f.home}<span class="v">v</span>${f.away}${logo(f.away)}</div><div class="hstepper" style="margin-top:14px">${box(0)}<span class="pcenter">vs</span>${box(1)}</div>`;}
+function bumpEdit(s,d){editVal[s]=Math.max(0,Math.min(10,editVal[s]+d));renderEdit();}
+function closeEdit(){document.getElementById('editmodal').classList.add('hidden');}
+function saveEdit(){const f=PICKS.fixtures[editIdx],P=loadPk();P[keyOf(f)]=[editVal[0],editVal[1]];savePk(P);closeEdit();refreshPick(editIdx);}
+function snapCard(btn){const card=btn.closest('.pcard');if(!card||!window.html2canvas)return;btn.style.display='none';
+  html2canvas(card,{scale:3,backgroundColor:getComputedStyle(document.body).backgroundColor}).then(c=>{btn.style.display='';document.getElementById('cardimg').src=c.toDataURL('image/png');document.getElementById('imgmodal').classList.remove('hidden');}).catch(()=>{btn.style.display='';});}
+function closeImg(){document.getElementById('imgmodal').classList.add('hidden');}
 function pickCard(f,i){const cf=confidence(f);
   const callTxt=cf.kind==='draw'?'Draw':`${cf.who} win`, callCol=cf.kind==='home'?'var(--good)':cf.kind==='away'?'var(--away)':'var(--muted)';
   const lvlTxt=cf.lvl==='toss'?'toss-up':cf.lvl;
@@ -621,9 +665,10 @@ function pickCard(f,i){const cf=confidence(f);
     <div class="plegend"><span style="color:var(--good)">${f.home} <b>${pcf(f.ph)}%</b></span><span>Draw <b>${pcf(f.pd)}%</b></span><span style="color:var(--away)">${f.away} <b>${pcf(f.pa)}%</b></span></div>
     <div class="formends"><span>${formStripArr(f.formH)}</span><span>${formStripArr(f.formA)}</span></div>
     <div class="tops">${tops}</div>
+    ${modelSays(f)}
     ${f.finished?`<div class="meta" style="margin-top:9px">Full time <b style="color:var(--ink)">${f.gh}–${f.ga}</b></div>`:''}
-    <div class="pickbox"><span>Your score</span><div id="pk-${i}">${pickUIFor(f,i)}</div></div>
-    <div class="cardfoot"><div class="vfill" id="vf-${i}">${validationLine(f,i)}</div></div>
+    <div class="pickbox"><div id="pk-${i}" style="flex:1">${pickUIFor(f,i)}</div></div>
+    <div class="cardfoot"><button class="snapbtn" onclick="snapCard(this)" title="Save as image">📷</button><div class="vfill" id="vf-${i}">${validationLine(f,i)}</div>${isLocked(f)?`<button class="editbtn" onclick="editPick(${i})" title="Edit pick">✎</button>`:''}</div>
   </div>`;}
 function refreshPick(i){const f=PICKS.fixtures[i];const pk=document.getElementById('pk-'+i);if(pk)pk.innerHTML=pickUIFor(f,i);const vf=document.getElementById('vf-'+i);if(vf)vf.innerHTML=validationLine(f,i);}
 function bumpPick(i,side,delta){const f=PICKS.fixtures[i];if(isLocked(f))return;const k=keyOf(f),P=loadPk();const cur=(P[k]||[null,null]).slice();let v=cur[side];
@@ -634,9 +679,11 @@ function renderPicks(){const host=document.getElementById('picks');
     fetch('picks.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{PICKS=d;renderPicks();}).catch(()=>{host.innerHTML='<div class="err">Picks data unavailable.</div>';});return;}
   const fx=PICKS.fixtures||[];
   if(!fx.length){host.innerHTML='<div class="err">No fixtures for the upcoming gameweek yet.</div>';return;}
+  const idx=fx.map((f,i)=>[f,i]), up=idx.filter(([f])=>!f.finished), done=idx.filter(([f])=>f.finished);
   let body='',cur=null;
-  fx.forEach((f,i)=>{const k=f.kickoff?f.kickoff.slice(0,10):('gw'+f.gw);if(k!==cur){cur=k;body+=`<div class="dayhdr">${f.kickoff?dayLabel(k):('Gameweek '+f.gw)}</div>`;}body+=pickCard(f,i);});
-  host.innerHTML=`<div class="tsub">Predict each scoreline for GW${PICKS.event}. Model call, win probabilities and likeliest scores shown — tap a matchup to compare both sides on xG. Picks lock at kickoff.</div>`+body;}
+  up.forEach(([f,i])=>{const k=f.kickoff?f.kickoff.slice(0,10):('gw'+f.gw);if(k!==cur){cur=k;body+=`<div class="dayhdr">${f.kickoff?dayLabel(k):('Gameweek '+f.gw)}</div>`;}body+=pickCard(f,i);});
+  if(done.length){body+=`<div class="dayhdr">Results</div>`;done.forEach(([f,i])=>{body+=pickCard(f,i);});}
+  host.innerHTML=`<div class="tsub">Predict each scoreline for GW${PICKS.event}. Model call, win probabilities and likeliest scores shown — tap a matchup to compare both sides on xG. Picks lock at kickoff; once a match ends its card drops to Results below and scores (1 pt result, 3 pts exact).</div>`+body;}
 let mxgIdx=null,mxgView='map';
 function openMatchXG(i){mxgIdx=i;mxgView='map';document.getElementById('matchxgmodal').classList.remove('hidden');
   if(!XG)fetch('xg.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{XG=d;renderMatchXG();}).catch(renderMatchXG);else renderMatchXG();}

@@ -94,10 +94,18 @@ def main() -> int:
         pen = E.ensemble_probs(model.outcome_probs(hk, ak, neutral=False),
                                elom.outcome_probs(hk, ak, neutral=False), w=0.45)
         tops = [[f"{i}-{j}", round(p, 3)] for (i, j), p in model.most_likely_scores(hk, ak, top=6, neutral=False)]
+        dcp = model.outcome_probs(hk, ak, neutral=False)
+        elop = elom.outcome_probs(hk, ak, neutral=False)
+        (es_i, es_j), _ = elom.most_likely_scores(hk, ak, top=1, neutral=False)[0]
+        models = {
+            "ens": {"ph": round(pen["home"], 3), "pd": round(pen["draw"], 3), "pa": round(pen["away"], 3), "score": tops[0][0] if tops else ""},
+            "dc":  {"ph": round(dcp["home"], 3), "pd": round(dcp["draw"], 3), "pa": round(dcp["away"], 3), "score": tops[0][0] if tops else ""},
+            "elo": {"ph": round(elop["home"], 3), "pd": round(elop["draw"], 3), "pa": round(elop["away"], 3), "score": f"{es_i}-{es_j}"},
+        }
         rows.append({
             "gw": target, "home": m["home"], "away": m["away"], "kickoff": m["kickoff"],
             "ph": round(pen["home"], 3), "pd": round(pen["draw"], 3), "pa": round(pen["away"], 3),
-            "xgh": round(lh, 2), "xga": round(la, 2), "tops": tops,
+            "xgh": round(lh, 2), "xga": round(la, 2), "tops": tops, "models": models,
             "formH": form_strip(train, hk, cutoff), "formA": form_strip(train, ak, cutoff),
             "finished": m["finished"], "gh": m["gh"], "ga": m["ga"],
         })
