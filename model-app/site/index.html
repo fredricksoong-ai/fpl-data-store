@@ -339,6 +339,13 @@
   </div>
 </div>
 
+<div id="playermodal" class="modal hidden" onclick="if(event.target===this)closePM()">
+  <div class="modalbox">
+    <div class="modalhd"><span id="pmtitle" class="teams"></span><span class="mx" onclick="closePM()" title="Close">✕</span></div>
+    <div id="pmbody"></div>
+  </div>
+</div>
+
 <div id="editmodal" class="modal hidden" onclick="if(event.target===this)closeEdit()">
   <div class="modalbox">
     <div class="modalhd"><span>Edit pick</span><span class="mx" onclick="closeEdit()" title="Close">✕</span></div>
@@ -427,7 +434,7 @@ function bub(p,SC,H,bn){const w=Math.round(tileW(p[3])*SC),h=Math.round(H!=null?
   else if(g)bd+=`<span class="cnr c-tl b-icon">${I_GOAL}</span>`;else if(a)bd+=`<span class="cnr c-tl b-icon">${I_ASSIST}</span>`;
   if(ti)bd+=`<span class="cnr c-bl">${I_XFER}</span>`;
   if(warn)bd+='<span class="cnr c-br b-warn">!</span>';
-  return `<div class="bub ${tier(p)} ${p[5]?'cap':p[6]?'vc':''}" style="width:${w}px;height:${h}px"><div class="in"><span class="nm" style="font-size:${nf}px">${p[1]}</span><span class="sub" style="font-size:${sf}px">${l2}</span><span class="sub" style="font-size:${sf}px">${l3}</span>${l4}</div>${bd}</div>`;}
+  return `<div class="bub ${tier(p)} ${p[5]?'cap':p[6]?'vc':''}" style="width:${w}px;height:${h}px" onclick="playerModal('${String(p[1]).replace(/'/g,"\\'")}',${p[0]})"><div class="in"><span class="nm" style="font-size:${nf}px">${p[1]}</span><span class="sub" style="font-size:${sf}px">${l2}</span><span class="sub" style="font-size:${sf}px">${l3}</span>${l4}</div>${bd}</div>`;}
 function gwPill(team){const s=STATS[team]||STATS[ME]||{gw:0,avg:1,ml:'',gap:'',op:0,ovr:'',ovrUp:0,gwr:'',up:0,val:'',bank:''};const sl='<span class="sl">•</span>';
   const top=`<span class="pill ptop"><span class="k">GW</span><b>${GWNO}</b>${sl}<b class="${gwCol(s.gw,s.avg)}">${s.gw}</b><span class="mu">/${s.avg}</span>${sl}<b class="gd">${s.ml}</b> <span class="${(s.gap+'')[0]==='+'?'gd':'bd'}">${s.gap}</span>${sl}<span class="k">GWR</span><b>${s.gwr}</b> <span class="${s.up?'gd':'bd'}">${s.up?'▲':'▼'}</span></span>`;
   const bot=`<span class="pill pbot"><span class="k">OP</span><b>${s.op}</b>${sl}<span class="k">OR</span><b>${s.ovr}</b> <span class="${s.ovrUp?'gd':'bd'}">${s.ovrUp?'▲':'▼'}</span>${sl}<b>${s.val}</b><span class="mu"> +${s.bank}</span></span>`;
@@ -847,7 +854,11 @@ function drawPlScatter(){const el=document.getElementById('plchart');if(!el)retu
   else{xf=p=>p.min;yf=p=>p.dc90;
     cfg={xlab:'minutes →',ylab:'CBIT /90 ↑',xstep:500,ystep:4,xmin:0,xmax:Math.ceil(mx(xf,50)/500)*500,ymin:0,ymax:Math.max(4,Math.ceil(mx(yf,2)))};}
   cfg.flipY=false;cfg.click='plPoint';
-  const items=pool.map(p=>({x:xf(p),y:yf(p),lbl:p.name,code:String(p.id),big:p.flag_count>=2,
+  // label outliers: top 10% and bottom 10% by the active lens's metric (WC26 rule)
+  const score=plView==='value'?(p=>p.ep/Math.max(p.price,0.1)):plView==='threat'?(p=>p.xg90+p.xa90):plView==='diff'?(p=>p.form):(p=>p.dc90);
+  const k=Math.max(1,Math.round(pool.length*0.1)),srt=[...pool].sort((a,b)=>score(b)-score(a));
+  const lab=new Set([...srt.slice(0,k),...srt.slice(-k)].map(p=>p.id));
+  const items=pool.map(p=>({x:xf(p),y:yf(p),lbl:p.name,code:String(p.id),big:lab.has(p.id),
     col:p.flag_count>=1?'#34d399':'#5b6b85',dim:p.flag_count===0}));
   el.innerHTML=scatterSVG(items,cfg);}
 function plPoint(id){const el=document.getElementById('pldetail');if(!el)return;
@@ -867,6 +878,30 @@ function renderRecommend(){const host=document.getElementById('recommend');
     ${p.flags.length?`<div class="pchips">${p.flags.map(fl=>`<span class="flg ${fl==='rotation_risk'?'flg-rot':''}">${FLAGLBL[fl]||fl}</span>`).join('')}</div>`:''}
   </div>`).join('');
   host.innerHTML=`<div class="tsub">The model's best picks for GW${REC.event} by expected points, with signal flags for conviction. Ranked per position — tap to switch lines.</div>${bar}${rows}`;}
+/* ===== Squad player modal: details + comparison vs replacements ===== */
+function closePM(){document.getElementById('playermodal').classList.add('hidden');}
+async function playerModal(name,posType){
+  document.getElementById('playermodal').classList.remove('hidden');
+  const host=document.getElementById('pmbody'); host.innerHTML='<div class="err">Loading…</div>';
+  if(!PLAYERS){try{PLAYERS=await (await fetch('players.json',{cache:'no-store'})).json();}catch(e){host.innerHTML='<div class="err">Player data unavailable.</div>';return;}}
+  const pc=({1:'GK',2:'DEF',3:'MID',4:'FWD'})[posType]||posType, all=PLAYERS.players||[];
+  const me=all.find(p=>p.name===name&&p.pos===pc)||all.find(p=>p.name===name);
+  document.getElementById('pmtitle').innerHTML=me?`${logo(me.code)}${me.name} <span class="m" style="font-weight:400">${me.pos} · £${me.price.toFixed(1)}</span>`:name;
+  if(!me){host.innerHTML='<div class="err">No data for '+name+' yet — fills in once games are played.</div>';return;}
+  const pool=all.filter(p=>p.pos===me.pos&&p.min>=300);
+  const cand=pool.filter(p=>p.id!==me.id).sort((a,b)=>b.ep-a.ep).slice(0,8);
+  const shown=[me,...cand];
+  const xf=p=>p.price,yf=p=>p.ep, mx=(f,pad)=>Math.max(...shown.map(f))+pad, mn=(f,pad)=>Math.min(...shown.map(f))-pad;
+  const cfg={xlab:'price £ →',ylab:'model xPts ↑',xstep:1,ystep:1,flipY:false,click:'pmPoint',
+    xmin:Math.floor(mn(xf,0.4)),xmax:Math.ceil(mx(xf,0.4)),ymin:Math.max(0,Math.floor(mn(yf,0.5))),ymax:Math.ceil(mx(yf,0.5))};
+  const items=shown.map(p=>({x:xf(p),y:yf(p),lbl:p.name,code:String(p.id),big:true,ring:p.id===me.id,col:p.id===me.id?'#00ff85':'#5dcaa5'}));
+  const ups=cand.filter(p=>p.ep>me.ep).slice(0,3);
+  const upline=ups.length?ups.map(p=>`<div class="mxg-row"><span>${logo(p.code)}<b style="color:var(--ink)">${p.name}</b> <span class="m">£${p.price.toFixed(1)}</span></span><span><b style="color:var(--good)">+${(p.ep-me.ep).toFixed(1)} xPts</b></span></div>`).join(''):'<div class="mxg-row"><span class="m">No higher-xPts option in position.</span></div>';
+  const metr=`<div class="pmet" style="margin:2px 0 4px"><span class="m">xPts <b style="color:var(--ink)">${me.ep}</b></span><span class="m">form <b style="color:var(--ink)">${me.form}</b></span><span class="m">xGI90 <b style="color:var(--ink)">${me.xgi}</b></span><span class="m">own <b style="color:var(--ink)">${me.sel}%</b></span></div>`;
+  const flags=me.flags&&me.flags.length?`<div class="pchips">${me.flags.map(fl=>`<span class="flg ${fl==='rotation_risk'?'flg-rot':''}">${FLAGLBL[fl]||fl}</span>`).join('')}</div>`:'';
+  host.innerHTML=metr+flags+scatterSVG(items,cfg)+`<div class="mshead">Higher-xPts in ${me.pos}</div><div class="mxg-sum">${upline}</div>`;
+}
+function pmPoint(id){const p=(PLAYERS.players||[]).find(x=>String(x.id)===String(id));if(p)playerModal(p.name,({GK:1,DEF:2,MID:3,FWD:4})[p.pos]);}
 const CARDS=["card-squad","card-league"];let _ci=0;
 function midAction(){ if(activeView!=="myteam"){selectView("myteam");return;}
   _ci=(_ci+1)%CARDS.length; const el=document.getElementById(CARDS[_ci]);
