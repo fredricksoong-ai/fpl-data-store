@@ -149,6 +149,9 @@
   .ttab td.g{color:var(--good)}.ttab td.rd{color:var(--bad)}
   .ttab tr.t4 td{background:rgba(0,255,133,.05)} .ttab tr.relrow td{background:rgba(248,113,113,.06)}
   .tnote{color:var(--faint);font-size:10.5px;line-height:1.5;margin:12px 2px 2px}
+  .bdg{width:11px;height:11px;vertical-align:-1px;margin-right:3px;object-fit:contain;display:inline-block}
+  .bdg.lg{width:18px;height:18px;vertical-align:-4px;margin-right:6px}
+  .ttab .ttm{display:flex;align-items:center}.tnm{display:flex;align-items:center}
 </style>
 </head>
 <body>
@@ -232,14 +235,18 @@ const gwCol=(gw,avg)=>{const r=gw/avg;return r<0.9?'bd':r<=1.1?'am':r<1.5?'gd':'
 const I_GOAL='⚽';
 const I_ASSIST='👟';
 const I_XFER='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h12M11 7l5 5-5 5"/></svg>';
+/* PL club 3-letter code -> official badge code (resources.premierleague.com) */
+const BADGE={ARS:3,AVL:7,BHA:36,BOU:91,BRE:94,CHE:8,COV:45,CRY:31,EVE:11,FUL:54,HUL:88,IPS:40,LEE:2,LIV:14,MCI:43,MUN:1,NEW:4,NFO:17,SUN:56,TOT:6,BUR:90,WHU:21,WOL:39,LEI:13,SOU:20,IPW:40};
+const logo=(code,cls)=>BADGE[code]?`<img class="bdg${cls?' '+cls:''}" src="https://resources.premierleague.com/premierleague/badges/50/t${BADGE[code]}.png" alt="" loading="lazy">`:'';
 function bub(p,SC,H,bn){const w=Math.round(tileW(p[3])*SC),h=Math.round(H!=null?H:TILEH*SC),s=p[4];  // width by ownership; H lets bench keep full height while width is scaled down; bn=bench
   const POS=['','GK','DEF','MID','FWD'][p[0]]||'';
   const fdrCol=d=>d>=4?'var(--bad)':(d>0&&d<=2)?'var(--good)':'var(--muted)';
   const xp=(p[13]!=null&&p[13]!=='')?(+p[13]).toFixed(1):'';
   // line 2: pre-game = opp(FDR) + kickoff; once played = opp + points (FDR/timing drop away)
-  const l2=s===0?`<span style="color:${fdrCol(p[14])}">${p[8]}</span>${p[9]?` <span class="tm">${p[9]}</span>`:''}`
-          :s===2?`${p[8]} • DNP`
-          :`${p[8]} • ${p[2]} pts`;
+  const ol=logo(p[8]);
+  const l2=s===0?`${ol}<span style="color:${fdrCol(p[14])}">${p[8]}</span>${p[9]?` <span class="tm">${p[9]}</span>`:''}`
+          :s===2?`${ol}${p[8]} • DNP`
+          :`${ol}${p[8]} • ${p[2]} pts`;
   // line 3: position (+ inline xPts on wide starter tiles); narrow bench tiles push xPts to line 4
   const xps=xp?`<span class="xp">${xp} xPts</span>`:'';
   const l3=bn?`<span class="pos">${POS}</span>`:`<span class="pos">${POS}</span>${xp?` • ${xps}`:''}`;
@@ -318,13 +325,13 @@ function renderTitle(){const el=document.getElementById('titlebody');
   const t=TITLE.teams||[], mx=Math.max(...t.map(x=>x.title),1), cont=t.filter(x=>x.title>=0.1);
   let html=`<div class="tsub">Each club's chance to <b>win the league</b> from ${(+TITLE.sims).toLocaleString()} simulated seasons — Dixon–Coles + Elo. Recalculates as results come in.</div>`;
   html+=cont.map((r,i)=>`<div class="orow"><div class="trk">${i+1}</div>
-    <div style="flex:1;min-width:0"><div class="tnm">${r.team}</div>
+    <div style="flex:1;min-width:0"><div class="tnm">${logo(r.code,'lg')}${r.code}</div>
       <div class="obar"><i style="width:${Math.max(2,Math.round(r.title/mx*100))}%"></i></div>
       <div class="tmeta">top 4 ${r.top4}% · rel ${r.releg}%</div></div>
     <div class="tpct"><b>${r.title.toFixed(1)}%</b><span>title</span></div></div>`).join('');
   html+=`<div class="ctitle2">Projected final table</div>
     <div class="lgcard"><table class="ttab"><thead><tr><th>#</th><th>Team</th><th class="r">Pts</th><th class="r">GD</th><th class="r">Title</th><th class="r">Top 4</th><th class="r">Rel</th></tr></thead><tbody>`+
-    t.map(r=>`<tr class="${r.rank<=4?'t4':r.rank>=18?'relrow':''}"><td class="trk2">${r.rank}</td><td class="ttm">${r.team}</td>
+    t.map(r=>`<tr class="${r.rank<=4?'t4':r.rank>=18?'relrow':''}"><td class="trk2">${r.rank}</td><td class="ttm">${logo(r.code)}${r.code}</td>
       <td class="r"><b>${r.pts}</b></td><td class="r ${r.gd>=0?'g':'rd'}">${r.gd>0?'+':''}${r.gd}</td>
       <td class="r">${tpct(r.title)}</td><td class="r">${tpct(r.top4)}</td><td class="r">${tpct(r.releg)}</td></tr>`).join('')+
     `</tbody></table></div>
