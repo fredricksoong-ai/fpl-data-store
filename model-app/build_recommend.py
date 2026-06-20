@@ -76,9 +76,14 @@ def main() -> int:
     cutoff = min(kos) if kos else hist.date.max() + pd.Timedelta(days=1)
     model = dc.fit(hist[hist.date < cutoff], xi=0.0019)
 
+    players_df = fp.build_players(boot)
     gw_fx = pd.DataFrame([{"home_team": _norm(CODE2FD.get(h, h)), "away_team": _norm(CODE2FD.get(a, a))}
                           for h, a in hzpairs if in_model(model, h, a)])
-    proj = fp.gameweek_points(model, fp.build_players(boot), gw_fx)  # xpts summed over the horizon fixtures
+    proj = fp.gameweek_points(model, players_df, gw_fx)  # xpts summed over the horizon fixtures
+    # single next-GW projection too (captaincy is a one-week call)
+    gw_fx1 = pd.DataFrame([{"home_team": _norm(CODE2FD.get(h, h)), "away_team": _norm(CODE2FD.get(a, a))}
+                           for h, a in npairs if in_model(model, h, a)])
+    xp1_by = {int(r.id): round(float(r.xpts), 2) for r in fp.gameweek_points(model, players_df, gw_fx1).itertuples()} if not gw_fx1.empty else {}
 
     try:
         flags = {p["id"]: p for p in json.loads((OUT.parent / "players.json").read_text())["players"]}
@@ -108,7 +113,7 @@ def main() -> int:
     try:
         pj = json.loads((OUT.parent / "players.json").read_text())
         for p in pj["players"]:
-            p["xph"] = xph_by.get(p["id"])
+            p["xph"] = xph_by.get(p["id"]); p["xp1"] = xp1_by.get(p["id"])
         (OUT.parent / "players.json").write_text(json.dumps(pj, ensure_ascii=False))
     except Exception as e:
         print("  could not merge xph into players.json:", e)

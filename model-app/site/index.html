@@ -247,6 +247,10 @@
   .diffcols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
   .diffh{font-size:10.5px;color:var(--faint);font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
   .diffrow{display:flex;align-items:center;gap:4px;font-size:12px;padding:3px 0;font-variant-numeric:tabular-nums}
+  .caprow{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+  .capchip{display:inline-flex;align-items:center;gap:4px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:11.5px} .capchip b{color:var(--fpl)}
+  .moverow{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:6px 0;border-bottom:1px solid var(--line)}
+  .moverow:last-child{border-bottom:none} .mout{white-space:nowrap} .marrow{color:var(--muted)} .min{flex:1} .mgain{color:var(--good);font-weight:800;font-variant-numeric:tabular-nums}
   .mshead{color:var(--muted);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.3px;margin:12px 0 5px}
   .msgrid{display:grid;grid-template-columns:1fr 40px 1fr 40px;gap:4px 8px;font-size:11.5px;align-items:center}
   .msgrid .gh{color:var(--faint);font-size:10px} .msl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .msc{text-align:center;color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums} .msr{text-align:right} .msd{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
@@ -285,6 +289,11 @@
       </div>
     </div>
     <div id="diffpanel"></div>
+  </section>
+
+  <section class="card" id="card-nextgw">
+    <div class="ctitle">Next GW · captain & transfers</div>
+    <div id="nextgw"></div>
   </section>
 
   <section class="card" id="card-chips">
@@ -990,7 +999,27 @@ function pmCompare(me,pc){
   const upline=ups.length?ups.map(p=>`<div class="mxg-row"><span>${logo(p.code)}<b style="color:var(--ink)">${p.name}</b> <span class="m">£${p.price.toFixed(1)}</span></span><span><b style="color:var(--good)">+${(XP(p)-XP(me)).toFixed(1)} xPts</b></span></div>`).join(''):'<div class="mxg-row"><span class="m">No higher-xPts option in position over the next 5 GWs.</span></div>';
   return scatterSVG(items,cfg)+`<div class="mshead">Higher-xPts in ${me.pos} (next 5 GWs)</div><div class="mxg-sum">${upline}</div>`;}
 function pmPoint(id){const p=(PLAYERS.players||[]).find(x=>String(x.id)===String(id));if(p){pmName=p.name;pmType=({GK:1,DEF:2,MID:3,FWD:4})[p.pos];pmTab='compare';pmRender();}}
-const CARDS=["card-squad","card-chips","card-league"];let _ci=0;
+const CARDS=["card-squad","card-nextgw","card-chips","card-league"];let _ci=0;
+function renderNextGW(){const host=document.getElementById('nextgw');if(!host)return;
+  const PL=(PLAYERS&&PLAYERS.players)||[], mine=SQUADS[ME]||[];
+  if(!mine.length){host.innerHTML='<div class="m" style="font-size:12px">Your Next GW plan appears once your team is set.</div>';return;}
+  if(!PL.length){host.innerHTML='<div class="m" style="font-size:12px">Loading projections…</div>';return;}
+  const byName=n=>PL.find(p=>p.name===n);
+  const xi=mine.filter(p=>!p[7]).map(p=>{const m=byName(p[1]);return {name:p[1],code:p[17],opp:p[8],xp:(m&&m.xp1!=null?m.xp1:(p[13]||0))};}).sort((a,b)=>b.xp-a.xp);
+  const cap=xi[0],vc=xi[1];
+  const capHtml=cap?`<div class="ctitle2" style="margin:2px 2px 6px">Captain pick</div>
+    <div class="tsub">Captain <b style="color:var(--fpl)">${cap.name}</b>${cap.opp?` <span class="m">vs ${cap.opp}</span>`:''} · <b style="color:var(--ink)">${cap.xp.toFixed(1)}</b> xPts · Vice <b style="color:var(--ink)">${vc?vc.name:'—'}</b></div>
+    <div class="caprow">${xi.slice(0,3).map((r,i)=>`<span class="capchip"><b>${['C','V','3'][i]}</b> ${logo(r.code)}${r.name} <span class="m">${r.xp.toFixed(1)}</span></span>`).join('')}</div>`:'';
+  const bank=parseFloat((STATS[ME]||{}).bank||'0')||0, owned=new Set(mine.map(p=>p[1])), moves=[];
+  mine.forEach(p=>{const m=byName(p[1]);if(!m||m.xph==null)return;const budget=m.price+bank;
+    const c=PL.filter(x=>x.pos===m.pos&&!owned.has(x.name)&&x.xph!=null&&x.price<=budget+1e-6&&x.xph>m.xph).sort((a,b)=>b.xph-a.xph)[0];
+    if(c)moves.push({out:m,inn:c,gain:c.xph-m.xph});});
+  moves.sort((a,b)=>b.gain-a.gain);
+  const usedIn=new Set(),usedOut=new Set(),top=[];  // distinct transfers — each player in/out once
+  for(const m of moves){if(top.length>=5)break;if(usedIn.has(m.inn.name)||usedOut.has(m.out.name))continue;usedIn.add(m.inn.name);usedOut.add(m.out.name);top.push(m);}
+  const movesHtml=`<div class="ctitle2" style="margin:16px 2px 6px">Your moves <span class="m" style="font-weight:400">· bank £${bank.toFixed(1)}m · next 5 GWs</span></div>`+
+    (top.length?top.map(m=>`<div class="moverow"><span class="mout">${logo(m.out.code)}${m.out.name}</span><span class="marrow">→</span><span class="min">${logo(m.inn.code)}${m.inn.name} <span class="m">£${m.inn.price.toFixed(1)}</span></span><span class="mgain">+${m.gain.toFixed(1)}</span></div>`).join(''):'<div class="m" style="font-size:12px">No affordable upgrade beats your current 15 over the next 5 GWs.</div>');
+  host.innerHTML=capHtml+movesHtml;}
 function midAction(){ if(activeView!=="myteam"){selectView("myteam");return;}
   _ci=(_ci+1)%CARDS.length; const el=document.getElementById(CARDS[_ci]);
   el.scrollIntoView({behavior:'smooth',block:'center'});
@@ -1036,6 +1065,8 @@ fetch('v2.json',{cache:'no-store'}).then(r=>r.json()).then(V=>{
   renderPitch(ME);
   renderLeague(V.league);
   chipPills('sqchips','sqchipnote','squad');
+  if(PLAYERS)renderNextGW();
+  else fetch('players.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{PLAYERS=d;renderNextGW();}).catch(()=>renderNextGW());
 }).catch(e=>{
   document.getElementById('pitchrows').innerHTML='<div style="padding:30px 16px;text-align:center;color:var(--bad)">Couldn\'t load live data (v2.json).</div>';
   document.getElementById('updatedTime').textContent='—';
