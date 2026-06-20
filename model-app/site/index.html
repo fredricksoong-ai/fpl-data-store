@@ -836,7 +836,7 @@ function renderPlayers(){const host=document.getElementById('players');
   const rows=list.map(p=>`<div class="pcard2">
     <div class="ppl"><span class="pcnt c${Math.min(p.flag_count,5)}">${p.flag_count}</span>${logo(p.code)}<b>${p.name}</b><span class="m">&nbsp;${p.pos} · £${p.price.toFixed(1)}</span></div>
     <div class="pchips">${p.flags.map(fl=>`<span class="flg ${fl==='rotation_risk'?'flg-rot':''}">${FLAGLBL[fl]||fl}</span>`).join('')}</div>
-    <div class="pmet"><span class="m">form <b style="color:var(--ink)">${p.form}</b></span><span class="m">xGI <b style="color:var(--ink)">${p.xgi}</b></span><span class="m">ep <b style="color:var(--ink)">${p.ep}</b></span><span class="m">${p.sel}%</span></div>
+    <div class="pmet"><span class="m">form <b style="color:var(--ink)">${p.form}</b></span><span class="m">xGI <b style="color:var(--ink)">${p.xgi}</b></span><span class="m">xPts·5 <b style="color:var(--ink)">${p.xph!=null?p.xph:p.ep}</b></span><span class="m">${p.sel}%</span></div>
   </div>`).join('')||'<div class="err">No flagged players in this position.</div>';
   host.innerHTML=`<div class="tsub">Players carrying ≥1 signal flag, ranked by conviction (flag count). More flags converging = stronger buy. <span style="color:var(--bad)">Rotation</span> is an avoid flag. Through GW${PLAYERS.event}.</div>${modebar}${posbar}${rows}`;}
 function drawPlScatter(){const el=document.getElementById('plchart');if(!el)return;
@@ -845,8 +845,8 @@ function drawPlScatter(){const el=document.getElementById('plchart');if(!el)retu
   if(!pool.length){el.innerHTML='<div class="err">Not enough minutes played yet for this lens.</div>';return;}
   const mx=(f,pad)=>Math.max(...pool.map(f))+pad, mn=(f,pad)=>Math.min(...pool.map(f))-pad;
   let xf,yf,cfg;
-  if(plView==='value'){xf=p=>p.price;yf=p=>p.ep;
-    cfg={xlab:'price £ →',ylab:'model xPts ↑',xstep:2,ystep:1,xmin:Math.floor(mn(xf,0.3)),xmax:Math.ceil(mx(xf,0.3)),ymin:0,ymax:Math.ceil(mx(yf,0.3))};}
+  if(plView==='value'){xf=p=>p.price;yf=p=>(p.xph!=null?p.xph:(p.ep||0));
+    cfg={xlab:'price £ →',ylab:'xPts (5 GW) ↑',xstep:2,ystep:2,xmin:Math.floor(mn(xf,0.3)),xmax:Math.ceil(mx(xf,0.3)),ymin:0,ymax:Math.ceil(mx(yf,1))};}
   else if(plView==='threat'){xf=p=>p.xg90;yf=p=>p.xa90;
     cfg={xlab:'xG /90 →',ylab:'xA /90 ↑',xstep:0.2,ystep:0.2,xmin:0,xmax:Math.max(0.4,Math.ceil(mx(xf,0.05)*5)/5),ymin:0,ymax:Math.max(0.4,Math.ceil(mx(yf,0.05)*5)/5)};}
   else if(plView==='diff'){xf=p=>p.sel;yf=p=>p.form;
@@ -855,7 +855,7 @@ function drawPlScatter(){const el=document.getElementById('plchart');if(!el)retu
     cfg={xlab:'minutes →',ylab:'CBIT /90 ↑',xstep:500,ystep:4,xmin:0,xmax:Math.ceil(mx(xf,50)/500)*500,ymin:0,ymax:Math.max(4,Math.ceil(mx(yf,2)))};}
   cfg.flipY=false;cfg.click='plPoint';
   // label outliers: top 10% and bottom 10% by the active lens's metric (WC26 rule)
-  const score=plView==='value'?(p=>p.ep/Math.max(p.price,0.1)):plView==='threat'?(p=>p.xg90+p.xa90):plView==='diff'?(p=>p.form):(p=>p.dc90);
+  const score=plView==='value'?(p=>(p.xph!=null?p.xph:(p.ep||0))/Math.max(p.price,0.1)):plView==='threat'?(p=>p.xg90+p.xa90):plView==='diff'?(p=>p.form):(p=>p.dc90);
   const k=Math.max(1,Math.round(pool.length*0.1)),srt=[...pool].sort((a,b)=>score(b)-score(a));
   const lab=new Set([...srt.slice(0,k),...srt.slice(-k)].map(p=>p.id));
   const items=pool.map(p=>({x:xf(p),y:yf(p),lbl:p.name,code:String(p.id),big:lab.has(p.id),
@@ -864,7 +864,7 @@ function drawPlScatter(){const el=document.getElementById('plchart');if(!el)retu
 function plPoint(id){const el=document.getElementById('pldetail');if(!el)return;
   const p=(PLAYERS.players||[]).find(x=>String(x.id)===String(id));if(!p)return;
   el.innerHTML=`<div class="xgd-h">${logo(p.code)}<b style="color:var(--ink)">${p.name}</b> <span class="m">${p.pos} · £${p.price.toFixed(1)} · ${p.code}</span></div>
-    <div class="pmet"><span class="m">xPts <b style="color:var(--ink)">${p.ep}</b></span><span class="m">form <b style="color:var(--ink)">${p.form}</b></span><span class="m">xG90 <b style="color:var(--ink)">${p.xg90}</b></span><span class="m">xA90 <b style="color:var(--ink)">${p.xa90}</b></span><span class="m">own <b style="color:var(--ink)">${p.sel}%</b></span></div>
+    <div class="pmet"><span class="m">xPts·5 <b style="color:var(--ink)">${p.xph!=null?p.xph:p.ep}</b></span><span class="m">form <b style="color:var(--ink)">${p.form}</b></span><span class="m">xG90 <b style="color:var(--ink)">${p.xg90}</b></span><span class="m">xA90 <b style="color:var(--ink)">${p.xa90}</b></span><span class="m">own <b style="color:var(--ink)">${p.sel}%</b></span></div>
     ${p.flags.length?`<div class="pchips">${p.flags.map(fl=>`<span class="flg ${fl==='rotation_risk'?'flg-rot':''}">${FLAGLBL[fl]||fl}</span>`).join('')}</div>`:''}`;}
 /* ===== Transfers (model-ranked targets: xPts × flags) ===== */
 let REC=null, recPos='MID';
@@ -874,10 +874,10 @@ function renderRecommend(){const host=document.getElementById('recommend');
   const pos=REC.positions||{}, list=pos[recPos]||[];
   const bar=`<div class="oddsel">`+['GK','DEF','MID','FWD'].map(x=>`<span class="opt ${recPos===x?'on':''}" onclick="recPos='${x}';renderRecommend()">${x}</span>`).join('')+`</div>`;
   const rows=list.map((p,i)=>`<div class="pcard2">
-    <div class="ppl"><span class="pcnt c${Math.min(p.flag_count,5)}">${i+1}</span>${logo(p.code)}<b>${p.name}</b><span class="m">&nbsp;£${p.price.toFixed(1)}${p.opp?` · ${p.opp}(${p.venue})`:''}</span><span class="recxp">${p.xpts.toFixed(1)}<span>xPts</span></span></div>
+    <div class="ppl"><span class="pcnt c${Math.min(p.flag_count,5)}">${i+1}</span>${logo(p.code)}<b>${p.name}</b><span class="m">&nbsp;£${p.price.toFixed(1)}${p.opp?` · ${p.opp}(${p.venue})`:''}${p.nfix?` · ${p.nfix} fix`:''}</span><span class="recxp">${(p.xph||0).toFixed(1)}<span>xPts·${REC.horizon||5}</span></span></div>
     ${p.flags.length?`<div class="pchips">${p.flags.map(fl=>`<span class="flg ${fl==='rotation_risk'?'flg-rot':''}">${FLAGLBL[fl]||fl}</span>`).join('')}</div>`:''}
   </div>`).join('');
-  host.innerHTML=`<div class="tsub">The model's best picks for GW${REC.event} by expected points, with signal flags for conviction. Ranked per position — tap to switch lines.</div>${bar}${rows}`;}
+  host.innerHTML=`<div class="tsub">The model's best picks over the next ${REC.horizon||5} gameweeks by expected points, with signal flags for conviction. Ranked per position — tap to switch lines.</div>${bar}${rows}`;}
 /* ===== Squad player modal: details + comparison vs replacements ===== */
 function closePM(){document.getElementById('playermodal').classList.add('hidden');}
 async function playerModal(name,posType){
@@ -888,18 +888,19 @@ async function playerModal(name,posType){
   const me=all.find(p=>p.name===name&&p.pos===pc)||all.find(p=>p.name===name);
   document.getElementById('pmtitle').innerHTML=me?`${logo(me.code)}${me.name} <span class="m" style="font-weight:400">${me.pos} · £${me.price.toFixed(1)}</span>`:name;
   if(!me){host.innerHTML='<div class="err">No data for '+name+' yet — fills in once games are played.</div>';return;}
+  const XP=p=>(p.xph!=null?p.xph:(p.ep||0));
   const pool=all.filter(p=>p.pos===me.pos&&p.min>=300);
-  const cand=pool.filter(p=>p.id!==me.id).sort((a,b)=>b.ep-a.ep).slice(0,8);
+  const cand=pool.filter(p=>p.id!==me.id).sort((a,b)=>XP(b)-XP(a)).slice(0,8);
   const shown=[me,...cand];
-  const xf=p=>p.price,yf=p=>p.ep, mx=(f,pad)=>Math.max(...shown.map(f))+pad, mn=(f,pad)=>Math.min(...shown.map(f))-pad;
-  const cfg={xlab:'price £ →',ylab:'model xPts ↑',xstep:1,ystep:1,flipY:false,click:'pmPoint',
-    xmin:Math.floor(mn(xf,0.4)),xmax:Math.ceil(mx(xf,0.4)),ymin:Math.max(0,Math.floor(mn(yf,0.5))),ymax:Math.ceil(mx(yf,0.5))};
+  const xf=p=>p.price,yf=p=>XP(p), mx=(f,pad)=>Math.max(...shown.map(f))+pad, mn=(f,pad)=>Math.min(...shown.map(f))-pad;
+  const cfg={xlab:'price £ →',ylab:'xPts (5 GW) ↑',xstep:1,ystep:2,flipY:false,click:'pmPoint',
+    xmin:Math.floor(mn(xf,0.4)),xmax:Math.ceil(mx(xf,0.4)),ymin:Math.max(0,Math.floor(mn(yf,1))),ymax:Math.ceil(mx(yf,1))};
   const items=shown.map(p=>({x:xf(p),y:yf(p),lbl:p.name,code:String(p.id),big:true,ring:p.id===me.id,col:p.id===me.id?'#00ff85':'#5dcaa5'}));
-  const ups=cand.filter(p=>p.ep>me.ep).slice(0,3);
-  const upline=ups.length?ups.map(p=>`<div class="mxg-row"><span>${logo(p.code)}<b style="color:var(--ink)">${p.name}</b> <span class="m">£${p.price.toFixed(1)}</span></span><span><b style="color:var(--good)">+${(p.ep-me.ep).toFixed(1)} xPts</b></span></div>`).join(''):'<div class="mxg-row"><span class="m">No higher-xPts option in position.</span></div>';
-  const metr=`<div class="pmet" style="margin:2px 0 4px"><span class="m">xPts <b style="color:var(--ink)">${me.ep}</b></span><span class="m">form <b style="color:var(--ink)">${me.form}</b></span><span class="m">xGI90 <b style="color:var(--ink)">${me.xgi}</b></span><span class="m">own <b style="color:var(--ink)">${me.sel}%</b></span></div>`;
+  const ups=cand.filter(p=>XP(p)>XP(me)).slice(0,3);
+  const upline=ups.length?ups.map(p=>`<div class="mxg-row"><span>${logo(p.code)}<b style="color:var(--ink)">${p.name}</b> <span class="m">£${p.price.toFixed(1)}</span></span><span><b style="color:var(--good)">+${(XP(p)-XP(me)).toFixed(1)} xPts</b></span></div>`).join(''):'<div class="mxg-row"><span class="m">No higher-xPts option in position over the next 5 GWs.</span></div>';
+  const metr=`<div class="pmet" style="margin:2px 0 4px"><span class="m">xPts·5 <b style="color:var(--ink)">${XP(me).toFixed(1)}</b></span><span class="m">form <b style="color:var(--ink)">${me.form}</b></span><span class="m">xGI90 <b style="color:var(--ink)">${me.xgi}</b></span><span class="m">own <b style="color:var(--ink)">${me.sel}%</b></span></div>`;
   const flags=me.flags&&me.flags.length?`<div class="pchips">${me.flags.map(fl=>`<span class="flg ${fl==='rotation_risk'?'flg-rot':''}">${FLAGLBL[fl]||fl}</span>`).join('')}</div>`:'';
-  host.innerHTML=metr+flags+scatterSVG(items,cfg)+`<div class="mshead">Higher-xPts in ${me.pos}</div><div class="mxg-sum">${upline}</div>`;
+  host.innerHTML=metr+flags+scatterSVG(items,cfg)+`<div class="mshead">Higher-xPts in ${me.pos} (next 5 GWs)</div><div class="mxg-sum">${upline}</div>`;
 }
 function pmPoint(id){const p=(PLAYERS.players||[]).find(x=>String(x.id)===String(id));if(p)playerModal(p.name,({GK:1,DEF:2,MID:3,FWD:4})[p.pos]);}
 const CARDS=["card-squad","card-league"];let _ci=0;
