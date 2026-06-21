@@ -39,14 +39,14 @@
   @keyframes fl{0%{box-shadow:0 0 0 2px var(--fpl),0 0 16px rgba(0,255,133,.4)}100%{box-shadow:0 0 0 0 rgba(0,255,133,0)}}
 
   /* legend + pitch */
-  .legend{flex:1;display:flex;justify-content:center;flex-wrap:wrap;gap:8px;align-items:center;font-size:8.5px;color:var(--muted)}
+  .legend{flex:1;display:flex;justify-content:center;flex-wrap:wrap;gap:8px;align-items:center;font-size:10px;color:var(--muted)}
   .lg.dnp{color:var(--faint)} .ld.dnpd{background:repeating-linear-gradient(45deg,currentColor,currentColor 1.5px,transparent 1.5px,transparent 3px)}
   .lg{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
   .ld{width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;flex:none}
   .gkrow{display:flex;align-items:center;justify-content:space-between;gap:6px}
   .gkstats{flex:1;min-width:0;font-size:10.5px;color:var(--muted);line-height:1.3}
   .gkstats.l{text-align:right;padding-right:4px} .gkstats.r{text-align:left;padding-left:4px}
-  .gkstats b{color:var(--ink);font-weight:800} .gk-s{font-size:9px;letter-spacing:.3px;color:var(--faint);text-transform:uppercase} .gk-m{color:var(--faint)}
+  .gkstats b{color:var(--ink);font-weight:800} .gk-s{font-size:10px;letter-spacing:.3px;color:var(--faint);text-transform:uppercase} .gk-m{color:var(--faint)}
   .lg.yet{color:var(--faint)}.lg.red{color:var(--bad)}.lg.gold{color:#e0b53a}.lg.green{color:var(--good)}.lg.purple{color:var(--pick)}
   .pitch{position:relative;border:1px solid var(--line);border-radius:18px;padding:12px 8px 14px;overflow:hidden;background:radial-gradient(120% 80% at 50% -10%,rgba(0,255,133,.05),transparent 55%),var(--card2)}
   .pitch::before{content:"";position:absolute;left:8%;right:8%;top:46%;height:1px;background:rgba(255,255,255,.05)}
@@ -156,7 +156,7 @@
   /* xG page */
   .err{padding:20px 4px;color:var(--muted);font-size:12.5px;line-height:1.5}
   .oddsel{display:flex;gap:6px;flex-wrap:wrap;margin:0 2px 10px}
-  .oddsel .opt{font-size:12px;padding:5px 10px;border-radius:8px;background:var(--card2);border:1px solid var(--line);color:var(--muted);cursor:pointer}
+  .oddsel .opt{font-size:12px;padding:7px 12px;border-radius:8px;background:var(--card2);border:1px solid var(--line);color:var(--muted);cursor:pointer}
   .oddsel .opt.on{background:rgba(0,255,133,.16);border-color:rgba(0,255,133,.5);color:var(--fpl);font-weight:600}
   .xgrow2{display:grid;grid-template-columns:64px 42px 62px 1fr 44px;gap:7px;align-items:center;padding:3px 0;font-size:12px}
   .xg-head{color:#6b7a90;font-size:10.5px;padding-top:10px}
@@ -239,10 +239,22 @@
   .recxp{margin-left:auto;font-weight:800;color:var(--fpl);font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
   .recxp span{font-size:9px;color:var(--muted);font-weight:600;margin-left:3px}
   .chiprow{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 10px}
-  .chippill{display:inline-flex;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:11px;color:var(--muted);cursor:default}
+  .chippill{display:inline-flex;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:11px;color:var(--muted);cursor:default}
   .chippill b{color:var(--ink);font-weight:700} .chippill span{font-variant-numeric:tabular-nums}
   .chippill.on{border-color:rgba(0,255,133,.5)} .chippill.on span{color:var(--fpl);font-weight:700}
   .chippill{cursor:pointer} .chipnote{font-size:11.5px;color:var(--muted);line-height:1.5;margin:0 2px 10px;min-height:1px}
+  /* squad sub-tabs */
+  .subtabs{display:flex;gap:6px;margin:10px 0 6px}
+  .subtab{flex:1;text-align:center;padding:9px 4px;border-radius:10px;background:var(--card2);border:1px solid var(--line);color:var(--muted);font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap}
+  .subtab.on{background:rgba(0,255,133,.12);border-color:rgba(0,255,133,.5);color:var(--fpl)}
+  /* next-gw detail */
+  .caprank{display:flex;align-items:center;gap:7px;padding:7px 2px;border-bottom:1px solid var(--line);font-size:13px}
+  .caprank:last-child{border-bottom:none} .crk{width:16px;text-align:right;color:var(--faint);font-size:11px} .cnm{flex:1;font-weight:600} .cxp{color:var(--fpl);font-weight:800;font-variant-numeric:tabular-nums}
+  .captag{width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex:none} .captag.c{background:var(--fpl);color:#06231a} .captag.v{background:#86f3bf;color:#06231a}
+  /* chip detail cards */
+  .chipcard{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:11px 12px;margin:8px 0}
+  .chiphd{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px} .chiphd b{font-size:13.5px;color:var(--ink)}
+  .chiptarget{color:var(--fpl);font-weight:800;font-size:13px} .chipnote2{font-size:11.5px;color:var(--muted);line-height:1.5}
   .pmperf{font-size:13px;margin:6px 0 8px}
   .diffcols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
   .diffh{font-size:10.5px;color:var(--faint);font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
@@ -267,6 +279,7 @@
 </header>
 
 <main class="wrap" id="myteam">
+  <div class="subtabs" id="subtabs"></div>
   <section class="card" id="card-squad">
     <div class="pitch">
       <div class="pitch-top">
@@ -298,8 +311,7 @@
 
   <section class="card" id="card-chips">
     <div class="ctitle">Chip plan</div>
-    <div id="sqchips" class="chiprow"></div>
-    <div id="sqchipnote" class="chipnote"></div>
+    <div id="sqchips"></div>
   </section>
 
   <section class="card" id="card-league">
@@ -504,7 +516,7 @@ function renderDiff(team){const el=document.getElementById('diffpanel');if(!el)r
     <div class="tsub">Net xPts on differentials: <b style="color:${net>=0?'var(--good)':'var(--bad)'}">${net>=0?'+':''}${net.toFixed(1)}</b> ${net>=0?'in your favour':'against you'} <span class="m">(yours ${ySum.toFixed(1)} vs theirs ${tSum.toFixed(1)})</span></div>
     <div class="diffcols"><div><div class="diffh">They have (you don't)</div>${theyHave.map(col).join('')||'<div class="m">—</div>'}</div><div><div class="diffh">You have (they don't)</div>${youHave.map(col).join('')||'<div class="m">—</div>'}</div></div>`;}
 function flash(el){el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1300);}
-function viewTeam(team){renderPitch(team);const c=document.getElementById('card-squad');c.scrollIntoView({behavior:'smooth',block:'start'});flash(c);}
+function viewTeam(team){setSub('squad');renderPitch(team);const c=document.getElementById('card-squad');c.scrollIntoView({behavior:'smooth',block:'start'});flash(c);}
 function backHome(){viewTeam(ME);}
 
 /* league table — rank,team,manager,captain,chipNow,chipsUsed[[name,count]],overallRank,gwPts,total,gap,xPts,xGI,isMe */
@@ -999,31 +1011,43 @@ function pmCompare(me,pc){
   const upline=ups.length?ups.map(p=>`<div class="mxg-row"><span>${logo(p.code)}<b style="color:var(--ink)">${p.name}</b> <span class="m">£${p.price.toFixed(1)}</span></span><span><b style="color:var(--good)">+${(XP(p)-XP(me)).toFixed(1)} xPts</b></span></div>`).join(''):'<div class="mxg-row"><span class="m">No higher-xPts option in position over the next 5 GWs.</span></div>';
   return scatterSVG(items,cfg)+`<div class="mshead">Higher-xPts in ${me.pos} (next 5 GWs)</div><div class="mxg-sum">${upline}</div>`;}
 function pmPoint(id){const p=(PLAYERS.players||[]).find(x=>String(x.id)===String(id));if(p){pmName=p.name;pmType=({GK:1,DEF:2,MID:3,FWD:4})[p.pos];pmTab='compare';pmRender();}}
-const CARDS=["card-squad","card-nextgw","card-chips","card-league"];let _ci=0;
+/* squad sub-tabs: Squad | Next GW | Chips | League */
+const SUBS=[['squad','card-squad','Squad'],['nextgw','card-nextgw','Next GW'],['chips','card-chips','Chips'],['league','card-league','League']];
+let subView='squad';
+function renderSubtabs(){const el=document.getElementById('subtabs');if(!el)return;
+  el.innerHTML=SUBS.map(([k,,l])=>`<span class="subtab ${subView===k?'on':''}" onclick="setSub('${k}')">${l}</span>`).join('');}
+function setSub(s){subView=s;
+  SUBS.forEach(([k,id])=>{const c=document.getElementById(id);if(c)c.style.display=k===s?'':'none';});
+  renderSubtabs();
+  if(s==='nextgw')renderNextGW();
+  if(s==='chips')renderSquadChips();
+  window.scrollTo({top:0,behavior:'smooth'});}
+function midAction(){ if(activeView!=="myteam"){selectView("myteam");return;}
+  const i=(SUBS.findIndex(x=>x[0]===subView)+1)%SUBS.length; setSub(SUBS[i][0]);}
 function renderNextGW(){const host=document.getElementById('nextgw');if(!host)return;
   const PL=(PLAYERS&&PLAYERS.players)||[], mine=SQUADS[ME]||[];
   if(!mine.length){host.innerHTML='<div class="m" style="font-size:12px">Your Next GW plan appears once your team is set.</div>';return;}
   if(!PL.length){host.innerHTML='<div class="m" style="font-size:12px">Loading projections…</div>';return;}
   const byName=n=>PL.find(p=>p.name===n);
   const xi=mine.filter(p=>!p[7]).map(p=>{const m=byName(p[1]);return {name:p[1],code:p[17],opp:p[8],xp:(m&&m.xp1!=null?m.xp1:(p[13]||0))};}).sort((a,b)=>b.xp-a.xp);
-  const cap=xi[0],vc=xi[1];
-  const capHtml=cap?`<div class="ctitle2" style="margin:2px 2px 6px">Captain pick</div>
-    <div class="tsub">Captain <b style="color:var(--fpl)">${cap.name}</b>${cap.opp?` <span class="m">vs ${cap.opp}</span>`:''} · <b style="color:var(--ink)">${cap.xp.toFixed(1)}</b> xPts · Vice <b style="color:var(--ink)">${vc?vc.name:'—'}</b></div>
-    <div class="caprow">${xi.slice(0,3).map((r,i)=>`<span class="capchip"><b>${['C','V','3'][i]}</b> ${logo(r.code)}${r.name} <span class="m">${r.xp.toFixed(1)}</span></span>`).join('')}</div>`:'';
+  const tag=i=>i===0?'<span class="captag c">C</span>':i===1?'<span class="captag v">V</span>':'';
+  const capHtml=`<div class="ctitle2" style="margin:2px 2px 6px">Captain pick · top of your XI</div>`+
+    xi.slice(0,5).map((r,i)=>`<div class="caprank"><span class="crk">${i+1}</span>${logo(r.code)}<span class="cnm">${r.name}</span><span class="m">${r.opp||''}</span><span class="cxp">${r.xp.toFixed(1)}</span>${tag(i)}</div>`).join('');
   const bank=parseFloat((STATS[ME]||{}).bank||'0')||0, owned=new Set(mine.map(p=>p[1])), moves=[];
   mine.forEach(p=>{const m=byName(p[1]);if(!m||m.xph==null)return;const budget=m.price+bank;
     const c=PL.filter(x=>x.pos===m.pos&&!owned.has(x.name)&&x.xph!=null&&x.price<=budget+1e-6&&x.xph>m.xph).sort((a,b)=>b.xph-a.xph)[0];
     if(c)moves.push({out:m,inn:c,gain:c.xph-m.xph});});
   moves.sort((a,b)=>b.gain-a.gain);
-  const usedIn=new Set(),usedOut=new Set(),top=[];  // distinct transfers — each player in/out once
-  for(const m of moves){if(top.length>=5)break;if(usedIn.has(m.inn.name)||usedOut.has(m.out.name))continue;usedIn.add(m.inn.name);usedOut.add(m.out.name);top.push(m);}
-  const movesHtml=`<div class="ctitle2" style="margin:16px 2px 6px">Your moves <span class="m" style="font-weight:400">· bank £${bank.toFixed(1)}m · next 5 GWs</span></div>`+
+  const usedIn=new Set(),usedOut=new Set(),top=[];
+  for(const m of moves){if(top.length>=6)break;if(usedIn.has(m.inn.name)||usedOut.has(m.out.name))continue;usedIn.add(m.inn.name);usedOut.add(m.out.name);top.push(m);}
+  const movesHtml=`<div class="ctitle2">Your moves <span class="m" style="font-weight:400">· bank £${bank.toFixed(1)}m · gain over next 5 GWs</span></div>`+
     (top.length?top.map(m=>`<div class="moverow"><span class="mout">${logo(m.out.code)}${m.out.name}</span><span class="marrow">→</span><span class="min">${logo(m.inn.code)}${m.inn.name} <span class="m">£${m.inn.price.toFixed(1)}</span></span><span class="mgain">+${m.gain.toFixed(1)}</span></div>`).join(''):'<div class="m" style="font-size:12px">No affordable upgrade beats your current 15 over the next 5 GWs.</div>');
   host.innerHTML=capHtml+movesHtml;}
-function midAction(){ if(activeView!=="myteam"){selectView("myteam");return;}
-  _ci=(_ci+1)%CARDS.length; const el=document.getElementById(CARDS[_ci]);
-  el.scrollIntoView({behavior:'smooth',block:'center'});
-  el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1300);}
+function renderSquadChips(){const el=document.getElementById('sqchips');if(!el)return;
+  withChips(()=>{const plan=CHIPS&&CHIPS.squad;
+    if(!plan||!plan.chips||!plan.chips.length){el.innerHTML='<div class="m" style="font-size:12px">Your chip plan appears once your team is set — see Best XV until then.</div>';return;}
+    el.innerHTML=`<div class="tsub">Plan based on ${plan.basis}${CHIPS.window?` · half ${CHIPS.half} (GW${CHIPS.window[0]}–${CHIPS.window[1]})`:''}. Doubles/blanks override these once announced.</div>`+
+      plan.chips.map(c=>`<div class="chipcard"><div class="chiphd"><b>${c.label}</b><span class="chiptarget">${c.advice}</span></div><div class="chipnote2">${c.note}</div></div>`).join('');});}
 function renderTabSheet(){document.getElementById('sheetTabs').innerHTML=VIEW_ORDER.map(([id,l])=>`<div class="tabrow ${activeView===id?'on':''}" onclick="selectView('${id}')">${l}</div>`).join('');}
 function toggleSheet(w,e){if(e)e.stopPropagation();const a=document.getElementById('sheetActions'),t=document.getElementById('sheetTabs');const tg=w==="actions"?a:t,o=w==="actions"?t:a;o.classList.add('hidden');tg.classList.toggle('hidden');}
 function closeSheets(){document.getElementById('sheetActions').classList.add('hidden');document.getElementById('sheetTabs').classList.add('hidden');}
@@ -1064,9 +1088,8 @@ fetch('v2.json',{cache:'no-store'}).then(r=>r.json()).then(V=>{
   }catch(e){document.getElementById('updatedTime').textContent=V.generated;}
   renderPitch(ME);
   renderLeague(V.league);
-  chipPills('sqchips','sqchipnote','squad');
-  if(PLAYERS)renderNextGW();
-  else fetch('players.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{PLAYERS=d;renderNextGW();}).catch(()=>renderNextGW());
+  renderSubtabs(); setSub('squad');
+  if(!PLAYERS)fetch('players.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{PLAYERS=d;if(subView==='nextgw')renderNextGW();}).catch(()=>{});
 }).catch(e=>{
   document.getElementById('pitchrows').innerHTML='<div style="padding:30px 16px;text-align:center;color:var(--bad)">Couldn\'t load live data (v2.json).</div>';
   document.getElementById('updatedTime').textContent='—';
