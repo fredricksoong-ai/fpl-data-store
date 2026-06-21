@@ -304,19 +304,24 @@
     <div id="diffpanel"></div>
   </section>
 
-  <section class="card" id="card-nextgw">
-    <div class="ctitle">Next GW · captain & transfers</div>
-    <div id="nextgw"></div>
-  </section>
-
-  <section class="card" id="card-chips">
-    <div class="ctitle">Chip plan</div>
-    <div id="sqchips"></div>
-  </section>
-
   <section class="card" id="card-league">
     <div class="ctitle">Ballon d'FPL · mini-league</div>
     <div class="lgcard"><table id="lgtable"></table></div>
+  </section>
+
+  <section class="card" id="card-nextgw">
+    <div class="ctitle">Next GW · captain, transfers & chips</div>
+    <div id="nextgw"></div>
+    <div class="ctitle2">Chip plan</div>
+    <div id="sqchips"></div>
+  </section>
+
+  <section class="card" id="card-bestxv">
+    <div class="ctitle">Best XV · model squad</div>
+    <div id="bxvchips" class="chiprow"></div>
+    <div id="bxvchipnote" class="chipnote"></div>
+    <div id="bxvsum" class="tsub"></div>
+    <div class="pitch"><div id="bxvrows"></div><div class="benchsep"></div><div class="bench" id="bxvbench"></div></div>
   </section>
   <div style="height:55vh" aria-hidden="true"></div>
 </main>
@@ -365,17 +370,6 @@
   <section class="card" id="card-transfers">
     <div class="ctitle">Transfers · model targets</div>
     <div id="recommend"></div>
-  </section>
-  <div style="height:55vh" aria-hidden="true"></div>
-</main>
-
-<main class="wrap" id="bestxvview" style="display:none">
-  <section class="card" id="card-bestxv">
-    <div class="ctitle">Best XV · model squad</div>
-    <div id="bxvchips" class="chiprow"></div>
-    <div id="bxvchipnote" class="chipnote"></div>
-    <div id="bxvsum" class="tsub"></div>
-    <div class="pitch"><div id="bxvrows"></div><div class="benchsep"></div><div class="bench" id="bxvbench"></div></div>
   </section>
   <div style="height:55vh" aria-hidden="true"></div>
 </main>
@@ -536,8 +530,8 @@ function renderLeague(LG){document.getElementById('lgtable').innerHTML=
 <td class="r"><span class="xv ${r[11]>=0.45?'g':'r'}">${(+r[11]).toFixed(1)}</span></td></tr>`}).join('')+`</tbody>`;}
 
 /* nav: no toggle. default = myteam (cards: squad, league). mid = next-card / home */
-const VIEW_ORDER=[["picks","Picks"],["bestxv","Best XV"],["transfers","Transfers"],["players","Players"],["title","Title Odds"],["xg","xG"],["mleague","Model League"]];
-const REAL=new Set(["picks","bestxv","transfers","players","title","xg","mleague"]);  // all views have real panels
+const VIEW_ORDER=[["picks","Picks"],["transfers","Transfers"],["players","Players"],["title","Title Odds"],["xg","xG"],["mleague","Model League"]];
+const REAL=new Set(["picks","transfers","players","title","xg","mleague"]);  // burger views (Best XV is now a squad sub-tab)
 const BURGER=VIEW_ORDER.map(v=>v[0]); let activeView="myteam";
 const ICON_CHEV='<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/></svg>';
 const ICON_HOME='<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg>';
@@ -550,9 +544,7 @@ function selectView(v){activeView=v;
   document.getElementById('mleagueview').style.display=v==="mleague"?"":"none";
   document.getElementById('playersview').style.display=v==="players"?"":"none";
   document.getElementById('transfersview').style.display=v==="transfers"?"":"none";
-  document.getElementById('bestxvview').style.display=v==="bestxv"?"":"none";
   if(v==="title")renderTitle();
-  if(v==="bestxv")renderBestXV();
   if(v==="xg")renderXG();
   if(v==="picks")renderPicks();
   if(v==="mleague")renderModelLeague();
@@ -1012,15 +1004,15 @@ function pmCompare(me,pc){
   return scatterSVG(items,cfg)+`<div class="mshead">Higher-xPts in ${me.pos} (next 5 GWs)</div><div class="mxg-sum">${upline}</div>`;}
 function pmPoint(id){const p=(PLAYERS.players||[]).find(x=>String(x.id)===String(id));if(p){pmName=p.name;pmType=({GK:1,DEF:2,MID:3,FWD:4})[p.pos];pmTab='compare';pmRender();}}
 /* squad sub-tabs: Squad | Next GW | Chips | League */
-const SUBS=[['squad','card-squad','Squad'],['nextgw','card-nextgw','Next GW'],['chips','card-chips','Chips'],['league','card-league','League']];
+const SUBS=[['squad','card-squad','Squad'],['ml','card-league','ML'],['nextgw','card-nextgw','Next GW'],['bestxv','card-bestxv','Best XV']];
 let subView='squad';
 function renderSubtabs(){const el=document.getElementById('subtabs');if(!el)return;
   el.innerHTML=SUBS.map(([k,,l])=>`<span class="subtab ${subView===k?'on':''}" onclick="setSub('${k}')">${l}</span>`).join('');}
 function setSub(s){subView=s;
   SUBS.forEach(([k,id])=>{const c=document.getElementById(id);if(c)c.style.display=k===s?'':'none';});
   renderSubtabs();
-  if(s==='nextgw')renderNextGW();
-  if(s==='chips')renderSquadChips();
+  if(s==='nextgw'){renderNextGW();renderSquadChips();}
+  if(s==='bestxv')renderBestXV();
   window.scrollTo({top:0,behavior:'smooth'});}
 function midAction(){ if(activeView!=="myteam"){selectView("myteam");return;}
   const i=(SUBS.findIndex(x=>x[0]===subView)+1)%SUBS.length; setSub(SUBS[i][0]);}
