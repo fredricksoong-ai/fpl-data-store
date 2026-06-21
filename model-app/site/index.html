@@ -255,6 +255,25 @@
   .chipcard{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:11px 12px;margin:8px 0}
   .chiphd{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px} .chiphd b{font-size:13.5px;color:var(--ink)}
   .chiptarget{color:var(--fpl);font-weight:800;font-size:13px} .chipnote2{font-size:11.5px;color:var(--muted);line-height:1.5}
+  /* player modal scout card */
+  .pmhero{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin:4px 0 2px}
+  .pmhero .lbl{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+  .pmhero .big{font-size:30px;font-weight:800;color:var(--fpl);line-height:1.1;font-variant-numeric:tabular-nums}
+  .pmhero .sub{font-size:11.5px;color:var(--muted);margin-top:3px}
+  .pmfx{display:flex;gap:6px}
+  .pmfx .fx{flex:1;text-align:center;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:6px 2px}
+  .pmfx .fx .g{font-size:9.5px;color:var(--faint)} .pmfx .fx .o{font-size:12px;font-weight:700;margin-top:2px}
+  .pmgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px} .pmgrid.g4{grid-template-columns:1fr 1fr 1fr 1fr}
+  .pmgrid .st{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 4px;text-align:center}
+  .pmgrid .st .v{font-size:16px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+  .pmgrid .st .l{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;margin-top:2px}
+  .spark{display:flex;align-items:flex-end;gap:3px;height:52px;margin:4px 0 2px}
+  .spark i{flex:1;background:var(--line);border-radius:2px 2px 0 0;min-height:3px}
+  .spark i.hi{background:var(--good)}.spark i.mid{background:var(--away)}.spark i.lo{background:var(--bad)}.spark i.na{background:rgba(255,255,255,.06)}
+  .sparkx{display:flex;gap:3px;font-size:9px;color:var(--faint)}.sparkx span{flex:1;text-align:center}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--good);display:inline-block}
+  .fit{display:inline-flex;align-items:center;gap:4px;color:var(--good);font-weight:700;font-size:12px}
+  .doubt{color:var(--away);font-weight:700;font-size:12px}.outl{color:var(--bad);font-weight:700;font-size:12px}
   .pmperf{font-size:13px;margin:6px 0 8px}
   .diffcols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
   .diffh{font-size:10.5px;color:var(--faint);font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
@@ -971,6 +990,11 @@ async function playerModal(name,posType){pmName=name;pmType=posType;pmTab='card'
   if(!PLAYERS){try{PLAYERS=await (await fetch('players.json',{cache:'no-store'})).json();}catch(e){}}
   pmRender();}
 function pmSetTab(t){pmTab=t;pmRender();}
+let PH=null;
+function avail(me){if(!me)return '';const s=me.st||'a';
+  if(s==='a')return ' <span class="fit"><span class="dot"></span>Fit</span>';
+  if(s==='d')return ` <span class="doubt">${me.cop!=null?me.cop+'%':'Doubt'}</span>`;
+  return ' <span class="outl">Out</span>';}
 function pmRender(){
   const host=document.getElementById('pmbody');
   const pc=({1:'GK',2:'DEF',3:'MID',4:'FWD'})[pmType]||pmType;
@@ -978,20 +1002,40 @@ function pmRender(){
   const all=(PLAYERS&&PLAYERS.players)||[];
   const me=all.find(p=>p.name===pmName&&p.pos===pc)||all.find(p=>p.name===pmName);
   const club=live?live[17]:(me?me.code:'');
-  document.getElementById('pmtitle').innerHTML=`${logo(club)}${pmName} <span class="m" style="font-weight:400">${pc}${me?` · £${me.price.toFixed(1)}`:''}</span>`;
+  document.getElementById('pmtitle').innerHTML=`${logo(club)}${pmName} <span class="m" style="font-weight:400">${pc}${me?` · £${me.price.toFixed(1)}`:''}</span>${avail(me)}`;
   const tabs=`<div class="oddsel"><span class="opt ${pmTab==='card'?'on':''}" onclick="pmSetTab('card')">Performance</span><span class="opt ${pmTab==='compare'?'on':''}" onclick="pmSetTab('compare')">Compare</span></div>`;
-  host.innerHTML=tabs+(pmTab==='card'?pmCard(live,me,club):pmCompare(me,pc));}
+  host.innerHTML=tabs+(pmTab==='card'?pmCard(live,me,club):pmCompare(me,pc));
+  if(pmTab==='card'&&me)pmSpark(me.id);}
 function pmCard(live,me,club){
-  let perf='<div class="pmperf m">No live data — tap from a squad to see this gameweek.</div>';
-  if(live){const st=live[4],pts=live[2],mins=live[15],g=live[10],a=live[11],bonus=live[16],opp=live[8],ko=live[9],xp=live[13];
-    if(st===0)perf=`<div class="pmperf"><span class="m">Upcoming</span> ${opp?`vs <b style="color:var(--ink)">${opp}</b>`:''}${ko?` ${ko}`:''} · proj <b style="color:var(--fpl)">${xp}</b> xPts</div>`;
-    else if(st===2)perf=`<div class="pmperf"><b style="color:var(--ink)">${opp}</b> · <span class="m">did not play</span></div>`;
-    else perf=`<div class="pmperf"><b style="color:var(--ink)">${pts} pts</b> <span class="m">vs ${opp} · ${mins}′ · ${g}G ${a}A${bonus?` · ${bonus} bonus`:''}</span></div>`;}
   const fdrCol=d=>d>=4?'var(--bad)':(d>0&&d<=2)?'var(--good)':'var(--muted)';
-  const fx=(FIX&&FIX[club])||[];
-  const next=`<div class="mshead">Next fixtures</div>`+(fx.length?`<div class="pchips">${fx.map(f=>`<span class="flg"><span class="m">GW${f.gw}</span> <span style="color:${fdrCol(f.fdr)}">${f.opp}</span> ${f.h?'(H)':'(A)'}</span>`).join('')}</div>`:`<div class="m" style="font-size:11px">Appear once the season is live.</div>`);
-  const seas=me?`<div class="pmet" style="margin-top:8px"><span class="m">form <b style="color:var(--ink)">${me.form}</b></span><span class="m">xPts·5 <b style="color:var(--ink)">${me.xph!=null?me.xph:me.ep}</b></span><span class="m">xGI90 <b style="color:var(--ink)">${me.xgi}</b></span><span class="m">own <b style="color:var(--ink)">${me.sel}%</b></span></div>${me.flags&&me.flags.length?`<div class="pchips">${me.flags.map(fl=>`<span class="flg ${fl==='rotation_risk'?'flg-rot':''}">${FLAGLBL[fl]||fl}</span>`).join('')}</div>`:''}`:'';
-  return perf+next+seas;}
+  let hero='';                                   // 1) GW RESULT — the primary read
+  if(live){const st=live[4],pts=live[2],mins=live[15],g=live[10],a=live[11],bn=live[16],opp=live[8],ko=live[9];
+    if(st===1)hero=`<div class="pmhero"><div class="lbl">This gameweek</div><div class="big">${pts}</div><div class="sub">vs ${opp} · ${mins}′ · ${g}G ${a}A${bn?` · ${bn} bonus`:''}</div></div>`;
+    else if(st===2)hero=`<div class="pmhero"><div class="lbl">This gameweek</div><div class="big" style="color:var(--muted)">DNP</div><div class="sub">vs ${opp} · did not play</div></div>`;
+    else hero=`<div class="pmhero"><div class="lbl">This gameweek · not started</div><div class="big">${me&&me.xp1!=null?me.xp1:(live[13]||0)}</div><div class="sub">vs ${opp}${ko?` · ${ko}`:''} · projected</div></div>`;}
+  const fx=(FIX&&FIX[club])||[];                 // 2) NEXT GW — the second read
+  const next=`<div class="mshead">Next GW${me&&me.xp1!=null?` · proj ${me.xp1} xPts`:''}</div>`+
+    (fx.length?`<div class="pmfx">${fx.map(f=>`<div class="fx"><div class="g">GW${f.gw}</div><div class="o" style="color:${fdrCol(f.fdr)}">${f.opp}(${f.h?'H':'A'})</div></div>`).join('')}</div>`:`<div class="m" style="font-size:11px">Fixtures appear once the season is live.</div>`);
+  const spark=`<div class="mshead">Points by gameweek</div><div id="pmspark"></div>`;   // 3) lazy sparkline
+  return hero+next+spark+pmStats(me);}           // 4) position-aware stats + flags
+function pmStats(me){if(!me)return '';
+  const st=(v,l)=>`<div class="st"><div class="v">${v}</div><div class="l">${l}</div></div>`;
+  const u=me.pos==='GK'?[[me.sv,'saves'],[me.cs,'CS'],[me.xgc,'xGC/90']]
+        :me.pos==='DEF'?[[me.dc90,'CBIT/90'],[me.cs,'CS'],[me.xgc,'xGC/90']]
+        :[[me.xg90,'xG/90'],[me.xa90,'xA/90'],[me.xgi,'xGI/90']];
+  const se=me.pos==='GK'?[[me.tp,'pts'],[me.ppg,'PPG'],[me.cs,'CS'],[me.gc,'GC']]
+        :[[me.tp,'pts'],[me.ppg,'PPG'],[me.g,'goals'],[me.a,'assists']];
+  const flags=me.flags&&me.flags.length?`<div class="pchips" style="margin-top:9px">${me.flags.map(fl=>`<span class="flg ${fl==='rotation_risk'?'flg-rot':''}">${FLAGLBL[fl]||fl}</span>`).join('')}</div>`:'';
+  return `<div class="mshead">Underlying · per 90</div><div class="pmgrid">${u.map(([v,l])=>st(v,l)).join('')}</div>`+
+    `<div class="mshead">Season</div><div class="pmgrid g4">${se.map(([v,l])=>st(v,l)).join('')}</div>`+
+    `<div class="pmet" style="margin-top:8px"><span class="m">own <b style="color:var(--ink)">${me.sel}%</b></span><span class="m">value <b style="color:var(--ink)">${me.val}</b></span><span class="m">5-GW xPts <b style="color:var(--ink)">${me.xph!=null?me.xph:me.ep}</b></span></div>`+flags;}
+function pmSpark(id){const el=document.getElementById('pmspark');if(!el)return;
+  if(!PH){fetch('player_history.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{PH=d;pmSpark(id);}).catch(()=>{el.innerHTML='<div class="m" style="font-size:11px">No history yet.</div>';});return;}
+  const arr=(PH.pts||{})[String(id)]||[], gws=PH.gws||[];
+  if(!arr.some(v=>v!=null)){el.innerHTML='<div class="m" style="font-size:11px">No games played yet.</div>';return;}
+  const mx=Math.max(1,...arr.filter(v=>v!=null));
+  const bars=arr.map(v=>v==null?'<i class="na"></i>':`<i class="${v>=8?'hi':v>=4?'mid':'lo'}" style="height:${Math.max(6,Math.round(v/mx*100))}%" title="${v} pts"></i>`).join('');
+  el.innerHTML=`<div class="spark">${bars}</div><div class="sparkx">${gws.map(g=>`<span>${g}</span>`).join('')}</div>`;}
 function pmCompare(me,pc){
   if(!me)return '<div class="err">No comparison data for this player yet.</div>';
   const all=(PLAYERS&&PLAYERS.players)||[], XP=p=>(p.xph!=null?p.xph:(p.ep||0));

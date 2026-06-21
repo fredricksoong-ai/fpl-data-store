@@ -53,11 +53,14 @@ def main() -> int:
 
     games = []
     last = 0
+    gwlist = []                 # finished GW ids, in order
+    phist = {}                  # player id -> {gw: points} (for the modal sparkline; reuses these live fetches)
     for gw in finished:
         try:
             live = {x["id"]: x["stats"] for x in get(f"/event/{gw}/live/")["elements"]}
         except Exception:
             continue
+        gwlist.append(gw)
         # club xG created this GW = sum of its players' expected_goals
         team_xg = {}
         for pid, st in live.items():
@@ -65,6 +68,8 @@ def main() -> int:
             if t is None:
                 continue
             team_xg[t] = team_xg.get(t, 0.0) + float(st.get("expected_goals", 0) or 0)
+            if (st.get("minutes", 0) or 0) > 0:   # only weeks the player featured
+                phist.setdefault(pid, {})[gw] = int(st.get("total_points", 0) or 0)
         for f in by_gw.get(gw, []):
             if not f.get("finished") or f.get("team_h_score") is None:
                 continue
@@ -85,7 +90,12 @@ def main() -> int:
     out = {"generated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
            "season": "live", "event": last, "games": games}
     OUT.write_text(json.dumps(out, ensure_ascii=False))
-    print(f"wrote {OUT}: {len(games)} games through GW{last}")
+    # per-player points-by-GW (last 12) for the modal sparkline — no extra API calls
+    tail = gwlist[-12:]
+    pts = {str(pid): [d.get(g) for g in tail] for pid, d in phist.items()}
+    (OUT.parent / "player_history.json").write_text(json.dumps(
+        {"generated": out["generated"], "gws": tail, "pts": pts}, ensure_ascii=False))
+    print(f"wrote {OUT}: {len(games)} games through GW{last}; player_history {len(pts)} players")
     return 0
 
 

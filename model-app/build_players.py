@@ -77,6 +77,11 @@ def main() -> int:
                         "xg90": round(f(e.get("expected_goals_per_90")), 2), "xa90": round(f(e.get("expected_assists_per_90")), 2),
                         "g": e.get("goals_scored", 0) or 0, "a": e.get("assists", 0) or 0,
                         "sel": f(e.get("selected_by_percent")),
+                        "tp": e.get("total_points", 0) or 0, "ppg": f(e.get("points_per_game")),
+                        "cs": cs, "gc": e.get("goals_conceded", 0) or 0, "sv": saves,
+                        "xgc": round(f(e.get("expected_goals_conceded_per_90")), 2),
+                        "val": f(e.get("value_season")), "bps": e.get("bps", 0) or 0,
+                        "st": e.get("status", "a"), "cop": e.get("chance_of_playing_next_round"),
                         "flags": flags, "flag_count": len([x for x in flags if x != "rotation_risk"])})
     players.sort(key=lambda p: (-p["flag_count"], -p["form"]))
 
