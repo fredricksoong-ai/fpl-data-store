@@ -135,16 +135,15 @@ def main() -> int:
         ovr_prev = last.get("overall_rank")
         gwr = this.get("rank")
         gwr_prev = last.get("rank")
-        gap_to_leader = r["total"] - leader_total
-        if r["rank"] == 1:
-            second = sorted((x["total"] for x in standings), reverse=True)
-            gap = f"+{second[0]-second[1]}" if len(second) > 1 else "—"
-        else:
-            gap = f"{gap_to_leader}"  # negative
+        by_rank = {x["rank"]: x["total"] for x in standings}
+        R = r["rank"]; above = by_rank.get(R - 1); below = by_rank.get(R + 1)
+        gd_up = (above - r["total"]) if above is not None else None   # deficit to team above (+ve magnitude)
+        gd_dn = (r["total"] - below) if below is not None else None   # cushion over team below (+ve magnitude)
+        gap = f"+{gd_dn}" if R == 1 and gd_dn is not None else (f"{r['total']-leader_total}" if R != 1 else "—")
         stats[name] = {
             "gw": this.get("points", eh.get("points", 0)), "avg": avg,
             "gwr": fmt_rank(gwr), "up": 1 if (gwr_prev and gwr and gwr < gwr_prev) else 0,
-            "ml": ordinal(r["rank"]), "gap": gap,
+            "ml": ordinal(r["rank"]), "gap": gap, "gd_up": gd_up, "gd_dn": gd_dn,
             "val": f"£{eh.get('value',1000)/10:.1f}m", "bank": f"{eh.get('bank',0)/10:.1f}",
             "op": r["total"], "ovr": fmt_rank(ovr),
             "ovrUp": 1 if (ovr_prev and ovr and ovr < ovr_prev) else 0,

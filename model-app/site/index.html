@@ -56,7 +56,7 @@
   .bub .in{display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.05;max-width:100%;padding:0 1px}
   .bub .nm{font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:normal;overflow-wrap:normal;line-height:1.06;max-width:100%}
   .bub .sub{font-weight:600;opacity:.82;white-space:nowrap}
-  .bub .sub .xp{font-weight:700;color:var(--ink)} .bub .sub .tm{color:var(--muted);font-weight:600} .bub .sub .pos{color:var(--muted);font-weight:700;letter-spacing:.3px}
+  .bub .sub .xp{font-weight:600;color:var(--muted);font-size:.85em} .bub .sub .tm{color:var(--muted);font-weight:600} .bub .sub .pos{color:var(--muted);font-weight:700;letter-spacing:.3px;font-size:.85em}
   .bub.dnp{background:repeating-linear-gradient(45deg,rgba(255,255,255,.03),rgba(255,255,255,.03) 5px,rgba(255,255,255,.085) 5px,rgba(255,255,255,.085) 10px);border:2px solid rgba(255,255,255,.16);color:var(--muted)}
   .bub.yet{background:rgba(255,255,255,.03);border:2px solid rgba(255,255,255,.22);color:var(--muted)}
   .bub.red{background:rgba(248,113,113,.15);border:2px solid var(--bad);color:#fca5a5}
@@ -478,8 +478,10 @@ function bub(p,SC,H,bn){const w=Math.round(tileW(p[3])*SC),h=Math.round(H!=null?
   if(warn)bd+='<span class="cnr c-br b-warn">!</span>';
   return `<div class="bub ${tier(p)} ${p[5]?'cap':p[6]?'vc':''}" style="width:${w}px;height:${h}px" onclick="playerModal('${String(p[1]).replace(/'/g,"\\'")}',${p[0]})"><div class="in"><span class="nm" style="font-size:${nf}px">${p[1]}</span><span class="sub" style="font-size:${sf}px">${l2}</span><span class="sub" style="font-size:${sf}px">${l3}</span>${l4}</div>${bd}</div>`;}
 function gwPill(team){const s=STATS[team]||STATS[ME]||{gw:0,avg:1,ml:'',gap:'',op:0,ovr:'',ovrUp:0,gwr:'',up:0,val:'',bank:''};const sl='<span class="sl">•</span>';
-  const top=`<span class="pill ptop"><span class="k">GW</span><b>${GWNO}</b>${sl}<b class="${gwCol(s.gw,s.avg)}">${s.gw}</b><span class="mu">/${s.avg}</span>${sl}<b class="gd">${s.ml}</b> <span class="${(s.gap+'')[0]==='+'?'gd':'bd'}">${s.gap}</span>${sl}<span class="k">GWR</span><b>${s.gwr}</b> <span class="${s.up?'gd':'bd'}">${s.up?'▲':'▼'}</span></span>`;
-  const bot=`<span class="pill pbot"><span class="k">OP</span><b>${s.op}</b>${sl}<span class="k">OR</span><b>${s.ovr}</b> <span class="${s.ovrUp?'gd':'bd'}">${s.ovrUp?'▲':'▼'}</span>${sl}<b>${s.val}</b><span class="mu"> +${s.bank}</span></span>`;
+  const dn=s.gd_dn,up=s.gd_up;  // cushion over team below / deficit to team above
+  const gapH=(dn!=null?`<span class="gd">+${dn}</span>`:'')+((dn!=null&&up!=null)?'<span class="mu">/</span>':'')+(up!=null?`<span class="bd">−${up}</span>`:'')||`<span class="gd">${s.gap}</span>`;
+  const top=`<span class="pill ptop"><span class="k">GW</span><b style="color:#fff">${GWNO}</b>${sl}<b class="${gwCol(s.gw,s.avg)}">${s.gw}</b><span class="mu">/${s.avg}</span>${sl}<b>${s.ml}</b> ${gapH}${sl}<span class="k">GWR</span><b>${s.gwr}</b> <span class="${s.up?'gd':'bd'}">${s.up?'▲':'▼'}</span></span>`;
+  const bot=`<span class="pill pbot"><span class="k">Overall Pts</span><b>${s.op}</b>${sl}<span class="k">Overall Rank</span><b>${s.ovr}</b> <span class="${s.ovrUp?'gd':'bd'}">${s.ovrUp?'▲':'▼'}</span>${sl}<b>${s.val}</b><span class="gd"> +${s.bank}</span></span>`;
   return top+bot;}
 function splitLine(a){return a.length<=3?[a]:[a.slice(0,Math.ceil(a.length/2)),a.slice(Math.ceil(a.length/2))];}
 function renderPitch(team){
@@ -515,16 +517,16 @@ function backHome(){viewTeam(ME);}
 
 /* league table — rank,team,manager,captain,chipNow,chipsUsed[[name,count]],overallRank,gwPts,total,gap,xPts,xGI,isMe */
 const PERSON='<svg class="icn" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0z"/></svg>';
-const gwTier=v=>v<25?'red':v<45?'gold':v<=50?'green':'purple';
+const gwTier=(v,avg)=>{const r=v/(avg||1);return r<0.9?'red':r<=1.1?'gold':r<1.5?'green':'purple';};  // relative to GW avg, matches the squad pill
 const xpC=v=>v>=50?'g':v>=42?'a':'r';
 const chipList=a=>(a||[]).map(([c,n])=>`<span class="${n>=2?'cu2':'cu1'}">${c}</span>`).join(' ');
-function renderLeague(LG){document.getElementById('lgtable').innerHTML=
+function renderLeague(LG){const AVG=(STATS[ME]||{}).avg||1;document.getElementById('lgtable').innerHTML=
 `<thead><tr><th>Team</th><th class="r">GW Pts</th><th class="r">Total</th><th class="r">xPts</th><th class="r">xGI</th></tr></thead><tbody>`+
 (LG||[]).map(r=>{const me=r[12];return `<tr class="${me?'me':''}">
 <td><div><span class="rk">${r[0]}</span> <span class="lname ${me?'lme':''}" onclick="viewTeam('${r[1].replace(/'/g,"\\'")}')">${r[1]}</span>${me?PERSON:''}${r[4]?`<span class="chipnow">${r[4]}</span>`:''}</div>
 <div class="lsub">${r[2]} · ${r[3]}</div>
 <div class="lsub2">${chipList(r[5])} · ${r[6]}</div></td>
-<td class="r"><span class="gwbox ${gwTier(r[7])}">${r[7]}</span></td>
+<td class="r"><span class="gwbox ${gwTier(r[7],AVG)}">${r[7]}</span></td>
 <td class="r"><b>${r[8]}</b>${r[9]?`<span class="gap">+${r[9]}</span>`:''}</td>
 <td class="r"><span class="xv ${xpC(r[10])}">${r[10]}</span></td>
 <td class="r"><span class="xv ${r[11]>=0.45?'g':'r'}">${(+r[11]).toFixed(1)}</span></td></tr>`}).join('')+`</tbody>`;}
