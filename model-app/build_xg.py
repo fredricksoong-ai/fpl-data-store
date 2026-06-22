@@ -55,12 +55,25 @@ def main() -> int:
     last = 0
     gwlist = []                 # finished GW ids, in order
     phist = {}                  # player id -> {gw: points} (for the modal sparkline; reuses these live fetches)
+    bd = {}; bd_gw = 0          # latest GW per-category points breakdown (FPL 'explain')
     for gw in finished:
         try:
-            live = {x["id"]: x["stats"] for x in get(f"/event/{gw}/live/")["elements"]}
+            elements = get(f"/event/{gw}/live/")["elements"]
         except Exception:
             continue
+        live = {x["id"]: x["stats"] for x in elements}
         gwlist.append(gw)
+        bd_gw = gw; bd = {}      # overwritten each GW → ends holding the latest finished GW
+        for x in elements:
+            rows = []; mins = 0
+            for fx in (x.get("explain") or []):
+                for s in fx.get("stats", []):
+                    if s.get("identifier") == "minutes":
+                        mins = s.get("value", 0)
+                    if s.get("points") or s.get("identifier") == "minutes":
+                        rows.append([s["identifier"], s.get("value", 0), s.get("points", 0)])
+            if rows and mins > 0:        # only players who actually featured
+                bd[str(x["id"])] = rows
         # club xG created this GW = sum of its players' expected_goals
         team_xg = {}
         for pid, st in live.items():
@@ -94,8 +107,8 @@ def main() -> int:
     tail = gwlist[-12:]
     pts = {str(pid): [d.get(g) for g in tail] for pid, d in phist.items()}
     (OUT.parent / "player_history.json").write_text(json.dumps(
-        {"generated": out["generated"], "gws": tail, "pts": pts}, ensure_ascii=False))
-    print(f"wrote {OUT}: {len(games)} games through GW{last}; player_history {len(pts)} players")
+        {"generated": out["generated"], "gws": tail, "pts": pts, "lastgw": bd_gw, "bd": bd}, ensure_ascii=False))
+    print(f"wrote {OUT}: {len(games)} games through GW{last}; history {len(pts)}; GW{bd_gw} breakdown {len(bd)}")
     return 0
 
 

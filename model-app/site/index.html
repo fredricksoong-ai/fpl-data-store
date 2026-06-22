@@ -274,6 +274,9 @@
   .dot{width:7px;height:7px;border-radius:50%;background:var(--good);display:inline-block}
   .fit{display:inline-flex;align-items:center;gap:4px;color:var(--good);font-weight:700;font-size:12px}
   .doubt{color:var(--away);font-weight:700;font-size:12px}.outl{color:var(--bad);font-weight:700;font-size:12px}
+  .bd{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:6px 11px}
+  .bdrow{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.04)} .bdrow:last-child{border-bottom:none}
+  .bdp{font-weight:700;font-variant-numeric:tabular-nums;color:var(--muted)} .bdp.pos{color:var(--good)} .bdp.neg{color:var(--bad)}
   .pmperf{font-size:13px;margin:6px 0 8px}
   .diffcols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
   .diffh{font-size:10.5px;color:var(--faint);font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
@@ -1005,7 +1008,7 @@ function pmRender(){
   document.getElementById('pmtitle').innerHTML=`${logo(club)}${pmName} <span class="m" style="font-weight:400">${pc}${me?` · £${me.price.toFixed(1)}`:''}</span>${avail(me)}`;
   const tabs=`<div class="oddsel"><span class="opt ${pmTab==='card'?'on':''}" onclick="pmSetTab('card')">Performance</span><span class="opt ${pmTab==='compare'?'on':''}" onclick="pmSetTab('compare')">Compare</span></div>`;
   host.innerHTML=tabs+(pmTab==='card'?pmCard(live,me,club):pmCompare(me,pc));
-  if(pmTab==='card'&&me)pmSpark(me.id);}
+  if(pmTab==='card'&&me){pmSpark(me.id);pmBd(me.id);}}
 function pmCard(live,me,club){
   const fdrCol=d=>d>=4?'var(--bad)':(d>0&&d<=2)?'var(--good)':'var(--muted)';
   let hero='';                                   // 1) GW RESULT — the primary read
@@ -1017,7 +1020,7 @@ function pmCard(live,me,club){
   const next=`<div class="mshead">Next GW${me&&me.xp1!=null?` · proj ${me.xp1} xPts`:''}</div>`+
     (fx.length?`<div class="pmfx">${fx.map(f=>`<div class="fx"><div class="g">GW${f.gw}</div><div class="o" style="color:${fdrCol(f.fdr)}">${f.opp}(${f.h?'H':'A'})</div></div>`).join('')}</div>`:`<div class="m" style="font-size:11px">Fixtures appear once the season is live.</div>`);
   const spark=`<div class="mshead">Points by gameweek</div><div id="pmspark"></div>`;   // 3) lazy sparkline
-  return hero+next+spark+pmStats(me);}           // 4) position-aware stats + flags
+  return hero+`<div id="pmbd"></div>`+next+spark+pmStats(me)+pmLeague(pmName);}        // breakdown + next + spark + stats + league
 function pmStats(me){if(!me)return '';
   const st=(v,l)=>`<div class="st"><div class="v">${v}</div><div class="l">${l}</div></div>`;
   const u=me.pos==='GK'?[[me.sv,'saves'],[me.cs,'CS'],[me.xgc,'xGC/90']]
@@ -1029,13 +1032,21 @@ function pmStats(me){if(!me)return '';
   return `<div class="mshead">Underlying · per 90</div><div class="pmgrid">${u.map(([v,l])=>st(v,l)).join('')}</div>`+
     `<div class="mshead">Season</div><div class="pmgrid g4">${se.map(([v,l])=>st(v,l)).join('')}</div>`+
     `<div class="pmet" style="margin-top:8px"><span class="m">own <b style="color:var(--ink)">${me.sel}%</b></span><span class="m">value <b style="color:var(--ink)">${me.val}</b></span><span class="m">5-GW xPts <b style="color:var(--ink)">${me.xph!=null?me.xph:me.ep}</b></span></div>`+flags;}
+function withPH(cb){if(PH){cb();return;}fetch('player_history.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{PH=d;cb();}).catch(()=>{PH={};cb();});}
 function pmSpark(id){const el=document.getElementById('pmspark');if(!el)return;
-  if(!PH){fetch('player_history.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{PH=d;pmSpark(id);}).catch(()=>{el.innerHTML='<div class="m" style="font-size:11px">No history yet.</div>';});return;}
-  const arr=(PH.pts||{})[String(id)]||[], gws=PH.gws||[];
-  if(!arr.some(v=>v!=null)){el.innerHTML='<div class="m" style="font-size:11px">No games played yet.</div>';return;}
-  const mx=Math.max(1,...arr.filter(v=>v!=null));
-  const bars=arr.map(v=>v==null?'<i class="na"></i>':`<i class="${v>=8?'hi':v>=4?'mid':'lo'}" style="height:${Math.max(6,Math.round(v/mx*100))}%" title="${v} pts"></i>`).join('');
-  el.innerHTML=`<div class="spark">${bars}</div><div class="sparkx">${gws.map(g=>`<span>${g}</span>`).join('')}</div>`;}
+  withPH(()=>{const arr=(PH.pts||{})[String(id)]||[], gws=PH.gws||[];
+    if(!arr.some(v=>v!=null)){el.innerHTML='<div class="m" style="font-size:11px">No games played yet.</div>';return;}
+    const mx=Math.max(1,...arr.filter(v=>v!=null));
+    const bars=arr.map(v=>v==null?'<i class="na"></i>':`<i class="${v>=8?'hi':v>=4?'mid':'lo'}" style="height:${Math.max(6,Math.round(v/mx*100))}%" title="${v} pts"></i>`).join('');
+    el.innerHTML=`<div class="spark">${bars}</div><div class="sparkx">${gws.map(g=>`<span>${g}</span>`).join('')}</div>`;});}
+const BDLBL={minutes:'Minutes',goals_scored:'Goals',assists:'Assists',clean_sheets:'Clean sheet',goals_conceded:'Goals conceded',own_goals:'Own goals',penalties_saved:'Pen saved',penalties_missed:'Pen missed',yellow_cards:'Yellow card',red_cards:'Red card',saves:'Saves',bonus:'Bonus',defensive_contribution:'Def. contribution'};
+function pmBd(id){const el=document.getElementById('pmbd');if(!el)return;
+  withPH(()=>{const bd=(PH.bd||{})[String(id)];if(!bd||!bd.length){el.innerHTML='';return;}
+    el.innerHTML=`<div class="mshead">GW${PH.lastgw} breakdown</div><div class="bd">`+bd.map(([k,v,p])=>`<div class="bdrow"><span>${BDLBL[k]||k} <span class="m">(${v})</span></span><span class="bdp ${p>0?'pos':p<0?'neg':''}">${p>0?'+':''}${p}</span></div>`).join('')+`</div>`;});}
+function pmLeague(name){const teams=Object.keys(SQUADS||{});if(!teams.length)return '';
+  let owners=0;const caps=[];teams.forEach(t=>{const r=(SQUADS[t]||[]).find(x=>x[1]===name);if(r){owners++;if(r[5])caps.push(t);}});
+  const body=owners?`Owned by <b style="color:var(--ink)">${owners} of ${teams.length}</b> managers${caps.length?` · captained by <b style="color:var(--ink)">${caps.join(', ')}</b>`:''}`:`Owned by <b style="color:var(--fpl)">0 of ${teams.length}</b> — a full differential`;
+  return `<div class="mshead">In your league</div><div class="m" style="font-size:11.5px;line-height:1.5">${body}</div>`;}
 function pmCompare(me,pc){
   if(!me)return '<div class="err">No comparison data for this player yet.</div>';
   const all=(PLAYERS&&PLAYERS.players)||[], XP=p=>(p.xph!=null?p.xph:(p.ep||0));
