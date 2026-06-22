@@ -1014,7 +1014,7 @@ function pmRender(){
   const all=(PLAYERS&&PLAYERS.players)||[];
   const me=all.find(p=>p.name===pmName&&p.pos===pc)||all.find(p=>p.name===pmName);
   const club=live?live[17]:(me?me.code:'');
-  document.getElementById('pmtitle').innerHTML=`<span class="pmname">${logo(club,'lg')}<b>${pmName}</b><span class="m"> · ${pc}${me?` · £${me.price.toFixed(1)}`:''}</span></span>${availBlock(me)}${pmLeagueLine(pmName)}`;
+  document.getElementById('pmtitle').innerHTML=`<span class="pmname">${logo(club,'lg')}<b>${pmName}</b><span class="m"> · ${pc}${me?` · £${me.price.toFixed(1)}`:''}${me&&me.sel!=null?` · ${me.sel}% owned`:''}</span></span>${availBlock(me)}${pmLeagueLine(pmName)}`;
   const tabs=`<div class="oddsel"><span class="opt ${pmTab==='card'?'on':''}" onclick="pmSetTab('card')">Performance</span><span class="opt ${pmTab==='compare'?'on':''}" onclick="pmSetTab('compare')">Compare</span></div>`;
   host.innerHTML=tabs+(pmTab==='card'?pmCard(live,me,club):pmCompare(me,pc));
   if(pmTab==='card'&&me){pmSpark(me.id);pmBd(me.id);}}
@@ -1027,7 +1027,9 @@ function pmCard(live,me,club){
     else if(st===2)hero=`<div class="pmgw">GW ${GWNO} ${sl} v ${opp} ${sl} <b class="gwpts" style="color:var(--muted)">DNP</b></div>`;
     else hero=`<div class="pmgw">GW ${GWNO} ${sl} v ${opp}${ko?` <span class="m">${ko}</span>`:''} ${sl} <b class="gwpts">${me&&me.xp1!=null?me.xp1:(live[13]||0)}</b> <span class="m">xPts proj</span></div>`;}
   const fx=(FIX&&FIX[club])||[];                 // 2) NEXT GW — the second read
-  const next=`<div class="mshead">Next GW${me&&me.xp1!=null?` · proj ${me.xp1} xPts`:''}</div>`+
+  const xp1=me&&me.xp1!=null?me.xp1:null, xph=me&&me.xph!=null?me.xph:null;
+  const proj=[xp1!=null?`${xp1} next GW`:'',xph!=null?`${xph} over 5`:''].filter(Boolean).join(' · ');
+  const next=`<div class="mshead">Next 5 GWs${proj?` · ${proj} xPts`:''}</div>`+
     (fx.length?`<div class="pmfx">${fx.map(f=>`<div class="fx"><div class="g">GW${f.gw}</div><div class="o" style="color:${fdrCol(f.fdr)}">${f.opp}(${f.h?'H':'A'})</div></div>`).join('')}</div>`:`<div class="m" style="font-size:11px">Fixtures appear once the season is live.</div>`);
   const spark=`<div class="mshead">Past performance</div><div id="pmspark"></div>`;   // 3) lazy sparkline
   return hero+`<div id="pmbd"></div>`+next+spark+pmStats(me);}        // breakdown + next + spark + stats
@@ -1036,8 +1038,7 @@ function pmStats(me){if(!me)return '';
   const se=me.pos==='GK'?[[me.tp,'pts'],[me.ppg,'PPG'],[me.cs,'CS'],[me.gc,'GC']]
         :[[me.tp,'pts'],[me.ppg,'PPG'],[me.g,'goals'],[me.a,'assists']];
   const flags=me.flags&&me.flags.length?`<div class="pchips" style="margin-top:9px">${me.flags.map(fl=>`<span class="flg ${fl==='rotation_risk'?'flg-rot':''}">${FLAGLBL[fl]||fl}</span>`).join('')}</div>`:'';
-  return `<div class="mshead">Season</div><div class="pmgrid g4">${se.map(([v,l])=>st(v,l)).join('')}</div>`+
-    `<div class="pmet" style="margin-top:8px"><span class="m">own <b style="color:var(--ink)">${me.sel}%</b></span><span class="m">value <b style="color:var(--ink)">${me.val}</b></span><span class="m">5-GW xPts <b style="color:var(--ink)">${me.xph!=null?me.xph:me.ep}</b></span></div>`+flags;}
+  return `<div class="mshead">Season</div><div class="pmgrid g4">${se.map(([v,l])=>st(v,l)).join('')}</div>`+flags;}
 function withPH(cb){if(PH){cb();return;}fetch('player_history.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{PH=d;cb();}).catch(()=>{PH={};cb();});}
 function pmSpark(id){const el=document.getElementById('pmspark');if(!el)return;
   withPH(()=>{const arr=(PH.pts||{})[String(id)]||[], gws=PH.gws||[];
