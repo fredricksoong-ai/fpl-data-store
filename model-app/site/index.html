@@ -293,8 +293,10 @@
   .diffrow{display:flex;align-items:center;gap:4px;font-size:12px;padding:3px 0;font-variant-numeric:tabular-nums}
   .caprow{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
   .capchip{display:inline-flex;align-items:center;gap:4px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:11px} .capchip b{color:var(--fpl)}
-  .moverow{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:6px 0;border-bottom:1px solid var(--line)}
-  .moverow:last-child{border-bottom:none} .mout{white-space:nowrap} .marrow{color:var(--muted)} .min{flex:1} .mgain{color:var(--good);font-weight:800;font-variant-numeric:tabular-nums}
+  .movehd{display:grid;grid-template-columns:1fr 16px 1fr 44px;align-items:center;gap:8px;padding:0 2px 4px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--faint);border-bottom:1px solid var(--line)}
+  .movehd .r{text-align:right}
+  .moverow{display:grid;grid-template-columns:1fr 16px 1fr 44px;align-items:center;gap:8px;font-size:12.5px;padding:6px 2px;border-bottom:1px solid var(--line)}
+  .moverow:last-child{border-bottom:none} .mout,.min{display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis} .marrow{color:var(--muted);text-align:center} .mgain{color:var(--good);font-weight:800;font-variant-numeric:tabular-nums;text-align:right}
   .mshead{color:var(--ink);font-weight:700;font-size:12.5px;margin:16px 2px 7px}
   .msgrid{display:grid;grid-template-columns:1fr 40px 1fr 40px;gap:4px 8px;font-size:11.5px;align-items:center}
   .msgrid .gh{color:var(--faint);font-size:10px} .msl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .msc{text-align:center;color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums} .msr{text-align:right} .msd{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
@@ -1101,13 +1103,16 @@ function renderNextGW(){const host=document.getElementById('nextgw');if(!host)re
   moves.sort((a,b)=>b.gain-a.gain);
   const usedIn=new Set(),usedOut=new Set(),top=[];
   for(const m of moves){if(top.length>=6)break;if(usedIn.has(m.inn.name)||usedOut.has(m.out.name))continue;usedIn.add(m.inn.name);usedOut.add(m.out.name);top.push(m);}
-  const movesHtml=`<div class="ctitle2">Your moves <span class="m" style="font-weight:400">· bank £${bank.toFixed(1)}m · gain over next 5 GWs</span></div>`+
-    (top.length?top.map(m=>`<div class="moverow"><span class="mout">${logo(m.out.code)}${m.out.name}</span><span class="marrow">→</span><span class="min">${logo(m.inn.code)}${m.inn.name} <span class="m">£${m.inn.price.toFixed(1)}</span></span><span class="mgain">+${m.gain.toFixed(1)}</span></div>`).join(''):'<div class="m" style="font-size:12px">No affordable upgrade beats your current 15 over the next 5 GWs.</div>');
+  const moveHead=`<div class="movehd"><span>Out</span><span></span><span>In</span><span class="r">Gain</span></div>`;
+  const movesHtml=`<div class="ctitle2" style="margin-top:10px">Your moves <span class="m" style="font-weight:400">· bank £${bank.toFixed(1)}m · gain over next 5 GWs</span></div>`+
+    (top.length?moveHead+top.map(m=>`<div class="moverow"><span class="mout">${logo(m.out.code)}${m.out.name}</span><span class="marrow">→</span><span class="min">${logo(m.inn.code)}${m.inn.name} <span class="m">£${m.inn.price.toFixed(1)}</span></span><span class="mgain">+${m.gain.toFixed(1)}</span></div>`).join(''):'<div class="m" style="font-size:12px">No affordable upgrade beats your current 15 over the next 5 GWs.</div>');
   host.innerHTML=capHtml+movesHtml;}
 function renderSquadChips(){const el=document.getElementById('sqchips');if(!el)return;
   withChips(()=>{const plan=CHIPS&&CHIPS.squad;
-    if(!plan||!plan.chips||!plan.chips.length){el.innerHTML='<div class="m" style="font-size:12px">Your chip plan appears once your team is set — see Best XV until then.</div>';return;}
-    el.innerHTML=`<div class="tsub">Plan based on ${plan.basis}${CHIPS.window?` · half ${CHIPS.half} (GW${CHIPS.window[0]}–${CHIPS.window[1]})`:''}. Doubles/blanks override these once announced.</div>`+
+    if(!plan){el.innerHTML='<div class="m" style="font-size:12px">Your chip plan appears once your team is set — see Best XV until then.</div>';return;}
+    if(!plan.chips||!plan.chips.length){el.innerHTML=`<div class="tsub">All chips for this half${CHIPS.window?` (GW${CHIPS.window[0]}–${CHIPS.window[1]})`:''} have been used.</div>`;return;}
+    const usedTxt=(CHIPS.used&&CHIPS.used.length)?` · used: ${CHIPS.used.join(', ')}`:'';
+    el.innerHTML=`<div class="tsub">Plan based on ${plan.basis}${CHIPS.window?` · half ${CHIPS.half} (GW${CHIPS.window[0]}–${CHIPS.window[1]})`:''}${usedTxt}. Doubles/blanks override these once announced.</div>`+
       plan.chips.map(c=>`<div class="chipcard"><div class="chiphd"><b>${c.label}</b><span class="chiptarget">${c.advice}</span></div><div class="chipnote2">${c.note}</div></div>`).join('');});}
 function renderTabSheet(){document.getElementById('sheetTabs').innerHTML=VIEW_ORDER.map(([id,l])=>`<div class="tabrow ${activeView===id?'on':''}" onclick="selectView('${id}')">${l}</div>`).join('');}
 function toggleSheet(w,e){if(e)e.stopPropagation();const a=document.getElementById('sheetActions'),t=document.getElementById('sheetTabs');const tg=w==="actions"?a:t,o=w==="actions"?t:a;o.classList.add('hidden');tg.classList.toggle('hidden');}

@@ -65,6 +65,18 @@ def bestxv_ids():
         return None
 
 
+def used_chips(half_start, half_end):
+    """Chips already played in the current half — so the plan stops suggesting them.
+    FPL grants one of each chip per half (GW1-19, GW20-38)."""
+    try:
+        h = get(f"/entry/{MY_ENTRY}/history/")
+    except Exception:
+        return set()
+    m = {"wildcard": "WC", "freehit": "FH", "bboost": "BB", "3xc": "TC"}
+    return {m[c["name"]] for c in h.get("chips", [])
+            if c.get("name") in m and half_start <= (c.get("event") or 0) <= half_end}
+
+
 def my_ids(boot):
     cur = [e["id"] for e in boot["events"] if e.get("is_current") or e.get("finished")]
     for ev in ([cur[-1]] if cur else []) + [e["id"] for e in boot["events"] if e.get("is_next")]:
@@ -96,7 +108,9 @@ def main() -> int:
         for r in csv.DictReader(open(HERE / "data" / "Fixtures-2026-27.csv")):
             gw_pairs.setdefault(int(r["gw"]), []).append((r["home"], r["away"]))
 
+    half_start = 1 if target <= 19 else 20
     half_end = 19 if target <= 19 else 38
+    used = used_chips(half_start, half_end) if un else set()  # skip off-season (API still on last finished season)
     window = [g for g in sorted(gw_pairs) if target <= g <= half_end]
     if not window:
         OUT.write_text(json.dumps({"generated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
@@ -140,24 +154,28 @@ def main() -> int:
         # candidate GW rankings per chip (doubles/blanks given a dominating bonus)
         def ranked(scoref, pool=None):
             return sorted([(g, scoref(g)) for g in (pool or window)], key=lambda x: -x[1])
-        tc_c = ranked(lambda g: tc[g] + (1e6 if g in dgw else 0))
-        bb_c = ranked(lambda g: bb[g] + (1e6 if g in dgw else 0))
-        fh_c = ranked(lambda g: (1e9 if g in bgw else 0) - xi[g])
         wc_pool = [g for g in window if g + 3 <= half_end] or window
-        wc_c = ranked(lambda g: sum(bb.get(g + k, 0) for k in range(4)), wc_pool)
-        a = assign_unique([("TC", tc_c), ("BB", bb_c), ("FH", fh_c), ("WC", wc_c)])
-        tc_gw, bb_gw, fh_gw, wc_gw = a["TC"], a["BB"], a["FH"], a["WC"]
+        cand = {
+            "TC": ranked(lambda g: tc[g] + (1e6 if g in dgw else 0)),
+            "BB": ranked(lambda g: bb[g] + (1e6 if g in dgw else 0)),
+            "FH": ranked(lambda g: (1e9 if g in bgw else 0) - xi[g]),
+            "WC": ranked(lambda g: sum(bb.get(g + k, 0) for k in range(4)), wc_pool),
+        }
+        a = assign_unique([(k, v) for k, v in cand.items() if k not in used])  # only chips still in hand
         cap = (lambda g: (f"{top[g][1]} vs {captain_for(g, top[g][2])}" if top.get(g) else ""))
-        chips = [
-            {"chip": "WC", "label": "Wildcard", "advice": f"GW{wc_gw}", "gw": wc_gw,
-             "note": f"{basis.capitalize()}'s best sustained run starts ~GW{wc_gw} — wildcard in to load up. First-half chip expires after GW19."},
-            {"chip": "FH", "label": "Free Hit", "advice": f"GW{fh_gw}", "gw": fh_gw,
-             "note": (f"GW{fh_gw} is a blank — Free Hit a full XI through it." if fh_gw in bgw else f"No blank scheduled; GW{fh_gw} is {basis}'s weakest projected XI week to bypass.")},
-            {"chip": "BB", "label": "Bench Boost", "advice": f"GW{bb_gw}", "gw": bb_gw,
-             "note": (f"GW{bb_gw} is a double — most points across {basis}." if bb_gw in dgw else f"GW{bb_gw}: {basis}'s strongest all-15 fixtures (incl. bench).")},
-            {"chip": "TC", "label": "Triple Captain", "advice": f"GW{tc_gw}", "gw": tc_gw, "who": cap(tc_gw),
-             "note": (f"GW{tc_gw} is a double — triple {cap(tc_gw)}." if tc_gw in dgw else f"Triple-captain {cap(tc_gw)} in GW{tc_gw} — {basis}'s best captain fixture (proj {tc[tc_gw]} pts).")},
-        ]
+        chips = []
+        if "WC" in a:
+            g = a["WC"]; chips.append({"chip": "WC", "label": "Wildcard", "advice": f"GW{g}", "gw": g,
+                "note": f"{basis.capitalize()}'s best sustained run starts ~GW{g} — wildcard in to load up. Chip expires after GW{half_end}."})
+        if "FH" in a:
+            g = a["FH"]; chips.append({"chip": "FH", "label": "Free Hit", "advice": f"GW{g}", "gw": g,
+                "note": (f"GW{g} is a blank — Free Hit a full XI through it." if g in bgw else f"No blank scheduled; GW{g} is {basis}'s weakest projected XI week to bypass.")})
+        if "BB" in a:
+            g = a["BB"]; chips.append({"chip": "BB", "label": "Bench Boost", "advice": f"GW{g}", "gw": g,
+                "note": (f"GW{g} is a double — most points across {basis}." if g in dgw else f"GW{g}: {basis}'s strongest all-15 fixtures (incl. bench).")})
+        if "TC" in a:
+            g = a["TC"]; chips.append({"chip": "TC", "label": "Triple Captain", "advice": f"GW{g}", "gw": g, "who": cap(g),
+                "note": (f"GW{g} is a double — triple {cap(g)}." if g in dgw else f"Triple-captain {cap(g)} in GW{g} — {basis}'s best captain fixture (proj {tc[g]} pts).")})
         chips.sort(key=lambda c: c["gw"])
         return {"basis": basis, "chips": chips}
 
@@ -165,7 +183,7 @@ def main() -> int:
     squad = plan_for(my_ids(boot), "your squad")
     out = {"generated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
            "half": 1 if target <= 19 else 2, "window": [window[0], window[-1]],
-           "bestxv": bestxv, "squad": squad}
+           "used": sorted(used), "bestxv": bestxv, "squad": squad}
     OUT.write_text(json.dumps(out, ensure_ascii=False))
     print(f"wrote {OUT}: GW{window[0]}-{window[-1]} | bestxv={'y' if bestxv else 'n'} squad={'y' if squad else 'n'}")
     return 0
