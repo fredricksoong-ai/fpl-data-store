@@ -498,13 +498,18 @@ function bub(p,SC,H,bn){const w=Math.round(tileW(p[3])*SC),h=Math.round(H!=null?
   const fdrCol=d=>d>=4?'var(--bad)':(d>0&&d<=2)?'var(--good)':'var(--muted)';
   const xp=(p[13]!=null&&p[13]!=='')?(+p[13]).toFixed(1):'';
   // line 2: pre-game = opp(FDR) + kickoff; once played = opp + points (FDR/timing drop away)
-  const l2=s===0?`<span style="color:${fdrCol(p[14])}">${p[8]}</span>${p[9]?` <span class="tm">${p[9]}</span>`:''}`
+  let l2=s===0?`<span style="color:${fdrCol(p[14])}">${p[8]}</span>${p[9]?` <span class="tm">${p[9]}</span>`:''}`
           :s===2?`${p[8]} • DNP`
           :`${p[8]} • ${p[2]} pts`;
   // line 3: position (+ inline xPts on wide starter tiles); narrow bench tiles push xPts to line 4
   const xps=xp?`<span class="xp">${xp} xPts</span>`:'';
-  const l3=bn?`<span class="pos">${POS}</span>`:`<span class="pos">${POS}</span>${xp?` • ${xps}`:''}`;
-  const l4=(bn&&xp)?`<span class="sub" style="font-size:${Math.max(7.5,Math.min(10,h*0.20)).toFixed(1)}px">${xps}</span>`:'';
+  let l3=bn?`<span class="pos">${POS}</span>`:`<span class="pos">${POS}</span>${xp?` • ${xps}`:''}`;
+  let l4=(bn&&xp)?`<span class="sub" style="font-size:${Math.max(7.5,Math.min(10,h*0.20)).toFixed(1)}px">${xps}</span>`:'';
+  if(HLOWN){  // Best XV tiles: Team • Pos • Price / Own% • xPts
+    const pr2=p[15]!=null?(+p[15]).toFixed(1):'', code=p[16]||'', own=p[3]!=null?(+p[3]).toFixed(1):'';
+    l2=`${code?`${code} • `:''}<span class="pos">${POS}</span>${pr2?` • £${pr2}`:''}`;
+    l3=`${own?`${own}%`:''}${(own&&xp)?' • ':''}${xps}`;
+    l4='';}
   const seg=Math.max(1,...String(p[1]).split(/[ \-]/).map(x=>x.length));  // longest unbreakable chunk
   const nf=Math.max(7.5,Math.min(12,h*0.30,(w-12)/(seg*0.6))).toFixed(1);  // fit that chunk; names wrap at spaces/hyphens
   const sf=Math.max(7.5,Math.min(10,h*0.20)).toFixed(1);
@@ -981,7 +986,7 @@ function renderBestXV(){const sum=document.getElementById('bxvsum');
   const sq=BXV.rows||[];
   if(!sq.length){sum.innerHTML='<span class="err">Best XV fills in once player projections are available.</span>';return;}
   VIEWING=ME;  // these aren't a rival's players — suppress the "not in my team" badge
-  const st=sq.filter(p=>!p[7]), bench=sq.filter(p=>p[7]);
+  const st=sq.filter(p=>!p[7]), bench=sq.filter(p=>p[7]).sort((a,b)=>((b[0]===1)-(a[0]===1))||(b[13]-a[13]));  // GK first (slot 12), then by xPts
   const subrows=[];[1,2,3,4].forEach(t=>{const l=st.filter(p=>p[0]===t);if(l.length)splitLine(l).forEach(r=>subrows.push(r));});
   const rowW=a=>a.reduce((s,p)=>s+tileW(p[3]),0)+(a.length-1)*GAP;
   const pr=document.getElementById('bxvrows'); const avail=(pr.clientWidth||340)-2;

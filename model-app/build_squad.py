@@ -158,7 +158,8 @@ def main() -> int:
     for i in s:
         p = P[i]; bench = 0 if i in xi else 1
         rows.append([PT[p["pos"]], p["name"], 0, p["sel"], 0, 1 if i == cap else 0, 1 if i == vice else 0,
-                     bench, opp.get(p["code"], ""), "", 0, 0, 0, round(p["xph"], 1), 0])
+                     bench, opp.get(p["code"], ""), "", 0, 0, 0, round(p["xph"], 1), 0,
+                     round(p["price"], 1), p["code"]])  # [15]=price [16]=club code (for Best XV tiles)
     spend = round(sum(P[i]["price"] for i in s), 1)
     xi_xph = round(sum(P[i]["xph"] for i in s if i in xi), 1)
     cnt = {ps: sum(1 for i in s if i in xi and P[i]["pos"] == ps) for ps in PT}
