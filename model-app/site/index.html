@@ -53,6 +53,7 @@
   .pitch::after{content:"";position:absolute;left:50%;top:48%;width:110px;height:110px;border:1px solid rgba(255,255,255,.05);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
   .prow{display:flex;justify-content:center;align-items:center;gap:6px;margin:5px 0}
   .bub{position:relative;display:flex;align-items:center;justify-content:center;border-radius:11px;text-align:center;flex:none;padding:0 4px}
+  .bub.own{box-shadow:0 0 0 2px var(--pick),0 0 8px rgba(167,139,250,.5)}
   .bub .in{display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.05;max-width:100%;padding:0 1px}
   .bub .nm{font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:normal;overflow-wrap:normal;line-height:1.06;max-width:100%}
   .bub .sub{font-weight:600;opacity:.82;white-space:nowrap}
@@ -293,10 +294,16 @@
   .diffrow{display:flex;align-items:center;gap:4px;font-size:12px;padding:3px 0;font-variant-numeric:tabular-nums}
   .caprow{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
   .capchip{display:inline-flex;align-items:center;gap:4px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:11px} .capchip b{color:var(--fpl)}
-  .movehd{display:grid;grid-template-columns:1fr 16px 1fr 62px;align-items:center;gap:8px;padding:0 2px 4px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--faint);border-bottom:1px solid var(--line)}
+  .movewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .movehd,.moverow{display:grid;grid-template-columns:132px 16px 132px 60px 78px 88px 64px;align-items:center;gap:8px;width:max-content;min-width:100%}
+  .movehd{padding:0 2px 4px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--faint);border-bottom:1px solid var(--line)}
   .movehd .r{text-align:right}
-  .moverow{display:grid;grid-template-columns:1fr 16px 1fr 62px;align-items:center;gap:8px;font-size:12.5px;padding:6px 2px;border-bottom:1px solid var(--line)}
-  .moverow:last-child{border-bottom:none} .mout,.min{display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis} .marrow{color:var(--muted);text-align:center} .mgain{color:var(--good);font-weight:800;font-variant-numeric:tabular-nums;text-align:right}
+  .moverow{font-size:12.5px;padding:6px 2px;border-bottom:1px solid var(--line)}
+  .moverow:last-child{border-bottom:none}
+  .mout,.min{display:flex;align-items:center;gap:5px;white-space:nowrap}
+  .movehd>span:first-child,.moverow>.mout{position:sticky;left:0;z-index:2;background:var(--bg);box-shadow:1px 0 0 var(--line)}
+  .marrow{color:var(--muted);text-align:center} .mgain{color:var(--good);font-weight:800;font-variant-numeric:tabular-nums;text-align:right}
+  .mc{color:var(--faint);font-weight:400;font-size:11px} .mcmp{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:11.5px} .mcmp .ar{color:var(--faint);padding:0 2px}
   .mshead{color:var(--ink);font-weight:700;font-size:12.5px;margin:16px 2px 7px}
   .msgrid{display:grid;grid-template-columns:1fr 40px 1fr 40px;gap:4px 8px;font-size:11.5px;align-items:center}
   .msgrid .gh{color:var(--faint);font-size:10px} .msl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .msc{text-align:center;color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums} .msr{text-align:right} .msd{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
@@ -352,8 +359,6 @@
 
   <section class="card" id="card-bestxv">
     <div class="ctitle">Best XV · model squad</div>
-    <div id="bxvchips" class="chiprow"></div>
-    <div id="bxvchipnote" class="chipnote"></div>
     <div id="bxvsum" class="tsub"></div>
     <div class="pitch"><div id="bxvrows"></div><div class="benchsep"></div><div class="bench" id="bxvbench"></div></div>
   </section>
@@ -510,7 +515,7 @@ function bub(p,SC,H,bn){const w=Math.round(tileW(p[3])*SC),h=Math.round(H!=null?
   else if(g)bd+=`<span class="cnr c-tl b-icon">${I_GOAL}</span>`;else if(a)bd+=`<span class="cnr c-tl b-icon">${I_ASSIST}</span>`;
   if(ti)bd+=`<span class="cnr c-bl">${I_XFER}</span>`;
   if(warn)bd+='<span class="cnr c-br b-warn">!</span>';
-  return `<div class="bub ${tier(p)} ${p[5]?'cap':p[6]?'vc':''}" style="width:${w}px;height:${h}px" onclick="playerModal('${String(p[1]).replace(/'/g,"\\'")}',${p[0]})"><div class="in"><span class="nm" style="font-size:${nf}px">${p[1]}</span><span class="sub" style="font-size:${sf}px">${l2}</span><span class="sub" style="font-size:${sf}px">${l3}</span>${l4}</div>${bd}</div>`;}
+  return `<div class="bub ${tier(p)} ${HLOWN&&MYNAMES.has(p[1])?'own':''} ${p[5]?'cap':p[6]?'vc':''}" style="width:${w}px;height:${h}px" onclick="playerModal('${String(p[1]).replace(/'/g,"\\'")}',${p[0]})"><div class="in"><span class="nm" style="font-size:${nf}px">${p[1]}</span><span class="sub" style="font-size:${sf}px">${l2}</span><span class="sub" style="font-size:${sf}px">${l3}</span>${l4}</div>${bd}</div>`;}
 function gwPill(team){const s=STATS[team]||STATS[ME]||{gw:0,avg:1,ml:'',gap:'',op:0,ovr:'',ovrUp:0,gwr:'',up:0,val:'',bank:''};const sl='<span class="sl">•</span>';
   const dn=s.gd_dn,up=s.gd_up;  // cushion over team below / deficit to team above
   const gapH=(dn!=null?`<span class="gd">+${dn}</span>`:'')+((dn!=null&&up!=null)?'<span class="mu">/</span>':'')+(up!=null?`<span class="bd">−${up}</span>`:'')||`<span class="gd">${s.gap}</span>`;
@@ -969,7 +974,7 @@ function renderRecommend(){const host=document.getElementById('recommend');
   </div>`).join('');
   host.innerHTML=`<div class="tsub">The model's best picks over the next ${REC.horizon||5} gameweeks by expected points, with signal flags for conviction. Ranked per position — tap to switch lines.</div>${bar}${rows}`;}
 /* ===== Best XV (model's optimal £100 squad) ===== */
-let BXV=null;
+let BXV=null, HLOWN=false;
 function renderBestXV(){const sum=document.getElementById('bxvsum');
   if(!BXV){sum.textContent='Loading…';
     fetch('squad.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{BXV=d;renderBestXV();}).catch(()=>{sum.innerHTML='<span class="err">Best XV unavailable.</span>';});return;}
@@ -982,10 +987,11 @@ function renderBestXV(){const sum=document.getElementById('bxvsum');
   const pr=document.getElementById('bxvrows'); const avail=(pr.clientWidth||340)-2;
   const SC=Math.min(1,avail/Math.max(...subrows.map(rowW),1));
   const BSC=Math.min(SC,(avail-6)/(bench.length?rowW(bench):1));
+  HLOWN=true;
   pr.innerHTML=subrows.map(r=>`<div class="prow">${r.map(p=>bub(p,SC)).join('')}</div>`).join('');
   document.getElementById('bxvbench').innerHTML=bench.map(p=>bub(p,BSC,TILEH*SC,true)).join('');
-  chipPills('bxvchips','bxvchipnote','bestxv');
-  sum.innerHTML=`Optimal £100 squad for the next 5 GWs — <b style="color:var(--ink)">${BXV.formation}</b> · spend <b style="color:var(--ink)">£${BXV.spend}m</b> · XI <b style="color:var(--fpl)">${BXV.xi_xph} xPts</b>. Maximises projected XI points; bench is budget fodder. Tap a tile to compare.`;}
+  HLOWN=false;
+  sum.innerHTML=`Best XV for the next 5 GWs — <b style="color:var(--ink)">${BXV.formation}</b> · <b style="color:var(--ink)">£${BXV.spend}m</b> · XI <b style="color:var(--fpl)">${BXV.xi_xph} xPts</b>. Highest-projected squad regardless of budget; players already in <b style="color:var(--pick)">your team</b> are ringed. Tap a tile to compare.`;}
 let CHIPS=null;
 function withChips(cb){if(CHIPS){cb();return;}fetch('chips.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{CHIPS=d;cb();}).catch(()=>{CHIPS={};cb();});}
 function chipPills(elId,noteId,key){const el=document.getElementById(elId);if(!el)return;
@@ -1103,9 +1109,13 @@ function renderNextGW(){const host=document.getElementById('nextgw');if(!host)re
   moves.sort((a,b)=>b.gain-a.gain);
   const usedIn=new Set(),usedOut=new Set(),top=[];
   for(const m of moves){if(top.length>=6)break;if(usedIn.has(m.inn.name)||usedOut.has(m.out.name))continue;usedIn.add(m.inn.name);usedOut.add(m.out.name);top.push(m);}
-  const moveHead=`<div class="movehd"><span>Out</span><span></span><span>In</span><span class="r">Gain (xPts)</span></div>`;
+  const fdr5=code=>{const fx=(FIX&&FIX[code])||[];if(!fx.length)return null;const s=fx.slice(0,5);return s.reduce((a,f)=>a+(f.fdr||0),0)/s.length;};
+  const cmp=(a,b,d)=>`${a==null?'–':(+a).toFixed(d)}<span class="ar">→</span>${b==null?'–':(+b).toFixed(d)}`;
+  const moveHead=`<div class="movehd"><span>Out</span><span></span><span>In</span><span class="r">Gain (xPts)</span><span>Form</span><span>5GW xPts</span><span>FDR5</span></div>`;
+  const rowsHtml=top.map(m=>{const of=fdr5(m.out.code),inf=fdr5(m.inn.code);
+    return `<div class="moverow"><span class="mout">${logo(m.out.code)}${m.out.name} <span class="mc">£${m.out.price.toFixed(1)}</span></span><span class="marrow">→</span><span class="min">${logo(m.inn.code)}${m.inn.name} <span class="mc">£${m.inn.price.toFixed(1)}</span></span><span class="mgain">+${m.gain.toFixed(1)}</span><span class="mcmp">${cmp(m.out.form,m.inn.form,1)}</span><span class="mcmp">${cmp(m.out.xph,m.inn.xph,1)}</span><span class="mcmp">${cmp(of,inf,1)}</span></div>`;}).join('');
   const movesHtml=`<div class="ctitle2" style="margin-top:10px">Your moves <span class="m" style="font-weight:400">· bank £${bank.toFixed(1)}m · gain over next 5 GWs</span></div>`+
-    (top.length?moveHead+top.map(m=>`<div class="moverow"><span class="mout">${logo(m.out.code)}${m.out.name}</span><span class="marrow">→</span><span class="min">${logo(m.inn.code)}${m.inn.name} <span class="m">£${m.inn.price.toFixed(1)}</span></span><span class="mgain">+${m.gain.toFixed(1)}</span></div>`).join(''):'<div class="m" style="font-size:12px">No affordable upgrade beats your current 15 over the next 5 GWs.</div>');
+    (top.length?`<div class="movewrap">${moveHead+rowsHtml}</div>`:'<div class="m" style="font-size:12px">No affordable upgrade beats your current 15 over the next 5 GWs.</div>');
   host.innerHTML=capHtml+movesHtml;}
 function renderSquadChips(){const el=document.getElementById('sqchips');if(!el)return;
   withChips(()=>{const plan=CHIPS&&CHIPS.squad;

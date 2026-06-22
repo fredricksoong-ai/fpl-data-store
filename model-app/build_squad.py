@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Build squad.json — the model's optimal £100 squad for the upcoming run.
+"""Build squad.json — the model's best 15 for the upcoming run (no budget cap).
 
-Solves the real FPL squad problem: pick 15 (2 GK, 5 DEF, 5 MID, 3 FWD) under a £100
-budget with <=3 per club, choosing a valid starting XI, to maximise the XI's projected
-points over the FDR-aware horizon (players' `xph` from build_recommend — model xPts
-summed over the next ~5 GWs, so fixture difficulty is already priced in). The bench is
-therefore cheap enabler fodder rather than wasted budget.
+Picks 15 (2 GK, 5 DEF, 5 MID, 3 FWD) with <=3 per club and a valid starting XI to
+maximise the XI's projected points over the FDR-aware horizon (players' `xph` from
+build_recommend — model xPts summed over the next ~5 GWs, so fixture difficulty is
+already priced in). Cost is not constrained: the squad shown is simply the strongest
+the model can assemble. Set SQUAD_BUDGET to reimpose a cap if ever needed.
 
 Reads players.json (needs `xph`, price, pos, code). Uses scipy's integer solver (milp),
 falling back to a greedy + local-search heuristic if unavailable. Emits rows in the same
@@ -19,7 +19,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 OUT = Path(os.environ.get("SQUAD_OUT", "squad.json"))
-BUDGET = float(os.environ.get("SQUAD_BUDGET", "100.0"))
+BUDGET = float(os.environ.get("SQUAD_BUDGET", "1e9"))  # uncapped by default — pick the best XV regardless of cost
 API = "https://fantasy.premierleague.com/api"
 PT = {"GK": 1, "DEF": 2, "MID": 3, "FWD": 4}
 QUOTA = {"GK": 2, "DEF": 5, "MID": 5, "FWD": 3}
