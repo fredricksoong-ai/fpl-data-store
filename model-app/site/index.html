@@ -253,8 +253,10 @@
   .subtab{flex:1;text-align:center;padding:9px 4px;border-radius:10px;background:var(--card2);border:1px solid var(--line);color:var(--muted);font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap}
   .subtab.on{background:rgba(0,255,133,.12);border-color:rgba(0,255,133,.5);color:var(--fpl)}
   /* next-gw detail */
-  .caprank{display:flex;align-items:center;gap:7px;padding:7px 2px;border-bottom:1px solid var(--line);font-size:13px}
-  .caprank:last-child{border-bottom:none} .crk{width:16px;text-align:right;color:var(--faint);font-size:11px} .cnm{flex:1;font-weight:600} .cxp{color:var(--fpl);font-weight:800;font-variant-numeric:tabular-nums}
+  .caphd{display:grid;grid-template-columns:18px 1fr 52px 42px 20px;align-items:center;gap:7px;padding:0 2px 4px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--faint);border-bottom:1px solid var(--line)}
+  .caphd .r{text-align:right}
+  .caprank{display:grid;grid-template-columns:18px 1fr 52px 42px 20px;align-items:center;gap:7px;padding:7px 2px;border-bottom:1px solid var(--line);font-size:13px}
+  .caprank:last-child{border-bottom:none} .crk{text-align:right;color:var(--faint);font-size:11px} .cnm{font-weight:600;display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis} .copp{color:var(--muted);font-size:11.5px} .cxp{color:var(--fpl);font-weight:800;font-variant-numeric:tabular-nums;text-align:right}
   .captag{width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex:none} .captag.c{background:var(--fpl);color:#06231a} .captag.v{background:#86f3bf;color:#06231a}
   /* chip detail cards */
   .chipcard{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:11px 12px;margin:8px 0}
@@ -1090,7 +1092,8 @@ function renderNextGW(){const host=document.getElementById('nextgw');if(!host)re
   const xi=mine.filter(p=>!p[7]).map(p=>{const m=byName(p[1]);return {name:p[1],code:p[17],opp:p[8],xp:(m&&m.xp1!=null?m.xp1:(p[13]||0))};}).sort((a,b)=>b.xp-a.xp);
   const tag=i=>i===0?'<span class="captag c">C</span>':i===1?'<span class="captag v">V</span>':'';
   const capHtml=`<div class="ctitle2" style="margin:2px 2px 6px">Captain pick · top of your XI</div>`+
-    xi.slice(0,5).map((r,i)=>`<div class="caprank"><span class="crk">${i+1}</span>${logo(r.code)}<span class="cnm">${r.name}</span><span class="m">${r.opp||''}</span><span class="cxp">${r.xp.toFixed(1)}</span>${tag(i)}</div>`).join('');
+    `<div class="caphd"><span class="r">#</span><span>Player</span><span>Opp</span><span class="r">xPts</span><span></span></div>`+
+    xi.slice(0,5).map((r,i)=>`<div class="caprank"><span class="crk">${i+1}</span><span class="cnm">${logo(r.code)}${r.name}</span><span class="copp">${r.opp||''}</span><span class="cxp">${r.xp.toFixed(1)}</span>${tag(i)||'<span></span>'}</div>`).join('');
   const bank=parseFloat((STATS[ME]||{}).bank||'0')||0, owned=new Set(mine.map(p=>p[1])), moves=[];
   mine.forEach(p=>{const m=byName(p[1]);if(!m||m.xph==null)return;const budget=m.price+bank;
     const c=PL.filter(x=>x.pos===m.pos&&!owned.has(x.name)&&x.xph!=null&&x.price<=budget+1e-6&&x.xph>m.xph).sort((a,b)=>b.xph-a.xph)[0];

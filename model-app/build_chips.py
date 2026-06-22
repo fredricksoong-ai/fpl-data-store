@@ -42,6 +42,21 @@ def get(path):
     return json.loads(urllib.request.urlopen(req, timeout=30).read())
 
 
+def assign_unique(cands):
+    """Assign each chip a distinct GW. cands: [(key, [(gw, score), ...desc])].
+    A chip can only be played one-per-GW, so when two chips want the same week the
+    one that loses more by moving (higher regret = gap to its next choice) keeps it;
+    the other drops to its next-best free week. Returns {key: gw}."""
+    order = sorted(cands, key=lambda c: -((c[1][0][1] - c[1][1][1]) if len(c[1]) > 1 else 1e18))
+    taken, result = set(), {}
+    for key, ranked in order:
+        pick = next((gw for gw, _ in ranked if gw not in taken), ranked[0][0] if ranked else None)
+        if pick is not None:
+            taken.add(pick)
+        result[key] = pick
+    return result
+
+
 def bestxv_ids():
     try:
         sq = json.loads((OUT.parent / "squad.json").read_text())
@@ -122,22 +137,28 @@ def main() -> int:
             xs = [r[3] for r in rows]
             bb[g] = round(sum(xs), 1); xi[g] = round(sum(xs[:11]), 1); tc[g] = round(xs[0], 1) if xs else 0.0
             top[g] = rows[0] if rows else None
-        tc_gw = dgw[0] if dgw else max(window, key=lambda g: tc[g])
-        bb_gw = dgw[0] if dgw else max(window, key=lambda g: bb[g])
-        fh_gw = bgw[0] if bgw else min(window, key=lambda g: xi[g])
-        runs = [(g, sum(bb.get(g + k, 0) for k in range(4))) for g in window if g + 3 <= half_end]
-        wc_gw = max(runs, key=lambda x: x[1])[0] if runs else window[0]
+        # candidate GW rankings per chip (doubles/blanks given a dominating bonus)
+        def ranked(scoref, pool=None):
+            return sorted([(g, scoref(g)) for g in (pool or window)], key=lambda x: -x[1])
+        tc_c = ranked(lambda g: tc[g] + (1e6 if g in dgw else 0))
+        bb_c = ranked(lambda g: bb[g] + (1e6 if g in dgw else 0))
+        fh_c = ranked(lambda g: (1e9 if g in bgw else 0) - xi[g])
+        wc_pool = [g for g in window if g + 3 <= half_end] or window
+        wc_c = ranked(lambda g: sum(bb.get(g + k, 0) for k in range(4)), wc_pool)
+        a = assign_unique([("TC", tc_c), ("BB", bb_c), ("FH", fh_c), ("WC", wc_c)])
+        tc_gw, bb_gw, fh_gw, wc_gw = a["TC"], a["BB"], a["FH"], a["WC"]
         cap = (lambda g: (f"{top[g][1]} vs {captain_for(g, top[g][2])}" if top.get(g) else ""))
         chips = [
-            {"chip": "WC", "label": "Wildcard", "advice": f"GW{wc_gw}",
+            {"chip": "WC", "label": "Wildcard", "advice": f"GW{wc_gw}", "gw": wc_gw,
              "note": f"{basis.capitalize()}'s best sustained run starts ~GW{wc_gw} — wildcard in to load up. First-half chip expires after GW19."},
-            {"chip": "FH", "label": "Free Hit", "advice": f"GW{fh_gw}",
-             "note": (f"GW{fh_gw} is a blank — Free Hit a full XI through it." if bgw else f"No blank scheduled; GW{fh_gw} is {basis}'s weakest projected XI week to bypass.")},
-            {"chip": "BB", "label": "Bench Boost", "advice": f"GW{bb_gw}",
-             "note": (f"GW{bb_gw} is a double — most points across {basis}." if dgw else f"GW{bb_gw}: {basis}'s strongest all-15 fixtures (incl. bench).")},
-            {"chip": "TC", "label": "Triple Captain", "advice": f"GW{tc_gw}", "who": cap(tc_gw),
-             "note": (f"GW{tc_gw} is a double — triple {cap(tc_gw)}." if dgw else f"Triple-captain {cap(tc_gw)} in GW{tc_gw} — {basis}'s best captain fixture (proj {tc[tc_gw]} pts).")},
+            {"chip": "FH", "label": "Free Hit", "advice": f"GW{fh_gw}", "gw": fh_gw,
+             "note": (f"GW{fh_gw} is a blank — Free Hit a full XI through it." if fh_gw in bgw else f"No blank scheduled; GW{fh_gw} is {basis}'s weakest projected XI week to bypass.")},
+            {"chip": "BB", "label": "Bench Boost", "advice": f"GW{bb_gw}", "gw": bb_gw,
+             "note": (f"GW{bb_gw} is a double — most points across {basis}." if bb_gw in dgw else f"GW{bb_gw}: {basis}'s strongest all-15 fixtures (incl. bench).")},
+            {"chip": "TC", "label": "Triple Captain", "advice": f"GW{tc_gw}", "gw": tc_gw, "who": cap(tc_gw),
+             "note": (f"GW{tc_gw} is a double — triple {cap(tc_gw)}." if tc_gw in dgw else f"Triple-captain {cap(tc_gw)} in GW{tc_gw} — {basis}'s best captain fixture (proj {tc[tc_gw]} pts).")},
         ]
+        chips.sort(key=lambda c: c["gw"])
         return {"basis": basis, "chips": chips}
 
     bestxv = plan_for(bestxv_ids(), "your Best XV")
