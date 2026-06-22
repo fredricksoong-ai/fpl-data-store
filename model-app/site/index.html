@@ -511,8 +511,9 @@ function bub(p,SC,H,bn){const w=Math.round(tileW(p[3])*SC),h=Math.round(H!=null?
     l3=`${own?`${own}%`:''}${(own&&xp)?' • ':''}${xp?`${xp} xPts`:''}`;
     l4='';}
   const seg=Math.max(1,...String(p[1]).split(/[ \-]/).map(x=>x.length));  // longest unbreakable chunk
-  const sf=Math.max(7.5,Math.min(10,h*0.20)).toFixed(1);
-  const nf=HLOWN?sf:Math.max(7.5,Math.min(12,h*0.30,(w-12)/(seg*0.6))).toFixed(1);  // Best XV: name matches detail size; else fit name chunk
+  const sfN=Math.max(7.5,Math.min(10,h*0.20));
+  const sf=(HLOWN?Math.max(6,sfN*0.75):sfN).toFixed(1);  // Best XV: detail lines much smaller than the name
+  const nf=Math.max(7.5,Math.min(12,h*0.30,(w-12)/(seg*0.6))).toFixed(1);  // name fits its longest chunk
   const g=p[10],a=p[11],ti=p[12],warn=VIEWING!==ME&&!MYNAMES.has(p[1]);
   let bd='';
   if(p[5])bd+='<span class="cnr c-tr b-cap">C</span>';else if(p[6])bd+='<span class="cnr c-tr b-vc">V</span>';
