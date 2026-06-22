@@ -82,6 +82,7 @@ def main() -> int:
                         "xgc": round(f(e.get("expected_goals_conceded_per_90")), 2),
                         "val": f(e.get("value_season")), "bps": e.get("bps", 0) or 0,
                         "st": e.get("status", "a"), "cop": e.get("chance_of_playing_next_round"),
+                        "news": (e.get("news") or "").strip(),
                         "flags": flags, "flag_count": len([x for x in flags if x != "rotation_risk"])})
     players.sort(key=lambda p: (-p["flag_count"], -p["form"]))
 

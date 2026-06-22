@@ -222,7 +222,8 @@
   #pmtitle{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
   .pmname{display:flex;align-items:center;font-weight:800;font-size:16px;min-width:0}
   .pmname b{font-weight:800} .pmname .m{font-weight:400;font-size:13px;white-space:nowrap}
-  .pmavail{font-size:11.5px;font-weight:700} .pmavail.amber{color:var(--away)} .pmavail.red{color:var(--bad)}
+  .pmavail{font-size:11.5px;font-weight:700;line-height:1.4} .pmavail.amber{color:var(--away)} .pmavail.red{color:var(--bad)}
+  .pmown{font-size:11px;color:var(--muted);line-height:1.4;margin-top:3px}
   .modalhd .mx{cursor:pointer;color:var(--muted);font-size:16px}
   .mxg-fc{margin:8px 0 2px} .mxg-fcx{font-size:11px;color:var(--muted);text-align:center;margin-top:6px} .mxg-fcx b{color:var(--ink)}
   .mxg-sum{margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
@@ -1001,12 +1002,11 @@ async function playerModal(name,posType){pmName=name;pmType=posType;pmTab='card'
   pmRender();}
 function pmSetTab(t){pmTab=t;pmRender();}
 let PH=null;
-function availBlock(me){if(!me)return '';const s=me.st||'a',c=me.cop;  // only shown when there's a concern
-  if(s==='a'&&(c==null||c>=100))return '';
-  let txt,cls;
-  if(s==='a'||s==='d'){txt=(c!=null?`${c}% chance of playing`:'Doubtful');cls=(c!=null&&c>=75)?'amber':'red';}
-  else{txt='Ruled out';cls='red';}
-  return `<div class="pmavail ${cls}">⚠ ${txt}</div>`;}
+function availBlock(me){if(!me)return '';const s=me.st||'a',c=me.cop,news=(me.news||'').trim();  // only shown when there's a concern
+  if(s==='a'&&(c==null||c>=100)&&!news)return '';
+  const cls=(s!=='a'&&s!=='d')?'red':(c!=null&&c>=75)?'amber':'red';
+  const txt=news||(c!=null?`${c}% chance of playing`:(s==='a'?'':'Ruled out'));
+  return txt?`<div class="pmavail ${cls}">⚠ ${txt}</div>`:'';}
 function pmRender(){
   const host=document.getElementById('pmbody');
   const pc=({1:'GK',2:'DEF',3:'MID',4:'FWD'})[pmType]||pmType;
@@ -1014,32 +1014,29 @@ function pmRender(){
   const all=(PLAYERS&&PLAYERS.players)||[];
   const me=all.find(p=>p.name===pmName&&p.pos===pc)||all.find(p=>p.name===pmName);
   const club=live?live[17]:(me?me.code:'');
-  document.getElementById('pmtitle').innerHTML=`<span class="pmname">${logo(club,'lg')}<b>${pmName}</b><span class="m"> · ${pc}${me?` · £${me.price.toFixed(1)}`:''}</span></span>${availBlock(me)}`;
+  document.getElementById('pmtitle').innerHTML=`<span class="pmname">${logo(club,'lg')}<b>${pmName}</b><span class="m"> · ${pc}${me?` · £${me.price.toFixed(1)}`:''}</span></span>${availBlock(me)}${pmLeagueLine(pmName)}`;
   const tabs=`<div class="oddsel"><span class="opt ${pmTab==='card'?'on':''}" onclick="pmSetTab('card')">Performance</span><span class="opt ${pmTab==='compare'?'on':''}" onclick="pmSetTab('compare')">Compare</span></div>`;
   host.innerHTML=tabs+(pmTab==='card'?pmCard(live,me,club):pmCompare(me,pc));
   if(pmTab==='card'&&me){pmSpark(me.id);pmBd(me.id);}}
 function pmCard(live,me,club){
   const fdrCol=d=>d>=4?'var(--bad)':(d>0&&d<=2)?'var(--good)':'var(--muted)';
+  const ptsCol=p=>p<=3?'var(--bad)':p<=8?'#e0b53a':p<=13?'var(--good)':'var(--pick)';
   let hero='';                                   // 1) GW RESULT — the primary read, folded to one line
   if(live){const st=live[4],pts=live[2],opp=live[8],ko=live[9];const sl='<span class="sl">•</span>';
-    if(st===1)hero=`<div class="pmgw">GW ${GWNO} ${sl} v ${opp} ${sl} <b class="gwpts">${pts}</b> pts</div>`;
+    if(st===1)hero=`<div class="pmgw">GW ${GWNO} ${sl} v ${opp} ${sl} <b class="gwpts" style="color:${ptsCol(pts)}">${pts}</b> pts</div>`;
     else if(st===2)hero=`<div class="pmgw">GW ${GWNO} ${sl} v ${opp} ${sl} <b class="gwpts" style="color:var(--muted)">DNP</b></div>`;
     else hero=`<div class="pmgw">GW ${GWNO} ${sl} v ${opp}${ko?` <span class="m">${ko}</span>`:''} ${sl} <b class="gwpts">${me&&me.xp1!=null?me.xp1:(live[13]||0)}</b> <span class="m">xPts proj</span></div>`;}
   const fx=(FIX&&FIX[club])||[];                 // 2) NEXT GW — the second read
   const next=`<div class="mshead">Next GW${me&&me.xp1!=null?` · proj ${me.xp1} xPts`:''}</div>`+
     (fx.length?`<div class="pmfx">${fx.map(f=>`<div class="fx"><div class="g">GW${f.gw}</div><div class="o" style="color:${fdrCol(f.fdr)}">${f.opp}(${f.h?'H':'A'})</div></div>`).join('')}</div>`:`<div class="m" style="font-size:11px">Fixtures appear once the season is live.</div>`);
   const spark=`<div class="mshead">Past performance</div><div id="pmspark"></div>`;   // 3) lazy sparkline
-  return hero+`<div id="pmbd"></div>`+next+spark+pmStats(me)+pmLeague(pmName);}        // breakdown + next + spark + stats + league
+  return hero+`<div id="pmbd"></div>`+next+spark+pmStats(me);}        // breakdown + next + spark + stats
 function pmStats(me){if(!me)return '';
   const st=(v,l)=>`<div class="st"><div class="v">${v}</div><div class="l">${l}</div></div>`;
-  const u=me.pos==='GK'?[[me.sv,'saves'],[me.cs,'CS'],[me.xgc,'xGC/90']]
-        :me.pos==='DEF'?[[me.dc90,'CBIT/90'],[me.cs,'CS'],[me.xgc,'xGC/90']]
-        :[[me.xg90,'xG/90'],[me.xa90,'xA/90'],[me.xgi,'xGI/90']];
   const se=me.pos==='GK'?[[me.tp,'pts'],[me.ppg,'PPG'],[me.cs,'CS'],[me.gc,'GC']]
         :[[me.tp,'pts'],[me.ppg,'PPG'],[me.g,'goals'],[me.a,'assists']];
   const flags=me.flags&&me.flags.length?`<div class="pchips" style="margin-top:9px">${me.flags.map(fl=>`<span class="flg ${fl==='rotation_risk'?'flg-rot':''}">${FLAGLBL[fl]||fl}</span>`).join('')}</div>`:'';
-  return `<div class="mshead">Underlying · per 90</div><div class="pmgrid">${u.map(([v,l])=>st(v,l)).join('')}</div>`+
-    `<div class="mshead">Season</div><div class="pmgrid g4">${se.map(([v,l])=>st(v,l)).join('')}</div>`+
+  return `<div class="mshead">Season</div><div class="pmgrid g4">${se.map(([v,l])=>st(v,l)).join('')}</div>`+
     `<div class="pmet" style="margin-top:8px"><span class="m">own <b style="color:var(--ink)">${me.sel}%</b></span><span class="m">value <b style="color:var(--ink)">${me.val}</b></span><span class="m">5-GW xPts <b style="color:var(--ink)">${me.xph!=null?me.xph:me.ep}</b></span></div>`+flags;}
 function withPH(cb){if(PH){cb();return;}fetch('player_history.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{PH=d;cb();}).catch(()=>{PH={};cb();});}
 function pmSpark(id){const el=document.getElementById('pmspark');if(!el)return;
@@ -1053,11 +1050,11 @@ function pmSpark(id){const el=document.getElementById('pmspark');if(!el)return;
 const BDLBL={minutes:'Minutes',goals_scored:'Goals',assists:'Assists',clean_sheets:'Clean sheet',goals_conceded:'Goals conceded',own_goals:'Own goals',penalties_saved:'Pen saved',penalties_missed:'Pen missed',yellow_cards:'Yellow card',red_cards:'Red card',saves:'Saves',bonus:'Bonus',defensive_contribution:'Def. contribution'};
 function pmBd(id){const el=document.getElementById('pmbd');if(!el)return;
   withPH(()=>{const bd=(PH.bd||{})[String(id)];if(!bd||!bd.length){el.innerHTML='';return;}
-    el.innerHTML=`<div class="mshead">GW${PH.lastgw} breakdown</div><div class="pbd">`+bd.map(([k,v,p])=>`<div class="bdrow"><span class="bdl">${BDLBL[k]||k} <span class="m">(${v})</span></span><span class="bdp ${p>0?'pos':p<0?'neg':''}">${p>0?'+':''}${p}</span></div>`).join('')+`</div>`;});}
-function pmLeague(name){const teams=Object.keys(SQUADS||{});if(!teams.length)return '';
+    el.innerHTML=`<div class="pbd">`+bd.map(([k,v,p])=>`<div class="bdrow"><span class="bdl">${BDLBL[k]||k} <span class="m">(${v})</span></span><span class="bdp ${p>0?'pos':p<0?'neg':''}">${p>0?'+':''}${p}</span></div>`).join('')+`</div>`;});}
+function pmLeagueLine(name){const teams=Object.keys(SQUADS||{});if(!teams.length)return '';
   let owners=0;const caps=[];teams.forEach(t=>{const r=(SQUADS[t]||[]).find(x=>x[1]===name);if(r){owners++;if(r[5])caps.push(t);}});
   const body=owners?`Owned by <b style="color:var(--ink)">${owners} of ${teams.length}</b> managers${caps.length?` · captained by <b style="color:var(--ink)">${caps.join(', ')}</b>`:''}`:`Owned by <b style="color:var(--fpl)">0 of ${teams.length}</b> — a full differential`;
-  return `<div class="mshead">In your league</div><div class="m" style="font-size:11.5px;line-height:1.5">${body}</div>`;}
+  return `<div class="pmown">${body}</div>`;}
 function pmCompare(me,pc){
   if(!me)return '<div class="err">No comparison data for this player yet.</div>';
   const all=(PLAYERS&&PLAYERS.players)||[], XP=p=>(p.xph!=null?p.xph:(p.ep||0));
