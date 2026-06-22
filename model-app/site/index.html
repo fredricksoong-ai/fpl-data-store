@@ -267,16 +267,19 @@
   .pmgrid .st{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 4px;text-align:center}
   .pmgrid .st .v{font-size:16px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
   .pmgrid .st .l{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;margin-top:2px}
-  .spark{display:flex;align-items:flex-end;gap:3px;height:52px;margin:4px 0 2px}
-  .spark i{flex:1;background:var(--line);border-radius:2px 2px 0 0;min-height:3px}
+  .spark{display:flex;align-items:flex-end;gap:3px;height:66px;margin:4px 0 2px}
+  .sb{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+  .sbv{font-size:9px;color:var(--muted);margin-bottom:2px;font-variant-numeric:tabular-nums}
+  .spark i{width:100%;background:var(--line);border-radius:2px 2px 0 0;min-height:3px}
   .spark i.hi{background:var(--good)}.spark i.mid{background:var(--away)}.spark i.lo{background:var(--bad)}.spark i.na{background:rgba(255,255,255,.06)}
   .sparkx{display:flex;gap:3px;font-size:9px;color:var(--faint)}.sparkx span{flex:1;text-align:center}
   .dot{width:7px;height:7px;border-radius:50%;background:var(--good);display:inline-block}
   .fit{display:inline-flex;align-items:center;gap:4px;color:var(--good);font-weight:700;font-size:12px}
   .doubt{color:var(--away);font-weight:700;font-size:12px}.outl{color:var(--bad);font-weight:700;font-size:12px}
-  .bd{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:6px 11px}
+  .pbd{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:6px 11px}
   .bdrow{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.04)} .bdrow:last-child{border-bottom:none}
-  .bdp{font-weight:700;font-variant-numeric:tabular-nums;color:var(--muted)} .bdp.pos{color:var(--good)} .bdp.neg{color:var(--bad)}
+  .bdl{color:var(--ink)} .bdp{font-weight:700;font-variant-numeric:tabular-nums;color:var(--muted)} .bdp.pos{color:var(--good)} .bdp.neg{color:var(--bad)}
+  .pmgw{font-size:14px;font-weight:600;margin:6px 2px 4px} .pmgw .gwpts{color:var(--fpl);font-weight:800;font-size:18px;font-variant-numeric:tabular-nums}
   .pmperf{font-size:13px;margin:6px 0 8px}
   .diffcols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
   .diffh{font-size:10.5px;color:var(--faint);font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
@@ -1011,15 +1014,15 @@ function pmRender(){
   if(pmTab==='card'&&me){pmSpark(me.id);pmBd(me.id);}}
 function pmCard(live,me,club){
   const fdrCol=d=>d>=4?'var(--bad)':(d>0&&d<=2)?'var(--good)':'var(--muted)';
-  let hero='';                                   // 1) GW RESULT — the primary read
-  if(live){const st=live[4],pts=live[2],mins=live[15],g=live[10],a=live[11],bn=live[16],opp=live[8],ko=live[9];
-    if(st===1)hero=`<div class="pmhero"><div class="lbl">This gameweek</div><div class="big">${pts}</div><div class="sub">vs ${opp} · ${mins}′ · ${g}G ${a}A${bn?` · ${bn} bonus`:''}</div></div>`;
-    else if(st===2)hero=`<div class="pmhero"><div class="lbl">This gameweek</div><div class="big" style="color:var(--muted)">DNP</div><div class="sub">vs ${opp} · did not play</div></div>`;
-    else hero=`<div class="pmhero"><div class="lbl">This gameweek · not started</div><div class="big">${me&&me.xp1!=null?me.xp1:(live[13]||0)}</div><div class="sub">vs ${opp}${ko?` · ${ko}`:''} · projected</div></div>`;}
+  let hero='';                                   // 1) GW RESULT — the primary read, folded to one line
+  if(live){const st=live[4],pts=live[2],opp=live[8],ko=live[9];const sl='<span class="sl">•</span>';
+    if(st===1)hero=`<div class="pmgw">GW ${GWNO} ${sl} v ${opp} ${sl} <b class="gwpts">${pts}</b> pts</div>`;
+    else if(st===2)hero=`<div class="pmgw">GW ${GWNO} ${sl} v ${opp} ${sl} <b class="gwpts" style="color:var(--muted)">DNP</b></div>`;
+    else hero=`<div class="pmgw">GW ${GWNO} ${sl} v ${opp}${ko?` <span class="m">${ko}</span>`:''} ${sl} <b class="gwpts">${me&&me.xp1!=null?me.xp1:(live[13]||0)}</b> <span class="m">xPts proj</span></div>`;}
   const fx=(FIX&&FIX[club])||[];                 // 2) NEXT GW — the second read
   const next=`<div class="mshead">Next GW${me&&me.xp1!=null?` · proj ${me.xp1} xPts`:''}</div>`+
     (fx.length?`<div class="pmfx">${fx.map(f=>`<div class="fx"><div class="g">GW${f.gw}</div><div class="o" style="color:${fdrCol(f.fdr)}">${f.opp}(${f.h?'H':'A'})</div></div>`).join('')}</div>`:`<div class="m" style="font-size:11px">Fixtures appear once the season is live.</div>`);
-  const spark=`<div class="mshead">Points by gameweek</div><div id="pmspark"></div>`;   // 3) lazy sparkline
+  const spark=`<div class="mshead">Past performance</div><div id="pmspark"></div>`;   // 3) lazy sparkline
   return hero+`<div id="pmbd"></div>`+next+spark+pmStats(me)+pmLeague(pmName);}        // breakdown + next + spark + stats + league
 function pmStats(me){if(!me)return '';
   const st=(v,l)=>`<div class="st"><div class="v">${v}</div><div class="l">${l}</div></div>`;
@@ -1037,12 +1040,14 @@ function pmSpark(id){const el=document.getElementById('pmspark');if(!el)return;
   withPH(()=>{const arr=(PH.pts||{})[String(id)]||[], gws=PH.gws||[];
     if(!arr.some(v=>v!=null)){el.innerHTML='<div class="m" style="font-size:11px">No games played yet.</div>';return;}
     const mx=Math.max(1,...arr.filter(v=>v!=null));
-    const bars=arr.map(v=>v==null?'<i class="na"></i>':`<i class="${v>=8?'hi':v>=4?'mid':'lo'}" style="height:${Math.max(6,Math.round(v/mx*100))}%" title="${v} pts"></i>`).join('');
-    el.innerHTML=`<div class="spark">${bars}</div><div class="sparkx">${gws.map(g=>`<span>${g}</span>`).join('')}</div>`;});}
+    const cols=arr.map(v=>v==null
+      ?`<div class="sb"><span class="sbv m">–</span><i class="na" style="height:4%"></i></div>`
+      :`<div class="sb"><span class="sbv">${v}</span><i class="${v>=8?'hi':v>=4?'mid':'lo'}" style="height:${Math.max(8,Math.round(v/mx*100))}%"></i></div>`).join('');
+    el.innerHTML=`<div class="spark">${cols}</div><div class="sparkx">${gws.map(g=>`<span>${g}</span>`).join('')}</div>`;});}
 const BDLBL={minutes:'Minutes',goals_scored:'Goals',assists:'Assists',clean_sheets:'Clean sheet',goals_conceded:'Goals conceded',own_goals:'Own goals',penalties_saved:'Pen saved',penalties_missed:'Pen missed',yellow_cards:'Yellow card',red_cards:'Red card',saves:'Saves',bonus:'Bonus',defensive_contribution:'Def. contribution'};
 function pmBd(id){const el=document.getElementById('pmbd');if(!el)return;
   withPH(()=>{const bd=(PH.bd||{})[String(id)];if(!bd||!bd.length){el.innerHTML='';return;}
-    el.innerHTML=`<div class="mshead">GW${PH.lastgw} breakdown</div><div class="bd">`+bd.map(([k,v,p])=>`<div class="bdrow"><span>${BDLBL[k]||k} <span class="m">(${v})</span></span><span class="bdp ${p>0?'pos':p<0?'neg':''}">${p>0?'+':''}${p}</span></div>`).join('')+`</div>`;});}
+    el.innerHTML=`<div class="mshead">GW${PH.lastgw} breakdown</div><div class="pbd">`+bd.map(([k,v,p])=>`<div class="bdrow"><span class="bdl">${BDLBL[k]||k} <span class="m">(${v})</span></span><span class="bdp ${p>0?'pos':p<0?'neg':''}">${p>0?'+':''}${p}</span></div>`).join('')+`</div>`;});}
 function pmLeague(name){const teams=Object.keys(SQUADS||{});if(!teams.length)return '';
   let owners=0;const caps=[];teams.forEach(t=>{const r=(SQUADS[t]||[]).find(x=>x[1]===name);if(r){owners++;if(r[5])caps.push(t);}});
   const body=owners?`Owned by <b style="color:var(--ink)">${owners} of ${teams.length}</b> managers${caps.length?` · captained by <b style="color:var(--ink)">${caps.join(', ')}</b>`:''}`:`Owned by <b style="color:var(--fpl)">0 of ${teams.length}</b> — a full differential`;
