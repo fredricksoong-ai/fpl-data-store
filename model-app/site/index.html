@@ -507,12 +507,12 @@ function bub(p,SC,H,bn){const w=Math.round(tileW(p[3])*SC),h=Math.round(H!=null?
   let l4=(bn&&xp)?`<span class="sub" style="font-size:${Math.max(7.5,Math.min(10,h*0.20)).toFixed(1)}px">${xps}</span>`:'';
   if(HLOWN){  // Best XV tiles: Team • Pos • Price / Own% • xPts
     const pr2=p[15]!=null?(+p[15]).toFixed(1):'', code=p[16]||'', own=p[3]!=null?(+p[3]).toFixed(1):'';
-    l2=`${code?`${code} • `:''}<span class="pos">${POS}</span>${pr2?` • £${pr2}`:''}`;
-    l3=`${own?`${own}%`:''}${(own&&xp)?' • ':''}${xps}`;
+    l2=`${code?`${code} • `:''}${POS}${pr2?` • £${pr2}`:''}`;
+    l3=`${own?`${own}%`:''}${(own&&xp)?' • ':''}${xp?`${xp} xPts`:''}`;
     l4='';}
   const seg=Math.max(1,...String(p[1]).split(/[ \-]/).map(x=>x.length));  // longest unbreakable chunk
-  const nf=Math.max(7.5,Math.min(12,h*0.30,(w-12)/(seg*0.6))).toFixed(1);  // fit that chunk; names wrap at spaces/hyphens
   const sf=Math.max(7.5,Math.min(10,h*0.20)).toFixed(1);
+  const nf=HLOWN?sf:Math.max(7.5,Math.min(12,h*0.30,(w-12)/(seg*0.6))).toFixed(1);  // Best XV: name matches detail size; else fit name chunk
   const g=p[10],a=p[11],ti=p[12],warn=VIEWING!==ME&&!MYNAMES.has(p[1]);
   let bd='';
   if(p[5])bd+='<span class="cnr c-tr b-cap">C</span>';else if(p[6])bd+='<span class="cnr c-tr b-vc">V</span>';
