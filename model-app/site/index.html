@@ -293,9 +293,9 @@
   .diffrow{display:flex;align-items:center;gap:4px;font-size:12px;padding:3px 0;font-variant-numeric:tabular-nums}
   .caprow{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
   .capchip{display:inline-flex;align-items:center;gap:4px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:11px} .capchip b{color:var(--fpl)}
-  .movehd{display:grid;grid-template-columns:1fr 16px 1fr 44px;align-items:center;gap:8px;padding:0 2px 4px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--faint);border-bottom:1px solid var(--line)}
+  .movehd{display:grid;grid-template-columns:1fr 16px 1fr 62px;align-items:center;gap:8px;padding:0 2px 4px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--faint);border-bottom:1px solid var(--line)}
   .movehd .r{text-align:right}
-  .moverow{display:grid;grid-template-columns:1fr 16px 1fr 44px;align-items:center;gap:8px;font-size:12.5px;padding:6px 2px;border-bottom:1px solid var(--line)}
+  .moverow{display:grid;grid-template-columns:1fr 16px 1fr 62px;align-items:center;gap:8px;font-size:12.5px;padding:6px 2px;border-bottom:1px solid var(--line)}
   .moverow:last-child{border-bottom:none} .mout,.min{display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis} .marrow{color:var(--muted);text-align:center} .mgain{color:var(--good);font-weight:800;font-variant-numeric:tabular-nums;text-align:right}
   .mshead{color:var(--ink);font-weight:700;font-size:12.5px;margin:16px 2px 7px}
   .msgrid{display:grid;grid-template-columns:1fr 40px 1fr 40px;gap:4px 8px;font-size:11.5px;align-items:center}
@@ -1103,7 +1103,7 @@ function renderNextGW(){const host=document.getElementById('nextgw');if(!host)re
   moves.sort((a,b)=>b.gain-a.gain);
   const usedIn=new Set(),usedOut=new Set(),top=[];
   for(const m of moves){if(top.length>=6)break;if(usedIn.has(m.inn.name)||usedOut.has(m.out.name))continue;usedIn.add(m.inn.name);usedOut.add(m.out.name);top.push(m);}
-  const moveHead=`<div class="movehd"><span>Out</span><span></span><span>In</span><span class="r">Gain</span></div>`;
+  const moveHead=`<div class="movehd"><span>Out</span><span></span><span>In</span><span class="r">Gain (xPts)</span></div>`;
   const movesHtml=`<div class="ctitle2" style="margin-top:10px">Your moves <span class="m" style="font-weight:400">· bank £${bank.toFixed(1)}m · gain over next 5 GWs</span></div>`+
     (top.length?moveHead+top.map(m=>`<div class="moverow"><span class="mout">${logo(m.out.code)}${m.out.name}</span><span class="marrow">→</span><span class="min">${logo(m.inn.code)}${m.inn.name} <span class="m">£${m.inn.price.toFixed(1)}</span></span><span class="mgain">+${m.gain.toFixed(1)}</span></div>`).join(''):'<div class="m" style="font-size:12px">No affordable upgrade beats your current 15 over the next 5 GWs.</div>');
   host.innerHTML=capHtml+movesHtml;}
