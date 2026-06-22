@@ -218,7 +218,11 @@
   .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:50;padding:20px}
   .modal.hidden{display:none}
   .modalbox{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;width:100%;max-width:460px;max-height:85vh;overflow:auto}
-  .modalhd{display:flex;align-items:center;justify-content:space-between;font-weight:700;color:var(--ink);margin-bottom:10px}
+  .modalhd{display:flex;align-items:flex-start;justify-content:space-between;font-weight:700;color:var(--ink);margin-bottom:10px;gap:10px}
+  #pmtitle{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
+  .pmname{display:flex;align-items:center;font-weight:800;font-size:16px;min-width:0}
+  .pmname b{font-weight:800} .pmname .m{font-weight:400;font-size:13px;white-space:nowrap}
+  .pmavail{font-size:11.5px;font-weight:700} .pmavail.amber{color:var(--away)} .pmavail.red{color:var(--bad)}
   .modalhd .mx{cursor:pointer;color:var(--muted);font-size:16px}
   .mxg-fc{margin:8px 0 2px} .mxg-fcx{font-size:11px;color:var(--muted);text-align:center;margin-top:6px} .mxg-fcx b{color:var(--ink)}
   .mxg-sum{margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
@@ -997,10 +1001,12 @@ async function playerModal(name,posType){pmName=name;pmType=posType;pmTab='card'
   pmRender();}
 function pmSetTab(t){pmTab=t;pmRender();}
 let PH=null;
-function avail(me){if(!me)return '';const s=me.st||'a';
-  if(s==='a')return ' <span class="fit"><span class="dot"></span>Fit</span>';
-  if(s==='d')return ` <span class="doubt">${me.cop!=null?me.cop+'%':'Doubt'}</span>`;
-  return ' <span class="outl">Out</span>';}
+function availBlock(me){if(!me)return '';const s=me.st||'a',c=me.cop;  // only shown when there's a concern
+  if(s==='a'&&(c==null||c>=100))return '';
+  let txt,cls;
+  if(s==='a'||s==='d'){txt=(c!=null?`${c}% chance of playing`:'Doubtful');cls=(c!=null&&c>=75)?'amber':'red';}
+  else{txt='Ruled out';cls='red';}
+  return `<div class="pmavail ${cls}">⚠ ${txt}</div>`;}
 function pmRender(){
   const host=document.getElementById('pmbody');
   const pc=({1:'GK',2:'DEF',3:'MID',4:'FWD'})[pmType]||pmType;
@@ -1008,7 +1014,7 @@ function pmRender(){
   const all=(PLAYERS&&PLAYERS.players)||[];
   const me=all.find(p=>p.name===pmName&&p.pos===pc)||all.find(p=>p.name===pmName);
   const club=live?live[17]:(me?me.code:'');
-  document.getElementById('pmtitle').innerHTML=`${logo(club)}${pmName} <span class="m" style="font-weight:400">${pc}${me?` · £${me.price.toFixed(1)}`:''}</span>${avail(me)}`;
+  document.getElementById('pmtitle').innerHTML=`<span class="pmname">${logo(club,'lg')}<b>${pmName}</b><span class="m"> · ${pc}${me?` · £${me.price.toFixed(1)}`:''}</span></span>${availBlock(me)}`;
   const tabs=`<div class="oddsel"><span class="opt ${pmTab==='card'?'on':''}" onclick="pmSetTab('card')">Performance</span><span class="opt ${pmTab==='compare'?'on':''}" onclick="pmSetTab('compare')">Compare</span></div>`;
   host.innerHTML=tabs+(pmTab==='card'?pmCard(live,me,club):pmCompare(me,pc));
   if(pmTab==='card'&&me){pmSpark(me.id);pmBd(me.id);}}
