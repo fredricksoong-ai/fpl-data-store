@@ -381,18 +381,10 @@
   <div style="height:55vh" aria-hidden="true"></div>
 </main>
 
-<main class="wrap" id="picksview" style="display:none">
-  <section class="card" id="card-picks">
-    <div class="ctitle">Picks · gameweek predictions</div>
-    <div id="picks"></div>
-  </section>
-  <div style="height:55vh" aria-hidden="true"></div>
-</main>
-
-<main class="wrap" id="mleagueview" style="display:none">
-  <section class="card" id="card-mleague">
-    <div class="ctitle">Model League</div>
-    <div id="mleague"></div>
+<main class="wrap" id="fixturesview" style="display:none">
+  <section class="card" id="card-fixtures">
+    <div class="ctitle">Fixtures · upcoming gameweek</div>
+    <div id="fixtures"></div>
   </section>
   <div style="height:55vh" aria-hidden="true"></div>
 </main>
@@ -413,13 +405,6 @@
   <div style="height:55vh" aria-hidden="true"></div>
 </main>
 
-<div id="matchxgmodal" class="modal hidden" onclick="if(event.target===this)closeMatchXG()">
-  <div class="modalbox">
-    <div class="modalhd"><span id="mxgtitle" class="teams"></span><span class="mx" onclick="closeMatchXG()" title="Close">✕</span></div>
-    <div id="mxgbody"></div>
-  </div>
-</div>
-
 <div id="playermodal" class="modal hidden" onclick="if(event.target===this)closePM()">
   <div class="modalbox">
     <div class="modalhd"><span id="pmtitle" class="teams"></span><span class="mx" onclick="closePM()" title="Close">✕</span></div>
@@ -427,29 +412,25 @@
   </div>
 </div>
 
-<div id="editmodal" class="modal hidden" onclick="if(event.target===this)closeEdit()">
+<div id="matchxgmodal" class="modal hidden" onclick="if(event.target===this)closeMatchXG()">
   <div class="modalbox">
-    <div class="modalhd"><span>Edit pick</span><span class="mx" onclick="closeEdit()" title="Close">✕</span></div>
-    <div id="editbody"></div>
-    <button class="pbtn" onclick="saveEdit()">Save pick</button>
+    <div class="modalhd"><span id="mxgtitle" class="teams"></span><span class="mx" onclick="closeMatchXG()" title="Close">✕</span></div>
+    <div id="mxgbody"></div>
   </div>
 </div>
 
-<div id="imgmodal" class="modal hidden" onclick="if(event.target===this)closeImg()">
+<div id="exportmodal" class="modal hidden" onclick="if(event.target===this)closeExport()">
   <div class="modalbox">
-    <div class="modalhd"><span>Save as image</span><span class="mx" onclick="closeImg()" title="Close">✕</span></div>
-    <img id="cardimg" alt="pick card">
-    <div class="m" style="font-size:11px;margin-top:8px;text-align:center">Long-press / right-click the image to save or share.</div>
+    <div class="modalhd"><span>Copy for Claude</span><span style="display:flex;gap:14px;flex:none"><span class="mx" onclick="copyExport()" title="Copy">⧉</span><span class="mx" onclick="closeExport()" title="Close">✕</span></span></div>
+    <div class="m" style="font-size:11px;margin-bottom:8px">A full app snapshot, formatted as a prompt. Copy it, paste into Claude, then run /fpl-brief, /fpl-update or /fpl-debrief — it'll use this instead of re-fetching.</div>
+    <textarea id="exportText" readonly style="width:100%;height:46vh;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:var(--ink);font:11px/1.45 ui-monospace,Menlo,monospace;padding:10px;resize:vertical"></textarea>
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 
 <div id="bbtoast" class="bbtoast"></div>
 <div id="sheetActions" class="bsheet bsheet-l hidden">
   <div class="brow" onclick="barAction('rebuild',event)"><span class="bic">↻</span>Rebuild</div>
-  <div class="brow" onclick="barAction('syncxg',event)"><span class="bic">⇅</span>Sync xG</div>
   <div class="brow" onclick="barAction('export',event)"><span class="bic">⤒</span>Export</div>
   <div class="brow" onclick="barAction('copy',event)"><span class="bic">⧉</span>Copy for Claude</div>
 </div>
@@ -477,7 +458,7 @@ document.getElementById('nextcd').innerHTML=`🔒 ${fmtCd((2*1440+14*60)*6e4)}`;
 function tier(p){const s=p[4];if(s===0)return"yet";if(s===2)return"dnp";const v=p[2];return v<=3?"red":v<=8?"gold":v<=13?"green":"purple";}
 const GAP=6, tileW=o=>122-Math.min(o,55)/55*28, TILEH=84;  // width by ownership; lines of >3 split into two staggered rows so tiles stay wide; tall enough for 3 text lines
 /* populated by the v2.json fetch at the bottom */
-let SQUADS={}, STATS={}, MYNAMES=new Set(), ME="wirtzplay", GWNO=0, VIEWING="wirtzplay", FIX={};
+let SQUADS={}, STATS={}, MYNAMES=new Set(), ME="wirtzplay", GWNO=0, VIEWING="wirtzplay", FIX={}, LEAGUE=[];
 const squadFor=t=>SQUADS[t]||SQUADS[ME]||[];
 const gwCol=(gw,avg)=>{const r=gw/avg;return r<0.9?'bd':r<=1.1?'am':r<1.5?'gd':'pk';};
 const I_GOAL='⚽';
@@ -577,8 +558,8 @@ function renderLeague(LG){const AVG=(STATS[ME]||{}).avg||1;document.getElementBy
 <td class="r"><span class="xv ${r[11]>=0.45?'g':'r'}">${(+r[11]).toFixed(1)}</span></td></tr>`}).join('')+`</tbody>`;}
 
 /* nav: no toggle. default = myteam (cards: squad, league). mid = next-card / home */
-const VIEW_ORDER=[["picks","Picks"],["transfers","Transfers"],["players","Players"],["title","Title Odds"],["xg","xG"],["mleague","Model League"]];
-const REAL=new Set(["picks","transfers","players","title","xg","mleague"]);  // burger views (Best XV is now a squad sub-tab)
+const VIEW_ORDER=[["fixtures","Fixtures"],["transfers","Transfers"],["players","Players"],["title","Title Odds"],["xg","xG"]];
+const REAL=new Set(["fixtures","transfers","players","title","xg"]);  // burger views (Best XV is now a squad sub-tab)
 const BURGER=VIEW_ORDER.map(v=>v[0]); let activeView="myteam";
 const ICON_CHEV='<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/></svg>';
 const ICON_HOME='<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg>';
@@ -587,14 +568,12 @@ function selectView(v){activeView=v;
   document.getElementById('myteam').style.display=v==="myteam"?"":"none";
   document.getElementById('titleview').style.display=v==="title"?"":"none";
   document.getElementById('xgview').style.display=v==="xg"?"":"none";
-  document.getElementById('picksview').style.display=v==="picks"?"":"none";
-  document.getElementById('mleagueview').style.display=v==="mleague"?"":"none";
+  document.getElementById('fixturesview').style.display=v==="fixtures"?"":"none";
   document.getElementById('playersview').style.display=v==="players"?"":"none";
   document.getElementById('transfersview').style.display=v==="transfers"?"":"none";
   if(v==="title")renderTitle();
   if(v==="xg")renderXG();
-  if(v==="picks")renderPicks();
-  if(v==="mleague")renderModelLeague();
+  if(v==="fixtures")renderFixtures();
   if(v==="players")renderPlayers();
   if(v==="transfers")renderRecommend();
   renderTabSheet();closeSheets();updateMid();
@@ -770,113 +749,45 @@ function xgPoint(code){const el=document.getElementById("xgdetail");if(!el)retur
     else{verd="results match the level — no clear edge";vc="var(--muted)";}
     summary=`<div class="xgd-sum"><span class="m">out-created ${back} of ${n}${fade?`, ${fade} against`:''}${vsStr?` · ${vsStr} vs stronger`:''} → </span><b style="color:${vc}">${verd}</b></div>`;}
   el.innerHTML=`<div class="xgd-h">${logo(team,'lg')}<b style="color:var(--ink)">${team}</b> · <b style="color:${zc}">${zone}</b> <span class="tm">· ${r.gp} game${r.gp>1?'s':''}</span></div>${summary}${head}${games}`;}
-/* ===== Picks page (mirrors WC26) ===== */
-let PICKS=null; const LSKEY='fplanner_picks';
-const loadPk=()=>{try{return JSON.parse(localStorage.getItem(LSKEY))||{}}catch(e){return{}}};
-const savePk=o=>{try{localStorage.setItem(LSKEY,JSON.stringify(o))}catch(e){}};
-const keyOf=f=>`${f.gw}|${f.home}|${f.away}`;
-const pickArr=f=>{const p=loadPk()[keyOf(f)];return (p&&p.length===2)?p:[null,null];};
-const isLocked=f=>f.finished||(!!f.kickoff&&Date.now()>=Date.parse(f.kickoff));
+/* ===== Fixtures page (schedule + tap-to-compare xG chart) ===== */
+let FXT=null;
 const pcf=v=>Math.round((v||0)*100);
-/* manual FotMob match-xG (entered on finished cards, committed via Sync xG) */
-const XGKEY='fplanner_xg', XGDIRTY='fplanner_xg_dirty';
-const loadXGo=()=>{try{return JSON.parse(localStorage.getItem(XGKEY))||{}}catch(e){return{}}};
-const saveXGo=o=>{try{localStorage.setItem(XGKEY,JSON.stringify(o))}catch(e){}};
-const loadDirty=()=>{try{return new Set(JSON.parse(localStorage.getItem(XGDIRTY))||[])}catch(e){return new Set()}};
-const saveDirty=s=>{try{localStorage.setItem(XGDIRTY,JSON.stringify([...s]))}catch(e){}};
-function setXG(k,side,val,i){const X=loadXGo();const cur=(X[k]?X[k].slice():[null,null]);const v=parseFloat(val);
-  cur[side]=(val===''||!isFinite(v))?null:Math.max(0,Math.min(10,v));
-  if(cur[0]==null&&cur[1]==null)delete X[k];else X[k]=cur; saveXGo(X);
-  const d=loadDirty();d.add(k);saveDirty(d);}
-function xgRowFinished(f,i){const k=keyOf(f),X=loadXGo()[k]||[null,null];
-  const inp=(s,v)=>`<input class="xgin" type="text" inputmode="decimal" value="${v==null?'':v}" placeholder="–" onchange="setXG('${k}',${s},this.value,${i})">`;
-  return `<div class="xgrow"><span class="m">Match xG</span><span class="xghint">model ${f.xgh}–${f.xga}</span><span class="xgins">${inp(0,X[0])}<span class="m">–</span>${inp(1,X[1])}</span></div>`;}
-async function syncXG(){const dots=document.getElementById('bbDots');if(dots.classList.contains('busy'))return;
-  const X=loadXGo(),dirty=loadDirty();const keys=[...dirty].filter(k=>X[k]&&X[k][0]!=null&&X[k][1]!=null);
-  if(!keys.length){toast('No new xG to sync',2500);return;}
-  const payload={};keys.forEach(k=>payload[k]=X[k]);bbBusy(true);toast(`Syncing ${keys.length} match${keys.length>1?'es':''}…`,0);
-  try{const r=await fetch('/sync-xg',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({xg:payload})});
-    const j=await r.json().catch(()=>({}));
-    if(r.ok&&j.ok){const d=loadDirty();keys.forEach(k=>d.delete(k));saveDirty(d);bbBusy(false);toast(`Synced ${keys.length} ✓ — model rebuilds shortly`,5000);}
-    else{bbBusy(false);toast('Sync failed: '+((j&&j.error)||('HTTP '+r.status)),5000);}
-  }catch(e){bbBusy(false);toast('Sync failed: '+e,5000);}}
 const koLabel=iso=>{try{return new Date(iso).toLocaleString('en-SG',{timeZone:'Asia/Singapore',weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',hour12:false})+' SGT';}catch(e){return'';}};
 const dayLabel=k=>{const[y,m,d]=k.split('-').map(Number);return new Date(Date.UTC(y,m-1,d)).toLocaleDateString('en-GB',{weekday:'long',day:'2-digit',month:'long',timeZone:'UTC'});};
 function confidence(f){const a=[['home',f.ph,f.home],['draw',f.pd,'Draw'],['away',f.pa,f.away]].sort((x,y)=>y[1]-x[1])[0];return{kind:a[0],p:a[1],who:a[2],lvl:a[1]>=0.6?'strong':a[1]>=0.45?'lean':'toss'};}
 const formStripArr=arr=>(!arr||!arr.length)?'<span class="m">—</span>':arr.map(g=>`<span class="fdot ${g}">${g}</span>`).join('');
-function pickUIFor(f,i){const yp=pickArr(f),locked=isLocked(f),a=yp[0],b=yp[1],both=a!=null&&b!=null;
-  const hbox=(side,val)=>`<div class="hbox"><button class="sbtn" ${locked?'disabled':''} onclick="bumpPick(${i},${side},-1)">−</button><div class="snum${val==null?' unset':''}">${val==null?'?':val}</div><button class="sbtn" ${locked?'disabled':''} onclick="bumpPick(${i},${side},1)">+</button></div>`;
-  const center=locked?`<span class="pstat lock">🔒</span>`:both?`<span class="pstat ok">✓</span>`:`<span class="pcenter">vs</span>`;
-  return `<div class="pickwrap"><div class="hstepper">${hbox(0,a)}${center}${hbox(1,b)}</div></div>`;}
-const RP=1, EXACT=3;  // scoring: 1 for the result, 3 for the exact score (accuracy-weighted)
-function validationLine(f,i){const yp=pickArr(f),a=yp[0],b=yp[1];
-  if(!f.finished)return '';
-  if(a==null)return `<span class="m">No pick · FT ${f.gh}–${f.ga}</span>`;
-  const actO=f.gh>f.ga?'home':f.gh<f.ga?'away':'draw', pkO=a>b?'home':a<b?'away':'draw';
-  const exact=a===f.gh&&b===f.ga, youHit=pkO===actO;
-  const tag=exact?`<span class="vok">✓ exact +${EXACT}</span>`:youHit?`<span class="vok">✓ result +${RP}</span>`:'<span class="vbad">✗ miss</span>';
-  return `<div>${tag} <span class="m">· you ${a}–${b} · FT ${f.gh}–${f.ga}</span></div>`;}
-function modelSays(f){const M=f.models;if(!M)return'';
-  const order=[['ens','Ensemble','var(--pick)'],['dc','Dixon–Coles','#facc15'],['elo','Elo','#60a5fa'],['market','Market','#e5e7eb']];
-  const ens=M.ens, base=ens?[ens.ph,ens.pd,ens.pa]:null;
-  const rows=order.filter(([k])=>M[k]).map(([k,lbl,col])=>{const v=M[k],probs=[v.ph,v.pd,v.pa],idx=probs.indexOf(Math.max(...probs));
-    const team=idx===1?'Draw':(idx===0?f.home:f.away), rcol=idx===0?'var(--good)':idx===2?'var(--away)':'var(--muted)';
-    let delta='–',dcol='var(--muted)';
-    if(k!=='ens'&&base){const d=Math.round((probs[idx]-base[idx])*100);delta=`${d>=0?'+':''}${d}`;dcol=d>0?'var(--good)':d<0?'var(--bad)':'var(--muted)';}
-    return `<span class="msl"><span style="color:${col}">●</span> ${lbl}</span><span class="msc">${v.score||'–'}</span><span class="msr" style="color:${rcol}">${team} <b style="color:var(--ink)">${pcf(probs[idx])}%</b></span><span class="msd" style="color:${dcol}">${delta}</span>`;}).join('');
-  return `<div class="mshead">What each model says</div><div class="msgrid"><span></span><span class="gh" style="text-align:center">score</span><span class="gh" style="text-align:right">call</span><span class="gh" style="text-align:right">vs ens</span>${rows}</div>`;}
-let editIdx=null, editVal=[0,0];
-function editPick(i){editIdx=i;const yp=pickArr(PICKS.fixtures[i]);editVal=[yp[0]!=null?yp[0]:0,yp[1]!=null?yp[1]:0];renderEdit();document.getElementById('editmodal').classList.remove('hidden');}
-function renderEdit(){const f=PICKS.fixtures[editIdx];const box=s=>`<div class="hbox"><button class="sbtn" onclick="bumpEdit(${s},-1)">−</button><div class="snum">${editVal[s]}</div><button class="sbtn" onclick="bumpEdit(${s},1)">+</button></div>`;
-  document.getElementById('editbody').innerHTML=`<div class="teams" style="justify-content:center">${logo(f.home)}${f.home}<span class="v">v</span>${f.away}${logo(f.away)}</div><div class="hstepper" style="margin-top:14px">${box(0)}<span class="pcenter">vs</span>${box(1)}</div>`;}
-function bumpEdit(s,d){editVal[s]=Math.max(0,Math.min(10,editVal[s]+d));renderEdit();}
-function closeEdit(){document.getElementById('editmodal').classList.add('hidden');}
-function saveEdit(){const f=PICKS.fixtures[editIdx],P=loadPk();P[keyOf(f)]=[editVal[0],editVal[1]];savePk(P);closeEdit();refreshPick(editIdx);}
-function snapCard(btn){const card=btn.closest('.pcard');if(!card||!window.html2canvas)return;btn.style.display='none';
-  html2canvas(card,{scale:3,backgroundColor:getComputedStyle(document.body).backgroundColor}).then(c=>{btn.style.display='';document.getElementById('cardimg').src=c.toDataURL('image/png');document.getElementById('imgmodal').classList.remove('hidden');}).catch(()=>{btn.style.display='';});}
-function closeImg(){document.getElementById('imgmodal').classList.add('hidden');}
-function pickCard(f,i){const cf=confidence(f);
+function fixtureCard(f,i){const cf=confidence(f);
   const callTxt=cf.kind==='draw'?'Draw':`${cf.who} win`, callCol=cf.kind==='home'?'var(--good)':cf.kind==='away'?'var(--away)':'var(--muted)';
   const lvlTxt=cf.lvl==='toss'?'toss-up':cf.lvl;
-  const tops=(f.tops||[]).slice(0,6).map((t,j)=>`<span class="chip ${j===0?'best':''}">${t[0]} · ${pcf(t[1])}%</span>`).join('');
   return `<div class="pcard">
     <div class="frow">
       <div style="min-width:0"><div class="teams tappable" onclick="openMatchXG(${i})" title="Compare on the xG charts">${logo(f.home)}${f.home}<span class="v">v</span>${f.away}${logo(f.away)}<span class="xgcmp">📊</span></div>
-        <div class="meta">xG ${f.xgh}–${f.xga}${f.kickoff?` · ${koLabel(f.kickoff)}`:''} · GW${f.gw}</div></div>
+        <div class="meta">${f.kickoff?koLabel(f.kickoff):('GW'+f.gw)}${f.finished?` · FT <b style="color:var(--ink)">${f.gh}–${f.ga}</b>`:''}</div></div>
       <div style="text-align:right;flex-shrink:0"><div style="color:${callCol};font-weight:700;font-size:13px">${callTxt}</div><div style="font-size:11px"><span class="rc-${cf.lvl}">${lvlTxt}</span> <span class="m">· ${pcf(cf.p)}%</span></div></div>
     </div>
     <div class="bar"><i class="h" style="width:${pcf(f.ph)}%"></i><i class="d" style="width:${pcf(f.pd)}%"></i><i class="a" style="width:${pcf(f.pa)}%"></i></div>
     <div class="plegend"><span style="color:var(--good)">${f.home} <b>${pcf(f.ph)}%</b></span><span>Draw <b>${pcf(f.pd)}%</b></span><span style="color:var(--away)">${f.away} <b>${pcf(f.pa)}%</b></span></div>
     <div class="formends"><span>${formStripArr(f.formH)}</span><span>${formStripArr(f.formA)}</span></div>
-    <div class="tops">${tops}</div>
-    ${modelSays(f)}
-    ${f.finished?`<div class="meta" style="margin-top:9px">Full time <b style="color:var(--ink)">${f.gh}–${f.ga}</b></div>`+xgRowFinished(f,i):''}
-    <div class="pickbox"><div id="pk-${i}" style="flex:1">${pickUIFor(f,i)}</div></div>
-    <div class="cardfoot"><button class="snapbtn" onclick="snapCard(this)" title="Save as image">📷</button><div class="vfill" id="vf-${i}">${validationLine(f,i)}</div>${isLocked(f)?`<button class="editbtn" onclick="editPick(${i})" title="Edit pick">✎</button>`:''}</div>
   </div>`;}
-function refreshPick(i){const f=PICKS.fixtures[i];const pk=document.getElementById('pk-'+i);if(pk)pk.innerHTML=pickUIFor(f,i);const vf=document.getElementById('vf-'+i);if(vf)vf.innerHTML=validationLine(f,i);}
-function bumpPick(i,side,delta){const f=PICKS.fixtures[i];if(isLocked(f))return;const k=keyOf(f),P=loadPk();const cur=(P[k]||[null,null]).slice();let v=cur[side];
-  if(v==null){if(delta>0){v=0;if(cur[1-side]==null)cur[1-side]=0;}}else{v+=delta;if(v<0)v=null;else if(v>10)v=10;}
-  cur[side]=v;P[k]=cur;savePk(P);refreshPick(i);}
-function renderPicks(){const host=document.getElementById('picks');
-  if(!PICKS){host.innerHTML='<div class="err">Loading…</div>';
-    fetch('picks.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{PICKS=d;renderPicks();}).catch(()=>{host.innerHTML='<div class="err">Picks data unavailable.</div>';});return;}
-  const fx=PICKS.fixtures||[];
+function renderFixtures(){const host=document.getElementById('fixtures');
+  if(!FXT){host.innerHTML='<div class="err">Loading…</div>';
+    fetch('fixtures.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{FXT=d;renderFixtures();}).catch(()=>{host.innerHTML='<div class="err">Fixtures data unavailable.</div>';});return;}
+  const fx=FXT.fixtures||[];
   if(!fx.length){host.innerHTML='<div class="err">No fixtures for the upcoming gameweek yet.</div>';return;}
   const idx=fx.map((f,i)=>[f,i]), up=idx.filter(([f])=>!f.finished), done=idx.filter(([f])=>f.finished);
   let body='',cur=null;
-  up.forEach(([f,i])=>{const k=f.kickoff?f.kickoff.slice(0,10):('gw'+f.gw);if(k!==cur){cur=k;body+=`<div class="dayhdr">${f.kickoff?dayLabel(k):('Gameweek '+f.gw)}</div>`;}body+=pickCard(f,i);});
-  if(done.length){body+=`<div class="dayhdr">Results</div>`;done.forEach(([f,i])=>{body+=pickCard(f,i);});}
-  host.innerHTML=`<div class="tsub">Predict each scoreline for GW${PICKS.event}. Model call, win probabilities and likeliest scores shown — tap a matchup to compare both sides on xG. Picks lock at kickoff; once a match ends its card drops to Results below and scores (1 pt result, 3 pts exact).</div>`+body;}
+  up.forEach(([f,i])=>{const k=f.kickoff?f.kickoff.slice(0,10):('gw'+f.gw);if(k!==cur){cur=k;body+=`<div class="dayhdr">${f.kickoff?dayLabel(k):('Gameweek '+f.gw)}</div>`;}body+=fixtureCard(f,i);});
+  if(done.length){body+=`<div class="dayhdr">Results</div>`;done.forEach(([f,i])=>{body+=fixtureCard(f,i);});}
+  host.innerHTML=`<div class="tsub">GW${FXT.event} fixtures with the model's win/draw/loss read and recent form — tap a matchup to compare both sides on the xG charts.</div>`+body;}
 let mxgIdx=null,mxgView='map';
 function openMatchXG(i){mxgIdx=i;mxgView='map';document.getElementById('matchxgmodal').classList.remove('hidden');
   if(!XG)fetch('xg.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{XG=d;renderMatchXG();}).catch(renderMatchXG);else renderMatchXG();}
 function closeMatchXG(){document.getElementById('matchxgmodal').classList.add('hidden');}
-function renderMatchXG(){const f=PICKS.fixtures[mxgIdx],t1=f.home,t2=f.away,rows=xgRows(null),hi=new Set([t1,t2]);
+function renderMatchXG(){const f=FXT.fixtures[mxgIdx],t1=f.home,t2=f.away,rows=xgRows(null),hi=new Set([t1,t2]);
   document.getElementById('mxgtitle').innerHTML=`${logo(t1)}${t1}<span class="v">v</span>${t2}${logo(t2)}`;
   const fc=`<div class="mxg-fc"><div class="bar"><i class="h" style="width:${pcf(f.ph)}%"></i><i class="d" style="width:${pcf(f.pd)}%"></i><i class="a" style="width:${pcf(f.pa)}%"></i></div>
     <div class="plegend"><span style="color:var(--good)">${t1} <b>${pcf(f.ph)}%</b></span><span>Draw <b>${pcf(f.pd)}%</b></span><span style="color:var(--away)">${t2} <b>${pcf(f.pa)}%</b></span></div>
-    <div class="mxg-fcx">likeliest <b>${(f.tops&&f.tops[0])?f.tops[0][0]:'—'}</b> · xG ${f.xgh}–${f.xga}</div></div>`;
+    <div class="mxg-fcx">model xG ${f.xgh}–${f.xga}</div></div>`;
   const present=rows.filter(r=>hi.has(r.t));let body;
   if(!present.length){body=`<div class="err" style="text-align:center;padding:14px 0">No xG yet — these teams need to have played.</div>`;}
   else{const views=[['map','Map'],['luck','Luck'],['finish','Finishing']];
@@ -886,35 +797,6 @@ function renderMatchXG(){const f=PICKS.fixtures[mxgIdx],t1=f.home,t2=f.away,rows
       const z=teamZone(rows,r,mxgView);return `<div class="mxg-row"><span>${logo(t)}<b style="color:var(--ink)">${t}</b></span><span><b style="color:${z.zc}">${z.zone}</b> <span class="m">· net ${r.xgd>0?'+':''}${r.xgd.toFixed(2)} · ${r.gp}g</span></span></div>`;};
     body=vt+chart+`<div class="mxg-sum">${line(t1)}${line(t2)}</div>`;}
   document.getElementById('mxgbody').innerHTML=fc+body;}
-/* ===== Model League (mirrors WC26 League) ===== */
-let ML=null, mlMode='points', mlChart=null;
-const ordn=n=>{const v=n%100;return n+(['th','st','nd','rd'][(v-20)%10]||['th','st','nd','rd'][v]||'th');};
-function youRow(games,gws){const P=loadPk();let rh=0,eh=0,g=0;const byw={};
-  games.forEach(m=>{const yp=P[`${m.gw}|${m.home}|${m.away}`];if(!yp||yp[0]==null)return;g++;
-    const o=m.gh>m.ga?0:m.gh<m.ga?2:1,p=yp[0]>yp[1]?0:yp[0]<yp[1]?2:1,r=p===o,e=yp[0]===m.gh&&yp[1]===m.ga;
-    if(r)rh++;if(e)eh++;byw[m.gw]=(byw[m.gw]||0)+(r?1:0)+(e?2:0);});
-  let cum=0;return {key:'you',label:'You',color:'#00ff85',games:g,result_hits:rh,exact_hits:eh,pts:rh*1+eh*2,rps:null,series:gws.map(w=>(cum+=byw[w]||0)),series_rps:gws.map(()=>null)};}
-function renderModelLeague(){const host=document.getElementById('mleague');
-  if(!ML){host.innerHTML='<div class="err">Loading…</div>';
-    fetch('modelleague.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{ML=d;renderModelLeague();}).catch(()=>{host.innerHTML='<div class="err">Model League fills in once gameweeks are played.</div>';});return;}
-  if(!ML.gws||!ML.gws.length){host.innerHTML='<div class="err">Model League fills in once gameweeks are played.</div>';return;}
-  const you=youRow(ML.games||[],ML.gws);
-  const rows=[...ML.models,...(you.games>0?[you]:[])].filter(r=>r.games>0).sort((a,b)=>(b.pts-a.pts)||((a.rps??9)-(b.rps??9)));
-  const wr=rows.filter(r=>r.rps!=null), bestR=wr.length?wr.reduce((a,b)=>a.rps<=b.rps?a:b):null;
-  const youR=rows.find(r=>r.key==='you'), youRank=youR?rows.indexOf(youR)+1:null;
-  const toggle=`<div class="oddsel"><span class="opt ${mlMode==='points'?'on':''}" onclick="mlMode='points';renderModelLeague()">Points</span><span class="opt ${mlMode==='rps'?'on':''}" onclick="mlMode='rps';renderModelLeague()">RPS</span></div>`;
-  const take=`<div class="tsub">Most points <b style="color:${rows[0].color}">${rows[0].label}</b>${bestR?` · sharpest <b style="color:${bestR.color}">${bestR.label}</b> <span class="m">rps ${bestR.rps.toFixed(3)}</span>`:''}${youR?` · you <b style="color:#00ff85">${ordn(youRank)}</b>`:''} <span class="m">· through GW${ML.event}</span></div>`;
-  const head=`<thead><tr><th>#</th><th>Model</th><th class="r">P</th><th class="r">R</th><th class="r">E</th><th class="r">Pts</th><th class="r">RPS</th></tr></thead>`;
-  const body=rows.map((r,i)=>`<tr><td class="trk2">${i+1}</td><td class="ttm"><span style="color:${r.color}">●</span>&nbsp;${r.label}</td><td class="r">${r.games}</td><td class="r">${r.result_hits}</td><td class="r">${r.exact_hits}</td><td class="r"><b>${r.pts}</b></td><td class="r">${r.rps!=null?r.rps.toFixed(3):'–'}</td></tr>`).join('');
-  host.innerHTML=`<div class="tsub">Each model's accuracy over played gameweeks — 1 pt for the result, 3 for the exact score, plus RPS (lower = sharper). Your saved picks are scored alongside.</div>${toggle}<div style="position:relative;height:210px;margin:6px 0 14px"><canvas id="mlchart"></canvas></div>${take}<div class="lgcard"><table class="ttab">${head}<tbody>${body}</tbody></table></div>`;
-  drawMLChart(rows);}
-function drawMLChart(rows){if(!window.Chart)return;const ctx=document.getElementById('mlchart');if(!ctx)return;if(mlChart){mlChart.destroy();mlChart=null;}
-  const labels=ML.gws.map(g=>'GW'+g);
-  const ds=rows.map(r=>({label:r.label,data:mlMode==='points'?r.series:r.series_rps,borderColor:r.color,backgroundColor:r.color,borderWidth:r.key==='you'?3:2,pointRadius:0,tension:.25,spanGaps:true}));
-  mlChart=new Chart(ctx,{type:'line',data:{labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-    plugins:{legend:{labels:{color:'#90a0b8',boxWidth:10,font:{size:10}}}},
-    scales:{x:{ticks:{color:'#647089',font:{size:9},maxTicksLimit:12},grid:{color:'rgba(255,255,255,.05)'}},
-      y:{reverse:mlMode==='rps',ticks:{color:'#647089',font:{size:9}},grid:{color:'rgba(255,255,255,.05)'}}}}});}
 /* ===== Players (autoflag board, ported from fpl-data-store) ===== */
 let PLAYERS=null, plPos='All';
 const FLAGLBL={form_top20:'Form',ep_top_pos:'EP',value_gem:'Value',price_rising:'Rising',cs_candidate:'CS',
@@ -1134,7 +1016,68 @@ function renderTabSheet(){document.getElementById('sheetTabs').innerHTML=VIEW_OR
 function toggleSheet(w,e){if(e)e.stopPropagation();const a=document.getElementById('sheetActions'),t=document.getElementById('sheetTabs');const tg=w==="actions"?a:t,o=w==="actions"?t:a;o.classList.add('hidden');tg.classList.toggle('hidden');}
 function closeSheets(){document.getElementById('sheetActions').classList.add('hidden');document.getElementById('sheetTabs').classList.add('hidden');}
 function barAction(a,e){if(e)e.stopPropagation();closeSheets();
-  if(a==='rebuild')triggerRefresh();else if(a==='syncxg')syncXG();else toast(a==='export'?'Exported':'Copied for Claude');}
+  if(a==='rebuild')triggerRefresh();else if(a==='copy')copyForClaude();else toast('Exported');}
+
+/* ===== Copy for Claude — a digested app snapshot the FPL skills run on instead of re-fetching ===== */
+function _pid(id){return ((PLAYERS&&PLAYERS.players)||[]).find(p=>p.id===id);}
+function ensureExportFeeds(){const j=[];
+  const need=(c,f,set)=>{if(!c)j.push(fetch(f,{cache:'no-store'}).then(r=>r.json()).then(set).catch(()=>{}));};
+  need(PLAYERS,'players.json',d=>PLAYERS=d); need(REC,'recommend.json',d=>REC=d);
+  need(BXV,'squad.json',d=>BXV=d); need(CHIPS,'chips.json',d=>CHIPS=d);
+  need(TITLE,'titleodds.json',d=>TITLE=d); need(FXT,'fixtures.json',d=>FXT=d);
+  return Promise.all(j);}
+function _plmap(){const m={};((PLAYERS&&PLAYERS.players)||[]).forEach(p=>{m[p.name+'|'+p.code]=p;});return m;}
+function sqLines(rows){const f=v=>(v==null||v==='')?'':(+v).toFixed(1);const M=_plmap();
+  return (rows||[]).map(p=>{const mk=p[5]?' (C)':p[6]?' (V)':'',bn=p[7]?' [bench]':'',ga=(p[10]||p[11])?` g${p[10]||0}/a${p[11]||0}`:'';
+    const pl=M[p[1]+'|'+p[17]]||{};
+    const price=pl.price!=null?` £${pl.price}`:'',xph=pl.xph!=null?` · xPH ${pl.xph}`:'';
+    const news=(pl.news&&String(pl.news).trim())?` · NEWS: ${pl.news}`:'';
+    const mins=p[4]!==0?` (${p[15]}min${p[16]?', '+p[16]+'bp':''})`:'';
+    return `  ${['','GK','DEF','MID','FWD'][p[0]]} ${p[1]}(${p[17]})${mk}${bn}${price} own ${f(p[3])}% · GW ${p[2]}pts${mins}${ga} · v ${p[8]}(FDR${p[14]}) · xP1 ${f(p[13])}${xph}${news}`;}).join('\n');}
+function copyForClaude(){toast('Gathering app data…',0);
+  ensureExportFeeds().then(()=>{
+    const f1=v=>(v==null||v==='')?'':(+v).toFixed(1),n=GWNO,ms=STATS[ME]||{},L=[];
+    L.push('[FPLANNER EXPORT — paste-and-run snapshot]');
+    L.push(`Team wirtzplay (entry 822500) · Ballon d'FPL mini-league (1822310) · GW${n} · generated ${LAST_GEN}.`);
+    L.push("This is a complete live snapshot from my FPLanner model app. FPLanner runs its OWN prediction model — a Dixon-Coles + Elo ensemble retrained on Premier League history — which is the source of every projection and recommendation below. The currency is expected points: xP1 = the model's projected points for the next GW, xPH = projected points over a 5-GW horizon (fixtures priced in). The TRANSFER TARGETS, BEST XV, FIXTURES read and TITLE ODDS sections are all model output (targets and Best XV are chosen by maximising model xPts, not by FPL's own numbers). Treat these as my model's recommendations — a distinct, quantitative view to weigh against any other sources you consult (e.g. the LazyFPL newsletter); where they agree or conflict, say so and attribute the model's call explicitly.");
+    L.push("The snapshot also contains: my squad, all rival squads + captains, the mini-league table, my value/bank/overall rank, FDR, injuries/news and the chip plan. USE THIS INSTEAD OF FETCHING FROM THE FPL API. Not included — fetch only if your skill needs them: my free-transfer count, and the LazyFPL newsletter. Then carry on with whatever FPL skill I invoke (brief / update / debrief).");
+    L.push('');
+    L.push(`== MY TEAM (GW${n}) ==`);
+    L.push(`GW avg ${ms.avg} · mini-league ${ms.ml} (gap ${ms.gap}) · value ${ms.val} · bank £${ms.bank}m · overall ${ms.op} pts, rank ${ms.ovr}`);
+    L.push(sqLines(SQUADS[ME]));
+    L.push('');
+    L.push('== MINI-LEAGUE TABLE ==');
+    L.push('rank · team (manager) · captain · chips used | GWpts | total | model xPts | xGI');
+    (LEAGUE||[]).forEach(r=>L.push(`${r[0]}. ${r[1]} (${r[2]}) · C:${r[3]||'?'} · ${(r[5]||[]).map(c=>c[0]).join(',')||'none'} | ${r[7]} | ${r[8]} | ${r[10]} | ${f1(r[11])}`));
+    L.push('');
+    L.push(`== RIVAL SQUADS (GW${n}) ==`);
+    Object.keys(SQUADS).filter(k=>k!==ME).forEach(k=>{const st=STATS[k]||{};L.push(`-- ${k} · ML ${st.ml||'?'} · val ${st.val||''} --`);L.push(sqLines(SQUADS[k]));});
+    L.push('');
+    if(FXT&&FXT.fixtures){L.push(`== FPLANNER MODEL — FIXTURES GW${FXT.event} (Dixon-Coles+Elo win/draw/loss + xG) ==`);
+      FXT.fixtures.forEach(x=>L.push(`  ${x.home} v ${x.away} | ${x.home} ${Math.round(x.ph*100)}% / D ${Math.round(x.pd*100)}% / ${x.away} ${Math.round(x.pa*100)}% · xG ${x.xgh}-${x.xga}${x.finished?` · FT ${x.gh}-${x.ga}`:''}`));L.push('');}
+    if(REC&&REC.positions){L.push(`== FPLANNER MODEL — TRANSFER TARGETS (ranked by the model's ${REC.horizon}-GW projected points, xPH) ==`);
+      ['GK','DEF','MID','FWD'].forEach(pos=>{const arr=(REC.positions[pos]||[]).slice(0,8);
+        if(arr.length)L.push(` ${pos}: `+arr.map(p=>`${p.name}(${p.code}) £${p.price} xPH ${p.xph}`).join(' · '));});L.push('');}
+    if(BXV&&BXV.ids){L.push(`== FPLANNER MODEL — BEST XV (model-optimal squad maximising XI xPH; formation ${BXV.formation}, spend £${BXV.spend}m, XI xPH ${BXV.xi_xph}) ==`);
+      L.push(' '+BXV.ids.map(id=>{const p=_pid(id);return p?`${p.name}(${p.code} ${p.pos} £${p.price})`:('#'+id);}).join(' · '));L.push('');}
+    const cp=CHIPS&&((CHIPS.squad&&CHIPS.squad.chips)||(CHIPS.bestxv&&CHIPS.bestxv.chips));
+    if(cp){L.push(`== CHIP PLAN (half ${CHIPS.half}, GW ${(CHIPS.window||[]).join('-')}; used: ${(CHIPS.used||[]).join(',')||'none'}) ==`);
+      cp.forEach(c=>L.push(`  ${c.label}: GW${c.gw}${c.who?` — ${c.who}`:''} — ${c.note}`));L.push('');}
+    if(PLAYERS&&PLAYERS.players){const inj=PLAYERS.players.filter(p=>p.news&&String(p.news).trim());
+      if(inj.length){L.push('== INJURIES / NEWS ==');inj.slice(0,40).forEach(p=>L.push(`  ${p.name}(${p.code}) [${p.st}]: ${p.news}`));L.push('');}
+      const form=[...PLAYERS.players].sort((a,b)=>b.form-a.form).slice(0,12);
+      L.push('== FORM LEADERS ==');L.push(' '+form.map(p=>`${p.name}(${p.code}) ${p.form}`).join(' · '));L.push('');}
+    if(TITLE&&TITLE.teams){L.push(`== FPLANNER MODEL — TITLE ODDS (${TITLE.sims} Monte-Carlo sims, trained through ${TITLE.trained_through}) ==`);
+      TITLE.teams.slice(0,8).forEach(t=>L.push(`  ${t.rank}. ${t.team} — proj ${t.pts}pts · title ${t.title}% · top4 ${t.top4}% · rel ${t.releg}%`));L.push('');}
+    openExportModal(L.join('\n'));
+  });}
+function copyText(t){try{return navigator.clipboard.writeText(t).then(()=>true).catch(()=>false);}catch(e){return Promise.resolve(false);}}
+function openExportModal(text){document.getElementById('exportText').value=text;
+  document.getElementById('exportmodal').classList.remove('hidden');
+  copyText(text).then(ok=>toast(ok?'Copied for Claude ✓':'Ready — tap ⧉ to copy',2500));}
+function closeExport(){document.getElementById('exportmodal').classList.add('hidden');}
+function copyExport(){const ta=document.getElementById('exportText');ta.select();
+  copyText(ta.value).then(ok=>{if(!ok){try{document.execCommand('copy');}catch(_){}}toast('Copied for Claude ✓',2000);});}
 function toast(t,ms=1300){const el=document.getElementById('bbtoast');el.textContent=t;el.classList.add('show');clearTimeout(toast._t);if(ms)toast._t=setTimeout(()=>el.classList.remove('show'),ms);}
 /* Rebuild: POST /refresh (Cloudflare worker → GitHub workflow_dispatch), then poll v2.json until it changes */
 let LAST_GEN="", refreshPoll=null;
@@ -1169,7 +1112,7 @@ fetch('v2.json',{cache:'no-store'}).then(r=>r.json()).then(V=>{
     document.getElementById('updatedTime').textContent=d.toLocaleString('en-SG',{timeZone:'Asia/Singapore',weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',hour12:false})+' SGT';
   }catch(e){document.getElementById('updatedTime').textContent=V.generated;}
   renderPitch(ME);
-  renderLeague(V.league);
+  LEAGUE=V.league||[]; renderLeague(V.league);
   renderSubtabs(); setSub('squad');
   if(!PLAYERS)fetch('players.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{PLAYERS=d;if(subView==='nextgw')renderNextGW();}).catch(()=>{});
 }).catch(e=>{

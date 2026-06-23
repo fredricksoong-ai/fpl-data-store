@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
-"""Build picks.json — the next gameweek's fixtures with model predictions, for the Picks page.
+"""Build fixtures.json — the next gameweek's fixtures with the model's read, for the Fixtures page.
 
 For each fixture in the target gameweek the Dixon-Coles + Elo ensemble gives win/draw/
-loss probs and xG; the DC score matrix gives the top scorelines; recent results give a
-form strip. If the match is finished its actual score is included so the page can score
-your pick against the model.
+loss probs and xG; recent results give a form strip. If the match is finished its actual
+score is included. (Superseded the old Picks builder: the scoreline-prediction game and the
+per-model breakdown were dropped, so this no longer computes top scorelines or reads odds.)
 
-Target GW: $PICKS_GW if set (handy for testing a past GW), else the next unfinished GW
+Target GW: $FIXTURES_GW if set (handy for testing a past GW), else the next unfinished GW
 from the live FPL API, else GW1 from the static schedule when no season is loaded yet.
 
 Emits: {generated, season, event, fixtures:[{gw,home,away,kickoff,ph,pd,pa,xgh,xga,
-        tops:[["2-1",0.09],...],formH:[...],formA:[...],finished,gh,ga}, ...]}
+        formH:[...],formA:[...],finished,gh,ga}, ...]}
 Needs pandas, numpy, scipy.
 """
 from __future__ import annotations
-import csv, glob, json, os, sys, urllib.request, datetime as dt
+import csv, glob, json, os, sys, datetime as dt, urllib.request
 from pathlib import Path
 import pandas as pd, numpy as np
 
@@ -24,8 +24,8 @@ from engine import dixon_coles as dc, elo as E
 from engine.data_pl import _norm, load_fd_csv
 
 API = "https://fantasy.premierleague.com/api"
-OUT = Path(os.environ.get("PICKS_OUT", "picks.json"))
-FORCE_GW = int(os.environ["PICKS_GW"]) if os.environ.get("PICKS_GW") else None
+OUT = Path(os.environ.get("FIXTURES_OUT", "fixtures.json"))
+FORCE_GW = int(os.environ["FIXTURES_GW"]) if os.environ.get("FIXTURES_GW") else None
 
 CODE2FD = {"ARS": "Arsenal", "AVL": "Aston Villa", "BOU": "Bournemouth", "BRE": "Brentford",
            "BHA": "Brighton", "CHE": "Chelsea", "COV": "Coventry", "CRY": "Crystal Palace",
@@ -67,15 +67,6 @@ def main() -> int:
         target = 1
         use_fpl = False  # no live season → static GW1
 
-    # market: read the throttled odds snapshot (built separately by build_odds.py)
-    odds_path = OUT.parent / "odds.json"
-    market = {}
-    try:
-        market = json.loads(odds_path.read_text()).get("events", {})
-    except Exception:
-        market = {}
-
-    rows = []
     if use_fpl:
         gw_fix = [f for f in sched if f["event"] == target]
         matches = [{"home": short[f["team_h"]], "away": short[f["team_a"]],
@@ -94,6 +85,7 @@ def main() -> int:
     model = dc.fit(train, xi=0.0019)
     elom = E.fit(train)
 
+    rows = []
     for m in matches:
         hk, ak = _norm(CODE2FD.get(m["home"], m["home"])), _norm(CODE2FD.get(m["away"], m["away"]))
         if hk not in model.attack or ak not in model.attack:
@@ -101,22 +93,10 @@ def main() -> int:
         lh, la = model.expected_goals(hk, ak, neutral=False)
         pen = E.ensemble_probs(model.outcome_probs(hk, ak, neutral=False),
                                elom.outcome_probs(hk, ak, neutral=False), w=0.45)
-        tops = [[f"{i}-{j}", round(p, 3)] for (i, j), p in model.most_likely_scores(hk, ak, top=6, neutral=False)]
-        dcp = model.outcome_probs(hk, ak, neutral=False)
-        elop = elom.outcome_probs(hk, ak, neutral=False)
-        (es_i, es_j), _ = elom.most_likely_scores(hk, ak, top=1, neutral=False)[0]
-        models = {
-            "ens": {"ph": round(pen["home"], 3), "pd": round(pen["draw"], 3), "pa": round(pen["away"], 3), "score": tops[0][0] if tops else ""},
-            "dc":  {"ph": round(dcp["home"], 3), "pd": round(dcp["draw"], 3), "pa": round(dcp["away"], 3), "score": tops[0][0] if tops else ""},
-            "elo": {"ph": round(elop["home"], 3), "pd": round(elop["draw"], 3), "pa": round(elop["away"], 3), "score": f"{es_i}-{es_j}"},
-        }
-        mk = market.get(f"{m['home']}|{m['away']}")
-        if mk:
-            models["market"] = {"ph": mk["ph"], "pd": mk["pd"], "pa": mk["pa"], "score": ""}
         rows.append({
             "gw": target, "home": m["home"], "away": m["away"], "kickoff": m["kickoff"],
             "ph": round(pen["home"], 3), "pd": round(pen["draw"], 3), "pa": round(pen["away"], 3),
-            "xgh": round(lh, 2), "xga": round(la, 2), "tops": tops, "models": models,
+            "xgh": round(lh, 2), "xga": round(la, 2),
             "formH": form_strip(train, hk, cutoff), "formA": form_strip(train, ak, cutoff),
             "finished": m["finished"], "gh": m["gh"], "ga": m["ga"],
         })

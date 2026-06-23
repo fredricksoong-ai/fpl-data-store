@@ -5,7 +5,6 @@
 #   xg.json        — per-match team xG for/against (FPL API, stdlib)
 #   odds.json      — de-vigged bookmaker market (The Odds API, throttled)
 #   titleodds.json — model title/top-4/relegation odds (DC+Elo, needs pandas/numpy/scipy)
-#   picks.json     — next-GW predictions incl. each model + market
 
 name: FPL — build & deploy
 
@@ -52,6 +51,9 @@ jobs:
       - name: Build xG feed (xg.json)
         run: XG_OUT=model-app/site/xg.json python3 model-app/build_xg.py
 
+      - name: Build fixtures (fixtures.json)
+        run: FIXTURES_OUT=model-app/site/fixtures.json python3 model-app/build_fixtures.py
+
       - name: Refresh bookmaker odds (throttled)
         run: ODDS_OUT=model-app/site/odds.json python3 model-app/build_odds.py
         env:
@@ -62,11 +64,7 @@ jobs:
       - name: Build title odds (titleodds.json)
         run: FPL_OUT_DIR="$PWD/model-app/site" python3 model-app/build_titleodds.py
 
-      - name: Build picks (picks.json)
-        run: PICKS_OUT=model-app/site/picks.json python3 model-app/build_picks.py
 
-      - name: Build Model League (modelleague.json)
-        run: ML_OUT=model-app/site/modelleague.json python3 model-app/build_modelleague.py
 
       - name: Build players (players.json)
         run: PLAYERS_OUT=model-app/site/players.json python3 model-app/build_players.py
