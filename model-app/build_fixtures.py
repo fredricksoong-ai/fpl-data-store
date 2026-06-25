@@ -34,6 +34,23 @@ CODE2FD = {"ARS": "Arsenal", "AVL": "Aston Villa", "BOU": "Bournemouth", "BRE": 
            "NFO": "Nott'm Forest", "SUN": "Sunderland", "TOT": "Tottenham"}
 
 
+# Official 2026/27 GW1 kickoff times (UTC; BST = UTC+1), used pre-season when the FPL API
+# has no live fixtures yet so the Fixtures page can group by date and show SGT times.
+# Once the API serves the live season, kickoff_time from /fixtures/ takes over automatically.
+GW1_KICKOFF = {
+    "ARS|COV": "2026-08-21T19:00:00Z",
+    "HUL|MUN": "2026-08-22T11:30:00Z",
+    "NFO|LEE": "2026-08-22T14:00:00Z",
+    "EVE|CRY": "2026-08-22T14:00:00Z",
+    "IPS|SUN": "2026-08-22T14:00:00Z",
+    "BRE|TOT": "2026-08-22T16:30:00Z",
+    "MCI|BOU": "2026-08-23T13:00:00Z",
+    "BHA|AVL": "2026-08-23T13:00:00Z",
+    "NEW|LIV": "2026-08-23T15:30:00Z",
+    "FUL|CHE": "2026-08-24T19:00:00Z",
+}
+
+
 def get(path):
     req = urllib.request.Request(API + path, headers={"User-Agent": "Mozilla/5.0"})
     return json.loads(urllib.request.urlopen(req, timeout=30).read())
@@ -75,7 +92,8 @@ def main() -> int:
                     "gh": f.get("team_h_score"), "ga": f.get("team_a_score")} for f in gw_fix]
     else:
         srows = [r for r in csv.DictReader(open(HERE / "data" / "Fixtures-2026-27.csv")) if int(r["gw"]) == target]
-        matches = [{"home": r["home"], "away": r["away"], "kickoff": None,
+        matches = [{"home": r["home"], "away": r["away"],
+                    "kickoff": GW1_KICKOFF.get(f"{r['home']}|{r['away']}") if target == 1 else None,
                     "finished": False, "gh": None, "ga": None} for r in srows]
 
     # train through the day before the gameweek's first kickoff (no leakage for past-GW tests)
