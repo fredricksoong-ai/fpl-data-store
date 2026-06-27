@@ -30,6 +30,14 @@
   .am{color:var(--away)!important}.gd{color:var(--good)!important}.bd{color:var(--bad)!important}.pk{color:var(--pick)!important}
   .sl{color:var(--faint);margin:0 5px}
   .updated{font-size:11px;color:var(--faint);margin-top:11px}.updated b{color:var(--muted);font-weight:600}
+  .hpill{display:inline-flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 10px;font-size:11px;font-weight:700;color:var(--ink);white-space:nowrap;cursor:pointer;font-variant-numeric:tabular-nums}
+  .hpill.lock{cursor:default}
+  .hpill.busy{color:var(--fpl)} .hpill.busy .ic{display:inline-block;animation:spin .9s linear infinite}
+  .tabbar{position:sticky;top:0;z-index:30;max-width:560px;margin:0 auto;display:flex;gap:1px;background:var(--bg);padding:7px 8px 5px;border-bottom:1px solid var(--line)}
+  .tabi{flex:1;background:none;border:none;padding:7px 0 9px;font-size:18px;line-height:1;cursor:pointer;color:var(--ink);opacity:.42;position:relative;font-family:inherit;-webkit-tap-highlight-color:transparent;border-radius:8px;transition:opacity .12s}
+  .tabi.on{opacity:1}
+  .tabi.on::after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:1px;width:64%;height:2.5px;border-radius:2px;background:var(--fpl)}
+  .tabi:active{transform:scale(.88)}
 
   main{padding:10px 0 78px}
   .card{scroll-margin-top:12px;margin:10px 0}
@@ -122,7 +130,6 @@
   .bbtn{width:44px;height:44px;border-radius:50%;background:rgba(20,20,32,.5);backdrop-filter:blur(12px) saturate(150%);-webkit-backdrop-filter:blur(12px) saturate(150%);border:1px solid rgba(255,255,255,.16);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:0;font-family:inherit;box-shadow:0 3px 14px rgba(0,0,0,.45);-webkit-tap-highlight-color:transparent}
   .bbtn:active{transform:scale(.92)}.bbtn svg{display:block}
   .bbtn-mid{width:50px;height:50px;background:rgba(0,255,133,.45);border-color:rgba(0,255,133,.7);color:#04140c}
-  .bbhit{position:fixed;bottom:0;height:74px;width:34%;z-index:39;pointer-events:auto}.bbhit-l{left:0}.bbhit-r{right:0}
   .bsheet{position:fixed;bottom:84px;z-index:45;background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:6px;max-height:60vh;overflow:auto;box-shadow:0 10px 30px rgba(0,0,0,.45)}
   .bsheet-l{left:14px;width:204px}.bsheet-r{right:14px;width:182px}
   .brow{display:flex;align-items:center;gap:10px;padding:11px 10px;border-radius:9px;font-size:14px;cursor:pointer;color:var(--ink)}
@@ -315,12 +322,11 @@
 </head>
 <body>
 <header class="wrap">
-  <div class="hrow"><h1>⚽️ FPLanner ⚽️</h1><span class="hright"><span id="oddsslot"></span><span id="nextcd" class="hcd"></span></span></div>
-  <div class="updated">Last updated: <b id="updatedTime">…</b></div>
+  <div class="hrow"><h1>⚽️ FPLanner ⚽️</h1><span class="hright"><span id="agoPill" class="hpill" onclick="triggerRefresh()" title="Refresh data"><span class="ic">↻</span> …</span><span id="oddsslot"></span><span id="nextcd" class="hpill lock" title="Next deadline"></span></span></div>
 </header>
+<nav class="tabbar" id="tabbar"></nav>
 
 <main class="wrap" id="myteam">
-  <div class="subtabs" id="subtabs"></div>
   <section class="card" id="card-squad">
     <div class="pitch">
       <div class="pitch-top">
@@ -434,22 +440,25 @@
   <div class="brow" onclick="barAction('export',event)"><span class="bic">⤒</span>Export</div>
   <div class="brow" onclick="barAction('copy',event)"><span class="bic">⧉</span>Copy for Claude</div>
 </div>
-<div id="sheetTabs" class="bsheet bsheet-r hidden"></div>
-<div class="bbhit bbhit-l" onclick="toggleSheet('actions',event)"></div>
-<div class="bbhit bbhit-r" onclick="toggleSheet('tabs',event)"></div>
 <nav class="bottombar">
   <button class="bbtn" id="bbDots" onclick="toggleSheet('actions',event)" title="Actions"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><circle cx="5" cy="12" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="19" cy="12" r="1.9"/></svg></button>
-  <button class="bbtn bbtn-mid" id="bbMid" onclick="midAction()" title="Next card"></button>
-  <button class="bbtn" id="bbBurger" onclick="toggleSheet('tabs',event)" title="Tabs"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
 </nav>
 
 <script>
 /* header bits */
-function oddsRing(c,cap=500){const f=Math.max(0,Math.min(1,c/cap)),C=2*Math.PI*8,off=C*(1-f);const col=c>100?"var(--good)":c>30?"var(--away)":"var(--bad)";
-  return `<span class="pill" title="Odds API credits left (of ${cap})" style="display:inline-flex;align-items:center;gap:6px;padding:5px 9px;font-size:11px"><svg width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="2.6"/><circle cx="10" cy="10" r="8" fill="none" stroke="${col}" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 10 10)"/></svg><b style="color:var(--ink)">${c}</b></span>`;}
 function fmtCd(ms){const m=Math.max(0,Math.floor(ms/6e4)),d=Math.floor(m/1440),h=Math.floor(m%1440/60);return d>0?`${d}d ${h}h`:`${h}h`;}
-document.getElementById('oddsslot').innerHTML=oddsRing(412);
+// relative "updated N ago" from the v2 generated timestamp (LAST_GEN, set on fetch)
+function relAgo(gen){try{const d=new Date(gen.replace(' ','T').replace(' UTC','')+':00Z');const s=Math.max(0,(Date.now()-d.getTime())/1000);
+  if(s<90)return'just now';const m=Math.round(s/60);if(m<60)return m+'m ago';const h=Math.round(m/60);if(h<48)return h+'h ago';return Math.round(h/24)+'d ago';}catch(e){return'—';}}
+function setAgo(){const el=document.getElementById('agoPill');if(!el)return;const dots=document.getElementById('bbDots');
+  el.classList.toggle('busy',!!(dots&&dots.classList.contains('busy')));
+  el.innerHTML=`<span class="ic">↻</span> ${LAST_GEN?relAgo(LAST_GEN):'…'}`;}
+// odds credits: only surface a small warning pill when they fall below 10
+function renderOdds(c){const el=document.getElementById('oddsslot');if(!el)return;
+  el.innerHTML=(c!=null&&c<10)?`<span class="hpill" title="Odds API credits running low" style="border-color:rgba(248,113,113,.5);color:var(--bad);cursor:default">⚠ ${c}</span>`:'';}
+// lock pill: countdown to the next deadline (placeholder until wired to the live deadline)
 document.getElementById('nextcd').innerHTML=`🔒 ${fmtCd((2*1440+14*60)*6e4)}`;
+setInterval(setAgo,60000);
 
 /* squad pitch */
 // type,name,pts,own,played,C,VC,bench,opp,kickoff(when unplayed)
@@ -468,12 +477,6 @@ const I_XFER='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke
 const BADGE={ARS:3,AVL:7,BHA:36,BOU:91,BRE:94,CHE:8,COV:9,CRY:31,EVE:11,FUL:54,HUL:88,IPS:40,LEE:2,LIV:14,MCI:43,MUN:1,NEW:4,NFO:17,SUN:56,TOT:6,BUR:90,WHU:21,WOL:39,LEI:13,SOU:20};
 const logo=(code,cls)=>{const id=BADGE[code];if(!id)return'';  // local self-hosted badge first, CDN fallback if not yet downloaded
   return `<img class="bdg${cls?' '+cls:''}" src="badges/${code}.svg" onerror="this.onerror=null;this.src='https://resources.premierleague.com/premierleague25/badges-alt/${id}.svg'" alt="" loading="lazy">`;};
-// Odds API credit gauge (ring fills with credits left of the 500/mo cap) — mirrors WC26
-function oddsRing(c,cap=500){const frac=Math.max(0,Math.min(1,c/cap)),C=2*Math.PI*8,off=C*(1-frac);
-  const col=c>100?'var(--good)':c>30?'var(--away)':'var(--bad)';
-  return `<span class="pill" title="Odds API credits left this month (of ${cap})" style="display:inline-flex;align-items:center;gap:6px;padding:4px 9px">`+
-    `<svg width="16" height="16" viewBox="0 0 20 20" style="flex:none"><circle cx="10" cy="10" r="8" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="2.6"/>`+
-    `<circle cx="10" cy="10" r="8" fill="none" stroke="${col}" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 10 10)"/></svg><b>${c}</b></span>`;}
 function bub(p,SC,H,bn){const w=Math.round(tileW(p[3])*SC),h=Math.round(H!=null?H:TILEH*SC),s=p[4];  // width by ownership; H lets bench keep full height while width is scaled down; bn=bench
   const POS=['','GK','DEF','MID','FWD'][p[0]]||'';
   const fdrCol=d=>d>=4?'var(--bad)':(d>0&&d<=2)?'var(--good)':'var(--muted)';
@@ -538,7 +541,7 @@ function renderDiff(team){const el=document.getElementById('diffpanel');if(!el)r
     <div class="tsub">Net xPts on differentials: <b style="color:${net>=0?'var(--good)':'var(--bad)'}">${net>=0?'+':''}${net.toFixed(1)}</b> ${net>=0?'in your favour':'against you'} <span class="m">(yours ${ySum.toFixed(1)} vs theirs ${tSum.toFixed(1)})</span></div>
     <div class="diffcols"><div><div class="diffh">They have (you don't)</div>${theyHave.map(col).join('')||'<div class="m">—</div>'}</div><div><div class="diffh">You have (they don't)</div>${youHave.map(col).join('')||'<div class="m">—</div>'}</div></div>`;}
 function flash(el){el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1300);}
-function viewTeam(team){setSub('squad');renderPitch(team);const c=document.getElementById('card-squad');c.scrollIntoView({behavior:'smooth',block:'start'});flash(c);}
+function viewTeam(team){goTab('squad');renderPitch(team);const c=document.getElementById('card-squad');c.scrollIntoView({behavior:'smooth',block:'start'});flash(c);}
 function backHome(){viewTeam(ME);}
 
 /* league table — rank,team,manager,captain,chipNow,chipsUsed[[name,count]],overallRank,gwPts,total,gap,xPts,xGI,isMe */
@@ -557,28 +560,38 @@ function renderLeague(LG){const AVG=(STATS[ME]||{}).avg||1;document.getElementBy
 <td class="r"><span class="xv ${xpC(r[10])}">${r[10]}</span></td>
 <td class="r"><span class="xv ${r[11]>=0.45?'g':'r'}">${(+r[11]).toFixed(1)}</span></td></tr>`}).join('')+`</tbody>`;}
 
-/* nav: no toggle. default = myteam (cards: squad, league). mid = next-card / home */
-const VIEW_ORDER=[["fixtures","Fixtures"],["transfers","Transfers"],["players","Players"],["title","Title Odds"],["xg","xG"]];
-const REAL=new Set(["fixtures","transfers","players","title","xg"]);  // burger views (Best XV is now a squad sub-tab)
-const BURGER=VIEW_ORDER.map(v=>v[0]); let activeView="myteam";
-const ICON_CHEV='<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/></svg>';
-const ICON_HOME='<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg>';
-function updateMid(){const b=document.getElementById('bbMid');const c=activeView==="myteam";b.innerHTML=c?ICON_CHEV:ICON_HOME;b.title=c?"Next card":"Home";}
-function selectView(v){activeView=v;
-  document.getElementById('myteam').style.display=v==="myteam"?"":"none";
-  document.getElementById('titleview').style.display=v==="title"?"":"none";
-  document.getElementById('xgview').style.display=v==="xg"?"":"none";
-  document.getElementById('fixturesview').style.display=v==="fixtures"?"":"none";
-  document.getElementById('playersview').style.display=v==="players"?"":"none";
-  document.getElementById('transfersview').style.display=v==="transfers"?"":"none";
-  if(v==="title")renderTitle();
-  if(v==="xg")renderXG();
-  if(v==="fixtures")renderFixtures();
-  if(v==="players")renderPlayers();
-  if(v==="transfers")renderRecommend();
-  renderTabSheet();closeSheets();updateMid();
-  if(v!=="myteam"&&!REAL.has(v))toast(VIEW_ORDER.find(x=>x[0]===v)[1]+" — placeholder");
-  window.scrollTo({top:0,behavior:'smooth'});}
+/* nav: one flat icon tab bar. first 4 are cards inside #myteam; the rest are standalone views. */
+const TABS=[
+  ['squad','Squad','👕','sub','card-squad'],
+  ['ml','Mini-league','📋','sub','card-league'],
+  ['nextgw','Next GW','🎯','sub','card-nextgw'],
+  ['bestxv','Best XV','⭐','sub','card-bestxv'],
+  ['fixtures','Fixtures','📅','view','fixturesview'],
+  ['transfers','Transfers','🔁','view','transfersview'],
+  ['players','Players','👥','view','playersview'],
+  ['title','Title Odds','🏆','view','titleview'],
+  ['xg','xG','📈','view','xgview'],
+];
+const VIEWMAINS=['titleview','xgview','fixturesview','playersview','transfersview'];
+let TAB='squad';
+function renderTabBar(){document.getElementById('tabbar').innerHTML=TABS.map(t=>`<button class="tabi ${TAB===t[0]?'on':''}" title="${t[1]}" aria-label="${t[1]}" onclick="goTab('${t[0]}')">${t[2]}</button>`).join('');}
+function goTab(id){const t=TABS.find(x=>x[0]===id);if(!t)return;TAB=id;const isSub=t[3]==='sub';
+  document.getElementById('myteam').style.display=isSub?'':'none';
+  VIEWMAINS.forEach(v=>document.getElementById(v).style.display='none');
+  if(isSub){
+    TABS.filter(x=>x[3]==='sub').forEach(x=>{const c=document.getElementById(x[4]);if(c)c.style.display=x[0]===id?'':'none';});
+    if(id==='nextgw'){renderNextGW();renderSquadChips();}
+    if(id==='bestxv')renderBestXV();
+  }else{
+    document.getElementById(t[4]).style.display='';
+    if(id==='title')renderTitle();
+    if(id==='xg')renderXG();
+    if(id==='fixtures')renderFixtures();
+    if(id==='players')renderPlayers();
+    if(id==='transfers')renderRecommend();
+  }
+  renderTabBar();closeSheets();window.scrollTo({top:0,behavior:'smooth'});}
+function swipeTab(dir){const i=TABS.findIndex(x=>x[0]===TAB),n=i+dir;if(n<0||n>=TABS.length)return;goTab(TABS[n][0]);}
 let TITLE=null;
 const tpct=v=>v>=0.05?v.toFixed(0)+'%':'—';
 function renderTitle(){const el=document.getElementById('titlebody');
@@ -971,19 +984,6 @@ function pmCompare(me,pc){
   const upline=ups.length?ups.map(p=>`<div class="mxg-row"><span>${logo(p.code)}<b style="color:var(--ink)">${p.name}</b> <span class="m">£${p.price.toFixed(1)}</span></span><span><b style="color:var(--good)">+${(XP(p)-XP(me)).toFixed(1)} xPts</b></span></div>`).join(''):'<div class="mxg-row"><span class="m">No higher-xPts option in position over the next 5 GWs.</span></div>';
   return scatterSVG(items,cfg)+`<div class="mshead">Higher-xPts in ${me.pos} (next 5 GWs)</div><div class="mxg-sum">${upline}</div>`;}
 function pmPoint(id){const p=(PLAYERS.players||[]).find(x=>String(x.id)===String(id));if(p){pmName=p.name;pmType=({GK:1,DEF:2,MID:3,FWD:4})[p.pos];pmTab='compare';pmRender();}}
-/* squad sub-tabs: Squad | Next GW | Chips | League */
-const SUBS=[['squad','card-squad','Squad'],['ml','card-league','ML'],['nextgw','card-nextgw','Next GW'],['bestxv','card-bestxv','Best XV']];
-let subView='squad';
-function renderSubtabs(){const el=document.getElementById('subtabs');if(!el)return;
-  el.innerHTML=SUBS.map(([k,,l])=>`<span class="subtab ${subView===k?'on':''}" onclick="setSub('${k}')">${l}</span>`).join('');}
-function setSub(s){subView=s;
-  SUBS.forEach(([k,id])=>{const c=document.getElementById(id);if(c)c.style.display=k===s?'':'none';});
-  renderSubtabs();
-  if(s==='nextgw'){renderNextGW();renderSquadChips();}
-  if(s==='bestxv')renderBestXV();
-  window.scrollTo({top:0,behavior:'smooth'});}
-function midAction(){ if(activeView!=="myteam"){selectView("myteam");return;}
-  const i=(SUBS.findIndex(x=>x[0]===subView)+1)%SUBS.length; setSub(SUBS[i][0]);}
 function renderNextGW(){const host=document.getElementById('nextgw');if(!host)return;
   const PL=(PLAYERS&&PLAYERS.players)||[], mine=SQUADS[ME]||[];
   if(!mine.length){host.innerHTML='<div class="m" style="font-size:12px">Your Next GW plan appears once your team is set.</div>';return;}
@@ -1016,9 +1016,8 @@ function renderSquadChips(){const el=document.getElementById('sqchips');if(!el)r
     const usedTxt=(CHIPS.used&&CHIPS.used.length)?` · used: ${CHIPS.used.join(', ')}`:'';
     el.innerHTML=`<div class="tsub">Plan based on ${plan.basis}${CHIPS.window?` · half ${CHIPS.half} (GW${CHIPS.window[0]}–${CHIPS.window[1]})`:''}${usedTxt}. Doubles/blanks override these once announced.</div>`+
       plan.chips.map(c=>`<div class="chipcard"><div class="chiphd"><b>${c.label}</b><span class="chiptarget">${c.advice}</span></div><div class="chipnote2">${c.note}</div></div>`).join('');});}
-function renderTabSheet(){document.getElementById('sheetTabs').innerHTML=VIEW_ORDER.map(([id,l])=>`<div class="tabrow ${activeView===id?'on':''}" onclick="selectView('${id}')">${l}</div>`).join('');}
-function toggleSheet(w,e){if(e)e.stopPropagation();const a=document.getElementById('sheetActions'),t=document.getElementById('sheetTabs');const tg=w==="actions"?a:t,o=w==="actions"?t:a;o.classList.add('hidden');tg.classList.toggle('hidden');}
-function closeSheets(){document.getElementById('sheetActions').classList.add('hidden');document.getElementById('sheetTabs').classList.add('hidden');}
+function toggleSheet(w,e){if(e)e.stopPropagation();document.getElementById('sheetActions').classList.toggle('hidden');}
+function closeSheets(){document.getElementById('sheetActions').classList.add('hidden');}
 function barAction(a,e){if(e)e.stopPropagation();closeSheets();
   if(a==='rebuild')triggerRefresh();else if(a==='copy')copyForClaude();else toast('Exported');}
 
@@ -1104,28 +1103,35 @@ async function triggerRefresh(){
     },every);
   }catch(e){fail(String(e));}
 }
-document.addEventListener('click',e=>{if(!e.target.closest('.bsheet,.bottombar,.bbhit'))closeSheets();});
-renderTabSheet();updateMid();
+document.addEventListener('click',e=>{if(!e.target.closest('.bsheet,.bottombar'))closeSheets();});
+renderTabBar();
+
+/* swipe left/right anywhere on the page → next/previous tab (ignores scrollables, modals, controls) */
+let _sx=0,_sy=0,_st=0,_sEl=null;
+document.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;const t=e.touches[0];_sx=t.clientX;_sy=t.clientY;_st=Date.now();_sEl=e.target;},{passive:true});
+document.addEventListener('touchend',e=>{if(!_sEl)return;const t=e.changedTouches[0],dx=t.clientX-_sx,dy=t.clientY-_sy,dt=Date.now()-_st;
+  const skip=_sEl.closest&&_sEl.closest('.lgcard,.movewrap,.modal,.bsheet,.tabbar,.xgctl,.xgslide,input,textarea,select,.oddsel');
+  _sEl=null;
+  if(skip||document.querySelector('.modal:not(.hidden)'))return;
+  if(dt>600||Math.abs(dx)<60||Math.abs(dx)<Math.abs(dy)*1.6)return;
+  swipeTab(dx<0?1:-1);},{passive:true});
 
 /* ===== live data ===== */
 fetch('v2.json',{cache:'no-store'}).then(r=>r.json()).then(V=>{
   SQUADS=V.squads||{}; STATS=V.stats||{}; ME=V.me||'wirtzplay'; GWNO=V.event||0; VIEWING=ME; LAST_GEN=V.generated||""; FIX=V.fixtures||{};
   MYNAMES=new Set((SQUADS[ME]||[]).map(p=>p[1]));
-  try{
-    const d=new Date(V.generated.replace(' ','T').replace(' UTC','')+':00Z');
-    document.getElementById('updatedTime').textContent=d.toLocaleString('en-SG',{timeZone:'Asia/Singapore',weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',hour12:false})+' SGT';
-  }catch(e){document.getElementById('updatedTime').textContent=V.generated;}
+  setAgo();
   renderPitch(ME);
   LEAGUE=V.league||[]; renderLeague(V.league);
-  renderSubtabs(); setSub('squad');
-  if(!PLAYERS)fetch('players.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{PLAYERS=d;if(subView==='nextgw')renderNextGW();}).catch(()=>{});
+  renderTabBar(); goTab('squad');
+  if(!PLAYERS)fetch('players.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{PLAYERS=d;if(TAB==='nextgw')renderNextGW();}).catch(()=>{});
 }).catch(e=>{
   document.getElementById('pitchrows').innerHTML='<div style="padding:30px 16px;text-align:center;color:var(--bad)">Couldn\'t load live data (v2.json).</div>';
-  document.getElementById('updatedTime').textContent='—';
+  setAgo();
 });
-/* odds-credit ring in the header (from the throttled odds.json) */
+/* odds credits (from the throttled odds.json) — only shown when running low */
 fetch('odds.json',{cache:'no-store'}).then(r=>r.json()).then(o=>{
-  if(o&&o.credits!=null)document.getElementById('oddsslot').innerHTML=oddsRing(+o.credits);
+  if(o&&o.credits!=null)renderOdds(+o.credits);
 }).catch(()=>{});
 </script>
 </body>
