@@ -58,6 +58,8 @@
   .gkstats b{color:var(--ink);font-weight:800} .gk-s{font-size:10px;letter-spacing:.3px;color:var(--faint);text-transform:uppercase} .gk-m{color:var(--faint)}
   .lg.yet{color:var(--faint)}.lg.red{color:var(--bad)}.lg.gold{color:#e0b53a}.lg.green{color:var(--good)}.lg.purple{color:var(--pick)}
   .pitch{position:relative;border:1px solid var(--line);border-radius:18px;padding:12px 8px 14px;overflow:hidden;background:radial-gradient(120% 80% at 50% -10%,rgba(0,255,133,.05),transparent 55%),var(--card2)}
+  .pcopy{position:absolute;top:11px;left:9px;z-index:3;background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;line-height:0;border-radius:7px;-webkit-tap-highlight-color:transparent}
+  .pcopy:active{transform:scale(.9);color:var(--fpl)}
   .pitch::before{content:"";position:absolute;left:8%;right:8%;top:46%;height:1px;background:rgba(255,255,255,.05);pointer-events:none}
   .pitch::after{content:"";position:absolute;left:50%;top:48%;width:110px;height:110px;border:1px solid rgba(255,255,255,.05);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
   .prow{display:flex;justify-content:center;align-items:center;gap:6px;margin:5px 0}
@@ -125,20 +127,8 @@
   .xv.g{color:var(--good)}.xv.a{color:var(--away)}.xv.r{color:var(--bad)}.xv{font-weight:700}
   .icn{width:13px;height:13px;vertical-align:-2px;margin-left:5px;opacity:.6}
 
-  /* bottom bar (WC26) — accent swapped to FPL green */
-  .bottombar{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:flex-end;justify-content:space-around;gap:8px;padding:40px 26px 8px;padding-bottom:calc(8px + env(safe-area-inset-bottom));background:linear-gradient(to top,rgba(6,6,12,.9),rgba(6,6,12,.5) 42%,rgba(6,6,12,0));z-index:40;pointer-events:none}
-  .bottombar .bbtn{pointer-events:auto}
-  .bbtn{width:44px;height:44px;border-radius:50%;background:rgba(20,20,32,.5);backdrop-filter:blur(12px) saturate(150%);-webkit-backdrop-filter:blur(12px) saturate(150%);border:1px solid rgba(255,255,255,.16);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:0;font-family:inherit;box-shadow:0 3px 14px rgba(0,0,0,.45);-webkit-tap-highlight-color:transparent}
-  .bbtn:active{transform:scale(.92)}.bbtn svg{display:block}
-  .bbtn-mid{width:50px;height:50px;background:rgba(0,255,133,.45);border-color:rgba(0,255,133,.7);color:#04140c}
-  .bsheet{position:fixed;bottom:84px;z-index:45;background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:6px;max-height:60vh;overflow:auto;box-shadow:0 10px 30px rgba(0,0,0,.45)}
-  .bsheet-l{left:14px;width:204px}.bsheet-r{right:14px;width:182px}
-  .brow{display:flex;align-items:center;gap:10px;padding:11px 10px;border-radius:9px;font-size:14px;cursor:pointer;color:var(--ink)}
-  .brow:active{background:rgba(255,255,255,.06)}.brow .bic{width:20px;text-align:center;color:var(--fpl);font-size:16px}
-  .tabrow{padding:11px 10px;border-radius:9px;font-size:14px;cursor:pointer;color:var(--ink)}
-  .tabrow.on{background:rgba(0,255,133,.14);color:var(--fpl);font-weight:600}
-  .bbtoast{position:fixed;left:50%;transform:translateX(-50%);bottom:88px;z-index:48;background:#1d2b22;border:1px solid var(--line);color:var(--ink);font-size:12px;padding:8px 14px;border-radius:10px;opacity:0;transition:opacity .25s;pointer-events:none}.bbtoast.show{opacity:1}
-  @keyframes spin{to{transform:rotate(360deg)}} #bbDots.busy{color:var(--fpl)} #bbDots.busy svg{animation:spin .9s linear infinite}
+  .bbtoast{position:fixed;left:50%;transform:translateX(-50%);bottom:24px;z-index:48;background:#1d2b22;border:1px solid var(--line);color:var(--ink);font-size:12px;padding:8px 14px;border-radius:10px;opacity:0;transition:opacity .25s;pointer-events:none}.bbtoast.show{opacity:1}
+  @keyframes spin{to{transform:rotate(360deg)}}
   /* title odds */
   .tsub{color:var(--muted);font-size:12px;line-height:1.5;margin:2px 2px 12px}
   .orow{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px solid var(--line)}
@@ -323,7 +313,7 @@
 </head>
 <body>
 <header class="wrap">
-  <div class="hrow"><h1>⚽️ FPLanner ⚽️</h1><span class="hright"><span id="oddsslot"></span><span id="agoPill" class="hpill" onclick="triggerRefresh()" title="Refresh data"><span class="ic">↻</span> …</span><span id="nextcd" class="hpill lock" title="Next deadline"></span></span></div>
+  <div class="hrow"><h1>⚽️ FPLanner ⚽️</h1><span class="hright"><span id="oddsslot"></span><span id="agoPill" class="hpill" onclick="askRebuild()" title="Rebuild data"><span class="ic">↻</span> …</span><span id="nextcd" class="hpill lock" title="Next deadline"></span></span></div>
 </header>
 <nav class="tabbar" id="tabbar"></nav>
 
@@ -331,6 +321,7 @@
 <main class="wrap" id="myteam">
   <section class="card" id="card-squad">
     <div class="pitch">
+      <button id="copyClaudeBtn" class="pcopy" onclick="copyForClaude()" title="Copy for Claude" aria-label="Copy for Claude"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
       <div class="pitch-top">
         <div class="pt-name"><span id="whoName">wirtzplay</span></div>
         <div id="gwpill" class="gwpills"></div>
@@ -438,14 +429,17 @@
 
 
 <div id="bbtoast" class="bbtoast"></div>
-<div id="sheetActions" class="bsheet bsheet-l hidden">
-  <div class="brow" onclick="barAction('rebuild',event)"><span class="bic">↻</span>Rebuild</div>
-  <div class="brow" onclick="barAction('export',event)"><span class="bic">⤒</span>Export</div>
-  <div class="brow" onclick="barAction('copy',event)"><span class="bic">⧉</span>Copy for Claude</div>
+
+<div id="confirmModal" class="modal hidden" onclick="if(event.target===this)closeConfirm()">
+  <div class="modalbox" style="max-width:340px">
+    <div class="modalhd"><span>Rebuild data?</span><span class="mx" onclick="closeConfirm()" title="Close">✕</span></div>
+    <div class="m" style="font-size:12.5px;line-height:1.55;margin-bottom:14px">This triggers the model pipeline to rebuild every feed and redeploy — usually ~2 minutes. The page reloads automatically when the new data is live.</div>
+    <div style="display:flex;gap:8px">
+      <button class="pbtn" style="margin-top:0;flex:1;background:none;border:1px solid var(--line);color:var(--muted)" onclick="closeConfirm()">Cancel</button>
+      <button class="pbtn" style="margin-top:0;flex:1" onclick="closeConfirm();triggerRefresh()">Rebuild</button>
+    </div>
+  </div>
 </div>
-<nav class="bottombar">
-  <button class="bbtn" id="bbDots" onclick="toggleSheet('actions',event)" title="Actions"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><circle cx="5" cy="12" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="19" cy="12" r="1.9"/></svg></button>
-</nav>
 
 <script>
 /* header bits */
@@ -453,9 +447,10 @@ function fmtCd(ms){const m=Math.max(0,Math.floor(ms/6e4)),d=Math.floor(m/1440),h
 // relative "updated N ago" from the v2 generated timestamp (LAST_GEN, set on fetch)
 function relAgo(gen){try{const d=new Date(gen.replace(' ','T').replace(' UTC','')+':00Z');const s=Math.max(0,(Date.now()-d.getTime())/1000);
   if(s<90)return'just now';const m=Math.round(s/60);if(m<60)return m+'m ago';const h=Math.round(m/60);if(h<48)return h+'h ago';return Math.round(h/24)+'d ago';}catch(e){return'—';}}
-function setAgo(){const el=document.getElementById('agoPill');if(!el)return;const dots=document.getElementById('bbDots');
-  el.classList.toggle('busy',!!(dots&&dots.classList.contains('busy')));
-  el.innerHTML=`<span class="ic">↻</span> ${LAST_GEN?relAgo(LAST_GEN):'…'}`;}
+function setAgo(){const el=document.getElementById('agoPill');if(!el)return;const busy=el.classList.contains('busy');
+  el.innerHTML=`<span class="ic">↻</span> ${busy?'rebuilding…':(LAST_GEN?relAgo(LAST_GEN):'…')}`;}
+function askRebuild(){const el=document.getElementById('agoPill');if(el&&el.classList.contains('busy'))return;document.getElementById('confirmModal').classList.remove('hidden');}
+function closeConfirm(){document.getElementById('confirmModal').classList.add('hidden');}
 // odds credits: only surface a small warning pill when they fall below 10
 function renderOdds(c){const el=document.getElementById('oddsslot');if(!el)return;
   el.innerHTML=(c!=null&&c<10)?`<span class="hpill" title="Odds API credits running low" style="border-color:rgba(248,113,113,.5);color:var(--bad);cursor:default">⚠ ${c}</span>`:'';}
@@ -579,13 +574,13 @@ const tabSvg=id=>`<svg viewBox="0 0 24 24" width="21" height="21" fill="none" st
 const TABS=[
   ['squad','Squad','sub','card-squad'],
   ['ml','Mini-league','sub','card-league'],
+  ['fixtures','Fixtures','view','fixturesview'],
   ['nextgw','Next GW','sub','card-nextgw'],
   ['bestxv','Best XV','sub','card-bestxv'],
-  ['fixtures','Fixtures','view','fixturesview'],
+  ['xg','xG','view','xgview'],
   ['transfers','Transfers','view','transfersview'],
   ['players','Players','view','playersview'],
   ['title','Title Odds','view','titleview'],
-  ['xg','xG','view','xgview'],
 ];
 const VIEWMAINS=['titleview','xgview','fixturesview','playersview','transfersview'];
 let TAB='squad';
@@ -605,7 +600,7 @@ function goTab(id){const t=TABS.find(x=>x[0]===id);if(!t)return;TAB=id;const isS
     if(id==='players')renderPlayers();
     if(id==='transfers')renderRecommend();
   }
-  renderTabBar();closeSheets();window.scrollTo(0,0);}
+  renderTabBar();window.scrollTo(0,0);}
 let TITLE=null;
 const tpct=v=>v>=0.05?v.toFixed(0)+'%':'—';
 function renderTitle(){const el=document.getElementById('titlebody');
@@ -1030,10 +1025,6 @@ function renderSquadChips(){const el=document.getElementById('sqchips');if(!el)r
     const usedTxt=(CHIPS.used&&CHIPS.used.length)?` · used: ${CHIPS.used.join(', ')}`:'';
     el.innerHTML=`<div class="tsub">Plan based on ${plan.basis}${CHIPS.window?` · half ${CHIPS.half} (GW${CHIPS.window[0]}–${CHIPS.window[1]})`:''}${usedTxt}. Doubles/blanks override these once announced.</div>`+
       plan.chips.map(c=>`<div class="chipcard"><div class="chiphd"><b>${c.label}</b><span class="chiptarget">${c.advice}</span></div><div class="chipnote2">${c.note}</div></div>`).join('');});}
-function toggleSheet(w,e){if(e)e.stopPropagation();document.getElementById('sheetActions').classList.toggle('hidden');}
-function closeSheets(){document.getElementById('sheetActions').classList.add('hidden');}
-function barAction(a,e){if(e)e.stopPropagation();closeSheets();
-  if(a==='rebuild')triggerRefresh();else if(a==='copy')copyForClaude();else toast('Exported');}
 
 /* ===== Copy for Claude — a digested app snapshot the FPL skills run on instead of re-fetching ===== */
 function _pid(id){return ((PLAYERS&&PLAYERS.players)||[]).find(p=>p.id===id);}
@@ -1098,9 +1089,9 @@ function copyExport(){const ta=document.getElementById('exportText');ta.select()
 function toast(t,ms=1300){const el=document.getElementById('bbtoast');el.textContent=t;el.classList.add('show');clearTimeout(toast._t);if(ms)toast._t=setTimeout(()=>el.classList.remove('show'),ms);}
 /* Rebuild: POST /refresh (Cloudflare worker → GitHub workflow_dispatch), then poll v2.json until it changes */
 let LAST_GEN="", refreshPoll=null;
-function bbBusy(on){document.getElementById('bbDots').classList.toggle('busy',on);}
+function bbBusy(on){const el=document.getElementById('agoPill');if(el)el.classList.toggle('busy',on);setAgo();}
 async function triggerRefresh(){
-  const d=document.getElementById('bbDots'); if(d.classList.contains('busy'))return;
+  const el=document.getElementById('agoPill'); if(el&&el.classList.contains('busy'))return;
   const prev=LAST_GEN; bbBusy(true); toast('Triggering rebuild…',0);
   const stop=()=>{clearInterval(refreshPoll);bbBusy(false);};
   const fail=m=>{stop();toast('Rebuild failed: '+m,5000);console.error('rebuild',m);};
@@ -1117,7 +1108,6 @@ async function triggerRefresh(){
     },every);
   }catch(e){fail(String(e));}
 }
-document.addEventListener('click',e=>{if(!e.target.closest('.bsheet,.bottombar'))closeSheets();});
 renderTabBar();
 
 /* interactive elastic swipe: the page follows your finger and only commits to the
@@ -1130,13 +1120,15 @@ function swReset(){sw.on=false;sw.axis=null;}
 document.addEventListener('touchstart',e=>{
   if(e.touches.length!==1){swReset();return;}
   const t=e.touches[0],el=e.target;
-  if((el.closest&&el.closest('.lgcard,.movewrap,.modal,.bsheet,.tabbar,.xgctl,.xgslide,input,textarea,select,.oddsel'))||document.querySelector('.modal:not(.hidden)')){swReset();return;}
-  sw={on:true,axis:null,x0:t.clientX,y0:t.clientY,dx:0,w:window.innerWidth||360};
+  if((el.closest&&el.closest('.modal,.bsheet,.tabbar,.xgctl,.xgslide,input,textarea,select,.oddsel'))||document.querySelector('.modal:not(.hidden)')){swReset();return;}
+  sw={on:true,axis:null,x0:t.clientX,y0:t.clientY,dx:0,w:window.innerWidth||360,scroller:(el.closest&&el.closest('.lgcard,.movewrap'))||null};
   vpTrans(false);
 },{passive:true});
 document.addEventListener('touchmove',e=>{
   if(!sw.on)return;const t=e.touches[0],dx=t.clientX-sw.x0,dy=t.clientY-sw.y0;
-  if(sw.axis===null){if(Math.abs(dx)<7&&Math.abs(dy)<7)return;sw.axis=Math.abs(dx)>Math.abs(dy)*1.25?'x':'y';}
+  if(sw.axis===null){if(Math.abs(dx)<7&&Math.abs(dy)<7)return;sw.axis=Math.abs(dx)>Math.abs(dy)*1.25?'x':'y';
+    if(sw.axis==='x'&&sw.scroller){const s=sw.scroller,max=s.scrollWidth-s.clientWidth-1;   // if the table can still scroll this way, let it
+      if((dx<0&&s.scrollLeft<max)||(dx>0&&s.scrollLeft>1)){sw.on=false;return;}}}
   if(sw.axis!=='x'){sw.on=false;return;}          // vertical → let the page scroll
   e.preventDefault();
   const i=TABS.findIndex(x=>x[0]===TAB);let d=dx;
