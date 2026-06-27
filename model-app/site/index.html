@@ -658,6 +658,16 @@ function refreshXGChart(){const el=document.getElementById("xgchart");if(!el)ret
       <div class="xg-bar"><span class="xg-mid"></span><span class="xg-fill" style="${up?'left:50%':'right:50%'};width:${w.toFixed(1)}%;background:${c}"></span></div>
       <span class="xg-val" style="color:${c}">${v>0?'+':''}${v.toFixed(2)}</span></div>`;}).join("");
   el.innerHTML=sub+hdr+`<div>${bars}</div>`;}
+function niceNum(x){if(!(x>0))return 1;const e=Math.pow(10,Math.floor(Math.log10(x))),f=x/e;return (f<1.5?1:f<3?2:f<7?5:10)*e;}
+// pick readable axis bounds + step from the actual data spread (zooms in instead of pinning to 0)
+function axisBounds(vals,ticks){vals=vals.filter(v=>isFinite(v));if(!vals.length)return{min:0,max:1,step:1};
+  let lo=Math.min(...vals),hi=Math.max(...vals);if(hi-lo<1e-9){hi=lo+1;lo-=1;}
+  const dataLo=lo,pad=(hi-lo)*0.08;lo-=pad;hi+=pad;
+  const step=niceNum((hi-lo)/(ticks||5));
+  let min=Math.floor(lo/step)*step,max=Math.ceil(hi/step)*step;
+  if(min<0&&dataLo>=0)min=0;                 // never show a negative axis when all data is ≥0
+  if(dataLo>=0&&dataLo<=step*0.6)min=0;       // if the data nearly reaches 0, anchor there
+  return{min,max,step};}
 function scatterSVG(items,cfg){
   const W=340,H=306,ml=30,mr=12,mt=14,mb=38,pw=W-ml-mr,ph=H-mt-mb;
   const sx=v=>ml+(v-cfg.xmin)/(cfg.xmax-cfg.xmin)*pw;
@@ -675,12 +685,21 @@ function scatterSVG(items,cfg){
     const r=it.big?6:3,op=it.dim?0.5:it.big?0.92:0.42;
     s+=`<circle cx="${X.toFixed(1)}" cy="${Y.toFixed(1)}" r="${r}" fill="${it.col}" fill-opacity="${op}" style="cursor:pointer" onclick="${cl}('${it.code}')"/>`;});
   const placed=[],ov=(a,b)=>a[0]<b[0]+b[2]&&a[0]+a[2]>b[0]&&a[1]<b[1]+b[3]&&a[1]+a[3]>b[1];
-  const cands=[[8,3.5,'start'],[8,-8,'start'],[-8,3.5,'end'],[8,15,'start'],[8,-15,'start'],[-8,-8,'end'],[-8,15,'end']];
-  items.filter(it=>it.big).forEach(it=>{const X=sx(it.x),Y=sy(it.y),lbl=it.lbl||it.code,w=lbl.length*6.6+3,h=12;let ch=cands[0];
-    for(let ci=0;ci<cands.length;ci++){const c=cands[ci],lx=X+c[0],ly=Y+c[1],bx=c[2]==='end'?lx-w:lx,box=[bx,ly-h+2,w,h];
-      if(!placed.some(p=>ov(p,box))){ch=c;placed.push(box);break;}
-      if(ci===cands.length-1){const bx0=ch[2]==='end'?X+ch[0]-w:X+ch[0];placed.push([bx0,Y+ch[1]-h+2,w,h]);}}
-    s+=`<text x="${(X+ch[0]).toFixed(1)}" y="${(Y+ch[1]).toFixed(1)}" fill="${it.dim?'#7a7a90':'#e8e8f2'}" font-size="11" font-weight="600" text-anchor="${ch[2]}" style="cursor:pointer" onclick="${cl}('${it.code}')">${lbl}</text>`;});
+  const cands=[[8,3.5,'start'],[-8,3.5,'end'],[8,-9,'start'],[-8,-9,'end'],[8,14,'start'],[-8,14,'end'],[8,-16,'start'],[-8,-16,'end']];
+  const BX0=2,BX1=W-2,BY0=2,BY1=H-mb;   // keep label boxes inside the plot (above the x-axis labels)
+  items.filter(it=>it.big||it.force).forEach(it=>{const X=sx(it.x),Y=sy(it.y),lbl=it.lbl||it.code,w=lbl.length*6.6+3,h=12;
+    let best=null,bestPen=1e18;
+    for(const c of cands){const lx=X+c[0],ly=Y+c[1],bx=c[2]==='end'?lx-w:lx,box=[bx,ly-h+2,w,h];
+      const offX=Math.max(0,BX0-box[0])+Math.max(0,box[0]+box[2]-BX1),offY=Math.max(0,BY0-box[1])+Math.max(0,box[1]+box[3]-BY1);
+      const pen=(offX+offY)*5+(placed.some(p=>ov(p,box))?80:0);
+      if(pen<bestPen){bestPen=pen;best={c,box:box.slice()};}
+      if(pen===0)break;}
+    const c=best.c,box=best.box;                         // clamp the chosen box back inside bounds, shift the text with it
+    let ddx=box[0]<BX0?BX0-box[0]:(box[0]+box[2]>BX1?BX1-(box[0]+box[2]):0);
+    let ddy=box[1]<BY0?BY0-box[1]:(box[1]+box[3]>BY1?BY1-(box[1]+box[3]):0);
+    box[0]+=ddx;box[1]+=ddy;placed.push(box);
+    const lfill=it.big?(it.dim?'#7a7a90':'#e8e8f2'):'#9aa0b5';   // forced (e.g. owned-but-not-top) labels read muted
+    s+=`<text x="${(X+c[0]+ddx).toFixed(1)}" y="${(Y+c[1]+ddy).toFixed(1)}" fill="${lfill}" font-size="11" font-weight="600" text-anchor="${c[2]}" style="cursor:pointer" onclick="${cl}('${it.code}')">${lbl}</text>`;});
   s+=`<text x="${(ml+pw/2).toFixed(1)}" y="${H-8}" fill="#8a8aa0" font-size="11" text-anchor="middle">${cfg.xlab}</text>`;
   s+=`<text transform="translate(11,${mt+2}) rotate(-90)" fill="#8a8aa0" font-size="11" text-anchor="end">${cfg.ylab}</text>`;
   return `<div style="margin-top:8px">${s}</svg></div>`;}
@@ -874,11 +893,10 @@ function drawScoutChart(){const el=document.getElementById('plchart');if(!el)ret
   if(L.filter)pool=pool.filter(L.filter);
   if(!pool.length){el.innerHTML='<div class="err">Not enough minutes played yet for this lens.</div>';return;}
   pool.sort((a,b)=>L.metric(b)-L.metric(a));pool=pool.slice(0,28);   // trim to the relevant top so the chart stays readable
-  const mx=(f,pad)=>Math.max(...pool.map(f))+pad, mn=(f,pad)=>Math.min(...pool.map(f))-pad;
-  const cfg={xlab:c.xlab,ylab:c.ylab,xstep:c.xstep,ystep:c.ystep,flipY:false,click:'scoutPoint',
-    xmin:Math.max(0,Math.floor(mn(c.xf,0.3))),xmax:Math.ceil(mx(c.xf,0.3)),ymin:0,ymax:Math.ceil(mx(c.yf,1))};
-  const items=pool.map((p,i)=>({x:c.xf(p),y:c.yf(p),lbl:p.name,code:String(p.id),big:i<8,
-    ring:MYNAMES.has(p.name),col:p.flag_count>=1?'#34d399':'#5b6b85',dim:p.flag_count===0}));
+  const xb=axisBounds(pool.map(c.xf),5),yb=axisBounds(pool.map(c.yf),5);
+  const cfg={xlab:c.xlab,ylab:c.ylab,xstep:xb.step,ystep:yb.step,xmin:xb.min,xmax:xb.max,ymin:yb.min,ymax:yb.max,flipY:false,click:'scoutPoint'};
+  const items=pool.map((p,i)=>{const own=MYNAMES.has(p.name);return {x:c.xf(p),y:c.yf(p),lbl:p.name,code:String(p.id),big:i<8,
+    force:own,ring:own,col:p.flag_count>=1?'#34d399':'#5b6b85',dim:p.flag_count===0};});
   el.innerHTML=scatterSVG(items,cfg);}
 function scoutPoint(id){const p=(PLAYERS.players||[]).find(x=>String(x.id)===String(id));if(p)playerModal(p.name,{GK:1,DEF:2,MID:3,FWD:4}[p.pos]||3);}
 /* ===== Best XV (model's optimal £100 squad) ===== */
