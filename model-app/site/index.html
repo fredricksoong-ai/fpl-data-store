@@ -33,11 +33,12 @@
   .hpill{display:inline-flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 10px;font-size:11px;font-weight:700;color:var(--ink);white-space:nowrap;cursor:pointer;font-variant-numeric:tabular-nums}
   .hpill.lock{cursor:default}
   .hpill.busy{color:var(--fpl)} .hpill.busy .ic{display:inline-block;animation:spin .9s linear infinite}
-  .tabbar{position:sticky;top:0;z-index:30;max-width:560px;margin:0 auto;display:flex;gap:1px;background:var(--bg);padding:7px 8px 5px;border-bottom:1px solid var(--line)}
-  .tabi{flex:1;background:none;border:none;padding:7px 0 9px;font-size:18px;line-height:1;cursor:pointer;color:var(--ink);opacity:.42;position:relative;font-family:inherit;-webkit-tap-highlight-color:transparent;border-radius:8px;transition:opacity .12s}
-  .tabi.on{opacity:1}
-  .tabi.on::after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:1px;width:64%;height:2.5px;border-radius:2px;background:var(--fpl)}
-  .tabi:active{transform:scale(.88)}
+  .tabbar{position:sticky;top:0;z-index:30;max-width:560px;margin:0 auto;display:flex;gap:1px;background:var(--bg);padding:8px 6px 6px;border-bottom:1px solid var(--line)}
+  .tabi{flex:1;display:flex;align-items:center;justify-content:center;background:none;border:none;padding:6px 0 9px;line-height:0;cursor:pointer;color:var(--faint);position:relative;font-family:inherit;-webkit-tap-highlight-color:transparent;border-radius:8px;transition:color .14s}
+  .tabi.on{color:var(--fpl)}
+  .tabi.on::after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:1px;width:62%;height:2.5px;border-radius:2px;background:var(--fpl)}
+  .tabi:active{transform:scale(.9)}
+  #viewport{will-change:transform}
 
   main{padding:10px 0 78px}
   .card{scroll-margin-top:12px;margin:10px 0}
@@ -322,10 +323,11 @@
 </head>
 <body>
 <header class="wrap">
-  <div class="hrow"><h1>⚽️ FPLanner ⚽️</h1><span class="hright"><span id="agoPill" class="hpill" onclick="triggerRefresh()" title="Refresh data"><span class="ic">↻</span> …</span><span id="oddsslot"></span><span id="nextcd" class="hpill lock" title="Next deadline"></span></span></div>
+  <div class="hrow"><h1>⚽️ FPLanner ⚽️</h1><span class="hright"><span id="oddsslot"></span><span id="agoPill" class="hpill" onclick="triggerRefresh()" title="Refresh data"><span class="ic">↻</span> …</span><span id="nextcd" class="hpill lock" title="Next deadline"></span></span></div>
 </header>
 <nav class="tabbar" id="tabbar"></nav>
 
+<div id="viewport">
 <main class="wrap" id="myteam">
   <section class="card" id="card-squad">
     <div class="pitch">
@@ -410,6 +412,7 @@
   </section>
   <div style="height:55vh" aria-hidden="true"></div>
 </main>
+</div><!-- /viewport -->
 
 <div id="playermodal" class="modal hidden" onclick="if(event.target===this)closePM()">
   <div class="modalbox">
@@ -561,37 +564,48 @@ function renderLeague(LG){const AVG=(STATS[ME]||{}).avg||1;document.getElementBy
 <td class="r"><span class="xv ${r[11]>=0.45?'g':'r'}">${(+r[11]).toFixed(1)}</span></td></tr>`}).join('')+`</tbody>`;}
 
 /* nav: one flat icon tab bar. first 4 are cards inside #myteam; the rest are standalone views. */
+const TABICON={
+  squad:'<path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/>',
+  ml:'<path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/>',
+  nextgw:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4"/>',
+  bestxv:'<path d="M12 2.5l2.9 5.87 6.48.94-4.69 4.57 1.11 6.45L12 17.77l-5.8 3.05 1.1-6.45L2.62 9.8l6.48-.94L12 2.5z"/>',
+  fixtures:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+  transfers:'<path d="M17 2l4 4-4 4"/><path d="M3 6h18"/><path d="M7 22l-4-4 4-4"/><path d="M21 18H3"/>',
+  players:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  title:'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
+  xg:'<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
+};
+const tabSvg=id=>`<svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${TABICON[id]||''}</svg>`;
 const TABS=[
-  ['squad','Squad','👕','sub','card-squad'],
-  ['ml','Mini-league','📋','sub','card-league'],
-  ['nextgw','Next GW','🎯','sub','card-nextgw'],
-  ['bestxv','Best XV','⭐','sub','card-bestxv'],
-  ['fixtures','Fixtures','📅','view','fixturesview'],
-  ['transfers','Transfers','🔁','view','transfersview'],
-  ['players','Players','👥','view','playersview'],
-  ['title','Title Odds','🏆','view','titleview'],
-  ['xg','xG','📈','view','xgview'],
+  ['squad','Squad','sub','card-squad'],
+  ['ml','Mini-league','sub','card-league'],
+  ['nextgw','Next GW','sub','card-nextgw'],
+  ['bestxv','Best XV','sub','card-bestxv'],
+  ['fixtures','Fixtures','view','fixturesview'],
+  ['transfers','Transfers','view','transfersview'],
+  ['players','Players','view','playersview'],
+  ['title','Title Odds','view','titleview'],
+  ['xg','xG','view','xgview'],
 ];
 const VIEWMAINS=['titleview','xgview','fixturesview','playersview','transfersview'];
 let TAB='squad';
-function renderTabBar(){document.getElementById('tabbar').innerHTML=TABS.map(t=>`<button class="tabi ${TAB===t[0]?'on':''}" title="${t[1]}" aria-label="${t[1]}" onclick="goTab('${t[0]}')">${t[2]}</button>`).join('');}
-function goTab(id){const t=TABS.find(x=>x[0]===id);if(!t)return;TAB=id;const isSub=t[3]==='sub';
+function renderTabBar(){document.getElementById('tabbar').innerHTML=TABS.map(t=>`<button class="tabi ${TAB===t[0]?'on':''}" title="${t[1]}" aria-label="${t[1]}" onclick="goTab('${t[0]}')">${tabSvg(t[0])}</button>`).join('');}
+function goTab(id){const t=TABS.find(x=>x[0]===id);if(!t)return;TAB=id;const isSub=t[2]==='sub';
   document.getElementById('myteam').style.display=isSub?'':'none';
   VIEWMAINS.forEach(v=>document.getElementById(v).style.display='none');
   if(isSub){
-    TABS.filter(x=>x[3]==='sub').forEach(x=>{const c=document.getElementById(x[4]);if(c)c.style.display=x[0]===id?'':'none';});
+    TABS.filter(x=>x[2]==='sub').forEach(x=>{const c=document.getElementById(x[3]);if(c)c.style.display=x[0]===id?'':'none';});
     if(id==='nextgw'){renderNextGW();renderSquadChips();}
     if(id==='bestxv')renderBestXV();
   }else{
-    document.getElementById(t[4]).style.display='';
+    document.getElementById(t[3]).style.display='';
     if(id==='title')renderTitle();
     if(id==='xg')renderXG();
     if(id==='fixtures')renderFixtures();
     if(id==='players')renderPlayers();
     if(id==='transfers')renderRecommend();
   }
-  renderTabBar();closeSheets();window.scrollTo({top:0,behavior:'smooth'});}
-function swipeTab(dir){const i=TABS.findIndex(x=>x[0]===TAB),n=i+dir;if(n<0||n>=TABS.length)return;goTab(TABS[n][0]);}
+  renderTabBar();closeSheets();window.scrollTo(0,0);}
 let TITLE=null;
 const tpct=v=>v>=0.05?v.toFixed(0)+'%':'—';
 function renderTitle(){const el=document.getElementById('titlebody');
@@ -1106,21 +1120,48 @@ async function triggerRefresh(){
 document.addEventListener('click',e=>{if(!e.target.closest('.bsheet,.bottombar'))closeSheets();});
 renderTabBar();
 
-/* swipe left/right anywhere on the page → next/previous tab (ignores scrollables, modals, controls) */
-let _sx=0,_sy=0,_st=0,_sEl=null;
-document.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;const t=e.touches[0];_sx=t.clientX;_sy=t.clientY;_st=Date.now();_sEl=e.target;},{passive:true});
-document.addEventListener('touchend',e=>{if(!_sEl)return;const t=e.changedTouches[0],dx=t.clientX-_sx,dy=t.clientY-_sy,dt=Date.now()-_st;
-  const skip=_sEl.closest&&_sEl.closest('.lgcard,.movewrap,.modal,.bsheet,.tabbar,.xgctl,.xgslide,input,textarea,select,.oddsel');
-  _sEl=null;
-  if(skip||document.querySelector('.modal:not(.hidden)'))return;
-  if(dt>600||Math.abs(dx)<60||Math.abs(dx)<Math.abs(dy)*1.6)return;
-  swipeTab(dx<0?1:-1);},{passive:true});
+/* interactive elastic swipe: the page follows your finger and only commits to the
+   next/previous tab if you drag past the threshold — otherwise it springs back. */
+const VP=()=>document.getElementById('viewport');
+let sw={on:false,axis:null,x0:0,y0:0,dx:0,w:360};
+function vpTrans(t){const v=VP();if(v)v.style.transition=t?'transform .2s cubic-bezier(.22,.61,.36,1)':'none';}
+function vpX(px){const v=VP();if(v)v.style.transform=px?`translateX(${px}px)`:'translateX(0)';}
+function swReset(){sw.on=false;sw.axis=null;}
+document.addEventListener('touchstart',e=>{
+  if(e.touches.length!==1){swReset();return;}
+  const t=e.touches[0],el=e.target;
+  if((el.closest&&el.closest('.lgcard,.movewrap,.modal,.bsheet,.tabbar,.xgctl,.xgslide,input,textarea,select,.oddsel'))||document.querySelector('.modal:not(.hidden)')){swReset();return;}
+  sw={on:true,axis:null,x0:t.clientX,y0:t.clientY,dx:0,w:window.innerWidth||360};
+  vpTrans(false);
+},{passive:true});
+document.addEventListener('touchmove',e=>{
+  if(!sw.on)return;const t=e.touches[0],dx=t.clientX-sw.x0,dy=t.clientY-sw.y0;
+  if(sw.axis===null){if(Math.abs(dx)<7&&Math.abs(dy)<7)return;sw.axis=Math.abs(dx)>Math.abs(dy)*1.25?'x':'y';}
+  if(sw.axis!=='x'){sw.on=false;return;}          // vertical → let the page scroll
+  e.preventDefault();
+  const i=TABS.findIndex(x=>x[0]===TAB);let d=dx;
+  if((i===0&&d>0)||(i===TABS.length-1&&d<0))d*=0.3; // rubber-band at the ends
+  sw.dx=d;vpX(d);
+},{passive:false});
+function swEnd(){
+  if(!sw.on){return;}sw.on=false;
+  const i=TABS.findIndex(x=>x[0]===TAB),w=sw.w,d=sw.dx,thresh=Math.min(96,w*0.3);
+  vpTrans(true);
+  // next: current exits left (-w), new enters from right (+w). prev: mirror.
+  const commit=(j,exit,from)=>{vpX(exit);
+    setTimeout(()=>{goTab(TABS[j][0]);vpTrans(false);vpX(from);requestAnimationFrame(()=>{vpTrans(true);vpX(0);});},190);};
+  if(d<=-thresh&&i<TABS.length-1)commit(i+1,-w,w);
+  else if(d>=thresh&&i>0)commit(i-1,w,-w);
+  else vpX(0);                                      // didn't pass threshold → spring back
+}
+document.addEventListener('touchend',swEnd,{passive:true});
+document.addEventListener('touchcancel',()=>{if(sw.on){sw.on=false;vpTrans(true);vpX(0);}},{passive:true});
 
 /* ===== live data ===== */
 fetch('v2.json',{cache:'no-store'}).then(r=>r.json()).then(V=>{
   SQUADS=V.squads||{}; STATS=V.stats||{}; ME=V.me||'wirtzplay'; GWNO=V.event||0; VIEWING=ME; LAST_GEN=V.generated||""; FIX=V.fixtures||{};
   MYNAMES=new Set((SQUADS[ME]||[]).map(p=>p[1]));
-  setAgo();
+  setAgo(); const _ap=document.getElementById('agoPill'); if(_ap)flash(_ap);
   renderPitch(ME);
   LEAGUE=V.league||[]; renderLeague(V.league);
   renderTabBar(); goTab('squad');
