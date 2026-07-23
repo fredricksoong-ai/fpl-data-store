@@ -22,8 +22,8 @@ import urllib.request
 from pathlib import Path
 
 API = "https://fantasy.premierleague.com/api"
-MY_ENTRY = 822500
-LEAGUE = 1822310
+MY_ENTRY = 97801       # 2026/27 team id
+LEAGUE = 48451         # 2026/27 Ballon d'FPL mini-league
 CHIP = {"bboost": "BB", "freehit": "FH", "wildcard": "WC", "3xc": "TC"}
 OUT = Path(os.environ.get("V2_OUT", "v2.json"))
 
@@ -87,7 +87,24 @@ def main() -> int:
         team_fix[f["team_h"]] = {"opp": tshort.get(f["team_a"], "?"), "ko": ko, "started": f.get("started"), "finished": f.get("finished"), "fdr": f.get("team_h_difficulty", 0)}
         team_fix[f["team_a"]] = {"opp": tshort.get(f["team_h"], "?"), "ko": ko, "started": f.get("started"), "finished": f.get("finished"), "fdr": f.get("team_a_difficulty", 0)}
 
-    standings = get(f"/leagues-classic/{LEAGUE}/standings/")["standings"]["results"]
+    try:
+        data = get(f"/leagues-classic/{LEAGUE}/standings/")
+        standings = data["standings"]["results"]
+        if not standings:  # pre-season: standings only populate after GW1 is scored — use the joined members
+            standings = [{"entry": e["entry"], "entry_name": e["entry_name"],
+                          "player_name": f"{e.get('player_first_name','')} {e.get('player_last_name','')}".strip() or e["entry_name"],
+                          "rank": i + 1, "total": 0, "event_total": 0}
+                         for i, e in enumerate(data.get("new_entries", {}).get("results", []))]
+    except Exception:
+        # league missing entirely (404) — fall back to just my own entry so the build still succeeds
+        try:
+            info = get(f"/entry/{MY_ENTRY}/")
+            standings = [{"entry": MY_ENTRY, "entry_name": info.get("name", "My Team"),
+                          "player_name": f"{info.get('player_first_name','')} {info.get('player_last_name','')}".strip() or "Me",
+                          "rank": 1, "total": info.get("summary_overall_points", 0) or 0,
+                          "event_total": info.get("summary_event_points", 0) or 0}]
+        except Exception:
+            standings = []
     leader_total = max((r["total"] for r in standings), default=0)
 
     squads, stats, league = {}, {}, []
