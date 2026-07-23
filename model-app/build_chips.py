@@ -37,9 +37,16 @@ CODE2FD = {"ARS": "Arsenal", "AVL": "Aston Villa", "BOU": "Bournemouth", "BRE": 
 NAME2CODE = {_norm(v): k for k, v in CODE2FD.items()}
 
 
-def get(path):
+def get(path, tries=5):
     req = urllib.request.Request(API + path, headers={"User-Agent": "Mozilla/5.0"})
-    return json.loads(urllib.request.urlopen(req, timeout=30).read())
+    for _i in range(tries):
+        try:
+            return json.loads(urllib.request.urlopen(req, timeout=30).read())
+        except Exception as _e:
+            # retry transient failures (launch-week 503s, timeouts, 429s) but fail fast on real client errors
+            if _i == tries - 1 or getattr(_e, "code", None) in (400, 401, 403, 404):
+                raise
+            import time; time.sleep(2 * (_i + 1))
 
 
 def assign_unique(cands):

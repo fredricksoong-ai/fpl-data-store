@@ -25,9 +25,16 @@ T = dict(value_gem_price=60, value_gem_form=5.0, value_gem_min=450,
          gk_saves90=3.2, gk_min=450, rot_avg=50, rot_total=1800)
 
 
-def get(path):
+def get(path, tries=5):
     req = urllib.request.Request(API + path, headers={"User-Agent": "Mozilla/5.0"})
-    return json.loads(urllib.request.urlopen(req, timeout=30).read())
+    for _i in range(tries):
+        try:
+            return json.loads(urllib.request.urlopen(req, timeout=30).read())
+        except Exception as _e:
+            # retry transient failures (launch-week 503s, timeouts, 429s) but fail fast on real client errors
+            if _i == tries - 1 or getattr(_e, "code", None) in (400, 401, 403, 404):
+                raise
+            import time; time.sleep(2 * (_i + 1))
 
 
 def f(x):
