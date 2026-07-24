@@ -113,7 +113,13 @@ def fetch_entry_picks(entry_id, gw):
     return fetch_json(f'{FPL_BASE}/entry/{entry_id}/event/{gw}/picks/')
 
 def fetch_league_standings(league_id):
-    return fetch_json(f'{FPL_BASE}/leagues-classic/{league_id}/standings/')
+    try:
+        return fetch_json(f'{FPL_BASE}/leagues-classic/{league_id}/standings/')
+    except requests.HTTPError as e:
+        # league not set up for this season yet (404) — return empty so build_league_table degrades gracefully
+        if getattr(e, 'response', None) is not None and e.response.status_code == 404:
+            return {}
+        raise
 
 def fetch_live_gw(gw):
     return fetch_json(f'{FPL_BASE}/event/{gw}/live/')
