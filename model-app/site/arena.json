@@ -1,0 +1,335 @@
+{
+ "generated": "2026-07-24 05:24 UTC",
+ "gw": 1,
+ "managers": [
+  {
+   "key": "you",
+   "name": "wirtzplay",
+   "kind": "human",
+   "locked": false,
+   "note": "revealed after the deadline"
+  },
+  {
+   "key": "ai",
+   "name": "AI \u00b7 Opus",
+   "kind": "ai",
+   "formation": "3-5-2",
+   "spend": 100.0,
+   "bank": 0.0,
+   "note": "Haaland (C) \u2014 LazyFPL backs him, template insurance. Loaded Man Utd's soft opener (Hull A, Ipswich H, Everton A) via Mbeumo + Shaw, and Garner for nailed DefCon/set-piece value the model underrates.",
+   "players": [
+    {
+     "pos": "GK",
+     "name": "Raya",
+     "code": "ARS",
+     "price": 6.0,
+     "xph": 20.19,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "FWD",
+     "name": "Haaland",
+     "code": "MCI",
+     "price": 15.5,
+     "xph": 23.08,
+     "c": true,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "DEF",
+     "name": "Virgil",
+     "code": "LIV",
+     "price": 6.5,
+     "xph": 21.27,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "DEF",
+     "name": "Gu\u00e9hi",
+     "code": "MCI",
+     "price": 6.0,
+     "xph": 20.11,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "FWD",
+     "name": "Watkins",
+     "code": "AVL",
+     "price": 8.0,
+     "xph": 23.14,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "MID",
+     "name": "Mbeumo",
+     "code": "MUN",
+     "price": 8.0,
+     "xph": 20.83,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "MID",
+     "name": "Gibbs-White",
+     "code": "NFO",
+     "price": 8.0,
+     "xph": 21.8,
+     "c": false,
+     "v": true,
+     "bench": false
+    },
+    {
+     "pos": "MID",
+     "name": "Garner",
+     "code": "EVE",
+     "price": 6.0,
+     "xph": 16.37,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "MID",
+     "name": "Gakpo",
+     "code": "LIV",
+     "price": 7.0,
+     "xph": 24.44,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "MID",
+     "name": "Szoboszlai",
+     "code": "LIV",
+     "price": 7.0,
+     "xph": 21.92,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "DEF",
+     "name": "Thiaw",
+     "code": "NEW",
+     "price": 5.0,
+     "xph": 18.06,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "GK",
+     "name": "Dubravka",
+     "code": "TOT",
+     "price": 4.0,
+     "xph": 16.18,
+     "c": false,
+     "v": false,
+     "bench": true
+    },
+    {
+     "pos": "DEF",
+     "name": "Shaw",
+     "code": "MUN",
+     "price": 4.5,
+     "xph": 15.94,
+     "c": false,
+     "v": false,
+     "bench": true
+    },
+    {
+     "pos": "DEF",
+     "name": "A.Murphy",
+     "code": "NEW",
+     "price": 4.0,
+     "xph": 0.01,
+     "c": false,
+     "v": false,
+     "bench": true
+    },
+    {
+     "pos": "FWD",
+     "name": "Neave",
+     "code": "NEW",
+     "price": 4.5,
+     "xph": 0.02,
+     "c": false,
+     "v": false,
+     "bench": true
+    }
+   ]
+  },
+  {
+   "key": "model",
+   "name": "Prediction Model",
+   "kind": "model",
+   "formation": "3-5-2",
+   "spend": 99.5,
+   "bank": 0.5,
+   "note": "Pure xPts \u2014 highest projected XI, no strategy.",
+   "players": [
+    {
+     "pos": "GK",
+     "name": "Raya",
+     "code": "ARS",
+     "price": 6.0,
+     "xph": 20.19,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "MID",
+     "name": "B.Fernandes",
+     "code": "MUN",
+     "price": 12.0,
+     "xph": 24.06,
+     "c": true,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "FWD",
+     "name": "Thiago",
+     "code": "BRE",
+     "price": 8.0,
+     "xph": 21.27,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "DEF",
+     "name": "Virgil",
+     "code": "LIV",
+     "price": 6.5,
+     "xph": 21.27,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "DEF",
+     "name": "O'Reilly",
+     "code": "MCI",
+     "price": 6.5,
+     "xph": 18.87,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "DEF",
+     "name": "Gu\u00e9hi",
+     "code": "MCI",
+     "price": 6.0,
+     "xph": 20.11,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "FWD",
+     "name": "Watkins",
+     "code": "AVL",
+     "price": 8.0,
+     "xph": 23.14,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "MID",
+     "name": "Mbeumo",
+     "code": "MUN",
+     "price": 8.0,
+     "xph": 20.83,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "MID",
+     "name": "Gibbs-White",
+     "code": "NFO",
+     "price": 8.0,
+     "xph": 21.8,
+     "c": false,
+     "v": true,
+     "bench": false
+    },
+    {
+     "pos": "MID",
+     "name": "Gakpo",
+     "code": "LIV",
+     "price": 7.0,
+     "xph": 24.44,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "MID",
+     "name": "Szoboszlai",
+     "code": "LIV",
+     "price": 7.0,
+     "xph": 21.92,
+     "c": false,
+     "v": false,
+     "bench": false
+    },
+    {
+     "pos": "GK",
+     "name": "Dubravka",
+     "code": "TOT",
+     "price": 4.0,
+     "xph": 16.18,
+     "c": false,
+     "v": false,
+     "bench": true
+    },
+    {
+     "pos": "DEF",
+     "name": "O'Nien",
+     "code": "SUN",
+     "price": 4.0,
+     "xph": 2.02,
+     "c": false,
+     "v": false,
+     "bench": true
+    },
+    {
+     "pos": "DEF",
+     "name": "Diop",
+     "code": "IPS",
+     "price": 4.0,
+     "xph": null,
+     "c": false,
+     "v": false,
+     "bench": true
+    },
+    {
+     "pos": "FWD",
+     "name": "Scarlett",
+     "code": "TOT",
+     "price": 4.5,
+     "xph": 0.01,
+     "c": false,
+     "v": false,
+     "bench": true
+    }
+   ]
+  }
+ ]
+}

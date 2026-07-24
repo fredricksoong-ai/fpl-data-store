@@ -364,6 +364,14 @@
   <div style="height:55vh" aria-hidden="true"></div>
 </main>
 
+<main class="wrap" id="arenaview" style="display:none">
+  <section class="card" id="card-arena">
+    <div class="ctitle">Arena · you vs AI vs model</div>
+    <div id="arena"></div>
+  </section>
+  <div style="height:55vh" aria-hidden="true"></div>
+</main>
+
 <main class="wrap" id="titleview" style="display:none">
   <section class="card" id="card-title">
     <div class="ctitle">Title Odds · 2026/27</div>
@@ -561,6 +569,7 @@ const TABICON={
   players:'<circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/>',
   title:'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
   xg:'<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
+  arena:'<rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/>',
 };
 const tabSvg=id=>`<svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${TABICON[id]||''}</svg>`;
 const TABS=[
@@ -572,8 +581,9 @@ const TABS=[
   ['xg','xG','view','xgview'],
   ['players','Scout','view','playersview'],
   ['title','Title Odds','view','titleview'],
+  ['arena','Arena','view','arenaview'],
 ];
-const VIEWMAINS=['titleview','xgview','fixturesview','playersview'];
+const VIEWMAINS=['titleview','xgview','fixturesview','playersview','arenaview'];
 let TAB='squad';
 function renderTabBar(){document.getElementById('tabbar').innerHTML=TABS.map(t=>`<button class="tabi ${TAB===t[0]?'on':''}" title="${t[1]}" aria-label="${t[1]}" onclick="goTab('${t[0]}')">${tabSvg(t[0])}</button>`).join('');}
 function goTab(id){const t=TABS.find(x=>x[0]===id);if(!t)return;TAB=id;const isSub=t[2]==='sub';
@@ -589,8 +599,37 @@ function goTab(id){const t=TABS.find(x=>x[0]===id);if(!t)return;TAB=id;const isS
     if(id==='xg')renderXG();
     if(id==='fixtures')renderFixtures();
     if(id==='players')renderScout();
+    if(id==='arena')renderArena();
   }
   renderTabBar();window.scrollTo(0,0);}
+/* ===== Arena: you vs AI vs Prediction Model (reads arena.json) ===== */
+let ARENA=null;
+const ARENAPOS={GK:'#5b6b85',DEF:'var(--good)',MID:'#38bdf8',FWD:'var(--away)'};
+function arenaTile(p){const c=ARENAPOS[p.pos]||'#5b6b85',badge=p.c?'C':p.v?'V':'';
+  const ring=p.c?'box-shadow:0 0 0 2px var(--fpl)':p.v?'box-shadow:0 0 0 2px rgba(255,255,255,.5)':'';
+  const b=badge?`<span style="position:absolute;top:-6px;right:-5px;width:15px;height:15px;border-radius:50%;background:${p.c?'var(--fpl)':'#86f3bf'};color:#06231a;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center">${badge}</span>`:'';
+  return `<div style="position:relative;flex:none;width:64px;background:${c}22;border:1px solid ${c};border-radius:9px;padding:5px 2px;text-align:center;${ring}">${b}<div style="font-size:10px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div><div style="font-size:8.5px;color:var(--muted)">£${(+p.price).toFixed(1)}</div></div>`;}
+function arenaRow(xi,pos){const line=xi.filter(x=>x.pos===pos);return line.length?`<div style="display:flex;gap:5px;justify-content:center;margin:5px 0">${line.map(arenaTile).join('')}</div>`:'';}
+function arenaCard(m){
+  if(m.kind==='human'&&m.locked===false)
+    return `<div class="pcard2"><div style="display:flex;align-items:center;gap:8px"><b style="color:var(--fpl);font-size:15px">${m.name}</b><span class="m" style="font-size:11px">you</span></div><div class="m" style="font-size:12px;margin-top:8px">🔒 Locked in the FPL app — revealed here after the GW deadline.</div></div>`;
+  const xi=(m.players||[]).filter(p=>!p.bench),bench=(m.players||[]).filter(p=>p.bench),cap=(m.players||[]).find(p=>p.c);
+  return `<div class="pcard2">
+    <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
+      <b style="color:var(--fpl);font-size:15px">${m.name}</b>
+      <span class="m" style="font-size:10.5px">${m.kind==='ai'?'strategist':'chalk'}</span>
+      <span class="m" style="margin-left:auto;font-size:11px">${m.formation} · £${(+m.spend).toFixed(1)}m</span>
+    </div>
+    ${m.note?`<div class="m" style="font-size:10.5px;line-height:1.45;margin:0 2px 7px">${m.note}</div>`:''}
+    ${arenaRow(xi,'GK')}${arenaRow(xi,'DEF')}${arenaRow(xi,'MID')}${arenaRow(xi,'FWD')}
+    <div class="benchsep" style="margin:8px 12px 6px"></div>
+    <div style="display:flex;gap:5px;justify-content:center;opacity:.6">${bench.map(b=>`<div style="flex:none;width:58px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:4px 2px;text-align:center"><div style="font-size:9.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${b.name}</div><div style="font-size:8px;color:var(--faint)">£${(+b.price).toFixed(1)}</div></div>`).join('')}</div>
+    <div class="m" style="font-size:10px;text-align:center;margin-top:5px">C: ${cap?cap.name:'—'} · bench below</div>
+  </div>`;}
+function renderArena(){const host=document.getElementById('arena');
+  if(!ARENA){host.innerHTML='<div class="err">Loading…</div>';
+    fetch('arena.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{ARENA=d;renderArena();}).catch(()=>{host.innerHTML='<div class="err">Arena fills in once the agents have drafted.</div>';});return;}
+  host.innerHTML=`<div class="tsub">GW${ARENA.gw} draft squads — same £100m, same pool. <b style="color:var(--fpl)">AI</b> (Opus strategist) vs <b>Model</b> (pure xPts) vs <b>you</b>. Generated ${ARENA.generated}.</div>`+(ARENA.managers||[]).map(arenaCard).join('');}
 let TITLE=null;
 const tpct=v=>v>=0.05?v.toFixed(0)+'%':'—';
 function renderTitle(){const el=document.getElementById('titlebody');

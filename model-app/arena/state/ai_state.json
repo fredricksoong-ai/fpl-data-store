@@ -1,0 +1,109 @@
+{
+ "agent": "ai",
+ "gw": 1,
+ "bank": 0.0,
+ "free_transfers": 1,
+ "chips": {
+  "1": [
+   "WC",
+   "FH",
+   "TC",
+   "BB"
+  ],
+  "2": [
+   "WC",
+   "FH",
+   "TC",
+   "BB"
+  ]
+ },
+ "squad": [
+  {
+   "id": 1,
+   "purchase_price": 6.0
+  },
+  {
+   "id": 411,
+   "purchase_price": 15.5
+  },
+  {
+   "id": 356,
+   "purchase_price": 6.5
+  },
+  {
+   "id": 388,
+   "purchase_price": 6.0
+  },
+  {
+   "id": 55,
+   "purchase_price": 8.0
+  },
+  {
+   "id": 423,
+   "purchase_price": 4.5
+  },
+  {
+   "id": 427,
+   "purchase_price": 8.0
+  },
+  {
+   "id": 480,
+   "purchase_price": 8.0
+  },
+  {
+   "id": 497,
+   "purchase_price": 4.0
+  },
+  {
+   "id": 239,
+   "purchase_price": 6.0
+  },
+  {
+   "id": 367,
+   "purchase_price": 7.0
+  },
+  {
+   "id": 368,
+   "purchase_price": 7.0
+  },
+  {
+   "id": 445,
+   "purchase_price": 5.0
+  },
+  {
+   "id": 451,
+   "purchase_price": 4.0
+  },
+  {
+   "id": 466,
+   "purchase_price": 4.5
+  }
+ ],
+ "locked": {
+  "xi": [
+   1,
+   411,
+   356,
+   388,
+   55,
+   427,
+   480,
+   239,
+   367,
+   368,
+   445
+  ],
+  "bench": [
+   497,
+   423,
+   451,
+   466
+  ],
+  "captain": 411,
+  "vice": 480,
+  "chip": null
+ },
+ "formation": "3-5-2",
+ "note": "Haaland (C) \u2014 LazyFPL backs him, template insurance. Loaded Man Utd's soft opener (Hull A, Ipswich H, Everton A) via Mbeumo + Shaw, and Garner for nailed DefCon/set-piece value the model underrates.",
+ "history": []
+}
