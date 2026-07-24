@@ -512,17 +512,19 @@ function gwPill(team){const s=STATS[team]||STATS[ME]||{gw:0,avg:1,ml:'',gap:'',o
   const bot=`<span class="pill pbot"><span class="k">Overall Pts</span><b>${s.op}</b>${sl}<span class="k">Overall Rank</span><b>${s.ovr}</b> <span class="${s.ovrUp?'gd':'bd'}">${s.ovrUp?'▲':'▼'}</span>${sl}<b>${s.val}</b><span class="gd"> +${s.bank}</span></span>`;
   return top+bot;}
 function splitLine(a){return a.length<=3?[a]:[a.slice(0,Math.ceil(a.length/2)),a.slice(Math.ceil(a.length/2))];}
+const rowW=a=>a.reduce((s,p)=>s+tileW(p[3]),0)+(a.length-1)*GAP;
+function buildPitch(sq, prEl, benchEl){                                        // render any squad (v2 rows) into given pitch + bench elements
+  const st=sq.filter(p=>!p[7]), benchArr=sq.filter(p=>p[7]);
+  const subrows=[];[1,2,3,4].forEach(t=>{const l=st.filter(p=>p[0]===t);if(l.length)splitLine(l).forEach(r=>subrows.push(r));});  // lines of >3 → two staggered sub-rows
+  const avail=(prEl.clientWidth||340)-2;
+  const SC=Math.min(1, avail/Math.max(...subrows.map(rowW),1));
+  const BSC=Math.min(SC, (avail-6)/(benchArr.length?rowW(benchArr):1));
+  prEl.innerHTML=subrows.map(r=>`<div class="prow">${r.map(p=>bub(p,SC)).join('')}</div>`).join('');
+  benchEl.innerHTML=benchArr.map(p=>bub(p,BSC,TILEH*SC,true)).join('');
+}
 function renderPitch(team){
   VIEWING=team;
-  const sq=squadFor(team), st=sq.filter(p=>!p[7]), benchArr=sq.filter(p=>p[7]);
-  const subrows=[];[1,2,3,4].forEach(t=>{const l=st.filter(p=>p[0]===t);if(l.length)splitLine(l).forEach(r=>subrows.push(r));});  // lines of >3 → two staggered sub-rows
-  const rowW=a=>a.reduce((s,p)=>s+tileW(p[3]),0)+(a.length-1)*GAP;
-  const pr=document.getElementById('pitchrows');
-  const avail=(pr.clientWidth||340)-2;
-  const SC=Math.min(1, avail/Math.max(...subrows.map(rowW),1));               // starters scale off their own ≤3 rows → bigger tiles
-  const BSC=Math.min(SC, (avail-6)/(benchArr.length?rowW(benchArr):1));        // bench keeps all 4 in one row, never bigger than starters
-  pr.innerHTML=subrows.map(r=>`<div class="prow">${r.map(p=>bub(p,SC)).join('')}</div>`).join('');
-  document.getElementById('bench').innerHTML=benchArr.map(p=>bub(p,BSC,TILEH*SC,true)).join('');  // bench: width scaled to fit 4, full height, xPts on its own 4th line
+  buildPitch(squadFor(team), document.getElementById('pitchrows'), document.getElementById('bench'));
   document.getElementById('gwpill').innerHTML=gwPill(team);
   document.getElementById('whoName').textContent=team;
   document.getElementById('whoBack').classList.toggle('hidden',team===ME);
@@ -602,34 +604,47 @@ function goTab(id){const t=TABS.find(x=>x[0]===id);if(!t)return;TAB=id;const isS
     if(id==='arena')renderArena();
   }
   renderTabBar();window.scrollTo(0,0);}
-/* ===== Arena: you vs AI vs Prediction Model (reads arena.json) ===== */
-let ARENA=null;
-const ARENAPOS={GK:'#5b6b85',DEF:'var(--good)',MID:'#38bdf8',FWD:'var(--away)'};
-function arenaTile(p){const c=ARENAPOS[p.pos]||'#5b6b85',badge=p.c?'C':p.v?'V':'';
-  const ring=p.c?'box-shadow:0 0 0 2px var(--fpl)':p.v?'box-shadow:0 0 0 2px rgba(255,255,255,.5)':'';
-  const b=badge?`<span style="position:absolute;top:-6px;right:-5px;width:15px;height:15px;border-radius:50%;background:${p.c?'var(--fpl)':'#86f3bf'};color:#06231a;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center">${badge}</span>`:'';
-  return `<div style="position:relative;flex:none;width:64px;background:${c}22;border:1px solid ${c};border-radius:9px;padding:5px 2px;text-align:center;${ring}">${b}<div style="font-size:10px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div><div style="font-size:8.5px;color:var(--muted)">£${(+p.price).toFixed(1)}</div></div>`;}
-function arenaRow(xi,pos){const line=xi.filter(x=>x.pos===pos);return line.length?`<div style="display:flex;gap:5px;justify-content:center;margin:5px 0">${line.map(arenaTile).join('')}</div>`:'';}
-function arenaCard(m){
-  if(m.kind==='human'&&m.locked===false)
-    return `<div class="pcard2"><div style="display:flex;align-items:center;gap:8px"><b style="color:var(--fpl);font-size:15px">${m.name}</b><span class="m" style="font-size:11px">you</span></div><div class="m" style="font-size:12px;margin-top:8px">🔒 Locked in the FPL app — revealed here after the GW deadline.</div></div>`;
-  const xi=(m.players||[]).filter(p=>!p.bench),bench=(m.players||[]).filter(p=>p.bench),cap=(m.players||[]).find(p=>p.c);
-  return `<div class="pcard2">
-    <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
-      <b style="color:var(--fpl);font-size:15px">${m.name}</b>
-      <span class="m" style="font-size:10.5px">${m.kind==='ai'?'strategist':'chalk'}</span>
-      <span class="m" style="margin-left:auto;font-size:11px">${m.formation} · £${(+m.spend).toFixed(1)}m</span>
-    </div>
-    ${m.note?`<div class="m" style="font-size:10.5px;line-height:1.45;margin:0 2px 7px">${m.note}</div>`:''}
-    ${arenaRow(xi,'GK')}${arenaRow(xi,'DEF')}${arenaRow(xi,'MID')}${arenaRow(xi,'FWD')}
-    <div class="benchsep" style="margin:8px 12px 6px"></div>
-    <div style="display:flex;gap:5px;justify-content:center;opacity:.6">${bench.map(b=>`<div style="flex:none;width:58px;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:4px 2px;text-align:center"><div style="font-size:9.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${b.name}</div><div style="font-size:8px;color:var(--faint)">£${(+b.price).toFixed(1)}</div></div>`).join('')}</div>
-    <div class="m" style="font-size:10px;text-align:center;margin-top:5px">C: ${cap?cap.name:'—'} · bench below</div>
-  </div>`;}
+/* ===== Arena: you vs AI vs Prediction Model — reuses the squad pitch ===== */
+let ARENA=null, arenaSel='ai';
+const A_P2N={GK:1,DEF:2,MID:3,FWD:4};
+function arenaRows(m){return (m.players||[]).map(p=>{const fx=((FIX&&FIX[p.code])||[])[0]||{};
+  return [A_P2N[p.pos]||3, p.name, 0, +p.own||0, 0, p.c?1:0, p.v?1:0, p.bench?1:0,
+    fx.opp||'', '', 0,0,0, (p.xp1!=null?p.xp1:(p.xph||0)), fx.fdr||0, 0,0, p.code];});}
+function arenaTabsHTML(){return `<div class="subtabs">`+(ARENA.managers||[]).map(m=>`<span class="subtab ${arenaSel===m.key?'on':''}" onclick="setArenaTab('${m.key}')">${m.name}</span>`).join('')+`</div>`;}
+function arenaScoresHTML(){
+  const rows=(ARENA.managers||[]).map(m=>({name:m.name,kind:m.kind,gw:m.gw||0,total:m.total||0,cap:(m.players||[]).find(p=>p.c),me:m.key==='you'}));
+  const body=rows.map((r,i)=>`<tr class="${r.me?'me':''}"><td class="rk">${i+1}</td><td class="tm">${r.name}</td><td class="m">${r.cap?r.cap.name:(r.kind==='human'?'—':'')}</td><td class="r"><span class="gwp">${r.gw}</span></td><td class="r"><b>${r.total}</b></td></tr>`).join('');
+  return `<div class="ctitle2" style="margin:16px 2px 7px">Scoreboard · GW${ARENA.gw}</div><div class="lgcard"><table><thead><tr><th>#</th><th>Manager</th><th>Captain</th><th class="r">GW</th><th class="r">Total</th></tr></thead><tbody>${body}</tbody></table></div>`;}
+function setArenaTab(k){arenaSel=k;fillArena();}
+function fillArena(){
+  const m=(ARENA.managers||[]).find(x=>x.key===arenaSel)||ARENA.managers[0];
+  document.getElementById('arena-tabs').innerHTML=arenaTabsHTML();
+  document.getElementById('arena-name').textContent=m.name;
+  const pitch=document.getElementById('arena-pitch'),pend=document.getElementById('arena-pending'),meta=document.getElementById('arena-meta'),note=document.getElementById('arena-note');
+  if(m.kind==='human'&&m.locked===false){
+    pitch.style.display='none';pend.style.display='';meta.textContent='';note.innerHTML='';
+    pend.innerHTML=`🔒 ${m.name} locks in the FPL app — revealed here after the deadline.`;
+  }else{
+    pend.style.display='none';pitch.style.display='';
+    meta.textContent=`${m.formation} · £${(+m.spend).toFixed(1)}m · ${m.kind==='ai'?'strategist':'chalk'}`;
+    note.innerHTML=m.note?`<span class="m" style="font-size:11px;line-height:1.45">${m.note}</span>`:'';
+    buildPitch(arenaRows(m), document.getElementById('arena-pitchrows'), document.getElementById('arena-bench'));
+  }
+  document.getElementById('arena-scores').innerHTML=arenaScoresHTML();
+}
 function renderArena(){const host=document.getElementById('arena');
   if(!ARENA){host.innerHTML='<div class="err">Loading…</div>';
     fetch('arena.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{ARENA=d;renderArena();}).catch(()=>{host.innerHTML='<div class="err">Arena fills in once the agents have drafted.</div>';});return;}
-  host.innerHTML=`<div class="tsub">GW${ARENA.gw} draft squads — same £100m, same pool. <b style="color:var(--fpl)">AI</b> (Opus strategist) vs <b>Model</b> (pure xPts) vs <b>you</b>. Generated ${ARENA.generated}.</div>`+(ARENA.managers||[]).map(arenaCard).join('');}
+  host.innerHTML=`<div class="tsub">GW${ARENA.gw} · same £100m, same pool — <b style="color:var(--fpl)">AI</b> (Opus) vs <b>Model</b> (chalk) vs <b>you</b>. Tap a name to switch team.</div>
+    <div id="arena-tabs"></div>
+    <div class="pitch">
+      <div class="pitch-top"><div class="pt-name"><span id="arena-name" style="color:var(--muted);font-weight:700;font-size:13px"></span></div><div id="arena-meta" class="who-val"></div></div>
+      <div id="arena-pending" class="m" style="display:none;padding:26px 8px;text-align:center;font-size:13px"></div>
+      <div id="arena-pitch"><div id="arena-pitchrows"></div><div class="benchsep"></div><div class="bench" id="arena-bench"></div></div>
+    </div>
+    <div id="arena-note" style="margin:8px 2px 2px"></div>
+    <div id="arena-scores"></div>`;
+  fillArena();}
 let TITLE=null;
 const tpct=v=>v>=0.05?v.toFixed(0)+'%':'—';
 function renderTitle(){const el=document.getElementById('titlebody');

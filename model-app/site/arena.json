@@ -1,5 +1,5 @@
 {
- "generated": "2026-07-24 05:24 UTC",
+ "generated": "2026-07-24 05:50 UTC",
  "gw": 1,
  "managers": [
   {
@@ -7,6 +7,8 @@
    "name": "wirtzplay",
    "kind": "human",
    "locked": false,
+   "gw": 0,
+   "total": 0,
    "note": "revealed after the deadline"
   },
   {
@@ -17,13 +19,17 @@
    "spend": 100.0,
    "bank": 0.0,
    "note": "Haaland (C) \u2014 LazyFPL backs him, template insurance. Loaded Man Utd's soft opener (Hull A, Ipswich H, Everton A) via Mbeumo + Shaw, and Garner for nailed DefCon/set-piece value the model underrates.",
+   "gw": 0,
+   "total": 0,
    "players": [
     {
      "pos": "GK",
      "name": "Raya",
      "code": "ARS",
      "price": 6.0,
+     "own": 29.0,
      "xph": 20.19,
+     "xp1": 4.63,
      "c": false,
      "v": false,
      "bench": false
@@ -33,7 +39,9 @@
      "name": "Haaland",
      "code": "MCI",
      "price": 15.5,
+     "own": 70.0,
      "xph": 23.08,
+     "xp1": 4.92,
      "c": true,
      "v": false,
      "bench": false
@@ -43,7 +51,9 @@
      "name": "Virgil",
      "code": "LIV",
      "price": 6.5,
+     "own": 15.2,
      "xph": 21.27,
+     "xp1": 3.49,
      "c": false,
      "v": false,
      "bench": false
@@ -53,7 +63,9 @@
      "name": "Gu\u00e9hi",
      "code": "MCI",
      "price": 6.0,
+     "own": 26.1,
      "xph": 20.11,
+     "xp1": 4.0,
      "c": false,
      "v": false,
      "bench": false
@@ -63,7 +75,9 @@
      "name": "Watkins",
      "code": "AVL",
      "price": 8.0,
+     "own": 15.5,
      "xph": 23.14,
+     "xp1": 4.38,
      "c": false,
      "v": false,
      "bench": false
@@ -73,7 +87,9 @@
      "name": "Mbeumo",
      "code": "MUN",
      "price": 8.0,
+     "own": 13.5,
      "xph": 20.83,
+     "xp1": 4.53,
      "c": false,
      "v": false,
      "bench": false
@@ -83,7 +99,9 @@
      "name": "Gibbs-White",
      "code": "NFO",
      "price": 8.0,
+     "own": 13.5,
      "xph": 21.8,
+     "xp1": 4.71,
      "c": false,
      "v": true,
      "bench": false
@@ -93,7 +111,9 @@
      "name": "Garner",
      "code": "EVE",
      "price": 6.0,
+     "own": 3.9,
      "xph": 16.37,
+     "xp1": 3.26,
      "c": false,
      "v": false,
      "bench": false
@@ -103,7 +123,9 @@
      "name": "Gakpo",
      "code": "LIV",
      "price": 7.0,
+     "own": 4.5,
      "xph": 24.44,
+     "xp1": 4.37,
      "c": false,
      "v": false,
      "bench": false
@@ -113,7 +135,9 @@
      "name": "Szoboszlai",
      "code": "LIV",
      "price": 7.0,
+     "own": 35.8,
      "xph": 21.92,
+     "xp1": 3.97,
      "c": false,
      "v": false,
      "bench": false
@@ -123,7 +147,9 @@
      "name": "Thiaw",
      "code": "NEW",
      "price": 5.0,
+     "own": 2.7,
      "xph": 18.06,
+     "xp1": 3.02,
      "c": false,
      "v": false,
      "bench": false
@@ -133,7 +159,9 @@
      "name": "Dubravka",
      "code": "TOT",
      "price": 4.0,
+     "own": 23.0,
      "xph": 16.18,
+     "xp1": 2.92,
      "c": false,
      "v": false,
      "bench": true
@@ -143,7 +171,9 @@
      "name": "Shaw",
      "code": "MUN",
      "price": 4.5,
+     "own": 14.3,
      "xph": 15.94,
+     "xp1": 3.6,
      "c": false,
      "v": false,
      "bench": true
@@ -153,7 +183,9 @@
      "name": "A.Murphy",
      "code": "NEW",
      "price": 4.0,
+     "own": 0.8,
      "xph": 0.01,
+     "xp1": 0.0,
      "c": false,
      "v": false,
      "bench": true
@@ -163,7 +195,9 @@
      "name": "Neave",
      "code": "NEW",
      "price": 4.5,
+     "own": 0.7,
      "xph": 0.02,
+     "xp1": 0.0,
      "c": false,
      "v": false,
      "bench": true
@@ -178,13 +212,17 @@
    "spend": 99.5,
    "bank": 0.5,
    "note": "Pure xPts \u2014 highest projected XI, no strategy.",
+   "gw": 0,
+   "total": 0,
    "players": [
     {
      "pos": "GK",
      "name": "Raya",
      "code": "ARS",
      "price": 6.0,
+     "own": 29.0,
      "xph": 20.19,
+     "xp1": 4.63,
      "c": false,
      "v": false,
      "bench": false
@@ -194,7 +232,9 @@
      "name": "B.Fernandes",
      "code": "MUN",
      "price": 12.0,
+     "own": 44.8,
      "xph": 24.06,
+     "xp1": 5.24,
      "c": true,
      "v": false,
      "bench": false
@@ -204,7 +244,9 @@
      "name": "Thiago",
      "code": "BRE",
      "price": 8.0,
+     "own": 20.3,
      "xph": 21.27,
+     "xp1": 4.69,
      "c": false,
      "v": false,
      "bench": false
@@ -214,7 +256,9 @@
      "name": "Virgil",
      "code": "LIV",
      "price": 6.5,
+     "own": 15.2,
      "xph": 21.27,
+     "xp1": 3.49,
      "c": false,
      "v": false,
      "bench": false
@@ -224,7 +268,9 @@
      "name": "O'Reilly",
      "code": "MCI",
      "price": 6.5,
+     "own": 25.3,
      "xph": 18.87,
+     "xp1": 3.8,
      "c": false,
      "v": false,
      "bench": false
@@ -234,7 +280,9 @@
      "name": "Gu\u00e9hi",
      "code": "MCI",
      "price": 6.0,
+     "own": 26.1,
      "xph": 20.11,
+     "xp1": 4.0,
      "c": false,
      "v": false,
      "bench": false
@@ -244,7 +292,9 @@
      "name": "Watkins",
      "code": "AVL",
      "price": 8.0,
+     "own": 15.5,
      "xph": 23.14,
+     "xp1": 4.38,
      "c": false,
      "v": false,
      "bench": false
@@ -254,7 +304,9 @@
      "name": "Mbeumo",
      "code": "MUN",
      "price": 8.0,
+     "own": 13.5,
      "xph": 20.83,
+     "xp1": 4.53,
      "c": false,
      "v": false,
      "bench": false
@@ -264,7 +316,9 @@
      "name": "Gibbs-White",
      "code": "NFO",
      "price": 8.0,
+     "own": 13.5,
      "xph": 21.8,
+     "xp1": 4.71,
      "c": false,
      "v": true,
      "bench": false
@@ -274,7 +328,9 @@
      "name": "Gakpo",
      "code": "LIV",
      "price": 7.0,
+     "own": 4.5,
      "xph": 24.44,
+     "xp1": 4.37,
      "c": false,
      "v": false,
      "bench": false
@@ -284,7 +340,9 @@
      "name": "Szoboszlai",
      "code": "LIV",
      "price": 7.0,
+     "own": 35.8,
      "xph": 21.92,
+     "xp1": 3.97,
      "c": false,
      "v": false,
      "bench": false
@@ -294,7 +352,9 @@
      "name": "Dubravka",
      "code": "TOT",
      "price": 4.0,
+     "own": 23.0,
      "xph": 16.18,
+     "xp1": 2.92,
      "c": false,
      "v": false,
      "bench": true
@@ -304,7 +364,9 @@
      "name": "O'Nien",
      "code": "SUN",
      "price": 4.0,
+     "own": 2.4,
      "xph": 2.02,
+     "xp1": 0.52,
      "c": false,
      "v": false,
      "bench": true
@@ -314,7 +376,9 @@
      "name": "Diop",
      "code": "IPS",
      "price": 4.0,
+     "own": 21.5,
      "xph": null,
+     "xp1": null,
      "c": false,
      "v": false,
      "bench": true
@@ -324,7 +388,9 @@
      "name": "Scarlett",
      "code": "TOT",
      "price": 4.5,
+     "own": 1.6,
      "xph": 0.01,
+     "xp1": 0.0,
      "c": false,
      "v": false,
      "bench": true
