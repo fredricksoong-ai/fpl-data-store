@@ -1,12 +1,10 @@
 name: FPL Data Pipeline
 
 # ── Triggers ──────────────────────────────────────────────────────────────────
+# RETIRED 2026-07-23: Core-Insights pipeline superseded by the FPLanner model-app (fpl-model.yml).
+# Schedule removed so it no longer auto-runs (it was crashing on the 2026/27 season rollover).
+# Left as manual-only via workflow_dispatch in case it's ever needed again.
 on:
-  schedule:
-    # Twice daily — timed for Singapore timezone
-    - cron: '30 5 * * *'   # 05:30 UTC = 1:30 PM SGT (30 min after CI morning refresh)
-    - cron: '30 17 * * *'   # 17:30 UTC = 1:30 AM SGT (30 min after CI evening refresh)
-
   # Manual trigger — run anytime from GitHub UI
   workflow_dispatch:
     inputs:

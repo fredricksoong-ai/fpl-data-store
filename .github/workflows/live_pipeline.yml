@@ -12,12 +12,8 @@ name: FPL Live Pipeline
 # So during off-season these triggers fire but cost ~1 second each — negligible.
 #
 on:
-  schedule:
-    - cron: '0,30 11-22 * * 6'    # Saturdays
-    - cron: '0,30 11-22 * * 0'    # Sundays
-    - cron: '0,30 11-22 * * 1-5'  # Mon–Fri evenings
-
-  # Manual trigger — useful for testing or emergency refresh
+  # RETIRED 2026-07-23: Core-Insights live updater superseded by the FPLanner model-app (fpl-model.yml).
+  # Schedule removed so it no longer auto-runs; kept as manual-only.
   workflow_dispatch:
 
 # ── Permissions ───────────────────────────────────────────────────────────────

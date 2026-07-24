@@ -3,9 +3,8 @@ name: Generate AI insights
 # Runs a little AFTER your data refresh so insights reflect fresh data.
 # Adjust the cron times to ~10-15 min after your existing data workflow.
 on:
-  schedule:
-    - cron: "15 5 * * *"    # 05:15 UTC
-    - cron: "15 17 * * *"   # 17:15 UTC
+  # RETIRED 2026-07-23: Core-Insights AI insights superseded by the FPLanner model-app (fpl-model.yml).
+  # Schedule removed so it no longer auto-runs; kept as manual-only.
   workflow_dispatch: {}      # lets you run it manually from the Actions tab
 
 permissions:
