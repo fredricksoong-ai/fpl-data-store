@@ -32,7 +32,8 @@ def xph_of(p):
 
 def optimize_squad(players, budget=100.0, obj_key="xph", force_in=()):
     # usable pool: has a price + position, and isn't hard-unavailable ('u')
-    pool = [p for p in players if p.get("price") and p.get("pos") in POS and p.get("st") != "u"]
+    # drop unavailable players: unavailable/injured/suspended (won't feature at the deadline)
+    pool = [p for p in players if p.get("price") and p.get("pos") in POS and p.get("st") not in ("u", "i", "s")]
     n = len(pool)
     price = np.array([float(p["price"]) for p in pool])
     val = np.array([xph_of(p) if obj_key == "xph" else float(p.get("xp1", 0) or 0) for p in pool])

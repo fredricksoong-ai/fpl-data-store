@@ -55,8 +55,12 @@
    "purchase_price": 4.0
   },
   {
-   "id": 239,
+   "id": 94,
    "purchase_price": 6.0
+  },
+  {
+   "id": 272,
+   "purchase_price": 4.5
   },
   {
    "id": 367,
@@ -73,10 +77,6 @@
   {
    "id": 451,
    "purchase_price": 4.0
-  },
-  {
-   "id": 466,
-   "purchase_price": 4.5
   }
  ],
  "locked": {
@@ -88,7 +88,7 @@
    55,
    427,
    480,
-   239,
+   94,
    367,
    368,
    445
@@ -96,14 +96,14 @@
   "bench": [
    497,
    423,
-   451,
-   466
+   272,
+   451
   ],
   "captain": 411,
   "vice": 480,
   "chip": null
  },
  "formation": "3-5-2",
- "note": "Haaland (C) \u2014 LazyFPL backs him, template insurance. Loaded Man Utd's soft opener (Hull A, Ipswich H, Everton A) via Mbeumo + Shaw, and Garner for nailed DefCon/set-piece value the model underrates.",
+ "note": "Haaland (C) \u2014 most-owned = best captain per LazyFPL. Man Utd's soft opener via Mbeumo + Shaw. Garner dropped \u2014 groin surgery, out for GW1.",
  "history": []
 }
