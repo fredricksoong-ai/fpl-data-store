@@ -50,6 +50,36 @@ def in_model(model, h, a):
     return _norm(CODE2FD.get(h, h)) in model.attack and _norm(CODE2FD.get(a, a)) in model.attack
 
 
+# --- Core-Insights enrichment tilt -------------------------------------------------
+# A BOUNDED nudge on the model's xPts using the underlying technical layer. The Dixon-Coles
+# model stays authoritative; this only leans it toward what the underlying numbers say:
+#   1. xG-regression — fade players whose recent returns overperformed their npxG+xA (en_ovp).
+#   2. DefCon floor  — reliable defensive-action hitters bank the +2 more often (en_dc90).
+#   3. GK quality    — shot-stoppers who prevent goals above expectation (en_gp).
+# Prior-season data counts at half weight; total tilt is hard-capped so the model can't be swamped.
+DC_LINE = {"DEF": 10.0, "MID": 12.0, "FWD": 12.0}   # FPL 2026/27 DefCon action thresholds
+TILT_CAP = 0.12
+
+
+def enrich_mult(fl):
+    """Return (multiplier, tilt) for a players.json record carrying en_* enrichment fields."""
+    if not fl or not fl.get("en_src"):
+        return 1.0, None
+    w = 0.5 if fl.get("en_src") == "prior" else 1.0
+    m = 0.0
+    ovp = fl.get("en_ovp")
+    if ovp is not None:
+        m += -max(-1.0, min(1.0, ovp / 4.0)) * 0.08          # regression to underlying xG
+    dc90 = fl.get("en_dc90"); pos = fl.get("pos")
+    if dc90 is not None and pos in DC_LINE and dc90 >= DC_LINE[pos]:
+        m += 0.04                                            # reliable DefCon floor
+    gp = fl.get("en_gp")
+    if gp is not None and pos == "GK":
+        m += max(-0.06, min(0.06, gp / 6.0 * 0.06))          # GK shot-stopping quality
+    m = max(-TILT_CAP, min(TILT_CAP, m * w))
+    return round(1.0 + m, 4), round(m, 4)
+
+
 def main() -> int:
     boot = get("/bootstrap-static/")
     short = {t["id"]: t["short_name"] for t in boot["teams"]}
@@ -98,17 +128,20 @@ def main() -> int:
         flags = {}
 
     positions = {"GK": [], "DEF": [], "MID": [], "FWD": []}
-    xph_by = {}
+    xph_by = {}; mult_by = {}
     for r in proj.itertuples():
         pos = POSFIX.get(r.pos, r.pos)
-        xph_by[int(r.id)] = round(float(r.xpts), 2)
+        fl = flags.get(int(r.id), {})
+        mult, tilt = enrich_mult(fl); mult_by[int(r.id)] = mult
+        xph_by[int(r.id)] = round(float(r.xpts) * mult, 2)   # enrichment-tilted horizon xPts
         if pos not in positions:
             continue
         code = NAME2CODE.get(r.team, r.team)
-        o = opp.get(code); fl = flags.get(int(r.id), {}); el = sel.get(int(r.id), {})
+        o = opp.get(code); el = sel.get(int(r.id), {})
         positions[pos].append({
             "id": int(r.id), "name": r.name, "code": code, "pos": pos,
-            "price": round(float(r.price), 1), "xph": round(float(r.xpts), 2), "nfix": int(r.n_fix),
+            "price": round(float(r.price), 1), "xph": round(float(r.xpts) * mult, 2),
+            "xph_m": round(float(r.xpts), 2), "en_tilt": tilt, "nfix": int(r.n_fix),
             "opp": o[0] if o else "", "venue": o[1] if o else "",
             "flags": fl.get("flags", []), "flag_count": fl.get("flag_count", 0),
             "sel": float(el.get("selected_by_percent", 0) or 0),
@@ -120,7 +153,11 @@ def main() -> int:
     try:
         pj = json.loads((OUT.parent / "players.json").read_text())
         for p in pj["players"]:
-            p["xph"] = xph_by.get(p["id"]); p["xp1"] = xp1_by.get(p["id"])
+            mult = mult_by.get(p["id"], 1.0)
+            xp1r = xp1_by.get(p["id"])
+            p["xph"] = xph_by.get(p["id"])                                  # already tilted
+            p["xp1"] = round(xp1r * mult, 2) if xp1r is not None else None  # tilt the 1-GW too
+            p["en_tilt"] = round(mult - 1.0, 4) if mult != 1.0 else None
         (OUT.parent / "players.json").write_text(json.dumps(pj, ensure_ascii=False))
     except Exception as e:
         print("  could not merge xph into players.json:", e)

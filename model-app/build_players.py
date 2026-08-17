@@ -42,9 +42,47 @@ def f(x):
     except Exception: return 0.0
 
 
+def load_enrich():
+    """Load player_enrich.json (from ingest_core_insights.py) if present.
+
+    Returns (by_id, by_code, meta). Fail-soft: missing/broken feed -> empty maps, so the
+    3-hourly build never breaks when the Core-Insights source isn't available (e.g. early season).
+    Same-season join is on the FPL element id; cross-season prior join is on the stable FPL code.
+    """
+    p = Path(os.environ.get("ENRICH_PATH", "player_enrich.json"))
+    try:
+        d = json.loads(p.read_text())
+    except Exception:
+        return {}, {}, {}
+    recs = list(d.get("players", {}).values())
+    by_id = {r["player_id"]: r for r in recs if r.get("player_id") is not None}
+    by_code = {int(k): v for k, v in d.get("players", {}).items() if str(k).isdigit()}
+    meta = {"season": d.get("season"), "through_gw": d.get("through_gw")}
+    return by_id, by_code, meta
+
+
+def enr_fields(rec, prior):
+    """Flatten the enrichment record into the compact keys the Scout board + AI tilt consume."""
+    return {
+        "en_npxg90": rec.get("npxg90"), "en_xa90": rec.get("xa90"), "en_spxg": rec.get("sp_xg"),
+        "en_dc90": rec.get("def_con90"), "en_cc": rec.get("chances_created"),
+        "en_gp": rec.get("gk_goals_prevented"), "en_ovp": rec.get("recent_overperf"),
+        "en_src": "prior" if prior else "cur",
+    }
+
+
 def main() -> int:
     boot = get("/bootstrap-static/")
     short = {t["id"]: t["short_name"] for t in boot["teams"]}
+    enr_id, enr_code, enr_meta = load_enrich()
+    # derive the live season ("YYYY-YYYY") from the first event's deadline (FPL seasons open in August)
+    cur_season = None
+    dls = [e.get("deadline_time") for e in boot.get("events", []) if e.get("deadline_time")]
+    if dls:
+        y = int(min(dls)[:4]); cur_season = f"{y}-{y + 1}"
+    # only trust the same-season element-id join when the feed's season matches the live one;
+    # otherwise the feed is a prior and we MUST join on the stable FPL code (ids collide across seasons)
+    same_season = bool(enr_meta.get("season")) and enr_meta.get("season") == cur_season
     fin = [e["id"] for e in boot["events"] if e.get("finished")]
     event = fin[-1] if fin else 0
     els = [e for e in boot["elements"] if e.get("minutes", 0) > 0]
@@ -77,8 +115,14 @@ def main() -> int:
         if pos == "GK" and mins >= T["gk_min"] and (saves / mins * 90) >= T["gk_saves90"]: flags.append("gk_shot_stopper")
         if (mins / 38.0) <= T["rot_avg"] and mins >= T["rot_total"]:
             flags.append("rotation_risk")
+        # enrichment: same-season -> element-id join; cross-season prior -> stable FPL-code join (never both)
+        if same_season:
+            rec = enr_id.get(e["id"]); prior = False
+        else:
+            rec = enr_code.get(e.get("code")); prior = True
+        enr = enr_fields(rec, prior) if rec else {}
         # keep ALL players (minutes>0) so the scatter can show the field; the list view filters to flagged
-        players.append({"id": e["id"], "name": e.get("web_name"), "code": short[e["team"]], "pos": pos,
+        players.append({"id": e["id"], "pcode": e.get("code"), "name": e.get("web_name"), "code": short[e["team"]], "pos": pos,
                         "price": round(price / 10.0, 1), "min": mins, "form": round(form, 1),
                         "ep": round(ep, 1), "xgi": round(xgi, 2), "dc90": round(dc90, 1),
                         "xg90": round(f(e.get("expected_goals_per_90")), 2), "xa90": round(f(e.get("expected_assists_per_90")), 2),
@@ -90,14 +134,17 @@ def main() -> int:
                         "val": f(e.get("value_season")), "bps": e.get("bps", 0) or 0,
                         "st": e.get("status", "a"), "cop": e.get("chance_of_playing_next_round"),
                         "news": (e.get("news") or "").strip(),
-                        "flags": flags, "flag_count": len([x for x in flags if x != "rotation_risk"])})
+                        "flags": flags, "flag_count": len([x for x in flags if x != "rotation_risk"]),
+                        **enr})
     players.sort(key=lambda p: (-p["flag_count"], -p["form"]))
 
     out = {"generated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
-           "event": event, "players": players}
+           "event": event, "enrich": enr_meta, "players": players}
     OUT.write_text(json.dumps(out, ensure_ascii=False))
     nflag = sum(1 for p in players if p["flag_count"] >= 1)
-    print(f"wrote {OUT}: {len(players)} players ({nflag} flagged) GW{event}; max flags {players[0]['flag_count'] if players else 0}")
+    nenr = sum(1 for p in players if p.get("en_src"))
+    esrc = "/".join(sorted({p["en_src"] for p in players if p.get("en_src")})) or "none"
+    print(f"wrote {OUT}: {len(players)} players ({nflag} flagged, {nenr} enriched [{esrc}]) GW{event}; max flags {players[0]['flag_count'] if players else 0}")
     return 0
 
 

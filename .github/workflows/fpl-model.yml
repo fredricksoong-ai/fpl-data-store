@@ -66,8 +66,19 @@ jobs:
 
 
 
+      # Core-Insights enrichment: refresh the underlying technical layer (npxG, DefCon/90,
+      # GK goals-prevented, xG-regression signal) BEFORE build_players consumes it. Fail-soft &
+      # commit-guarded: only re-ingests when the upstream changed; any failure keeps the committed feed.
+      - name: Refresh Core-Insights enrichment (player_enrich.json)
+        continue-on-error: true
+        run: bash model-app/refresh_enrich.sh
+        env:
+          CI_REPO: olbauday/FPL-Core-Insights
+          CI_BRANCH: codex/data-integration-review
+          CI_SEASON: "2025-2026"
+
       - name: Build players (players.json)
-        run: PLAYERS_OUT=model-app/site/players.json python3 model-app/build_players.py
+        run: PLAYERS_OUT=model-app/site/players.json ENRICH_PATH=model-app/site/player_enrich.json python3 model-app/build_players.py
 
       - name: Build transfer targets (recommend.json)
         run: REC_OUT=model-app/site/recommend.json python3 model-app/build_recommend.py
