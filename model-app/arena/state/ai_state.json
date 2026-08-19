@@ -1,7 +1,7 @@
 {
  "agent": "ai",
  "gw": 1,
- "bank": 0.0,
+ "bank": 0.5,
  "free_transfers": 1,
  "chips": {
   "1": [
@@ -27,6 +27,10 @@
    "purchase_price": 15.5
   },
   {
+   "id": 106,
+   "purchase_price": 8.0
+  },
+  {
    "id": 356,
    "purchase_price": 6.5
   },
@@ -39,15 +43,15 @@
    "purchase_price": 8.0
   },
   {
-   "id": 423,
-   "purchase_price": 4.5
+   "id": 68,
+   "purchase_price": 6.0
+  },
+  {
+   "id": 368,
+   "purchase_price": 7.0
   },
   {
    "id": 427,
-   "purchase_price": 8.0
-  },
-  {
-   "id": 480,
    "purchase_price": 8.0
   },
   {
@@ -55,11 +59,11 @@
    "purchase_price": 4.0
   },
   {
-   "id": 94,
-   "purchase_price": 6.0
+   "id": 66,
+   "purchase_price": 4.0
   },
   {
-   "id": 272,
+   "id": 221,
    "purchase_price": 4.5
   },
   {
@@ -67,15 +71,11 @@
    "purchase_price": 7.0
   },
   {
-   "id": 368,
-   "purchase_price": 7.0
-  },
-  {
    "id": 445,
    "purchase_price": 5.0
   },
   {
-   "id": 451,
+   "id": 511,
    "purchase_price": 4.0
   }
  ],
@@ -83,27 +83,27 @@
   "xi": [
    1,
    411,
+   106,
    356,
    388,
    55,
-   427,
-   480,
-   94,
-   367,
+   68,
    368,
+   427,
+   367,
    445
   ],
   "bench": [
    497,
-   423,
-   272,
-   451
+   511,
+   66,
+   221
   ],
   "captain": 411,
-  "vice": 480,
+  "vice": 106,
   "chip": null
  },
- "formation": "3-5-2",
- "note": "Haaland (C) \u2014 most-owned = best captain per LazyFPL. Man Utd's soft opener via Mbeumo + Shaw. Garner dropped \u2014 groin surgery, out for GW1.",
+ "formation": "3-4-3",
+ "note": "",
  "history": []
 }

@@ -1,7 +1,7 @@
 {
  "agent": "model",
  "gw": 1,
- "bank": 0.5,
+ "bank": 1.0,
  "free_transfers": 1,
  "chips": {
   "1": [
@@ -19,12 +19,16 @@
  },
  "squad": [
   {
+   "id": 426,
+   "purchase_price": 12.0
+  },
+  {
    "id": 1,
    "purchase_price": 6.0
   },
   {
-   "id": 426,
-   "purchase_price": 12.0
+   "id": 2,
+   "purchase_price": 5.0
   },
   {
    "id": 106,
@@ -32,10 +36,6 @@
   },
   {
    "id": 356,
-   "purchase_price": 6.5
-  },
-  {
-   "id": 387,
    "purchase_price": 6.5
   },
   {
@@ -47,6 +47,10 @@
    "purchase_price": 8.0
   },
   {
+   "id": 368,
+   "purchase_price": 7.0
+  },
+  {
    "id": 427,
    "purchase_price": 8.0
   },
@@ -55,11 +59,7 @@
    "purchase_price": 8.0
   },
   {
-   "id": 497,
-   "purchase_price": 4.0
-  },
-  {
-   "id": 259,
+   "id": 66,
    "purchase_price": 4.0
   },
   {
@@ -67,8 +67,8 @@
    "purchase_price": 7.0
   },
   {
-   "id": 368,
-   "purchase_price": 7.0
+   "id": 445,
+   "purchase_price": 5.0
   },
   {
    "id": 528,
@@ -81,29 +81,29 @@
  ],
  "locked": {
   "xi": [
-   1,
    426,
+   1,
    106,
    356,
-   387,
    388,
    55,
+   368,
    427,
    480,
    367,
-   368
+   445
   ],
   "bench": [
-   497,
+   2,
    539,
-   259,
+   66,
    528
   ],
   "captain": 426,
-  "vice": 480,
+  "vice": 106,
   "chip": null
  },
  "formation": "3-5-2",
- "note": "Pure xPts \u2014 highest projected XI, no strategy.",
+ "note": "",
  "history": []
 }
