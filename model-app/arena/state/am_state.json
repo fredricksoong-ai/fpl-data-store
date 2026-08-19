@@ -1,0 +1,109 @@
+{
+ "agent": "am",
+ "gw": 1,
+ "bank": 0.5,
+ "free_transfers": 1,
+ "chips": {
+  "1": [
+   "WC",
+   "FH",
+   "TC",
+   "BB"
+  ],
+  "2": [
+   "WC",
+   "FH",
+   "TC",
+   "BB"
+  ]
+ },
+ "squad": [
+  {
+   "id": 1,
+   "purchase_price": 6.0
+  },
+  {
+   "id": 411,
+   "purchase_price": 15.5
+  },
+  {
+   "id": 106,
+   "purchase_price": 8.0
+  },
+  {
+   "id": 356,
+   "purchase_price": 6.5
+  },
+  {
+   "id": 388,
+   "purchase_price": 6.0
+  },
+  {
+   "id": 55,
+   "purchase_price": 8.0
+  },
+  {
+   "id": 68,
+   "purchase_price": 6.0
+  },
+  {
+   "id": 368,
+   "purchase_price": 7.0
+  },
+  {
+   "id": 427,
+   "purchase_price": 8.0
+  },
+  {
+   "id": 497,
+   "purchase_price": 4.0
+  },
+  {
+   "id": 66,
+   "purchase_price": 4.0
+  },
+  {
+   "id": 163,
+   "purchase_price": 4.5
+  },
+  {
+   "id": 367,
+   "purchase_price": 7.0
+  },
+  {
+   "id": 445,
+   "purchase_price": 5.0
+  },
+  {
+   "id": 539,
+   "purchase_price": 4.0
+  }
+ ],
+ "locked": {
+  "xi": [
+   1,
+   411,
+   106,
+   356,
+   388,
+   55,
+   68,
+   368,
+   427,
+   367,
+   445
+  ],
+  "bench": [
+   497,
+   539,
+   66,
+   163
+  ],
+  "captain": 411,
+  "vice": 106,
+  "chip": null
+ },
+ "formation": "3-4-3",
+ "note": "",
+ "history": []
+}

@@ -626,16 +626,17 @@ function fillArena(){
     pend.innerHTML=`🔒 ${m.name} locks in the FPL app — revealed here after the deadline.`;
   }else{
     pend.style.display='none';pitch.style.display='';
-    meta.textContent=`${m.formation} · £${(+m.spend).toFixed(1)}m · ${m.kind==='ai'?'strategist':'chalk'}`;
+    meta.textContent=`${m.formation} · £${(+m.spend).toFixed(1)}m · ${({ai:'strategist',am:'assistant',model:'chalk'})[m.kind]||'chalk'}`;
     note.innerHTML=m.note?`<span class="m" style="font-size:11px;line-height:1.45">${m.note}</span>`:'';
     buildPitch(arenaRows(m), document.getElementById('arena-pitchrows'), document.getElementById('arena-bench'));
   }
+  document.getElementById('arena-writeup').innerHTML=(m.kind!=='human'&&m.writeup)?`<div class="lgcard" style="padding:12px 13px;margin:10px 2px 2px;font-size:12.5px;line-height:1.5">${m.writeup}</div>`:'';
   document.getElementById('arena-scores').innerHTML=arenaScoresHTML();
 }
 function renderArena(){const host=document.getElementById('arena');
   if(!ARENA){host.innerHTML='<div class="err">Loading…</div>';
     fetch('arena.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{ARENA=d;renderArena();}).catch(()=>{host.innerHTML='<div class="err">Arena fills in once the agents have drafted.</div>';});return;}
-  host.innerHTML=`<div class="tsub">GW${ARENA.gw} · same £100m, same pool — <b style="color:var(--fpl)">AI</b> (Opus) vs <b>Model</b> (chalk) vs <b>you</b>. Tap a name to switch team.</div>
+  host.innerHTML=`<div class="tsub">GW${ARENA.gw} · <b style="color:var(--fpl)">AI</b> (Opus) vs <b>Model</b> (chalk) vs <b style="color:var(--pick)">AM</b> (your assistant) vs <b>you</b>. Tap a name to switch team.</div>
     <div id="arena-tabs"></div>
     <div class="pitch">
       <div class="pitch-top"><div class="pt-name"><span id="arena-name" style="color:var(--muted);font-weight:700;font-size:13px"></span></div><div id="arena-meta" class="who-val"></div></div>
@@ -643,6 +644,7 @@ function renderArena(){const host=document.getElementById('arena');
       <div id="arena-pitch"><div id="arena-pitchrows"></div><div class="benchsep"></div><div class="bench" id="arena-bench"></div></div>
     </div>
     <div id="arena-note" style="margin:8px 2px 2px"></div>
+    <div id="arena-writeup"></div>
     <div id="arena-scores"></div>`;
   fillArena();}
 let TITLE=null;
