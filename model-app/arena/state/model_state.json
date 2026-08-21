@@ -1,7 +1,7 @@
 {
  "agent": "model",
  "gw": 1,
- "bank": 1.0,
+ "bank": 0.0,
  "free_transfers": 1,
  "chips": {
   "1": [
@@ -19,16 +19,12 @@
  },
  "squad": [
   {
-   "id": 426,
-   "purchase_price": 12.0
-  },
-  {
    "id": 1,
    "purchase_price": 6.0
   },
   {
-   "id": 2,
-   "purchase_price": 5.0
+   "id": 411,
+   "purchase_price": 15.5
   },
   {
    "id": 106,
@@ -47,6 +43,10 @@
    "purchase_price": 8.0
   },
   {
+   "id": 68,
+   "purchase_price": 6.0
+  },
+  {
    "id": 368,
    "purchase_price": 7.0
   },
@@ -55,11 +55,7 @@
    "purchase_price": 8.0
   },
   {
-   "id": 480,
-   "purchase_price": 8.0
-  },
-  {
-   "id": 66,
+   "id": 497,
    "purchase_price": 4.0
   },
   {
@@ -71,39 +67,43 @@
    "purchase_price": 5.0
   },
   {
-   "id": 528,
-   "purchase_price": 4.5
+   "id": 487,
+   "purchase_price": 5.0
   },
   {
-   "id": 539,
+   "id": 509,
+   "purchase_price": 4.0
+  },
+  {
+   "id": 511,
    "purchase_price": 4.0
   }
  ],
  "locked": {
   "xi": [
-   426,
    1,
+   411,
    106,
    356,
    388,
    55,
+   68,
    368,
    427,
-   480,
    367,
    445
   ],
   "bench": [
-   2,
-   539,
-   66,
-   528
+   497,
+   487,
+   511,
+   509
   ],
-  "captain": 426,
+  "captain": 411,
   "vice": 106,
   "chip": null
  },
- "formation": "3-5-2",
+ "formation": "3-4-3",
  "note": "",
  "history": []
 }

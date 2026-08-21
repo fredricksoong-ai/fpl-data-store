@@ -63,19 +63,19 @@
    "purchase_price": 4.0
   },
   {
-   "id": 163,
-   "purchase_price": 4.5
-  },
-  {
    "id": 367,
    "purchase_price": 7.0
+  },
+  {
+   "id": 409,
+   "purchase_price": 4.5
   },
   {
    "id": 445,
    "purchase_price": 5.0
   },
   {
-   "id": 539,
+   "id": 509,
    "purchase_price": 4.0
   }
  ],
@@ -95,9 +95,9 @@
   ],
   "bench": [
    497,
-   539,
    66,
-   163
+   409,
+   509
   ],
   "captain": 411,
   "vice": 106,
