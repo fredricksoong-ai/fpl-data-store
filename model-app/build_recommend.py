@@ -87,9 +87,16 @@ def main() -> int:
     fixtures = get("/fixtures/")
     sched = [f for f in fixtures if f.get("event")]
     unfinished = sorted({f["event"] for f in sched if not f.get("finished")})
+    # the actionable target is the next gw you can still pick for (deadline in the future),
+    # NOT the in-progress one — once GW1 kicks off the plan should roll to GW2.
+    now = dt.datetime.now(dt.timezone.utc)
+    def _future(e):
+        d = e.get("deadline_time")
+        return bool(d) and dt.datetime.fromisoformat(d.replace("Z", "+00:00")) > now
+    upcoming = sorted(e["id"] for e in boot["events"] if _future(e))
 
     if unfinished:
-        target = unfinished[0]
+        target = upcoming[0] if upcoming else unfinished[0]
         hz = [g for g in unfinished if target <= g < target + H]
         nextfix = [f for f in sched if f["event"] == target]
         hzpairs = [(short[f["team_h"]], short[f["team_a"]]) for f in sched if f["event"] in hz and not f.get("finished")]

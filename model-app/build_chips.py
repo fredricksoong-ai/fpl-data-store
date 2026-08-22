@@ -28,7 +28,7 @@ from engine.data_pl import _norm, load_fd_csv
 
 API = "https://fantasy.premierleague.com/api"
 OUT = Path(os.environ.get("CHIPS_OUT", "chips.json"))
-MY_ENTRY = int(os.environ.get("FPL_ENTRY", "822500"))
+MY_ENTRY = int(os.environ.get("FPL_ENTRY", "97801"))   # 2026/27 team id (wirtzplay)
 CODE2FD = {"ARS": "Arsenal", "AVL": "Aston Villa", "BOU": "Bournemouth", "BRE": "Brentford",
            "BHA": "Brighton", "CHE": "Chelsea", "COV": "Coventry", "CRY": "Crystal Palace",
            "EVE": "Everton", "FUL": "Fulham", "HUL": "Hull", "IPS": "Ipswich", "LEE": "Leeds",
@@ -101,10 +101,14 @@ def main() -> int:
     short = {t["id"]: t["short_name"] for t in boot["teams"]}; nteams = len(boot["teams"])
     sched = [f for f in get("/fixtures/") if f.get("event")]
     un = sorted({f["event"] for f in sched if not f.get("finished")})
+    # target the next gw you can still pick for (deadline in the future), not the in-progress one
+    now = dt.datetime.now(dt.timezone.utc)
+    upcoming = sorted(e["id"] for e in boot["events"]
+                      if e.get("deadline_time") and dt.datetime.fromisoformat(e["deadline_time"].replace("Z", "+00:00")) > now)
 
     gw_pairs, kos_first = {}, {}
     if un:
-        target = un[0]
+        target = upcoming[0] if upcoming else un[0]
         for f in sched:
             if not f.get("finished"):
                 gw_pairs.setdefault(f["event"], []).append((short[f["team_h"]], short[f["team_a"]]))

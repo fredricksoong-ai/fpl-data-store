@@ -24,7 +24,7 @@ from engine import dixon_coles as dc, elo as E, data_pl, fpl_points as fp
 from engine.data_pl import _norm
 
 API = "https://fantasy.premierleague.com/api"
-ENTRY = 822500
+ENTRY = 97801
 ARG_EVENT = int(sys.argv[1]) if len(sys.argv) > 1 else None
 SITE = HERE / "site"
 
