@@ -67,7 +67,7 @@ def enr_fields(rec, prior):
         "en_npxg90": rec.get("npxg90"), "en_xa90": rec.get("xa90"), "en_spxg": rec.get("sp_xg"),
         "en_dc90": rec.get("def_con90"), "en_cc": rec.get("chances_created"),
         "en_gp": rec.get("gk_goals_prevented"), "en_ovp": rec.get("recent_overperf"),
-        "en_src": "prior" if prior else "cur",
+        "en_min": rec.get("minutes"), "en_src": "prior" if prior else "cur",
     }
 
 
@@ -85,7 +85,11 @@ def main() -> int:
     same_season = bool(enr_meta.get("season")) and enr_meta.get("season") == cur_season
     fin = [e["id"] for e in boot["events"] if e.get("finished")]
     event = fin[-1] if fin else 0
-    els = [e for e in boot["elements"] if e.get("minutes", 0) > 0]
+    # Include anyone who could feature — NOT just players with minutes. At a season boundary the FPL
+    # API resets minutes to 0, so a `minutes > 0` filter silently drops every club that hasn't played
+    # its opener yet (that's how Haaland, Salah et al. vanished on GW1 match-day). Keep all available
+    # players (status != "u" unavailable); those who won't feature sink on xph/flags anyway.
+    els = [e for e in boot["elements"] if e.get("status") != "u" and e.get("element_type") in POS]
 
     # rank-based pools
     by_form = sorted(els, key=lambda e: -f(e.get("form")))

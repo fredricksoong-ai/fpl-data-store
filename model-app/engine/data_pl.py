@@ -41,11 +41,29 @@ FD_TO_FPL = {
     "Wolves": "Wolves",
     "West Ham": "West Ham",
     "Man City": "Man City",
+    # FPL bootstrap uses full club names for promoted sides; the model + fixtures use the short
+    # football-data form. Map both to one canonical so player-to-fixture name matching holds.
+    "Coventry City": "Coventry",
+    "Hull City": "Hull",
+    "Ipswich Town": "Ipswich",
+    "Leeds United": "Leeds",
+    "Sunderland AFC": "Sunderland",
 }
+
+# common club-name suffixes that FPL includes and football-data omits — stripped as a fallback so a
+# newly-promoted club never silently zeroes out just because it isn't in the explicit map above.
+_SUFFIXES = (" City", " Town", " United", " Wanderers", " Albion", " Hotspur", " AFC", " FC", " & Hove Albion")
 
 
 def _norm(name: str) -> str:
-    return FD_TO_FPL.get(str(name).strip(), str(name).strip())
+    s = str(name).strip()
+    if s in FD_TO_FPL:                     # explicit map wins (keeps "Man City" intact)
+        return FD_TO_FPL[s]
+    for suf in _SUFFIXES:                  # else strip a known club suffix (Coventry City -> Coventry)
+        if s.endswith(suf):
+            cand = s[: -len(suf)]
+            return FD_TO_FPL.get(cand, cand)
+    return s
 
 
 # ---- source 1: football-data.co.uk -----------------------------------------

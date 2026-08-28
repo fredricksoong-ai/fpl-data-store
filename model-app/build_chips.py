@@ -133,6 +133,13 @@ def main() -> int:
     cutoff = min(kos_first.get(target, [])) if kos_first.get(target) else hist.date.max() + pd.Timedelta(days=1)
     model = dc.fit(hist[hist.date < cutoff], xi=0.0019)
     players = fp.build_players(boot)
+    # early-season prior (same as build_recommend): fall back to last season's rates until current
+    # data accrues, so a club that hasn't played yet doesn't zero out the chip projections.
+    try:
+        _enr = {p["id"]: p for p in json.loads((OUT.parent / "players.json").read_text())["players"]}
+        fp.apply_early_season_prior(players, _enr, sum(1 for e in boot["events"] if e.get("finished")))
+    except Exception as _e:
+        print("  enrichment prior unavailable:", _e)
 
     # one projection pass; store per-GW per-player rows so we can score any squad
     projs, dgw, bgw = {}, [], []

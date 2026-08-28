@@ -76,6 +76,35 @@ def build_players(bootstrap: dict, games_played: int | None = None) -> pd.DataFr
     return pd.DataFrame(rows)
 
 
+def apply_early_season_prior(players: pd.DataFrame, enr_by_id: dict, n_finished: int, ramp: float = 4.0):
+    """Blend last-season priors into per-90 rates + start probability while current-season data is thin.
+
+    At a season boundary the FPL API resets minutes/xg90 to 0, so any club that hasn't played its
+    opener yet has xg90=xa90=0 and p60=0 — and since exp_goals weights by xg90*p60 as a *share*, the
+    whole club collapses to a zero projection (Haaland, Salah et al. reading 0 on GW1 match-day).
+    This falls back to the enrichment prior (en_npxg90 / en_xa90 / en_min) with weight that ramps from
+    all-prior (0 finished GWs) to all-current by ~GW`ramp`. enr_by_id: {id: {en_npxg90, en_xa90, en_min}}.
+    Mutates and returns `players`.
+    """
+    w = min(1.0, (n_finished or 0) / ramp)
+    if w >= 1.0 or not enr_by_id:
+        return players
+    xg, xa, p60 = players["xg90"].tolist(), players["xa90"].tolist(), players["p60"].tolist()
+    av, ids = players["avail"].tolist(), players["id"].tolist()
+    for i, pid in enumerate(ids):
+        r = enr_by_id.get(int(pid))
+        if not r:
+            continue
+        if xg[i] == 0 and r.get("en_npxg90"):
+            xg[i] = float(r["en_npxg90"])
+        if xa[i] == 0 and r.get("en_xa90"):
+            xa[i] = float(r["en_xa90"])
+        if r.get("en_min"):                                        # ~2700 min last season ≈ nailed starter
+            p60[i] = w * p60[i] + (1.0 - w) * min(1.0, float(r["en_min"]) / 2700.0) * av[i]
+    players["xg90"], players["xa90"], players["p60"] = xg, xa, p60
+    return players
+
+
 # --- per-fixture expected points --------------------------------------------
 def _conceded_penalty(lam_against: float, kmax: int = 12) -> float:
     """Expected goals-conceded points for a GK/DEF: -1 per 2 conceded (exact over Poisson)."""

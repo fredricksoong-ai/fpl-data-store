@@ -121,6 +121,14 @@ def main() -> int:
     model = dc.fit(hist[hist.date < cutoff], xi=0.0019)
 
     players_df = fp.build_players(boot)
+    # Early-season prior: FPL resets per-90 rates + minutes to 0 at the season boundary, collapsing
+    # projections for any club that hasn't played yet. Blend last season's rates back in from the
+    # enrichment (see fp.apply_early_season_prior) until current-season data accrues (~GW4).
+    try:
+        _enr = {p["id"]: p for p in json.loads((OUT.parent / "players.json").read_text())["players"]}
+        fp.apply_early_season_prior(players_df, _enr, sum(1 for e in boot["events"] if e.get("finished")))
+    except Exception as _e:
+        print("  enrichment prior unavailable:", _e)
     gw_fx = pd.DataFrame([{"home_team": _norm(CODE2FD.get(h, h)), "away_team": _norm(CODE2FD.get(a, a))}
                           for h, a in hzpairs if in_model(model, h, a)])
     proj = fp.gameweek_points(model, players_df, gw_fx)  # xpts summed over the horizon fixtures

@@ -1114,7 +1114,7 @@ function copyForClaude(){toast('Gathering app data…',0);
   ensureExportFeeds().then(()=>{
     const f1=v=>(v==null||v==='')?'':(+v).toFixed(1),n=GWNO,ms=STATS[ME]||{},L=[];
     L.push('[FPLANNER EXPORT — paste-and-run snapshot]');
-    L.push(`Team wirtzplay (entry 822500) · Ballon d'FPL mini-league (1822310) · GW${n} · generated ${LAST_GEN}.`);
+    L.push(`Team wirtzplay (entry 97801) · Ballon d'FPL mini-league (48451) · GW${n} · generated ${LAST_GEN}.`);
     L.push("This is a complete live snapshot from my FPLanner model app. FPLanner runs its OWN prediction model — a Dixon-Coles + Elo ensemble retrained on Premier League history — which is the source of every projection and recommendation below. The currency is expected points: xP1 = the model's projected points for the next GW, xPH = projected points over a 5-GW horizon (fixtures priced in). The TRANSFER TARGETS, BEST XV, FIXTURES read and TITLE ODDS sections are all model output (targets and Best XV are chosen by maximising model xPts, not by FPL's own numbers). Treat these as my model's recommendations — a distinct, quantitative view to weigh against any other sources you consult (e.g. the LazyFPL newsletter); where they agree or conflict, say so and attribute the model's call explicitly.");
     L.push("The snapshot also contains: my squad, all rival squads + captains, the mini-league table, my value/bank/overall rank, FDR, injuries/news and the chip plan. USE THIS INSTEAD OF FETCHING FROM THE FPL API. Not included — fetch only if your skill needs them: my free-transfer count, and the LazyFPL newsletter. Then carry on with whatever FPL skill I invoke (brief / update / debrief).");
     L.push('');

@@ -105,5 +105,11 @@
  },
  "formation": "3-4-3",
  "note": "",
- "history": []
+ "history": [
+  {
+   "gw": 1,
+   "points": 59,
+   "total": 59
+  }
+ ]
 }
