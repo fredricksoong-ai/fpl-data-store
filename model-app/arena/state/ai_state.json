@@ -1,7 +1,7 @@
 {
  "agent": "ai",
- "gw": 1,
- "bank": 0.5,
+ "gw": 2,
+ "bank": 2.4,
  "free_transfers": 1,
  "chips": {
   "1": [
@@ -39,10 +39,6 @@
    "purchase_price": 6.0
   },
   {
-   "id": 55,
-   "purchase_price": 8.0
-  },
-  {
    "id": 68,
    "purchase_price": 6.0
   },
@@ -77,20 +73,24 @@
   {
    "id": 509,
    "purchase_price": 4.0
+  },
+  {
+   "id": 79,
+   "purchase_price": 6.0
   }
  ],
  "locked": {
   "xi": [
    1,
-   411,
-   106,
-   356,
    388,
-   55,
-   68,
    368,
    427,
+   68,
+   79,
    367,
+   411,
+   356,
+   106,
    445
   ],
   "bench": [
@@ -99,8 +99,8 @@
    66,
    509
   ],
-  "captain": 411,
-  "vice": 106,
+  "captain": 427,
+  "vice": 368,
   "chip": null
  },
  "formation": "3-4-3",

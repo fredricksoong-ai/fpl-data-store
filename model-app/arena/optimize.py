@@ -80,9 +80,9 @@ def optimize_squad(players, budget=100.0, obj_key="xph", force_in=()):
     squad = [pool[i] for i in range(n) if x[i]]
     xi = [pool[i] for i in range(n) if y[i]]
     bench = [p for p in squad if p not in xi]
-    # captain = highest single-GW projection in the XI; vice = next
-    xi_sorted = sorted(xi, key=lambda p: -(float(p.get("xp1", 0) or 0)))
-    captain, vice = xi_sorted[0], xi_sorted[1]
+    # captain = highest single-GW projection in the XI (position-agnostic, with an anomaly guard)
+    from captaincy import pick_captain
+    captain, vice = pick_captain(xi)
     # bench order: GK first, then by xp1 descending
     bench_sorted = sorted(bench, key=lambda p: (0 if p["pos"] == "GK" else 1, -(float(p.get("xp1", 0) or 0))))
     form = "-".join(str(sum(1 for p in xi if p["pos"] == k)) for k in ["DEF", "MID", "FWD"])

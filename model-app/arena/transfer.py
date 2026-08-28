@@ -122,8 +122,8 @@ def optimize_transfers(players, state, max_transfers=MAX_TRANSFERS):
     bench = [p for p in new_squad if p not in xi]
     sold = [byid[pid] for pid in owned if pid not in {p["id"] for p in new_squad}]
     bought = [p for p in new_squad if p["id"] not in owned]
-    xi_sorted = sorted(xi, key=lambda p: -xp1_of(p))
-    captain, vice = xi_sorted[0], xi_sorted[1]
+    from captaincy import pick_captain
+    captain, vice = pick_captain(xi)
     bench_sorted = sorted(bench, key=lambda p: (0 if p["pos"] == "GK" else 1, -xp1_of(p)))
     spend_new = sum(cost[i] for i in range(len(pool)) if x[i])
     form = "-".join(str(sum(1 for p in xi if p["pos"] == k)) for k in ["DEF", "MID", "FWD"])
