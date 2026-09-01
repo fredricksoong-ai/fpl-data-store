@@ -89,9 +89,14 @@ jobs:
       - name: Build chip plan (chips.json)
         run: CHIPS_OUT=model-app/site/chips.json python3 model-app/build_chips.py
 
+      # Deploy via `npx wrangler` directly rather than cloudflare/wrangler-action@v3 — the action is
+      # fetched from codeload.github.com, which intermittently 429s and silently fails the whole deploy
+      # (leaving the site frozen at the last good build). npx pulls wrangler from npm instead, with a
+      # one-shot retry, so a transient blip no longer strands the feeds.
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy model-app/site --project-name=wirtzplay --branch=main --commit-dirty=true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          deploy() { npx --yes wrangler@3 pages deploy model-app/site --project-name=wirtzplay --branch=main --commit-dirty=true; }
+          deploy || { echo "deploy failed, retrying in 20s"; sleep 20; deploy; }
