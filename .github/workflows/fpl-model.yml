@@ -1,24 +1,15 @@
-# .github/workflows/fpl-model.yml — refresh all FPLanner data feeds + deploy
-# The model rebuilds every 3h; the PAID odds call is throttled (see build_odds.py):
-# only on manual refresh, when odds.json is >=12h old, or at the 6pm/10pm SGT windows.
-#   v2.json        — live squad + mini-league (FPL API, stdlib)
-#   xg.json        — per-match team xG for/against (FPL API, stdlib)
-#   odds.json      — de-vigged bookmaker market (The Odds API, throttled)
-#   titleodds.json — model title/top-4/relegation odds (DC+Elo, needs pandas/numpy/scipy)
+# .github/workflows/fpl-model.yml
+# ⚠️ RETIRED 2026-09-28 — FPLanner no longer runs as a Cloudflare-hosted site.
+# It now lives as a Cowork persisted artifact ("fplanner"): the same Python builders regenerate the
+# feeds in-session and build_artifact.py bakes them into the artifact HTML (see model-app/refresh_artifact.sh),
+# which is published via update_artifact. No GitHub Actions, no Cloudflare, no wrangler.
+# Auto-triggers (push + schedule) removed so this never runs or deploys on its own. Kept manual-only
+# (workflow_dispatch) purely as a fallback; the deploy step below still targets Cloudflare if ever run.
 
-name: FPL — build & deploy
+name: FPL — build & deploy (RETIRED)
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "model-app/**"
-      - ".github/workflows/fpl-model.yml"
-  schedule:
-    - cron: "0 */3 * * *"      # every 3h UTC — model rebuild (odds reused unless due)
-    - cron: "0 10 * * *"      # 18:00 SGT — scheduled odds window
-    - cron: "0 14 * * *"      # 22:00 SGT — scheduled odds window
-  workflow_dispatch: {}
+  workflow_dispatch: {}   # manual only — retired; artifact refresh replaces this
 
 concurrency:
   group: fpl-deploy
